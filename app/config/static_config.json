@@ -4,10 +4,10 @@
     "modem": "nb-iot",
     "isurreach": true,
     "mqtt": {
-        "ip": "10.70.171.69",
+        "ip": "1.2.3.4",
         "port": 1883,
-        "user": "isurlog",
-        "passwd": "Isurki_MQTT_2025"
+        "user": "user",
+        "passwd": "password"
     },
     "pinout":{
         "rs485":{
