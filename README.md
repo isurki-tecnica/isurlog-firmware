@@ -1,9 +1,9 @@
 [![Unix CI badge](https://github.com/micropython/micropython/actions/workflows/ports_unix.yml/badge.svg)](https://github.com/micropython/micropython/actions?query=branch%3Amaster+event%3Apush) [![STM32 CI badge](https://github.com/micropython/micropython/actions/workflows/ports_stm32.yml/badge.svg)](https://github.com/micropython/micropython/actions?query=branch%3Amaster+event%3Apush) [![Docs CI badge](https://github.com/micropython/micropython/actions/workflows/docs.yml/badge.svg)](https://docs.micropython.org/) [![codecov](https://codecov.io/gh/micropython/micropython/branch/master/graph/badge.svg?token=I92PfD05sD)](https://codecov.io/gh/micropython/micropython)
 
-The ISURKI Datalogger Firmware Project
+The ISURLOG Firmware Project
 =====================================
 
-This is the custom MicroPython firmware (based on v1.25.0) for the ISURKI ESP32-based IoT Datalogger.
+This is the custom MicroPython firmware (based on v1.25.0) for the ISURKI ISURLOG IoT Datalogger.
 It aims to provide a reliable and optimized firmware for data logging applications, leveraging the flexibility of MicroPython.
 
 ---
@@ -43,7 +43,7 @@ mkdir -p ~/esp
 cd ~/esp
 
 # Clone the correct version
-git clone -b v5.2.6 --recursive [https://github.com/espressif/esp-idf.git](https://github.com/espressif/esp-idf.git)
+git clone -b v5.4.1 --recursive [https://github.com/espressif/esp-idf.git](https://github.com/espressif/esp-idf.git)
 
 # Install the toolchain
 cd esp-idf
