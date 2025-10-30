@@ -4,6 +4,7 @@ import time
 import json
 from modules.config_manager import config_manager
 import ubinascii
+import os
 
 class NBIoT:
     def __init__(self, uart_id, tx_pin, rx_pin, baudrate=9600, timeout=1000):
@@ -740,175 +741,365 @@ class NBIoT:
         self.received_messages = [] # Clear the list after retrieving it
         return messages
 
-    def download_file(self, ip_address, port, filename, local_filename = "update_candidate.py", chunk_size=1024):
-            """
-            DEBUG FUNCTION: Performs a full chunked GET transfer test and prints
-            ONLY the file content from each chunk's response.
-            """
-            
-            def extract_block(text):
-                lines = text.split('\n')
-                capturing = False
-                block = []
+    def _read_full_response(self, timeout=10000, inactivity_timeout=10000):
+        """
+        - Uses the 2 URCs logic to detect the end.
+        - ONLY sleeps if there is no data, to avoid overflow.
+        - Has an inactivity timeout.
+        - Returns BYTES.
+        """
+        response_bytes = bytearray()
+        start_time = time.ticks_ms()
+        last_data_time = time.ticks_ms() # Inactivity timer
+        urc_pattern = b'#XHTTPCRSP:'
+        urc_count = 0
 
-                for line in lines:
-                    if line.startswith('#XHTTPCRSP:') and not capturing:
-                        # Primera marca: activar captura
-                        capturing = True
-                        # Si hay más contenido después de la marca, capturarlo
-                        rest = line[len('#XHTTPCRSP:'):].strip()
-                        content = line.split(None, 1)  # divide en "#XHTTPCRSP:230,1" y lo que sigue
-                        if len(content) > 1:
-                            block.append(content[1])  # Captura el texto tras la marca
-                        continue
-                    elif line.startswith('#XHTTPCRSP:') and capturing:
-                        # Segunda marca: detener captura
-                        break
-                    elif capturing:
-                        block.append(line)
+        utils.log_debug(f"READ_USER_OPT: Starting read (timeout={timeout}ms, inactivity={inactivity_timeout}ms)...")
 
-                return '\n'.join(block).rstrip('\r\n')
-            
-            utils.log_info(f"--- Iniciando Test Inteligente de Peticiones GET por Chunks ---")
+        while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
+            bytes_available = self.uart.any()
+            if bytes_available:
+                # <<< CHANGE: Read in larger blocks >>>
+                read_size = min(bytes_available, 512) # Read up to 512 bytes
+                new_data = self.uart.read(read_size)
+                # <<< END CHANGE >>>
+                if new_data:
+                    # utils.log_debug(f"RAW READ USER OPT: Read {len(new_data)} bytes") # Very verbose
+                    response_bytes.extend(new_data)
+                    last_data_time = time.ticks_ms() # Reset timer
 
-            # ----------------------------------------------------------------------
-            # ETAPA 1: Pedir el primer chunk para descubrir el tamaño total del archivo
-            # ----------------------------------------------------------------------
-            total_size = None
-            bytes_downloaded = 0
-            
-            print("\n" + "="*60)
-            utils.log_info(f"STEP 1: Requesting first chunk (bytes 0-{chunk_size-1}) to get total size...")
-            print("="*60)
+                    # Your 2 URCs logic (can give false positives with binary)
+                    # Full recount for safety with large blocks
+                    urc_count = response_bytes.count(urc_pattern)
 
-            if not self.send_at_command_check(f'AT#XHTTPCCON=1,"{ip_address}",{port},54322', timeout=10000):
-                utils.log_error("Failed to open HTTP connection for size discovery.")
-                return
+                    if urc_count >= 2:
+                        time.sleep_ms(50) # Short final wait
+                        if self.uart.any(): response_bytes.extend(self.uart.read(self.uart.any()))
+                        utils.log_info(f"READ_USER_OPT: Second {urc_pattern!r} detected ({len(response_bytes)} bytes).")
+                        return bytes(response_bytes) # Success
+            else:
+                # CRITICAL! Only sleep if there is NO data.
+                time.sleep_ms(1) # Yield CPU very briefly
+
+            # Failsafe: Inactivity timeout
+            if time.ticks_diff(time.ticks_ms(), last_data_time) > inactivity_timeout:
+                utils.log_error(f"READ_USER_OPT: Inactivity timeout ({inactivity_timeout}ms). Returning {len(response_bytes)} bytes (URCs={urc_count}).")
+                break # Exit while loop
+
+        # General or inactivity timeout
+        utils.log_error(f"READ_USER_OPT: Final timeout ({timeout}ms). Returning {len(response_bytes)} bytes (URCs={urc_count}).")
+        return bytes(response_bytes) if response_bytes else None
+
+
+    def _extract_body_binary(self, response_bytes):
+        """
+        adapted for BYTES.
+        """
+        if not response_bytes:
+            utils.log_debug("Extract USER: No response bytes.")
+            return None
+        try:
+            # BEWARE! split(b'\n') can be problematic with binary.
+            lines = response_bytes.split(b'\n')
+            capturing = False
+            block = []
+            urc_pattern = b'#XHTTPCRSP:'
+
+            utils.log_debug(f"Extract USER: Processing {len(lines)} lines...")
+
+            for i, line in enumerate(lines):
+                clean_line = line.rstrip(b'\r') # Remove \r for startswith
+                is_urc_line = clean_line.startswith(urc_pattern)
+
+                if is_urc_line and not capturing:
+                    capturing = True
+                    utils.log_debug(f"Extract USER: Start capture found at line {i}.")
+                    content = clean_line.split(None, 1)
+                    if len(content) > 1:
+                        utils.log_debug(f"Extract USER: Capturing trailing data on start line: {content[1][:20]!r}...")
+                        block.append(content[1])
+                    # Don't continue
+
+                elif is_urc_line and capturing:
+                    utils.log_debug(f"Extract USER: End capture found at line {i}.")
+                    break # Exit for loop
+
+                elif capturing:
+                    block.append(line) # Add original line
+
+            # Join captured lines
+            joined_block = b'\n'.join(block)
+            cleaned_body = joined_block.rstrip(b'\r\n') # Original final cleanup
+
+            utils.log_info(f"Extract USER: Extracted {len(cleaned_body)} final bytes.")
+            return cleaned_body if cleaned_body else None
+
+        except Exception as e:
+            utils.log_error(f"Critical error extracting HTTP body USER: {e!r}")
+            return None
+
+    # --- NEW Helper Function to Clear Buffer ---
+    def _clear_uart_buffer(self, wait_ms=100):
+        """Reads and discards any pending data in the UART buffer."""
+        bytes_cleared = 0
+        read_start_time = time.ticks_ms()
+        while self.uart.any() and time.ticks_diff(time.ticks_ms(), read_start_time) < 500: # Safety timeout
+            data = self.uart.read(self.uart.any())
+            if data:
+                bytes_cleared += len(data)
+            time.sleep_ms(5)
+        if bytes_cleared > 0:
+            utils.log_warning(f"CLEAR_UART: Discarded {bytes_cleared} unexpected bytes from UART buffer.")
+
+
+    # --- Main Function (YOUR Original + 8KB Chunk + No Pause on Success + RECONNECT ON RETRY) ---
+    # <<< chunk_size default to 8192 >>>
+    def download_file(self, ip_address, port, filename, local_filename = "update_candidate.py", chunk_size=8192):
+        """
+        - WITHOUT connection check before each successful GET.
+        - Retry: Long Pause + Close/Reopen Connection + Clear Buffer.
+        - Optimized Read (_read_full_response with blocks > 1 byte).
+        - Default chunk size increased to 8KB.
+        - Removed 1s pause between successful chunks.
+        """
+        # <<< Modified name in log >>>
+        utils.log_info(f"--- Starting Download USER BASE v17 (Chunk={chunk_size}B, Reconnect on Retry) ---")
+        self._clear_uart_buffer() # Initial cleanup
+
+        total_size = None
+        bytes_downloaded = 0
+        start_time_total = time.ticks_ms()
+        connection_open = False
+        download_successful = False
+
+        try:
+            os.remove(local_filename)
+            utils.log_info(f"Previous local file '{local_filename}' deleted.")
+        except OSError:
+            pass
+
+        file_mode = "wb"
+
+        try:
+            # STAGE 1: Open connection, request first chunk and get size
+            utils.log_info(f"STEP 1: Connecting and requesting first chunk...")
+            connect_command = f'AT#XHTTPCCON=1,"{ip_address}",{port}'
+            if not self.send_at_command_check(connect_command, "OK", timeout=20000, retries=1):
+                utils.log_error("HTTP USER: Failed to open initial connection.")
+                return False
+            utils.log_info("HTTP USER: Connection open.")
+            connection_open = True
 
             try:
+                # Request first chunk using chunk_size
                 range_header = f"Range: bytes=0-{chunk_size-1}\\r\\n"
                 command = f'AT#XHTTPCREQ="GET","/{filename}","{range_header}"'
                 utils.log_info(f"Sending command: {command}")
+                self._clear_uart_buffer() # Clear just before sending GET
                 self.uart.write(command + '\r\n')
 
-                # Leer la respuesta completa para este primer chunk
-                response_bytes = bytearray()
-                last_data_time = time.ticks_ms()
-                while time.ticks_diff(time.ticks_ms(), last_data_time) < 10000:
-                    if self.uart.any():
-                        response_bytes.extend(self.uart.read(self.uart.any()))
-                        last_data_time = time.ticks_ms()
-                    time.sleep_ms(20)
-                
-                response_str = response_bytes.decode('utf-8', 'ignore')
-                                
-                # Parsear la respuesta para encontrar Content-Range
-                for line in response_str.split('\r\n'):
+                response_bytes = self._read_full_response(timeout=30000) # Read timeout a bit larger for large chunk
+                if not response_bytes:
+                    utils.log_error("HTTP USER: No response received for the first chunk.")
+                    raise ConnectionError("No response for first chunk")
+
+                # Parse size (no changes)
+                total_size = None
+                response_str_headers = response_bytes.decode('ascii', 'ignore')
+                for line in response_str_headers.split('\r\n'):
                     if line.lower().startswith("content-range:"):
                         try:
                             size_str = line.split('/')[-1]
                             total_size = int(size_str)
-                            utils.log_info(f"SUCCESS: Total file size discovered: {total_size} bytes.")
+                            utils.log_info(f"SUCCESS USER: Total file size discovered: {total_size} bytes.")
                             break
-                        except Exception as e:
-                            utils.log_error(f"Failed to parse Content-Range: {e}")
-                
+                        except Exception as e: utils.log_error(f"Failed to parse Content-Range USER: {e!r}")
                 if total_size is None:
-                    utils.log_error("Could not determine total file size. Aborting.")
-                    return
+                    for line in response_str_headers.split('\r\n'):
+                        if line.lower().startswith("content-length:"):
+                            try:
+                                total_size = int(line.split(':')[1].strip())
+                                utils.log_warning(f"HTTP USER: Using Content-Length: {total_size} bytes.")
+                                break
+                            except Exception as e: utils.log_error(f"Failed to parse Content-Length USER: {e!r}")
+                if total_size is None:
+                    utils.log_error("Could not determine total file size USER. Aborting.")
+                    utils.log_debug(f"Response received was:\n{response_str_headers[:500]}")
+                    raise ValueError("Cannot determine file size USER")
 
-                # <<< INICIO DEL CAMBIO SOLICITADO >>>
-                
-                print("\n----------- CONTENIDO DEL CHUNK #1 -----------")
-                
-                print(f"Preparse: {response_str}")
-                
-                response_str = extract_block(response_str)
-                with open(local_filename, "wb") as f:
-                    f.write(response_str)
-                print(f"Postparse: {response_str}")
-                    
-                print("------------ FIN DEL CHUNK #1 ------------\n")
-                # <<< FIN DEL CAMBIO SOLICITADO >>>
-                    
-            finally:
-                self.send_at_command_check("AT#XHTTPCCON=0")
-                bytes_downloaded += chunk_size
+
+                # Extract and write BODY
+                utils.log_info("Extracting binary body from chunk #1 (USER)...")
+                file_data = self._extract_body_binary(response_bytes)
+
+                if file_data:
+                    with open(local_filename, file_mode) as f: f.write(file_data)
+                    bytes_written = len(file_data)
+                    percentage = int((bytes_written / total_size) * 100) if total_size else 0
+                    utils.log_info(f"Chunk #1 written (USER): {bytes_written} bytes. Total: {bytes_written}/{total_size} ({percentage}%)")
+                    bytes_downloaded += bytes_written
+                    file_mode = "ab"
+                else:
+                    utils.log_warning("HTTP USER: First chunk empty after extraction.")
+                    bytes_downloaded = 0
+
+            except Exception as e:
+                utils.log_error(f"HTTP USER: Error processing first chunk: {e!r}")
+                raise
 
             # ----------------------------------------------------------------------
-            # ETAPA 2: Bucle para pedir y mostrar los chunks restantes
+            # STAGE 2: Loop for remaining chunks (NO pre-check, Modified Retry)
             # ----------------------------------------------------------------------
-            utils.log_info(f"\nSTEP 2: Looping for remaining chunks...")
-            
+            utils.log_info(f"\nSTEP 2: Looping for remaining chunks (USER)...")
+            retries_left_chunk = 3
+
             while bytes_downloaded < total_size:
+
+                if total_size is not None and bytes_downloaded >= total_size - 1:
+                     utils.log_info(f"Download complete (bytes descargados >= total_size - 1). Bytes: {bytes_downloaded}/{total_size}")
+                     download_successful = True 
+                     break
+                    
                 chunk_start = bytes_downloaded
                 chunk_end = min(chunk_start + chunk_size - 1, total_size - 1)
-
                 if chunk_start >= total_size: break
 
                 print("\n" + "="*60)
-                utils.log_info(f"Requesting Chunk: bytes {chunk_start}-{chunk_end}")
+                utils.log_info(f"Requesting Chunk (USER): bytes {chunk_start}-{chunk_end}")
                 print("="*60)
 
-                if not self.send_at_command_check(f'AT#XHTTPCCON=1,"{ip_address}",{port}', timeout=5000):
-                    break
-                
                 try:
+                    # <<< ADDED: Verify/Reconnect BEFORE requesting >>>
+                    # It's safer to do it here in case the server closed the connection
+                    # after the previous chunk (even if we requested keep-alive)
+                    conn_status_resp = self.send_at_command('AT#XHTTPCCON?', '#XHTTPCCON:', timeout=5000)
+                    if not (conn_status_resp and '#XHTTPCCON: 1,' in conn_status_resp):
+                        utils.log_warning("HTTP USER: Connection lost before request. Reconnecting...")
+                        # self.send_at_command_check("AT#XHTTPCCON=0", "OK", timeout=5000) # Unnecessary if already closed
+                        if not self.send_at_command_check(connect_command, "OK", timeout=20000, retries=1):
+                            raise ConnectionError("Failed to reconnect USER") # Use standard
+                        utils.log_info("HTTP USER: Reconnected.")
+                        connection_open = True # Ensure flag
+                    # <<< END VERIFY/RECONNECT >>>
+
+
+                    # Request chunk
                     range_header = f"Range: bytes={chunk_start}-{chunk_end}\\r\\n"
                     command = f'AT#XHTTPCREQ="GET","/{filename}","{range_header}"'
                     utils.log_info(f"Sending command: {command}")
+                    self._clear_uart_buffer() # Clear just before sending GET
                     self.uart.write(command + '\r\n')
 
-                    response_bytes = bytearray()
-                    chunk_receive_start_time = time.ticks_ms()
-                    chunk_timeout = 10000 # Timeout general de 20s por chunk
+                    # Read response (Timeout increased for large chunk)
+                    response_bytes = self._read_full_response(timeout=30000) # Use optimized read
+                    if not response_bytes:
+                        utils.log_error("No response received for this chunk.")
+                        raise ConnectionError("No response for chunk")
 
-                    while time.ticks_diff(time.ticks_ms(), chunk_receive_start_time) < chunk_timeout:
-                        if self.uart.any():
-                            response_bytes.extend(self.uart.read(self.uart.any()))
-                            
-                            # <<< LÓGICA MEJORADA: Esperar al SEGUNDO URC >>>
-                            # Contamos cuántas veces aparece la señal de finalización.
-                            if response_bytes.count(b'#XHTTPCRSP:') >= 2:
-                                # Hemos recibido tanto el URC de la cabecera como el del cuerpo.
-                                # Esperamos un instante más por si los últimos bytes llegan fragmentados.
-                                time.sleep_ms(50) 
-                                if self.uart.any():
-                                    response_bytes.extend(self.uart.read(self.uart.any()))
-                                
-                                utils.log_info("Second #XHTTPCRSP URC detected. Chunk response is complete.")
-                                break # Salir del bucle de lectura.
+                    # Extract and write
+                    file_data = self._extract_body_binary(response_bytes)
 
-                        time.sleep_ms(20) # Ceder CPU
+                    if file_data:
+                        bytes_written = len(file_data)
+                        expected_bytes_in_chunk = chunk_end - chunk_start + 1
+                        is_last_chunk = (total_size is not None and chunk_end == total_size - 1)
+                        
+                        # <<< SIZE VALIDATION >>>
+                        if not is_last_chunk and bytes_written < expected_bytes_in_chunk - 1:
+                            utils.log_error(f"Error USER: Chunk {chunk_start}-{chunk_end} incorrect size. Expected: {expected_bytes_in_chunk}, Received: {bytes_written}.")
+                            #raise ValueError("Incorrect chunk size received")
+                            time.sleep(10)
+                            self._clear_uart_buffer()
+                        
+                        else:
                     
-                    response_str = response_bytes.decode('utf-8', 'ignore')
-
-                    # <<< INICIO DEL CAMBIO SOLICITADO (REPETIDO PARA EL BUCLE) >>>
-                    print(f"\n----------- CONTENIDO DEL CHUNK #{bytes_downloaded // chunk_size + 1} -----------")
-
-                    print(f"Preparse: {response_str}")
-
-                    response_str = extract_block(response_str)
-                    print(f"Postparse: {response_str}")
-                    
-                    if response_str != '':
-                        bytes_downloaded += chunk_size
-                        with open(local_filename, "ab") as f:
-                            f.write(response_str)
+                            with open(local_filename, file_mode) as f: f.write(file_data)
+                            bytes_downloaded += bytes_written
+                            percentage = int((bytes_downloaded / total_size) * 100) if total_size else 0
+                            utils.log_info(f"Chunk written (USER): {bytes_written} bytes. Total: {bytes_downloaded}/{total_size} ({percentage}%)")
+                            if file_mode == "wb": file_mode = "ab"
+                            retries_left_chunk = 3 # Reset
                     else:
-                         utils.log_error(f"Error downloading chunk #{bytes_downloaded // chunk_size + 1}")
-                         
-                    print(f"------------ FIN DEL CHUNK ------------\n")
-                    # <<< FIN DEL CAMBIO SOLICITADO >>>
+                        utils.log_error(f"Error USER: Chunk {chunk_start}-{chunk_end} received but no data (body).")
+                        raise ValueError("Chunk extraction failed USER")
 
-                finally:
-                    self.send_at_command_check("AT#XHTTPCCON=0")
-                
-                time.sleep(2)
+                # <<< EXCEPT BLOCK WITH MODIFIED RETRY (Close/Reopen) >>>
+                except Exception as e:
+                    utils.log_error(f"HTTP USER: Error processing chunk {chunk_start}-{chunk_end}: {e!r}")
+                    if retries_left_chunk > 0:
+                        retries_left_chunk -= 1
+                        utils.log_warning(f"Retrying chunk ({retries_left_chunk} remaining)...")
 
-            utils.log_info("--- Chunked GET Test Finished ---")
+                        # <<< NEW RETRY LOGIC (FORCE CLOSE/REOPEN) >>>
+                        utils.log_info("Closing HTTP connection before retrying...")
+                        # Use simple send_at_command, don't check response here
+                        self.send_at_command("AT#XHTTPCCON=0", "OK", timeout=5000)
+                        connection_open = False # Mark as closed
+                        utils.log_info("Waiting 10 seconds before retrying...")
+                        time.sleep(10)
+                        # DO NOT clear buffer here, the reconnect at the start of the loop will do it
+                        # <<< END NEW LOGIC >>>
+
+                        continue # Go back to the start of the while to retry this chunk
+                    else:
+                        utils.log_error("HTTP USER: Max retries reached. Aborting.")
+                        raise ConnectionError("Chunk failed after retries USER") # Use standard
+                # <<< END EXCEPT BLOCK >>>
+
+                # <<< REMOVED PAUSE BETWEEN SUCCESSFUL CHUNKS >>>
+                # time.sleep(1)
+
+            # Download nominally finished
+            utils.log_info(f"--- Download USER Nominally Finished ({bytes_downloaded} bytes) ---")
+            download_successful = True
 
 
+        except Exception as e:
+            utils.log_error(f"HTTP USER: FATAL error during download: {e!r}")
+            download_successful = False
+        finally:
+            # Close connection at the end
+            if connection_open:
+                # Check status before closing
+                conn_status_resp = self.send_at_command('AT#XHTTPCCON?', '#XHTTPCCON:', timeout=5000)
+                if conn_status_resp and '#XHTTPCCON: 1,' in conn_status_resp:
+                    utils.log_info("HTTP USER: Closing connection (finally)...")
+                    self.send_at_command_check("AT#XHTTPCCON=0", "OK", timeout=10000)
+                else:
+                    # If it was already closed (e.g., by an error not caught before finally), do nothing
+                    utils.log_info("HTTP USER: Connection was already closed in finally.")
 
 
+        # Final size verification
+        if download_successful: # Be more tolerant if total_size failed
+            # Check size only if we got it
+            if total_size is not None:
+                try:
+                    final_size = os.stat(local_filename)[6]
+                    if abs(final_size - total_size) <= 1: #1 byte diff is ok :)
+                        utils.log_info(f"--- Download USER Finished Successfully ({bytes_downloaded} bytes). Size verified. ---")
+                        return True
+                    else:
+                        utils.log_error(f"--- Download USER Failed. FINAL SIZE INCORRECT. Expected: {total_size}, Got: {final_size} ---")
+                        try: os.remove(local_filename)
+                        except OSError: pass
+                        return False
+                except Exception as e_stat:
+                    utils.log_error(f"--- Download USER Failed. Error verifying final size: {e_stat!r} ---")
+                    try: os.remove(local_filename)
+                    except OSError: pass
+                    return False
+            else: # If we couldn't get total_size but download_successful is True
+                utils.log_warning(f"--- Download USER Finished ({bytes_downloaded} bytes), BUT total size unknown. Considered SUCCESS. ---")
+                return True
 
+        else: # If download_successful is False
+            utils.log_error(f"--- Download USER Failed. Expected: {total_size}, Downloaded: {bytes_downloaded} ---")
+            try:
+                stat_info = os.stat(local_filename)
+                if stat_info[6] > 0:
+                    os.remove(local_filename)
+                    utils.log_warning(f"Incomplete/corrupt USER file '{local_filename}' deleted.")
+            except OSError:
+                pass
+            return False
