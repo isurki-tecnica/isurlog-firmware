@@ -6,6 +6,17 @@ from modules.config_manager import config_manager
 import ubinascii
 import os
 
+try:
+    _ = ConnectionError
+except NameError:
+    class ConnectionError(Exception):
+        pass
+try:
+    _ = ConnectionAbortedError
+except NameError:
+    class ConnectionAbortedError(Exception):
+        pass
+
 class NBIoT:
     def __init__(self, uart_id, tx_pin, rx_pin, baudrate=9600, timeout=1000):
         """
@@ -20,7 +31,7 @@ class NBIoT:
         """
         self.tx_pin = tx_pin if tx_pin is not None else config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("tx_pin", 4)
         self.rx_pin = rx_pin if rx_pin is not None else config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("rx_pin", 2)
-        self.uart = UART(uart_id, baudrate=baudrate, tx=Pin(self.tx_pin), rx=Pin(self.rx_pin), timeout=timeout)
+        self.uart = UART(uart_id, baudrate=baudrate, tx=Pin(self.tx_pin), rx=Pin(self.rx_pin), rxbuf=8192, timeout=timeout)
         self.received_messages = []
         self.BLACKLIST = {
             'NB-IoT': ['21403'],  # Block Orange NB-IoT (MQTT downlinks not working?)
@@ -328,7 +339,7 @@ class NBIoT:
                         continue
                     
                     utils.log_info(f"Attempting manual connection to PLMN: {plmn}...")
-                    if self.send_at_command_check(f'AT+COPS=1,2,"{plmn}"'):
+                    if self.send_at_command_check(f'AT+COPS=1,2,"{plmn}"', timeout = 10000):
                         if self.wait_for_network_connection(timeout=180000): # 3 min timeout per operator
                             utils.log_info(f"Successfully connected to {plmn}!")
                             is_connected = True
@@ -854,7 +865,7 @@ class NBIoT:
 
     # --- Main Function (YOUR Original + 8KB Chunk + No Pause on Success + RECONNECT ON RETRY) ---
     # <<< chunk_size default to 8192 >>>
-    def download_file(self, ip_address, port, filename, local_filename = "update_candidate.py", chunk_size=8192):
+    def download_file(self, ip_address, port, filename, local_filename, wdt = None, chunk_size=8192):
         """
         - WITHOUT connection check before each successful GET.
         - Retry: Long Pause + Close/Reopen Connection + Clear Buffer.
@@ -1005,7 +1016,7 @@ class NBIoT:
                         is_last_chunk = (total_size is not None and chunk_end == total_size - 1)
                         
                         # <<< SIZE VALIDATION >>>
-                        if not is_last_chunk and bytes_written < expected_bytes_in_chunk - 1:
+                        if not is_last_chunk and bytes_written < expected_bytes_in_chunk - 2:
                             utils.log_error(f"Error USER: Chunk {chunk_start}-{chunk_end} incorrect size. Expected: {expected_bytes_in_chunk}, Received: {bytes_written}.")
                             #raise ValueError("Incorrect chunk size received")
                             time.sleep(10)
@@ -1048,6 +1059,10 @@ class NBIoT:
 
                 # <<< REMOVED PAUSE BETWEEN SUCCESSFUL CHUNKS >>>
                 # time.sleep(1)
+                
+                #Feed WDT so it doesn't trigger during big downloads.
+                if wdt != None:
+                    wdt.feed()
 
             # Download nominally finished
             utils.log_info(f"--- Download USER Nominally Finished ({bytes_downloaded} bytes) ---")
