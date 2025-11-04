@@ -7,6 +7,7 @@ from modules.rtc_memory import RTC_Memory
 from modules.led_manager import LEDManagerULP
 import uio
 import builtins
+from lib.ota import rollback
 
 #Enable WDT
 
@@ -451,7 +452,7 @@ async def ble_mode_task(blinky, pm, ser_num):
 
 if __name__ == "__main__":
 
-    print("\n####WELCOME TO ISURLOG OS MICROPYTHON FLAVOUR####\n")
+    print("\n####WELCOME TO ISURLOG OS v.1.0.1 MICROPYTHON FLAVOUR####\n")
 
     # --- Power Management ---
     pm = power_manager.PowerManager()
@@ -584,12 +585,14 @@ if __name__ == "__main__":
             #nb_iot_module.register_SIM()
             if not nb_iot_module.connect(config_manager.dynamic_config["communications"]["nb_iot"].get("mode", "LTE-M"), apn = config_manager.dynamic_config["communications"]["nb_iot"].get("apn", None)):
                 print("Failed to connect to NB-IoT")
+                pm.configure_wakeup_sources(wake_up_sources)
                 pm.go_to_sleep()
             
             keep_alive = ((config_manager.dynamic_config["general"].get("latency_time", 10) * 60)+20) * config_manager.dynamic_config["general"].get("register_acumulator", 1)
             nb_iot_module.mqtt_configure(ser_num, keep_alive, 0)
             if not nb_iot_module.mqtt_connect(config_manager.static_config.get("mqtt", {}).get("user", ""), config_manager.static_config.get("mqtt", {}).get("passwd", ""), config_manager.static_config.get("mqtt", {}).get("ip", "80.24.238.36"), config_manager.static_config.get("mqtt", {}).get("port", 1883)):
                 print("Failed to connect to MQTT broker")
+                pm.configure_wakeup_sources(wake_up_sources)
                 pm.go_to_sleep()
             
             if not pm.rtc_available:
@@ -610,6 +613,7 @@ if __name__ == "__main__":
             lorawan_module = lorawan.LoRaWAN(uart_id=2, tx_pin=2, rx_pin=4, baudrate=115200)
             if not lorawan_module.connect():
                 print("Failed to connect to LoRaWAN")
+                pm.configure_wakeup_sources(wake_up_sources)
                 pm.go_to_sleep()
             lorawan_module.set_confirmed_mode(0) # Enable/disable send ACK (optional)
             if not pm.rtc_available:
@@ -646,6 +650,7 @@ if __name__ == "__main__":
                     reset() #Reset ESP32
                 if not nb_iot_module.mqtt_connect(config_manager.static_config.get("mqtt", {}).get("user", ""), config_manager.static_config.get("mqtt", {}).get("passwd", ""), config_manager.static_config.get("mqtt", {}).get("ip", "80.24.238.36"), config_manager.static_config.get("mqtt", {}).get("port", 1883)):
                     print("Failed to connect to MQTT broker")
+                    pm.configure_wakeup_sources(wake_up_sources)
                     pm.go_to_sleep()
                 nb_iot_module.mqtt_subscribe(f"isurlog/config/{ser_num}", QoS=2)
                     
@@ -666,26 +671,55 @@ if __name__ == "__main__":
                 for msg in received_mqtt_messages:
                     if msg['message'] == "Wake": #WAKE UP MESSAGE
                         pass
+                    
                     elif msg['message'] == "REPL": #ENABLE REMOTE REPL
                         if nb_iot_module.mqtt_publish(f"isurlog/repl_out/{ser_num}", "Connected"):
                             nb_iot_module.mqtt_subscribe(f"isurlog/repl_in/{ser_num}", QoS=2)
                             handle_remote_repl()
                             
-                    elif "Update" in msg['message']: #FIRMWARE UPDATE MESSAGE
+                    elif "update" in msg['message']: #FIRMWARE UPDATE MESSAGE
                         print("Starting OTA update process...")
                         update_instructions = msg['message'].split(" ")
                         if len(update_instructions) == 5:
                             from modules import update_manager
-                            _, server, port, file, checksum = update_instructions
-                            print(f"Received instructions: Server: {server} Port: {port} File: {file} Checksum: {checksum}")
-                            nb_iot_module.download_file(server, port, file, chunk_size=1024)
-                            if update_manager.verify_file_checksum(checksum):
-                                update_manager.perform_update()
-                                print("Update process finished, rebooting in 5 seconds...")
-                                if not nb_iot_module.mqtt_publish(f"dataloggers/update/{ser_num}", "Update OK"):
-                                    print(f"Failed to publish response")
-                                time.sleep(5)
-                                reset()
+                            update_type, server, port, file_name, checksum = update_instructions
+                            print(f"Received instructions: Update_type: {update_type} Server: {server} Port: {port} File: {file_name} Checksum: {checksum}")
+                            
+                            if update_type == "main_update":
+                                if nb_iot_module.download_file(server, port, file_name, file_name, chunk_size=2048):
+                                    if update_manager.verify_file_checksum(checksum, filename = file_name):
+                                        update_manager.perform_update()
+                                        print("Update process finished, rebooting in 5 seconds...")
+                                        if not nb_iot_module.mqtt_publish(f"dataloggers/update/{ser_num}", "Update OK"):
+                                            print(f"Failed to publish response")
+                                        time.sleep(5)
+                                        reset()
+
+                            if update_type == "upython_update":
+                                if nb_iot_module.download_file(server, port, file_name, file_name, wdt = wdt, chunk_size=8192):
+                                    if(update_manager.decode_base64_file(file_name, "/micropython_decoded.bin")):
+                                        if update_manager.verify_file_checksum(checksum, filename = "/micropython_decoded.bin"):
+                                            print("Decoding successful!")
+                                            from lib.ota import update
+                                            try:
+                                                with update.OTA(verbose=True, reboot=True) as ota_updater:
+                                                    with open("/micropython_decoded.bin", "rb") as f:
+                                                        ota_updater.from_stream(f)
+                                                print("OTA update prepared.")
+                                            except Exception as e_ota:
+                                                print(f"Error during OTA: {e_ota!r}")
+
+                                            # Delete the b64 file after use to free space.
+                                            try:
+                                                import os
+                                                os.remove(file_name)
+                                                print(f"Temporary file '{file_name}' deleted.")
+                                            except OSError:
+                                                 pass
+                                        else:
+                                            print("Decoding failed.")
+                        
+                        #If code reaches this point the update was unsuccessful
                         if not nb_iot_module.mqtt_publish(f"dataloggers/update/{ser_num}", "Update FAILED"):
                             print(f"Failed to publish response")
                         
@@ -743,29 +777,6 @@ if __name__ == "__main__":
             
             blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500,  wake_up_period=10)
 
+    rollback.cancel() #We can cancel rollback protection if program reaches this point.
     pm.configure_wakeup_sources(wake_up_sources)
     pm.go_to_sleep()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
