@@ -325,6 +325,12 @@ class NBIoT:
             scan_response = self.send_at_command('AT+COPS=?', timeout=300000)
             
             if scan_response and "+COPS:" in scan_response:
+
+                if connection_preference == "LTE-M":
+                    desired_act= 7
+                elif connection_preference == "NB-IoT":
+                    desired_act = 9
+                    
                 available_networks = self._parse_cops_response(scan_response)
                 current_blacklist = self.BLACKLIST.get(connection_preference, [])
                 
@@ -335,6 +341,10 @@ class NBIoT:
                 for plmn, act in available_networks:
                     if plmn in current_blacklist:
                         utils.log_info(f"Operator {plmn} is blacklisted, skipping.")
+                        continue
+                    
+                    if int(act) != desired_act:
+                        utils.log_info(f"Ignoring operator {plmn} with AcT {act}.")
                         continue
                     
                     utils.log_info(f"Attempting manual connection to PLMN: {plmn}...")

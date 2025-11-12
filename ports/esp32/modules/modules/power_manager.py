@@ -159,31 +159,37 @@ class PowerManager:
         Returns:
             The number of seconds until the next wakeup time.
         """
-        if not self.rtc_available:
-            utils.log_error("RTC not available for time synchronization.")
-            return config_manager.dynamic_config["general"].get("latency_time", 10) * 60 # Default to latency_time if RTC is not available
-        
-        now_tuple = self.rtc.datetime()
-        utils.log_info(f"Current RTC time: {now_tuple}")  # Log the current time
-        now = now_tuple[4], now_tuple[5], now_tuple[6] # Get (hour, minute, second) from the tuple
-        seconds_remaining = 0
+        if config_manager.dynamic_config["general"].get("rtc_sync", False) and self.rtc_available:
 
-        latency_time = int(config_manager.dynamic_config["general"].get("latency_time", 60)) # Default to 60 minutes if not set
+            if not self.rtc_available:
+                utils.log_error("RTC not available for time synchronization.")
+                return config_manager.dynamic_config["general"].get("latency_time", 10) * 60 # Default to latency_time if RTC is not available
+            
+            now_tuple = self.rtc.datetime()
+            utils.log_info(f"Current RTC time: {now_tuple}")  # Log the current time
+            now = now_tuple[4], now_tuple[5], now_tuple[6] # Get (hour, minute, second) from the tuple
+            seconds_remaining = 0
+
+            latency_time = int(config_manager.dynamic_config["general"].get("latency_time", 60)) # Default to 60 minutes if not set
+            
+            # Calculate the next multiple of latency_time
+            if latency_time < 60:
+                next_multiple = ((now[1] // latency_time) + 1) * latency_time
+                if next_multiple > 60:
+                    next_multiple = 0  # Reset to 0 if it exceeds 59 minutes
+                seconds_remaining = (next_multiple - now[1]) * 60 - now[2]
+            else:
+                hours_to_next_multiple = ((now[0] // (latency_time // 60)) + 1) * (latency_time // 60)
+                seconds_remaining = ((hours_to_next_multiple - now[0]) * 60 - now[1]) * 60 - now[2]
+
+            if seconds_remaining < 60:
+                seconds_remaining += latency_time * 60
+
+            return seconds_remaining
         
-        # Calculate the next multiple of latency_time
-        if latency_time < 60:
-            next_multiple = ((now[1] // latency_time) + 1) * latency_time
-            if next_multiple > 60:
-                next_multiple = 0  # Reset to 0 if it exceeds 59 minutes
-            seconds_remaining = (next_multiple - now[1]) * 60 - now[2]
         else:
-            hours_to_next_multiple = ((now[0] // (latency_time // 60)) + 1) * (latency_time // 60)
-            seconds_remaining = ((hours_to_next_multiple - now[0]) * 60 - now[1]) * 60 - now[2]
-
-        if seconds_remaining < 60:
-            seconds_remaining += latency_time * 60
-
-        return seconds_remaining
+            
+            return int(config_manager.dynamic_config["general"].get("latency_time", 10)) * 60
 
     def configure_pins_for_sleep(self):
         """
@@ -269,7 +275,7 @@ class PowerManager:
         Control VO14642 solid state relay.
         """
         
-        Pin(config_manager.static_config.get("pinout", {}).get("control", {}).get("do0_pin", 26), Pin.OUT,  value=state)
+        Pin(config_manager.static_config.get("pinout", {}).get("control", {}).get("do0_pin", 26), Pin.OUT,  value=state, hold=True)
         
     def control_vdc(self, state, reset = False):
         """
@@ -339,12 +345,8 @@ class PowerManager:
         """
         
         self.configure_pins_for_sleep()
+        seconds_until_wakeup = self.seconds2wakeup()
 
-        if config_manager.dynamic_config["general"].get("rtc_sync", False) and self.rtc_available:
-            seconds_until_wakeup = self.seconds2wakeup()
-        else:
-            seconds_until_wakeup = int(config_manager.dynamic_config["general"].get("latency_time", 10)) * 60
-        
         utils.log_info(f"Next wake-up in {seconds_until_wakeup} seconds")
         esp32.gpio_deep_sleep_hold(True)
         utils.log_info("Entering deep sleep now.")

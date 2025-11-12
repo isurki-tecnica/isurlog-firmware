@@ -2,12 +2,13 @@
     "log_level": "DEBUG",
     "serial": "c-804",
     "modem": "nb-iot",
-    "isurreach": true,
+    "isurreach": false,
     "mqtt": {
         "ip": "1.2.3.4",
         "port": 1883,
         "user": "user",
-        "passwd": "password"
+        "passwd": "password",
+        "base_topic": "isurlog"
     },
     "pinout":{
         "rs485":{
