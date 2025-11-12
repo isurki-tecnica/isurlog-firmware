@@ -12,6 +12,8 @@ CONFIG_MAP = {
     'setRegisterAccumulator': ('general', 'register_acumulator'),
     'setMagnetWakeup': ('general', 'magnet_wakeup', bool),
     'setDebugLED': ('general', 'debug_led', bool),
+    'setContinuousMode': ('general', 'continuous_mode', bool),
+    'setLoopCycles': ('general', 'loop_cycles'),
     # LoRaWAN
     'setLoRaWANDevEUI': ('communications', 'lorawan', 'dev_eui', lambda v: f"{v:016X}"),
     'setLoRaWANAppEUI': ('communications', 'lorawan', 'app_eui', lambda v: f"{v:016X}"),
@@ -38,6 +40,10 @@ CONFIG_MAP = {
     "setDigitalHighCond": ("digital_config", "high_cond", bool),
     # Modbus Inputs
     'setModbusPreAcquisition': ('modbus_config', 'pre_acquisition'),
+    'setModbusInputBaudrate': ('modbus_config', 'baudrate'),
+    'setModbusInputDataBits': ('modbus_config', 'data_bits'),
+    'setModbusInputStopBits': ('modbus_config', 'stop_bits'),
+    'setModbusInputParity': ('modbus_config', 'parity'),
     'setModbusInputEnable': ('modbus_config', 'inputs', '{channel}', 'enable', bool),
     'setModbusInputSlaveAddress': ('modbus_config', 'inputs', '{channel}', 'slave_address'),
     'setModbusInputRegisterAddress': ('modbus_config', 'inputs', '{channel}', 'register_address'),

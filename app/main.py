@@ -1,5 +1,5 @@
 import time
-from machine import Pin, reset, WDT, UART
+from machine import Pin, reset, WDT, UART, deepsleep
 from modules import power_manager, utils, battery_monitor
 from modules.config_manager import config_manager
 from lib.IsurlogLPP import IsurlogLPPEncoder
@@ -47,8 +47,9 @@ def handle_remote_repl():
     """
     Enables REPL mode.
     """
+    base_topic = config_manager.static_config.get("mqtt", {}).get("base_topic", "isurlog")
     uart = UART(2, baudrate=115200, tx=Pin(4), rx=Pin(2), timeout=1000)
-    command_topic = f"isurlog/repl_in/{ser_num}" 
+    command_topic = f"{base_topic}/repl_in/{ser_num}" 
     print(f"--- Remote REPL Mode Activated. Listening on {command_topic} ---")
     
     repl_active = True
@@ -59,7 +60,7 @@ def handle_remote_repl():
         
         if (time.ticks_diff(time.ticks_ms(), last_message_time) > 120000):
             print("Disconnecting from online REPL due to timeout...")
-            nb_iot_module.mqtt_publish(f"isurlog/repl_out/{ser_num}", "Disconnected")
+            nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Disconnected")
             repl_active = False
             
         if uart.any():
@@ -86,7 +87,7 @@ def handle_remote_repl():
                         
                         if message_str.strip() == "logout":
 
-                            nb_iot_module.mqtt_publish(f"isurlog/repl_out/{ser_num}", "Disconnected")
+                            nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Disconnected")
                             print("Exit command received. Deactivating REPL.")
                             response = "REPL session terminated."
                             repl_active = False
@@ -95,8 +96,10 @@ def handle_remote_repl():
                         
                             command_output = execute_code(message_str)
                             print(f"Response to received commmand: {command_output}")
-                            nb_iot_module.mqtt_publish(f"isurlog/repl_out/{ser_num}", command_output)
-                            wdt.feed()
+                            nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", command_output)
+                            if wdt:
+                                print("Feeding WDT from REPL task.")
+                                wdt.feed()
                             
                     else:
                         
@@ -108,7 +111,7 @@ def handle_remote_repl():
             except Exception as e:
                 print(f"Error while processing UART data: {e}")
 
-def read_all_sensors(pm, register_mode, ble = False):
+def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10):
     
     data = [[0, "addUnixTime", pm.get_unix_time()]]
     alarm_condition = False
@@ -119,10 +122,10 @@ def read_all_sensors(pm, register_mode, ble = False):
     pt100_config = config_manager.get_dynamic("pt100_config")
     output_config = config_manager.get_dynamic("output_config")
 
-    any_modbus_enabled = any(ch.get("enable", False) for ch in modbus_config.get("inputs", [])) if modbus_config else False
-    any_analog_enabled = any(ch.get("enable", False) for ch in analog_config.get("inputs", [])) if analog_config else False
+    num_modbus_enabled = sum(ch.get("enable", False) for ch in modbus_config.get("inputs", [])) if modbus_config else 0
+    num_analog_enabled = sum(ch.get("enable", False) for ch in analog_config.get("inputs", [])) if analog_config else 0
     pt100_enabled = pt100_config and pt100_config.get("enable", False)
-            
+
     # Battery measurement
     batt_monitor = battery_monitor.BatteryMonitor()
     battery_voltage = batt_monitor.read_voltage()
@@ -139,11 +142,11 @@ def read_all_sensors(pm, register_mode, ble = False):
     
     if not ble:
             
-        if any_analog_enabled or any_modbus_enabled or pt100_enabled:
+        if num_modbus_enabled > 0 or num_analog_enabled > 0 or pt100_enabled:
             pm.control_vdc(1)
             time.sleep_ms(250)
             
-        if any_modbus_enabled or pt100_enabled:
+        if num_modbus_enabled > 0 or pt100_enabled:
             pm.control_5v(1)
             
         if output_config.get("active_vdc", False):
@@ -176,34 +179,7 @@ def read_all_sensors(pm, register_mode, ble = False):
             data.append([0, "addDigitalInput", state])
             if state == 0:
                 wake_up_sources.append(DIO0_PIN)
-            
-    # Temperature PT100 Input
-    pt100_config = config_manager.get_dynamic("pt100_config")
-
-    if pt100_config and pt100_config.get("enable", False):
-        pm.control_5v(1)
-        from modules import max31865_sensor
-        max31865_module = max31865_sensor.MAX31865Sensor()
-        print("Reading PT100 input...")
-        faults = max31865_module.read_faults()
-        temperature = max31865_module.read_temperature()
-        if temperature is not None:
-            print(f"  PT100 Temperature: {temperature:.2f} °C")
-            data.append([0, "addTemperatureInput", temperature])
-            
-            #Check alarms
-            if (register_mode and (pt100_config.get("low_cond", False)) and (temperature < pt100_config.get("low", 0))):
-                alarm_condition = True
-            if (register_mode and (pt100_config.get("high_cond", False)) and (temperature > pt100_config.get("high", 0))):
-                alarm_condition = True
                 
-        else:
-            print("  Error reading PT100 temperature.")
-            data.append([0, "addTemperatureInput", 0]) 
-
-    else:
-        print("No PT100 input configured in dymanic_config.json.")
-
     # BME680 Sensor
     bme680_config = config_manager.get_dynamic("BME680_sensor")
 
@@ -231,164 +207,260 @@ def read_all_sensors(pm, register_mode, ble = False):
                 
     else:
         print("No BME680 sensor configured in dymanic_config.json.")
+        
+        
+    sum_pt100 = 0.0
+    count_pt100 = 0
+    sum_analog = {}
+    count_analog = {}
+    sum_modbus = {}
+    count_modbus = {}
+    sum_modbus_generic = {}
+    count_modbus_generic = {}
 
-    # Modbus Inputs
-    if any_modbus_enabled:
+    # Modules
+    max31865_module = None
+    modbus_module = None
+    analog_module = None
+    
+    if pt100_enabled:
+        from modules import max31865_sensor
+        max31865_module = max31865_sensor.MAX31865Sensor()
+
+    if num_analog_enabled > 0:
+        from modules import analog_sensor
+        analog_module = analog_sensor.AnalogInput()
+        # Init dictionaries
+        for ch_cfg in analog_config.get("inputs", []):
+            if ch_cfg.get("enable", False):
+                ch = ch_cfg.get("channel")
+                if ch is not None:
+                    sum_analog[ch] = 0.0
+                    count_analog[ch] = 0
+        
+        # Analog preadquisition (only once)
+        pre_acquisition_time = analog_config.get("pre_acquisition", 0)
+        if pre_acquisition_time > 0:
+            utils.log_info(f"Starting Analog pre-acquisition delay: {pre_acquisition_time} ms")
+            while (time.time() - reg_on_t) * 1000 < pre_acquisition_time:
+                time.sleep(0.5)
+            utils.log_info("Analog pre-acquisition delay finished.")
+
+    if num_modbus_enabled > 0:
         from modules import modbus_sensor
-        utils.log_info("At least one Modbus input is enabled. Proceeding with acquisition.")
+        baudrate_map = {0: 9600, 1: 19200, 2: 38400, 3: 57600, 4: 115200}
+        parity_map = {0: None, 1: 0, 2: 1}
+        modbus_module = modbus_sensor.ModbusSensor(
+            baudrate=baudrate_map[modbus_config.get("baudrate", 0)],
+            data_bits=modbus_config.get("data_bits", 8),
+            parity=parity_map[modbus_config.get("parity", 0)],
+            stop_bits=modbus_config.get("stop_bits", 1)
+        )
+        # Init dictionaries
+        for ch_cfg in modbus_config.get("inputs", []):
+            if ch_cfg.get("enable", False):
+                ch = ch_cfg.get("channel")
+                if ch is not None:
+                    fc = ch_cfg.get("fc")
+                    if fc == 1 or fc == 2 or ch_cfg.get("long_int", False):
+                        sum_modbus_generic[ch] = 0
+                        count_modbus_generic[ch] = 0
+                    else:
+                        sum_modbus[ch] = 0.0
+                        count_modbus[ch] = 0
 
-        # 2. Perform pre-acquisition delay ONLY if any input is enabled
+        # Modbus preadquisition (only once)
         pre_acquisition_time = modbus_config.get("pre_acquisition", 0)
         if pre_acquisition_time > 0:
             utils.log_info(f"Starting Modbus pre-acquisition delay: {pre_acquisition_time} ms")
-            now = time.time()
-            while ((now - reg_on_t) * 1000 < pre_acquisition_time):
-                remaining_ms = pre_acquisition_time - (now - reg_on_t) * 1000
-                if remaining_ms > 1000:
-                    print(f"Modbus pre-acquisition: waiting {remaining_ms:.0f} ms...")
-                time.sleep(0.5) 
-                now = time.time()
+            while (time.time() - reg_on_t) * 1000 < pre_acquisition_time:
+                time.sleep(0.5)
             utils.log_info("Modbus pre-acquisition delay finished.")
-        else:
-            utils.log_info("Modbus pre-acquisition time is 0 or not configured. Skipping delay.")
 
-        # 3. Initialize the module and read ONLY if any input is enabled
-        modbus_module = modbus_sensor.ModbusSensor() # Initialize Modbus sensor
-        print("Reading Enabled Modbus inputs...")
-        
-        for channel_config in modbus_config["inputs"]: # Iterate over the list
-            channel = channel_config.get("channel")
-            if channel is None: # Check if the channel is present
-                print(f"  Error: Missing channel number in Modbus config.")
-                continue
 
-            # Check if THIS specific input is enabled
-            if not channel_config.get("enable", False):
-                print(f"  Skipping Modbus input channel {channel} (disabled).")
-                continue
-
-            # Get necessary parameters for reading
-            slave_addr = channel_config.get("slave_address")
-            register_addr = channel_config.get("register_address")
-            fc = channel_config.get("fc")
-            is_fp = channel_config.get("is_FP", False)
-            byte_order = channel_config.get("byte_order", "big") # Ensure default if not specified
-            number_of_decimals = 10**channel_config.get("number_of_decimals", 0)
-            offset = channel_config.get("offset", 0.0)
-            invert = channel_config.get("invert", False)
-            long_int = channel_config.get("long_int", False)
-
-            if slave_addr is None or register_addr is None or fc is None:
-                print(f"  Error: Missing configuration (slave, reg, or fc) for Modbus input channel {channel}.")
-                continue
-
-            # Read the value
-            # Pass byte_order, needed for floating point conversion
+    # --- Sampling loop ---
+    start_time = time.time()
+    loop_counter = 0
+    
+    while (time.time() - start_time < n_seconds) and (loop_counter < n_loop):
             
-            print(f"Reading modbus input. slave_addr: {slave_addr}, fc: {fc}, register_addr: {register_addr}, is_fp: {is_fp}") 
-            value = modbus_module.read_modbus_data(slave_addr, fc, register_addr, is_fp)
-            time.sleep_ms(100)
+        # --- Temperature PT100 Input ---
+        if pt100_enabled and max31865_module:
+            temperature = max31865_module.read_temperature()
+            if temperature is not None:
+                print(f"  Loop {loop_counter}: PT100 Temp: {temperature:.2f} °C")
+                sum_pt100 += temperature
+                count_pt100 += 1
+                
+                # Check alarms
+                if (register_mode and (pt100_config.get("low_cond", False)) and (temperature < pt100_config.get("low", 0))):
+                    alarm_condition = True
+                if (register_mode and (pt100_config.get("high_cond", False)) and (temperature > pt100_config.get("high", 0))):
+                    alarm_condition = True
+            else:
+                print(f"  Loop {loop_counter}: Error reading PT100 temperature.")
 
-            if value is not None:
-                if not is_fp:
-                    value = value[0]
-                print(f"  Channel {channel}: {value}")
-                # Determine LPP type based on function code
-                if fc == 1 or fc == 2:
-                    data.append([channel, "addModbusGenericInput", value])
-                else: # FC 3 or 4
-                    if invert:
-                        value = offset - value/number_of_decimals   
-                    else:
-                        value = value/number_of_decimals - offset
+        # --- Modbus Inputs ---
+        if num_modbus_enabled > 0 and modbus_module:
+            for channel_config in modbus_config["inputs"]:
+                if not channel_config.get("enable", False):
+                    continue # Skip disabled channels
+
+                channel = channel_config.get("channel")
+                slave_addr = channel_config.get("slave_address")
+                register_addr = channel_config.get("register_address")
+                fc = channel_config.get("fc")
+                is_fp = channel_config.get("is_FP", False)
+                byte_order = channel_config.get("byte_order", "big") # Ensure default if not specified
+                number_of_decimals = 10**channel_config.get("number_of_decimals", 0)
+                offset = channel_config.get("offset", 0.0)
+                invert = channel_config.get("invert", False)
+                long_int = channel_config.get("long_int", False)
+                
+                value = modbus_module.read_modbus_data(slave_addr, fc, register_addr, is_fp)
+                time.sleep_ms(100)
+
+                if value is not None:
+                    if not is_fp:
+                        value = value[0]
                     
-                    if long_int:
-                        data.append([channel, "addModbusGenericInput", value])
+                    # Apply offsets
+                    if fc == 3 or fc == 4:
+                        if invert:
+                            value = offset - value/number_of_decimals   
+                        else:
+                            value = value/number_of_decimals - offset
+                    
+                    print(f"  Loop {loop_counter}: Modbus Ch {channel}: {value}")
+
+                    if fc == 1 or fc == 2 or long_int:
+                        sum_modbus_generic[channel] += value
+                        count_modbus_generic[channel] += 1
                     else:
-                        data.append([channel, "addModbusInput", value])
+                        sum_modbus[channel] += value
+                        count_modbus[channel] += 1
 
-                # Check alarms 
-
-                if register_mode and channel_config.get("low_cond", False) and value < channel_config.get("low", 0):
-                    alarm_condition = True
-                if register_mode and channel_config.get("high_cond", False) and value > channel_config.get("high", 0):
-                    alarm_condition = True
-
-            else:
-                print(f"  Error reading Modbus input channel {channel}.")
-                if fc == 1 or fc == 2:
-                    data.append([channel, "addModbusGenericInput", 0]) 
+                    # Check alarms
+                    if register_mode and channel_config.get("low_cond", False) and value < channel_config.get("low", 0):
+                        alarm_condition = True
+                    if register_mode and channel_config.get("high_cond", False) and value > channel_config.get("high", 0):
+                        alarm_condition = True
                 else:
-                    data.append([channel, "addModbusInput", 0.0]) 
+                    print(f"  Loop {loop_counter}: Error reading Modbus channel {channel}.")
 
-    else:
-        # This executes if 'inputs' exists but no entry is enabled
-        print("All Modbus inputs are disabled.")
+        # --- Analog inputs ---
+        if num_analog_enabled > 0 and analog_module:
+            for channel_config in analog_config["inputs"]:
+                if not channel_config.get("enable", False):
+                    continue # Skip disabled channels
+
+                channel = channel_config.get("channel")
+                value = analog_module.read_analog(3 - channel) # Hardware-specific mapping
+                value = analog_module.convert_value(value, channel_config.get("zero", 0),  channel_config.get("full_scale", 100))
+
+                if value is not None:
+                    print(f"  Loop {loop_counter}: Analog Ch {channel}: {value}")
+                    sum_analog[channel] += value
+                    count_analog[channel] += 1
+
+                    # Check alarms 
+                    if register_mode and channel_config.get("low_cond", False) and value < channel_config.get("low", 0):
+                        alarm_condition = True
+                    if register_mode and channel_config.get("high_cond", False) and value > channel_config.get("high", 0):
+                        alarm_condition = True
+                else:
+                    print(f"  Loop {loop_counter}: Error reading Analog channel {channel}.")
         
-        
-    #Analog inputs
-    if any_analog_enabled:
-        from modules import analog_sensor
-        utils.log_info("At least one analog input is enabled. Proceeding with acquisition.")
-
-        # 2. Perform pre-acquisition delay ONLY if any input is enabled
-        pre_acquisition_time = analog_config.get("pre_acquisition", 0)
-        if pre_acquisition_time > 0:
-            utils.log_info(f"Starting pre-acquisition delay: {pre_acquisition_time} ms")
-            now = time.time()
-            while((now - reg_on_t) * 1000 < pre_acquisition_time):
-                 remaining_ms = pre_acquisition_time - (now - reg_on_t) * 1000
-                 if remaining_ms > 1000:
-                      print(f"Analog sensor pre-acquisition: waiting {remaining_ms:.0f} ms...")
-                 time.sleep(0.5)
-                 now = time.time()
-            utils.log_info("Pre-acquisition delay finished.")
-        else:
-            utils.log_info("Pre-acquisition time is 0 or not configured. Skipping delay.")
-
-        # 3. Initialize the module and read ONLY if any input is enabled
-        analog_module = analog_sensor.AnalogInput()
-        print("Reading Enabled Analog inputs...")
-        for channel_config in analog_config["inputs"]: # Iterate over the list
-            channel = channel_config.get("channel")
-
-            if channel is None: # Check if the channel is present
-                print(f"  Error: Missing channel number in analog config.")
-                continue
-
-            # Check if THIS specific input is enabled
-            if not channel_config.get("enable", False):
-                # We already know at least one is enabled in general,
-                # but we can skip the log if this specific one is not.
-                print(f"  Skipping Analog input channel {channel} (disabled).") # Optional
-                continue
-
-            # Read the value
-            value = analog_module.read_analog(3-channel)
-            value = analog_module.convert_value(value, channel_config.get("zero", 0),  channel_config.get("full_scale", 100))
-
-            if value is not None:
-                print(f"  Channel {channel}: {value}")
-                data.append([channel, "addAnalogInput", value])
-
-                # Check alarms (assuming register_mode and alarm_condition are defined earlier)
-                if register_mode and channel_config.get("low_cond", False) and value < channel_config.get("low", 0):
-                    alarm_condition = True
-                if register_mode and channel_config.get("high_cond", False) and value > channel_config.get("high", 0): # Corrected 'hi' to 'high'
-                    alarm_condition = True
-            else:
-                print(f"  Error reading Analog input channel {channel}.")
-                data.append([channel, "addAnalogInput", 0.0]) # Add default value on error
-
-    else:
-        # This executes if 'inputs' exists but no entry is enabled
-        print("All Analog inputs are disabled.")
-        
-    # --- Power down regulators ---
+        # --- Loop end ---
+        loop_counter += 1
+        if wdt:
+            print("Feeding WDT from read_all_sensors task.")
+            wdt.feed()
+        if (loop_counter < n_loop):
+            time.sleep(5)
+                
+                
     if not ble:
         pm.control_vdc(0)
         pm.control_5v(0)
-        pm.control_digital_output(0)
+        if output_config.get("active_vdc", False):
+            pm.control_digital_output(0)
+    
+    # --- CALCULATE AVERAGE VALUES & ADD TO DATA ---
+
+    if pt100_enabled:
+        if count_pt100 > 0:
+            avg_pt100 = sum_pt100 / count_pt100
+            print(f"Final PT100 Avg: {avg_pt100:.2f} (from {count_pt100} readings)")
+            data.append([0, "addTemperatureInput", avg_pt100])
+        else:
+            print("No valid PT100 readings obtained.")
+            data.append([0, "addTemperatureInput", 0]) # Add 0 for error
+
+    if num_analog_enabled > 0:
+        for channel, total_sum in sum_analog.items():
+            count = count_analog[channel]
+            if count > 0:
+                avg_analog = total_sum / count
+                print(f"Final Analog Ch {channel} Avg: {avg_analog:.2f} (from {count} readings)")
+                data.append([channel, "addAnalogInput", avg_analog])
+            else:
+                print(f"No valid Analog Ch {channel} readings obtained.")
+                data.append([channel, "addAnalogInput", 0.0]) # Add 0 for error
+
+    if num_modbus_enabled > 0:
+        # Average for FC 3/4 (float)
+        for channel, total_sum in sum_modbus.items():
+            count = count_modbus[channel]
+            if count > 0:
+                avg_modbus = total_sum / count
+                print(f"Final Modbus Ch {channel} Avg: {avg_modbus:.2f} (from {count} readings)")
+                data.append([channel, "addModbusInput", avg_modbus])
+            else:
+                print(f"No valid Modbus Ch {channel} readings obtained.")
+                data.append([channel, "addModbusInput", 0.0])
+
+        # Average for FC 1/2 (int/generic)
+        for channel, total_sum in sum_modbus_generic.items():
+            count = count_modbus_generic[channel]
+            if count > 0:
+                # El promedio de enteros debe redondearse a entero
+                avg_modbus_gen = int(round(total_sum / count, 0))
+                print(f"Final Modbus-Gen Ch {channel} Avg: {avg_modbus_gen} (from {count} readings)")
+                data.append([channel, "addModbusGenericInput", avg_modbus_gen])
+            else:
+                print(f"No valid Modbus-Gen Ch {channel} readings obtained.")
+                data.append([channel, "addModbusGenericInput", 0])
+                
+    #Digital output
+        
+    SENSOR_MAP = {
+    0: ("addAnalogInput", 0),
+    1: ("addAnalogInput", 1),
+    2: ("addAnalogInput", 2),
+    3: ("addAnalogInput", 3),
+    4: ("addModbusInput", 0),
+    5: ("addModbusInput", 1),
+    6: ("addModbusInput", 2),
+    7: ("addModbusInput", 3),
+    8: ("addTemperatureInput", 0),
+
+    }
+        
+    do_config = config_manager.get_dynamic("output_config")
+    latency_time = config_manager.dynamic_config["general"].get("latency_time", 10) * 60
+    if do_config:
+        if not output_config.get("active_vdc", False) and output_config.get("crontab", "inactive") != "inactive":
+            from lib import crontab
+                
+            cron = output_config.get("crontab", "inactive")
+            print(f'ON Cron job for DO is configured: {cron}')
+            entry = crontab.CronTab(cron)
+            
+            if entry.test():
+                pm.control_digital_output(1)
+            else:
+                pm.control_digital_output(0)
     
     return data, alarm_condition
 
@@ -467,6 +539,8 @@ if __name__ == "__main__":
 
     wake_up_sources = []
     register_mode = config_manager.get_dynamic("general").get("register_mode", 0) #Register mode, 0 normal, 1 conditional
+    continuous_mode = config_manager.get_dynamic("general").get("continuous_mode", False)
+    n_loop_cycles = config_manager.get_dynamic("general").get("loop_cycles", 1)
 
     # Declare Blinky <º)))><
     blinky = LEDManagerULP()
@@ -508,7 +582,8 @@ if __name__ == "__main__":
 
         
     #Read all sensors (if activated)
-    data, alarm_condition = read_all_sensors(pm, register_mode)
+    loop_seconds = pm.seconds2wakeup()
+    data, alarm_condition = read_all_sensors(pm, register_mode, n_loop = n_loop_cycles, n_seconds = loop_seconds)
 
     # Get battery voltage from data to configure Blinky later
     found_list = None
@@ -567,6 +642,7 @@ if __name__ == "__main__":
             from modules import nb_iot_isurreach_som as nb_iot
         else:
             from modules import nb_iot
+        base_topic = config_manager.static_config.get("mqtt", {}).get("base_topic", "isurlog")
         wake_up_sources.append(config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("esp_wake_up", 34))
         
     if modem_type == "lorawan":
@@ -600,7 +676,7 @@ if __name__ == "__main__":
                 print(f"New requested time UTC: {new_time}")
                 pm.set_rtc_time(new_time)
                 
-            nb_iot_module.mqtt_subscribe(f"isurlog/config/{ser_num}", QoS=2)
+            nb_iot_module.mqtt_subscribe(f"{base_topic}/config/{ser_num}", QoS=2)
             
             if not rtc_memory.should_transmit():
                 nb_iot_module.sleep()
@@ -643,7 +719,6 @@ if __name__ == "__main__":
             print(f"Retrieved payloads: {payloads}")
 
             nb_iot_module.wake_up()  # Wake up *only* when transmitting
-            #nb_iot_module.mqtt_subscribe(f"isurlog/config/{ser_num}", QoS=2)
             if not nb_iot_module.mqtt_check_connection():
                 if not nb_iot_module.check_network_connection():
                     nb_iot_module.reset() #Reset NB-IoT module
@@ -652,13 +727,13 @@ if __name__ == "__main__":
                     print("Failed to connect to MQTT broker")
                     pm.configure_wakeup_sources(wake_up_sources)
                     pm.go_to_sleep()
-                nb_iot_module.mqtt_subscribe(f"isurlog/config/{ser_num}", QoS=2)
+                nb_iot_module.mqtt_subscribe(f"{base_topic}/config/{ser_num}", QoS=2)
                     
             for i, payload in enumerate(payloads):
                 #Publish not empty payloads only.
                 if payload:
                     print(f"Publishing payload {i+1}: {payload}")
-                    if not nb_iot_module.mqtt_publish(f"dataloggers/datos/{ser_num}", payload):
+                    if not nb_iot_module.mqtt_publish(f"{base_topic}/datos/{ser_num}", payload):
                         print(f"Failed to publish payload {i+1}")
                     time.sleep(1)
                 else:
@@ -673,8 +748,8 @@ if __name__ == "__main__":
                         pass
                     
                     elif msg['message'] == "REPL": #ENABLE REMOTE REPL
-                        if nb_iot_module.mqtt_publish(f"isurlog/repl_out/{ser_num}", "Connected"):
-                            nb_iot_module.mqtt_subscribe(f"isurlog/repl_in/{ser_num}", QoS=2)
+                        if nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Connected"):
+                            nb_iot_module.mqtt_subscribe(f"{base_topic}/repl_in/{ser_num}", QoS=2)
                             handle_remote_repl()
                             
                     elif "update" in msg['message']: #FIRMWARE UPDATE MESSAGE
@@ -690,7 +765,7 @@ if __name__ == "__main__":
                                     if update_manager.verify_file_checksum(checksum, filename = file_name):
                                         update_manager.perform_update()
                                         print("Update process finished, rebooting in 5 seconds...")
-                                        if not nb_iot_module.mqtt_publish(f"dataloggers/update/{ser_num}", "Update OK"):
+                                        if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
                                             print(f"Failed to publish response")
                                         time.sleep(5)
                                         reset()
@@ -700,12 +775,14 @@ if __name__ == "__main__":
                                     if(update_manager.decode_base64_file(file_name, "/micropython_decoded.bin")):
                                         if update_manager.verify_file_checksum(checksum, filename = "/micropython_decoded.bin"):
                                             print("Decoding successful!")
+                                            ota_succeded = False
                                             from lib.ota import update
                                             try:
-                                                with update.OTA(verbose=True, reboot=True) as ota_updater:
+                                                with update.OTA(verbose=True, reboot=False) as ota_updater:
                                                     with open("/micropython_decoded.bin", "rb") as f:
                                                         ota_updater.from_stream(f)
                                                 print("OTA update prepared.")
+                                                ota_succeded = True
                                             except Exception as e_ota:
                                                 print(f"Error during OTA: {e_ota!r}")
 
@@ -714,14 +791,30 @@ if __name__ == "__main__":
                                                 import os
                                                 os.remove(file_name)
                                                 print(f"Temporary file '{file_name}' deleted.")
+                                                if ota_succeded:
+                                                    print("Update process finished, rebooting in 5 seconds...")
+                                                    if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
+                                                        print(f"Failed to publish response")
+                                                    time.sleep(5)
+                                                    reset()
                                             except OSError:
                                                  pass
                                         else:
                                             print("Decoding failed.")
                         
                         #If code reaches this point the update was unsuccessful
-                        if not nb_iot_module.mqtt_publish(f"dataloggers/update/{ser_num}", "Update FAILED"):
+                        if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update FAILED"):
                             print(f"Failed to publish response")
+                            
+                    elif "cron" in msg['message']: #New cron syntax.
+                        print("Received new cron configuration.")
+                        cron_config = msg['message'].split(":")
+                        print(cron_config)
+                        if len(cron_config) == 2:
+                            cron_syntax = cron_config[1]
+                            config_manager.dynamic_config['output_config']['crontab'] = cron_syntax
+                            config_manager.save_dynamic_config()
+                            print(f"Crontab successfully updated to: {cron_syntax}")
                         
                     else: #NEW CONFIGURATION MESSAGE
                         print(f"Processing message on topic: {msg['topic']}")
@@ -777,6 +870,34 @@ if __name__ == "__main__":
             
             blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500,  wake_up_period=10)
 
-    rollback.cancel() #We can cancel rollback protection if program reaches this point.
     pm.configure_wakeup_sources(wake_up_sources)
+    rollback.cancel() #We can cancel rollback protection if program reaches this point.
+    if continuous_mode:
+        deepsleep(1000)
     pm.go_to_sleep()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -58,6 +58,8 @@
    "general":{
       "register_mode":1,
       "compact_register": true,
+      "continuous_mode": false,
+      "loop_cycles": 1,
       "register_acumulator":1,
       "rtc_sync":true,
       "magnet_wakeup":true,
@@ -77,7 +79,8 @@
       "high_cond":false
    },
    "output_config":{
-      "active_vdc":true
+      "active_vdc": true,
+      "crontab": "inactive"
    },
    "pt100_config":{
       "high_cond":false,
