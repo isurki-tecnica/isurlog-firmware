@@ -1,5 +1,5 @@
 import time
-from machine import Pin, reset, WDT, UART, deepsleep
+from machine import Pin, reset, WDT, UART, deepsleep, I2C
 from modules import power_manager, utils, battery_monitor
 from modules.config_manager import config_manager
 from lib.IsurlogLPP import IsurlogLPPEncoder
@@ -180,33 +180,70 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10)
             if state == 0:
                 wake_up_sources.append(DIO0_PIN)
                 
-    # BME680 Sensor
-    bme680_config = config_manager.get_dynamic("BME680_sensor")
+    # Internal temperature and humidity sensor (BME680 or SHT30)
+    int_th_config = config_manager.get_dynamic("int_th_sensor")
+    # External temperature and humidity sensor (BME280 only?)
+    ext_th_config = config_manager.get_dynamic("ext_th_sensor")
+    
+    th_configs = [int_th_config, ext_th_config]
+    
+    read_sensors = []
+    
+    for th_config in th_configs:
 
-    if bme680_config and bme680_config.get("enable", True):
-        from modules import bme680_sensor
-        print("Reading BME680 sensor...")
-        bme_sensor = bme680_sensor.BME680Sensor(IAQ=False)  # Set IAQ=True if you want IAQ calculation
-        bme_data = bme_sensor.read_data()
-        if bme_data:
-            print(f"BME680 - Temperature: {bme_data['temperature']:.2f} °C, Pressure: {bme_data['pressure']:.2f} hPa, Humidity: {bme_data['humidity']:.2f} %RH")
-            data.append([0, "addTemperatureSensor", bme_data['temperature']])
-            data.append([0, "addHumiditySensor", bme_data['humidity']])
-
-            #Check temperature alarms
-            if (register_mode and (bme680_config.get("temperature_low_cond", False)) and (bme_data['temperature'] < bme680_config.get("temperature_low", 0))):
-                alarm_condition = True
-            if (register_mode and (bme680_config.get("temperature_high_cond", False)) and (bme_data['temperature'] > bme680_config.get("temperature_high", 0))):
-                alarm_condition = True
-
-            #Check humidity alarms
-            if (register_mode and (bme680_config.get("humidity_low_cond", False)) and (bme_data['humidity'] < bme680_config.get("humidity_low", 0))):
-                alarm_condition = True
-            if (register_mode and (bme680_config.get("humidity_high_cond", False)) and (bme_data['humidity'] > bme680_config.get("humidity_high", 0))):
-                alarm_condition = True
+        if th_config and th_config.get("enable", True):
+            
+            print("Reading internal temperature and humidity sensor...")
+            
+            i2c = I2C(scl=Pin(22), sda=Pin(21))
+            devices = i2c.scan()
+            sensor_data = None
+            
+            if (68 in devices) and (68 not in read_sensors):
+                print("SHT30 sensor found!")
+                from modules import sht30_sensor
+                sht_sensor = sht30_sensor.SHT30Sensor()
+                sensor_data = sht_sensor.read_data()
+                read_sensors.append(68)
                 
-    else:
-        print("No BME680 sensor configured in dymanic_config.json.")
+            elif (118 in devices) and (118 not in read_sensors):
+                print("BME sensor found!")
+                from modules import bme_sensor
+                CHIP_ID = bme_sensor.BME_CHIP_ID()
+                
+                if CHIP_ID == 88: #Sensor is BME280
+                    print("Sensor is BME280!")
+                    bme_sensor = bme_sensor.BME280Sensor()
+                    sensor_data = bme_sensor.read_data()
+                    read_sensors.append(118)
+                    
+                elif CHIP_ID == 97: #Sensor is BME680
+                    print("Sensor is BME680!")
+                    bme_sensor = bme_sensor.BME680Sensor(IAQ=False)  # Set IAQ=True if you want IAQ calculation
+                    sensor_data = bme_sensor.read_data()
+                    read_sensors.append(118)
+                else:
+                    print(f"Unkwon CHIP ID found: {CHIP_ID}")
+
+            if sensor_data:
+                print(f"BME680 - Temperature: {sensor_data['temperature']:.2f} °C, Humidity: {sensor_data['humidity']:.2f} %RH")
+                data.append([len(read_sensors)-1, "addTemperatureSensor", sensor_data['temperature']])
+                data.append([len(read_sensors)-1, "addHumiditySensor", sensor_data['humidity']])
+
+                #Check temperature alarms
+                if (register_mode and (th_config.get("temperature_low_cond", False)) and (sensor_data['temperature'] < th_config.get("temperature_low", 0))):
+                    alarm_condition = True
+                if (register_mode and (th_config.get("temperature_high_cond", False)) and (sensor_data['temperature'] > th_config.get("temperature_high", 0))):
+                    alarm_condition = True
+
+                #Check humidity alarms
+                if (register_mode and (th_config.get("humidity_low_cond", False)) and (sensor_data['humidity'] < th_config.get("humidity_low", 0))):
+                    alarm_condition = True
+                if (register_mode and (th_config.get("humidity_high_cond", False)) and (sensor_data['humidity'] > th_config.get("humidity_high", 0))):
+                    alarm_condition = True
+                    
+        else:
+            print("No temperature and humidity sensor configured in dymanic_config.json.")
         
         
     sum_pt100 = 0.0
@@ -722,6 +759,7 @@ if __name__ == "__main__":
             if not nb_iot_module.mqtt_check_connection():
                 if not nb_iot_module.check_network_connection():
                     nb_iot_module.reset() #Reset NB-IoT module
+                    time.sleep(5)
                     reset() #Reset ESP32
                 if not nb_iot_module.mqtt_connect(config_manager.static_config.get("mqtt", {}).get("user", ""), config_manager.static_config.get("mqtt", {}).get("passwd", ""), config_manager.static_config.get("mqtt", {}).get("ip", "80.24.238.36"), config_manager.static_config.get("mqtt", {}).get("port", 1883)):
                     print("Failed to connect to MQTT broker")
