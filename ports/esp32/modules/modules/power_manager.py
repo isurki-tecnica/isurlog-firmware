@@ -57,8 +57,12 @@ class PowerManager:
                 utils.log_error("DS3231 RTC lost power! Time is invalid.")
                 self.rtc_available = False
             else:
-                utils.log_info(f"DS3231 RTC is present and time is valid: {self.rtc.datetime()}")
-                self.rtc_available = True
+                if (self.get_unix_time() < 1763628870): #Time can`t be earlier to the time I'm programming this :) 
+                    self.rtc_available = False
+                    utils.log_info(f"DS3231 RTC is present and time is not valid: {self.rtc.datetime()}")
+                else:
+                    self.rtc_available = True
+                    utils.log_info(f"DS3231 RTC is present and time is valid: {self.rtc.datetime()}")
         except OSError:
             utils.log_error("DS3231 RTC not detected on I2C bus.")
             self.rtc_available = False

@@ -1,0 +1,26 @@
+In file included from C:/ncs/v2.6.2/zephyr/include/zephyr/toolchain/gcc.h:98,
+                 from C:/ncs/v2.6.2/zephyr/include/zephyr/toolchain.h:50,
+                 from C:/ncs/v2.6.2/zephyr/include/zephyr/kernel_includes.h:23,
+                 from C:/ncs/v2.6.2/zephyr/include/zephyr/kernel.h:17,
+                 from C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/slm_uart_handler.c:7:
+C:/ncs/v2.6.2/zephyr/include/zephyr/device.h:89:41: error: '__device_dts_ord_DT_CHOSEN_ncs_slm_uart_ORD' undeclared here (not in a function)
+   89 | #define DEVICE_NAME_GET(dev_id) _CONCAT(__device_, dev_id)
+      |                                         ^~~~~~~~~
+C:/ncs/v2.6.2/zephyr/include/zephyr/toolchain/common.h:137:26: note: in definition of macro '_DO_CONCAT'
+  137 | #define _DO_CONCAT(x, y) x ## y
+      |                          ^
+C:/ncs/v2.6.2/zephyr/include/zephyr/device.h:89:33: note: in expansion of macro '_CONCAT'
+   89 | #define DEVICE_NAME_GET(dev_id) _CONCAT(__device_, dev_id)
+      |                                 ^~~~~~~
+C:/ncs/v2.6.2/zephyr/include/zephyr/device.h:216:37: note: in expansion of macro 'DEVICE_NAME_GET'
+  216 | #define DEVICE_DT_NAME_GET(node_id) DEVICE_NAME_GET(Z_DEVICE_DT_DEV_ID(node_id))
+      |                                     ^~~~~~~~~~~~~~~
+C:/ncs/v2.6.2/zephyr/include/zephyr/device.h:233:34: note: in expansion of macro 'DEVICE_DT_NAME_GET'
+  233 | #define DEVICE_DT_GET(node_id) (&DEVICE_DT_NAME_GET(node_id))
+      |                                  ^~~~~~~~~~~~~~~~~~
+C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/slm_uart_handler.c:24:43: note: in expansion of macro 'DEVICE_DT_GET'
+   24 | const struct device *const slm_uart_dev = DEVICE_DT_GET(DT_CHOSEN(ncs_slm_uart));
+      |                                           ^~~~~~~~~~~~~
+[208/404] Building C object CMakeFiles/app.dir/src/twi/slm_at_twi.c.obj
+ninja: build stopped: subcommand failed.
+FATAL ERROR: command exited with status 1: 'C:\ncs\toolchains\cf2149caf2\opt\bin\cmake.EXE' --build 'c:\ncs\v2.6.2\nrf\applications\serial_lte_modem\build'
