@@ -1,7 +1,7 @@
 # src/modules/sht30_sensor.py
 from machine import I2C, Pin
 from modules import utils
-from lib2.SHT30 import SHT30, SHT30Error
+from lib.SHT30 import SHT30, SHT30Error
 import time
 from modules.config_manager import config_manager
 

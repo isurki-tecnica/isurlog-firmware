@@ -1,0 +1,252 @@
+ *  Executing task: nRF Connect: Build [clean]: serial_lte_modem/build (active) 
+
+Building serial_lte_modem
+C:\WINDOWS\system32\cmd.exe /d /s /c "west build -t clean --build-dir c:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build"
+
+-- west build: running target clean
+[2/2] Cleaning all built files...
+Cleaning... 222 files.
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: nRF Connect: Generate config actinius_icarus_som_ns for nrf/applications/serial_lte_modem 
+
+Building serial_lte_modem
+C:\WINDOWS\system32\cmd.exe /d /s /c "west build --build-dir c:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build c:/ncs/v2.6.2/nrf/applications/serial_lte_modem --pristine --board actinius_icarus_som_ns -- -DNCS_TOOLCHAIN_VERSION=NONE"
+
+-- west build: generating a build system
+Loading Zephyr default modules (Zephyr base).
+-- Application: C:/ncs/v2.6.2/nrf/applications/serial_lte_modem
+-- CMake version: 3.21.0
+-- Found Python3: C:/ncs/toolchains/cf2149caf2/opt/bin/python.exe (found suitable version "3.9.13", minimum required is "3.8") found components: Interpreter 
+-- Cache files will be written to: C:/ncs/v2.6.2/zephyr/.cache
+-- Zephyr version: 3.5.99 (C:/ncs/v2.6.2/zephyr)
+-- Found west (found suitable version "1.2.0", minimum required is "0.14.0")
+-- Board: actinius_icarus_som_ns
+-- Found host-tools: zephyr 0.16.5 (C:/ncs/toolchains/cf2149caf2/opt/zephyr-sdk)
+-- Found toolchain: zephyr 0.16.5 (C:/ncs/toolchains/cf2149caf2/opt/zephyr-sdk)
+-- Found Dtc: C:/ncs/toolchains/cf2149caf2/opt/bin/dtc.exe (found suitable version "1.4.7", minimum required is "1.4.6") 
+-- Found BOARD.dts: C:/ncs/v2.6.2/zephyr/boards/arm/actinius_icarus_som/actinius_icarus_som_ns.dts
+-- Generated zephyr.dts: C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/zephyr/zephyr.dts
+-- Generated devicetree_generated.h: C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/zephyr/include/generated/devicetree_generated.h
+-- Including generated dts.cmake file: C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/zephyr/dts.cmake
+
+warning: Experimental symbol TFTP_LIB is enabled.
+
+
+warning: Experimental symbol HTTP_CLIENT is enabled.
+
+Parsing C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/Kconfig
+Loaded configuration 'C:/ncs/v2.6.2/zephyr/boards/arm/actinius_icarus_som/actinius_icarus_som_ns_defconfig'
+Merged configuration 'C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/prj.conf'
+Configuration saved to 'C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/zephyr/.config'
+Kconfig header saved to 'C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/zephyr/include/generated/autoconf.h'
+-- Found GnuLd: c:/ncs/toolchains/cf2149caf2/opt/zephyr-sdk/arm-zephyr-eabi/bin/../lib/gcc/arm-zephyr-eabi/12.2.0/../../../../arm-zephyr-eabi/bin/ld.bfd.exe (found version "2.38") 
+-- The C compiler identification is GNU 12.2.0
+-- The CXX compiler identification is GNU 12.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: C:/ncs/toolchains/cf2149caf2/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc.exe
+-- Found Python3: C:/ncs/toolchains/cf2149caf2/opt/bin/python.exe (found version "3.9.13") found components: Interpreter 
+Changed board to secure actinius_icarus_som (NOT NS)
+
+=== child image mcuboot -  begin ===
+loading initial cache file C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/mcuboot/child_image_preload.cmake
+Loading Zephyr default modules (Zephyr base).
+-- Application: C:/ncs/v2.6.2/bootloader/mcuboot/boot/zephyr
+-- CMake version: 3.21.0
+-- Found Python3: C:/ncs/toolchains/cf2149caf2/opt/bin/python.exe (found suitable version "3.9.13", minimum required is "3.8") found components: Interpreter 
+-- Cache files will be written to: C:/ncs/v2.6.2/zephyr/.cache
+-- Zephyr version: 3.5.99 (C:/ncs/v2.6.2/zephyr)
+-- Found west (found suitable version "1.2.0", minimum required is "0.14.0")
+-- Board: actinius_icarus_som
+-- Found host-tools: zephyr 0.16.5 (C:/ncs/toolchains/cf2149caf2/opt/zephyr-sdk)
+-- Found toolchain: zephyr 0.16.5 (C:/ncs/toolchains/cf2149caf2/opt/zephyr-sdk)
+-- Found Dtc: C:/ncs/toolchains/cf2149caf2/opt/bin/dtc.exe (found suitable version "1.4.7", minimum required is "1.4.6") 
+-- Found BOARD.dts: C:/ncs/v2.6.2/zephyr/boards/arm/actinius_icarus_som/actinius_icarus_som.dts
+-- Found devicetree overlay: C:/ncs/v2.6.2/bootloader/mcuboot/boot/zephyr/app.overlay
+-- Generated zephyr.dts: C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/mcuboot/zephyr/zephyr.dts
+-- Generated devicetree_generated.h: C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/mcuboot/zephyr/include/generated/devicetree_generated.h
+-- Including generated dts.cmake file: C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/mcuboot/zephyr/dts.cmake
+Parsing C:/ncs/v2.6.2/bootloader/mcuboot/boot/zephyr/Kconfig
+Loaded configuration 'C:/ncs/v2.6.2/zephyr/boards/arm/actinius_icarus_som/actinius_icarus_som_defconfig'
+Merged configuration 'C:/ncs/v2.6.2/bootloader/mcuboot/boot/zephyr/prj.conf'
+Merged configuration 'C:/ncs/v2.6.2/nrf/modules/mcuboot/tfm.conf'
+Merged configuration 'C:/ncs/v2.6.2/nrf/modules/mcuboot/fih_low_enable.conf'
+Merged configuration 'C:/ncs/v2.6.2/nrf/subsys/partition_manager/partition_manager_enabled.conf'
+Merged configuration 'C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/child_image/mcuboot.conf'
+Merged configuration 'C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/mcuboot/zephyr/misc/generated/extra_kconfig_options.conf'
+Configuration saved to 'C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/mcuboot/zephyr/.config'
+Kconfig header saved to 'C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/mcuboot/zephyr/include/generated/autoconf.h'
+-- Found GnuLd: c:/ncs/toolchains/cf2149caf2/opt/zephyr-sdk/arm-zephyr-eabi/bin/../lib/gcc/arm-zephyr-eabi/12.2.0/../../../../arm-zephyr-eabi/bin/ld.bfd.exe (found version "2.38") 
+-- The C compiler identification is GNU 12.2.0
+-- The CXX compiler identification is GNU 12.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: C:/ncs/toolchains/cf2149caf2/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc.exe
+CMake Warning at C:/ncs/v2.6.2/zephyr/CMakeLists.txt:862 (message):
+  No SOURCES given to Zephyr library: boards__arm__actinius_icarus_som
+
+  Excluding target from build.
+
+
+CMake Warning at C:/ncs/v2.6.2/zephyr/CMakeLists.txt:862 (message):
+  No SOURCES given to Zephyr library: drivers__console
+
+  Excluding target from build.
+
+
+MCUBoot bootloader key file: C:/ncs/v2.6.2/bootloader/mcuboot/root-ec-p256.pem
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/mcuboot
+=== child image mcuboot -  end ===
+
+CMake Warning at C:/ncs/v2.6.2/nrf/modules/mcuboot/CMakeLists.txt:382 (message):
+  
+
+          ---------------------------------------------------------
+          --- WARNING: Using default MCUBoot key, it should not ---
+          --- be used for production.                           ---
+          ---------------------------------------------------------
+          
+
+
+
+CMake Warning at C:/ncs/v2.6.2/zephyr/CMakeLists.txt:862 (message):
+  No SOURCES given to Zephyr library: boards__arm__actinius_icarus_som
+
+  Excluding target from build.
+
+
+CMake Warning at C:/ncs/v2.6.2/nrf/cmake/partition_manager.cmake:79 (message):
+  
+
+          ---------------------------------------------------------------------
+          --- WARNING: Using a bootloader without pm_static.yml.            ---
+          --- There are cases where a deployed product can consist of       ---
+          --- multiple images, and only a subset of these images can be     ---
+          --- upgraded through a firmware update mechanism. In such cases,  ---
+          --- the upgradable images must have partitions that are static    ---
+          --- and are matching the partition map used by the bootloader     ---
+          --- programmed onto the device.                                   ---
+          ---------------------------------------------------------------------
+          
+
+Call Stack (most recent call first):
+  C:/ncs/v2.6.2/zephyr/cmake/modules/kernel.cmake:248 (include)
+  C:/ncs/v2.6.2/zephyr/cmake/modules/zephyr_default.cmake:138 (include)
+  C:/ncs/v2.6.2/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)
+  C:/ncs/v2.6.2/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)
+  CMakeLists.txt:9 (find_package)
+
+
+Dropping partition 'nrf_modem_lib_trace' since its size is 0.
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build
+-- west build: building application
+[5/404] Generating include/generated/version.h
+-- Zephyr version: 3.5.99 (C:/ncs/v2.6.2/zephyr), build: v3.5.99-ncs1-2
+[3/178] Generating include/generated/version.h
+-- Zephyr version: 3.5.99 (C:/ncs/v2.6.2/zephyr), build: v3.5.99-ncs1-2
+[178/178] Linking C executable zephyr\zephyr.elf
+Memory region         Used Size  Region Size  %age Used
+           FLASH:       31012 B        48 KB     63.09%
+             RAM:       16336 B        32 KB     49.85%
+        IDT_LIST:          0 GB        32 KB      0.00%
+[12/404] Generating ../../tfm/CMakeCache.txt
+CMake Warning at cmake/version.cmake:22 (message):
+
+  Actual TF-M version is not available from Git repository.  Settled to
+
+  v2.0.0
+
+Call Stack (most recent call first):
+
+  CMakeLists.txt:22 (include)
+
+
+
+
+-- Found Git: C:/ncs/toolchains/cf2149caf2/mingw64/bin/git.exe (found version "2.37.3.windows.1") 
+-- The C compiler identification is GNU 12.2.0
+-- The CXX compiler identification is GNU 12.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: C:/ncs/toolchains/cf2149caf2/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc.exe
+-- Found Python3: C:/ncs/toolchains/cf2149caf2/opt/bin/python.exe (found version "3.9.13") found components: Interpreter 
+CMake Deprecation Warning at C:/ncs/v2.6.2/zephyr/cmake/modules/FindDeprecated.cmake:121 (message):
+
+  'PYTHON_PREFER' variable is deprecated.  Please use Python3_EXECUTABLE
+
+  instead.
+
+Call Stack (most recent call first):
+
+  C:/ncs/v2.6.2/zephyr/cmake/modules/python.cmake:16 (find_package)
+
+  C:/ncs/v2.6.2/zephyr/cmake/modules/user_cache.cmake:30 (include)
+
+  C:/ncs/v2.6.2/zephyr/cmake/modules/extensions.cmake:5 (include)
+
+  C:/ncs/v2.6.2/nrf/subsys/nrf_security/tfm/CMakeLists.txt:38 (include)
+
+
+
+
+-- Found Python3: C:/ncs/toolchains/cf2149caf2/opt/bin/python.exe (found suitable version "3.9.13", minimum required is "3.8") found components: Interpreter 
+-- Cache files will be written to: C:/ncs/v2.6.2/zephyr/.cache
+-- Configuring done
+-- Generating done
+CMake Warning:
+
+  Manually-specified variables were not used by the project:
+
+
+
+    CRYPTO_RNG_MODULE_ENABLED
+
+    MBEDTLS_PSA_CRYPTO_USER_CONFIG_FILE
+
+    PYTHON_PREFER
+
+
+
+
+-- Build files have been written to: C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/tfm
+[168/172] Linking C executable bin\tfm_s.axf
+Memory region         Used Size  Region Size  %age Used
+           FLASH:       31592 B      32256 B     97.94%
+             RAM:       14392 B        32 KB     43.92%
+[23/404] Performing install step for 'tfm'
+-- Install configuration: "MinSizeRel"
+----- Installing platform NS -----
+[198/404] Building C object CMakeFiles/app.dir/src/slm_uart_handler.c.obj
+FAILED: CMakeFiles/app.dir/src/slm_uart_handler.c.obj 
+C:\ncs\toolchains\cf2149caf2\opt\zephyr-sdk\arm-zephyr-eabi\bin\arm-zephyr-eabi-gcc.exe -DAPP_VERSION=v2.6.2 -DEXT_API_MAGIC=0x281ee6de,0xb845acea,23298 -DFIRMWARE_INFO_MAGIC=0x281ee6de,0x8fcebb4c,23298 -DKERNEL -DMBEDTLS_CONFIG_FILE=\"nrf-config.h\" -DMBEDTLS_PSA_CRYPTO_CONFIG_FILE=\"nrf-psa-crypto-want-config.h\" -DMBEDTLS_PSA_CRYPTO_USER_CONFIG_FILE=\"nrf-psa-crypto-config.h\" -DNRF9160_XXAA -DNRF_SKIP_FICR_NS_COPY_TO_RAM -DNRF_TRUSTZONE_NONSECURE -DPICOLIBC_DOUBLE_PRINTF_SCANF -DTFM_PSA_API -DUSE_PARTITION_MANAGER=1 -D_FORTIFY_SOURCE=1 -D_POSIX_C_SOURCE=200809 -D__LINUX_ERRNO_EXTENSIONS__ -D__PROGRAM_START -D__ZEPHYR__=1 -IC:/ncs/v2.6.2/zephyr/include -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/zephyr/include/generated -IC:/ncs/v2.6.2/zephyr/soc/arm/nordic_nrf/nrf91 -IC:/ncs/v2.6.2/zephyr/soc/common/nordic_nrf/. -IC:/ncs/v2.6.2/zephyr/soc/arm/nordic_nrf/common/. -IC:/ncs/v2.6.2/zephyr/subsys/net/ip -IC:/ncs/v2.6.2/zephyr/subsys/settings/include -IC:/ncs/v2.6.2/nrf/include -IC:/ncs/v2.6.2/nrf/lib/at_cmd_parser/include -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/tfm/api_ns/interface/include -IC:/ncs/v2.6.2/nrf/subsys/net/lib/nrf_cloud/./include -IC:/ncs/v2.6.2/nrf/subsys/net/lib/nrf_cloud/coap/include -IC:/ncs/v2.6.2/nrf/subsys/net/lib/fota_download/./include -IC:/ncs/v2.6.2/nrf/modules/trusted-firmware-m/. -IC:/ncs/v2.6.2/nrf/include/tfm -IC:/ncs/v2.6.2/nrf/tests/include -IC:/ncs/v2.6.2/modules/lib/cjson -IC:/ncs/v2.6.2/nrf/modules/cjson/include -IC:/ncs/v2.6.2/modules/hal/cmsis/CMSIS/Core/Include -IC:/ncs/v2.6.2/zephyr/modules/cmsis/. -IC:/ncs/v2.6.2/modules/hal/nordic/nrfx -IC:/ncs/v2.6.2/modules/hal/nordic/nrfx/drivers/include -IC:/ncs/v2.6.2/modules/hal/nordic/nrfx/mdk -IC:/ncs/v2.6.2/zephyr/modules/hal_nordic/nrfx/. -IC:/ncs/v2.6.2/modules/debug/segger/SEGGER -IC:/ncs/v2.6.2/modules/debug/segger/Config -IC:/ncs/v2.6.2/nrfxlib/nrf_modem/include -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/gnss/. -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/nrfcloud/. -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/mqtt_c/. -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/http_c/. -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/twi/. -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/gpio/. -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/ftp_c/. -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src -IC:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/modules/nrf/subsys/nrf_security/src/include/generated -IC:/ncs/v2.6.2/nrf/subsys/nrf_security/include -IC:/ncs/v2.6.2/nrf/ext/oberon/psa/core/include -IC:/ncs/v2.6.2/nrf/ext/oberon/psa/core/library -IC:/ncs/v2.6.2/modules/crypto/mbedtls/include -IC:/ncs/v2.6.2/modules/crypto/mbedtls/library -IC:/ncs/v2.6.2/nrfxlib/crypto/nrf_oberon/include/mbedtls -IC:/ncs/v2.6.2/nrfxlib/crypto/nrf_oberon/include -isystem C:/ncs/v2.6.2/zephyr/lib/libc/common/include -fno-strict-aliasing -Os -imacros C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/build/zephyr/include/generated/autoconf.h -fno-common -g -gdwarf-4 -fdiagnostics-color=always -mcpu=cortex-m33 -mthumb -mabi=aapcs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mfp16-format=ieee -mtp=soft --sysroot=C:/ncs/toolchains/cf2149caf2/opt/zephyr-sdk/arm-zephyr-eabi/arm-zephyr-eabi -imacros C:/ncs/v2.6.2/zephyr/include/zephyr/toolchain/zephyr_stdint.h -Wall -Wformat -Wformat-security -Wno-format-zero-length -Wno-pointer-sign -Wpointer-arith -Wexpansion-to-defined -Wno-unused-but-set-variable -Werror=implicit-int -fno-pic -fno-pie -fno-asynchronous-unwind-tables -ftls-model=local-exec -fno-reorder-functions --param=min-pagesize=0 -fno-defer-pop -fmacro-prefix-map=C:/ncs/v2.6.2/nrf/applications/serial_lte_modem=CMAKE_SOURCE_DIR -fmacro-prefix-map=C:/ncs/v2.6.2/zephyr=ZEPHYR_BASE -fmacro-prefix-map=C:/ncs/v2.6.2=WEST_TOPDIR -ffunction-sections -fdata-sections --specs=picolibc.specs -D_POSIX_THREADS -std=c99 -MD -MT CMakeFiles/app.dir/src/slm_uart_handler.c.obj -MF CMakeFiles\app.dir\src\slm_uart_handler.c.obj.d -o CMakeFiles/app.dir/src/slm_uart_handler.c.obj -c C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/slm_uart_handler.c
+In file included from C:/ncs/v2.6.2/zephyr/include/zephyr/toolchain/gcc.h:98,
+                 from C:/ncs/v2.6.2/zephyr/include/zephyr/toolchain.h:50,
+                 from C:/ncs/v2.6.2/zephyr/include/zephyr/kernel_includes.h:23,
+                 from C:/ncs/v2.6.2/zephyr/include/zephyr/kernel.h:17,
+                 from C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/slm_uart_handler.c:7:
+C:/ncs/v2.6.2/zephyr/include/zephyr/device.h:89:41: error: '__device_dts_ord_DT_CHOSEN_ncs_slm_uart_ORD' undeclared here (not in a function)
+   89 | #define DEVICE_NAME_GET(dev_id) _CONCAT(__device_, dev_id)
+      |                                         ^~~~~~~~~
+C:/ncs/v2.6.2/zephyr/include/zephyr/toolchain/common.h:137:26: note: in definition of macro '_DO_CONCAT'
+  137 | #define _DO_CONCAT(x, y) x ## y
+      |                          ^
+C:/ncs/v2.6.2/zephyr/include/zephyr/device.h:89:33: note: in expansion of macro '_CONCAT'
+   89 | #define DEVICE_NAME_GET(dev_id) _CONCAT(__device_, dev_id)
+      |                                 ^~~~~~~
+C:/ncs/v2.6.2/zephyr/include/zephyr/device.h:216:37: note: in expansion of macro 'DEVICE_NAME_GET'
+  216 | #define DEVICE_DT_NAME_GET(node_id) DEVICE_NAME_GET(Z_DEVICE_DT_DEV_ID(node_id))
+      |                                     ^~~~~~~~~~~~~~~
+C:/ncs/v2.6.2/zephyr/include/zephyr/device.h:233:34: note: in expansion of macro 'DEVICE_DT_NAME_GET'
+  233 | #define DEVICE_DT_GET(node_id) (&DEVICE_DT_NAME_GET(node_id))
+      |                                  ^~~~~~~~~~~~~~~~~~
+C:/ncs/v2.6.2/nrf/applications/serial_lte_modem/src/slm_uart_handler.c:24:43: note: in expansion of macro 'DEVICE_DT_GET'
+   24 | const struct device *const slm_uart_dev = DEVICE_DT_GET(DT_CHOSEN(ncs_slm_uart));
+      |                                           ^~~~~~~~~~~~~
+[215/404] Building C object CMakeFiles/app.dir/src/slm_at_socket.c.obj
+ninja: build stopped: subcommand failed.
+FATAL ERROR: command exited with status 1: 'C:\ncs\toolchains\cf2149caf2\opt\bin\cmake.EXE' --build 'c:\ncs\v2.6.2\nrf\applications\serial_lte_modem\build'
+
+ *  The terminal process terminated with exit code: 1. 
+ *  Terminal will be reused by tasks, press any key to close it.
