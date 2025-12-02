@@ -1,5 +1,16 @@
 {
-   "BME680_sensor":{
+   "int_th_sensor":{
+      "humidity_low_cond":false,
+      "humidity_low":30,
+      "humidity_high_cond":false,
+      "temperature_high":30.0,
+      "temperature_low":10.0,
+      "enable":true,
+      "temperature_high_cond":false,
+      "humidity_high":85.0,
+      "temperature_low_cond":false
+   },
+   "ext_th_sensor":{
       "humidity_low_cond":false,
       "humidity_low":30,
       "humidity_high_cond":false,
