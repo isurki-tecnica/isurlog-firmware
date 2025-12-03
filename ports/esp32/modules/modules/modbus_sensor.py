@@ -8,7 +8,7 @@ from modules.config_manager import config_manager
 import struct
 
 class ModbusSensor:
-    def __init__(self, uart_id = 2, tx_pin = None, rx_pin = None, en_pin= None, baudrate=9600, data_bits=8, parity=None, stop_bits=1):
+    def __init__(self, uart_id = 1, tx_pin = None, rx_pin = None, en_pin= None, baudrate=9600, data_bits=8, parity=None, stop_bits=1):
         """
         Initializes the Modbus sensor module.
 
