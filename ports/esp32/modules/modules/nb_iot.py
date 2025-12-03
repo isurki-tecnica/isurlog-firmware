@@ -225,6 +225,7 @@ class NBIoT:
             except IndexError:
                 continue # Ignore malformed entries
         return networks
+    
 
     def connect(self, connection_preference, edrx = True, apn = None):
 
@@ -742,7 +743,7 @@ class NBIoT:
 
         """
 
-        if not self.send_at_command_check(f'AT#XMQTTSUB="{topic}",{QoS}', timeout = 2000, retries = 10, retry_delay = 5):
+        if not self.send_at_command_check(f'AT#XMQTTSUB="{topic}",{QoS}', timeout = 10000, retries = 5, retry_delay = 10):
             utils.log_error("Failed to configure MQTT connection.")
             return False
         

@@ -64,16 +64,27 @@ CONFIG_MAP = {
     'setPT100High': ('pt100_config', 'high'),
     'setPT100LowCond': ('pt100_config', 'low_cond', bool),
     'setPT100HighCond': ('pt100_config', 'high_cond', bool),
-    # BME680
-    'setBME680Enable': ('BME680_sensor', 'enable', bool),
-    'setBME680TemperatureLow': ('BME680_sensor', 'temperature_low'),
-    'setBME680TemperatureHigh': ('BME680_sensor', 'temperature_high'),
-    'setBME680TemperatureLowCond': ('BME680_sensor', 'temperature_low_cond', bool),
-    'setBME680TemperatureHighCond': ('BME680_sensor', 'temperature_high_cond', bool),
-    'setBME680HumidityLow': ('BME680_sensor', 'humidity_low'),
-    'setBME680HumidityHigh': ('BME680_sensor', 'humidity_high'),
-    'setBME680HumidityLowCond': ('BME680_sensor', 'humidity_low_cond', bool),
-    'setBME680HumidityHighCond': ('BME680_sensor', 'humidity_high_cond', bool),
+    # INTTH (Internal temperature and humidity sensor, can be BME680 or SHT30.
+    'setINTTHEnable': ('int_th_sensor', 'enable', bool),
+    'setINTTHTemperatureLow': ('int_th_sensor', 'temperature_low'),
+    'setINTTHTemperatureHigh': ('int_th_sensor', 'temperature_high'),
+    'setINTTHTemperatureLowCond': ('int_th_sensor', 'temperature_low_cond', bool),
+    'setINTTHTemperatureHighCond': ('int_th_sensor', 'temperature_high_cond', bool),
+    'setINTTHHumidityLow': ('int_th_sensor', 'humidity_low'),
+    'setINTTHHumidityHigh': ('int_th_sensor', 'humidity_high'),
+    'setINTTHHumidityLowCond': ('int_th_sensor', 'humidity_low_cond', bool),
+    'setINTTHHumidityHighCond': ('int_th_sensor', 'humidity_high_cond', bool),
+    
+    # EXTTTH (External temperature and humidity sensor, can be BME680 or BME280.
+    'setEXTTHEnable': ('ext_th_sensor', 'enable', bool),
+    'setEXTTHTemperatureLow': ('ext_th_sensor', 'temperature_low'),
+    'setEXTTHTemperatureHigh': ('ext_th_sensor', 'temperature_high'),
+    'setEXTTHTemperatureLowCond': ('ext_th_sensor', 'temperature_low_cond', bool),
+    'setEXTTHTemperatureHighCond': ('ext_th_sensor', 'temperature_high_cond', bool),
+    'setEXTTHHumidityLow': ('ext_th_sensor', 'humidity_low'),
+    'setEXTTHHumidityHigh': ('ext_th_sensor', 'humidity_high'),
+    'setEXTTHHumidityLowCond': ('ext_th_sensor', 'humidity_low_cond', bool),
+    'setEXTTHHumidityHighCond': ('ext_th_sensor', 'humidity_high_cond', bool),
     
     # --- ISURNODE CONFIG ---
     # Isurnode General
