@@ -67,15 +67,15 @@ class IsurlogLPPEncoder:
             'setPT100High':               {'type': "CA", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
             'setPT100LowCond':            {'type': "CB", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setPT100HighCond':           {'type': "CC", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            'setBME680Enable':            {'type': "CD", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            'setBME680TemperatureLow':    {'type': "CE", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
-            'setBME680TemperatureHigh':   {'type': "CF", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
-            'setBME680TemperatureLowCond':{'type': "D0", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            'setBME680TemperatureHighCond':{'type': "D1", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            'setBME680HumidityLow':       {'type': "D2", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67}, # Originalmente size:1 multipl:2? Revisar
-            'setBME680HumidityHigh':      {'type': "D3", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},# Originalmente size:1 multipl:2? Revisar
-            'setBME680HumidityLowCond':   {'type': "D4", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            'setBME680HumidityHighCond':  {'type': "D5", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setINTTHEnable':            {'type': "CD", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setINTTHTemperatureLow':    {'type': "CE", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
+            'setINTTHTemperatureHigh':   {'type': "CF", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
+            'setINTTHTemperatureLowCond':{'type': "D0", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setINTTHTemperatureHighCond':{'type': "D1", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setINTTHHumidityLow':       {'type': "D2", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67}, # Originalmente size:1 multipl:2? Revisar
+            'setINTTHHumidityHigh':      {'type': "D3", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},# Originalmente size:1 multipl:2? Revisar
+            'setINTTHHumidityLowCond':   {'type': "D4", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setINTTHHumidityHighCond':  {'type': "D5", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             # ----------------- Isurnode Config Types -----------------
             # -- Isurnode General --
             'setIsurnodeEnable': {'type': "D6", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
@@ -135,7 +135,17 @@ class IsurlogLPPEncoder:
             'setModbusInputParity': {'type': "82", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
             #New addition to enable continious mode and configure number of loops per reading cycle 11-11-2025
             'setContinuousMode': {'type': "83", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            'setLoopCycles': {'type': "84", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255}
+            'setLoopCycles': {'type': "84", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
+            #New addittion to enable external temperature and humidity sensors (BME280/BMP280/BME680)
+            'setEXTTHEnable':            {'type': "85", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setEXTTHTemperatureLow':    {'type': "86", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
+            'setEXTTHTemperatureHigh':   {'type': "87", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
+            'setEXTTHTemperatureLowCond':{'type': "88", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setEXTTHTemperatureHighCond':{'type': "89", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setEXTTHHumidityLow':       {'type': "8A", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67}, # Originalmente size:1 multipl:2? Revisar
+            'setEXTTHHumidityHigh':      {'type': "8B", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67}, # Originalmente size:1 multipl:2? Revisar
+            'setEXTTHHumidityLowCond':   {'type': "8C", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setEXTTHHumidityHighCond':  {'type': "8D", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             
         }
         
