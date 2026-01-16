@@ -109,9 +109,13 @@
          "apn": "iot.1nce.net"
       },
       "lorawan":{
-         "dev_eui":"ac1f09fffe1abfd4",
-         "app_key":"769595af875eb1581547944436f65dc3",
-         "app_eui":"6779960990679865"
+         "dev_eui":"",
+         "app_key":"",
+         "app_eui":""
+      },
+      "wifi":{
+         "ssid": "wifi_ssif",
+         "password": "wifi_pass"
       }
    },
    "modbus_config":{

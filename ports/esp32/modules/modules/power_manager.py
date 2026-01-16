@@ -76,6 +76,28 @@ class PowerManager:
             format: NB-IoT or LoRaWAN.
         """
         
+        if (mode == "WiFi"):
+            try:
+                #(2025, 12, 4, 11, 56, 8, 3, 338)
+
+                year = int(time_str[0]) 
+                day = int(time_str[2])
+                month = int(time_str[1])
+                hour = int(time_str[3])
+                minute = int(time_str[4])
+                second = int(time_str[5])  # Only the first two digits are seconds
+                
+                # Create a time tuple in *local* time (as required by mktime)
+                local_time_tuple = (year, month, day, 1, hour, minute, second, 0)  # Weekday and yearday are ignored
+                utils.log_info(f"Local time tuple: {local_time_tuple}")
+                
+                self.rtc.datetime(local_time_tuple)
+                self.rtc_available = True
+                utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
+
+            except (IndexError, ValueError) as e:
+                utils.log_error(f"Error parsing time string from modem: {e}, string: {time_str}")        
+        
         if (mode == "NB-IoT"):
             try:
                 # "yy/MM/dd,hh:mm:ss+TZ"  TZ is quarter-hours offset from GMT
@@ -101,7 +123,6 @@ class PowerManager:
                 self.rtc_available = True
                 utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
 
-
             except (IndexError, ValueError) as e:
                 utils.log_error(f"Error parsing time string from modem: {e}, string: {time_str}")
                 
@@ -119,8 +140,6 @@ class PowerManager:
                 minute = int(time_parts[3:5])
                 second = int(time_parts[6:8])  # Only the first two digits are seconds
                 
-                utils.log_error(f"From PM Day: {day} Month: {month}")
-
                 # Create a time tuple in *local* time (as required by mktime)
                 local_time_tuple = (year, month, day, 1, hour, minute, second, 0)  # Weekday and yearday are ignored
                 utils.log_info(f"Local time tuple: {local_time_tuple}")
@@ -128,7 +147,6 @@ class PowerManager:
                 self.rtc.datetime(local_time_tuple)
                 self.rtc_available = True
                 utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
-
 
             except (IndexError, ValueError) as e:
                 utils.log_error(f"Error parsing time string from modem: {e}, string: {time_str}")
@@ -333,7 +351,7 @@ class PowerManager:
                 esp32.wake_on_ulp(True) #Enable the option to the ULP to wake up the ESP32
         
         if wake_up_sources == []:
-            utils.log_info(f"No wake-up sources provided.")
+            utils.log_info(f"No EXT1 sources provided.")
             return
         
         wakeup_pins = []

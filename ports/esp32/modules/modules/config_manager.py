@@ -14,6 +14,7 @@ CONFIG_MAP = {
     'setDebugLED': ('general', 'debug_led', bool),
     'setContinuousMode': ('general', 'continuous_mode', bool),
     'setLoopCycles': ('general', 'loop_cycles'),
+    'setMaxPayloadSize': ('general', 'max_payload_size'),
     # LoRaWAN
     'setLoRaWANDevEUI': ('communications', 'lorawan', 'dev_eui', lambda v: f"{v:016X}"),
     'setLoRaWANAppEUI': ('communications', 'lorawan', 'app_eui', lambda v: f"{v:016X}"),
