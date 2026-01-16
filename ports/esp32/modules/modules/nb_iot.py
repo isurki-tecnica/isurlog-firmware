@@ -33,8 +33,8 @@ class NBIoT:
         self.uart = UART(uart_id, baudrate=baudrate, tx=Pin(self.tx_pin), rx=Pin(self.rx_pin), rxbuf=8192, timeout=timeout)
         self.received_messages = []
         self.BLACKLIST = {
-            'NB-IoT': ['21403'],  # Block Orange NB-IoT (MQTT downlinks not working?)
-            'LTE-M':  ['21401']   # Block Vodafone LTE-M (Vodafone does not support eDRX over LTE-M)
+            'NB-IoT': ['21401', '21403'],  # Block Orange NB-IoT (MQTT downlinks not working?) and Block Vodafone! (awful performance)
+            'LTE-M':  ['21403']   # Block Vodafone LTE-M (Vodafone does not support eDRX over LTE-M)
         }
 
     def send_at_command(self, command, expected_response="OK", timeout=1000):
@@ -151,9 +151,9 @@ class NBIoT:
                     utils.log_info("#XMQTTMSG detected!")
                     #topic_line = self._read_uart_until(f'isurlog/config/{config_manager.static_config.get("serial", "c-000")}' ,text_timeout=6000) # Timeout para el topic
                     self._parse_mqtt_msg_urc(buffer)
-                elif line.startswith("#XMQTTEVT:"):
-                    utils.log_info("#XMQTTEVT detected!")
-                    self._parse_mqtt_evt_urc(line)
+                #elif line.startswith("#XMQTTEVT:"):
+                    #utils.log_info("#XMQTTEVT detected!")
+                    #self._parse_mqtt_evt_urc(line)
                 else:
                     # If it's not a known URC, add it to the response lines
                     response_lines.append(line)
@@ -199,34 +199,49 @@ class NBIoT:
         if (sim == "eSIM"):
             if not self.send_at_command_check("AT#XGPIO=0,12,1"): #Set GPIO12 high.
                 return False
-            
+    
     def _parse_cops_response(self, response):
         """
         Parses the response from AT+COPS=? to extract a list of (PLMN, AcT) tuples.
-        Example input: '+COPS: (1,"","","21407",7),(1,"","","21403",7)'
-        Example output: [('21407', '7'), ('21403', '7')]
+        Example input: '+COPS: (1,"","","21407",7),(1,"","","21403",9)\r\nOK\r\n'
+        Example output: [('21407', '7'), ('21403', '9')]
         """
         networks = []
-        if "+COPS:" not in response:
+        if not response or "+COPS:" not in response:
             return networks
         
-        # Remove the '+COPS: ' part and split by '),' which separates entries
-        response_part = response.split('+COPS: ')[1]
-        entries = response_part.split('),(')
-        
-        for entry in entries:
-            try:
+        try:
+            # Remove the '+COPS: ' prefix to isolate the data
+            response_part = response.split('+COPS: ')[1]
+            
+            # Split the string into individual network entries
+            entries = response_part.split('),(')
+            
+            for entry in entries:
                 parts = entry.split(',')
-                # The PLMN is the 4th part, AcT is the 5th
-                plmn = parts[3].strip().replace('"', '')
-                act = parts[4].strip().replace(')', '')
-                if plmn: # Ensure PLMN is not empty
-                    networks.append((plmn, act))
-            except IndexError:
-                continue # Ignore malformed entries
-        return networks
-    
+                
+                # Basic validation to ensure the entry has enough components
+                if len(parts) < 5:
+                    continue
 
+                # The PLMN is usually the 4th part (index 3)
+                plmn = parts[3].strip().replace('"', '')
+                
+                # The AcT is the 5th part (index 4)
+                # CRITICAL FIX: The last entry often contains trailing garbage (e.g., "9)\r\nOK").
+                # We split by ')' and take the first part to safely isolate the number.
+                act = parts[4].split(')')[0].strip()
+                
+                # Ensure PLMN is valid and AcT is purely numeric before appending
+                if plmn and act.isdigit():
+                    networks.append((plmn, act))
+                    
+        except Exception as e:
+            # Catch parsing errors to prevent crashing the main application loop
+            print(f"Error parsing COPS response: {e}")
+            
+        return networks    
+    
     def connect(self, connection_preference, edrx = True, apn = None):
 
         """
@@ -310,6 +325,11 @@ class NBIoT:
                 
                 if not self.send_at_command_check(f'AT%XPTW={desired_mode_val},"0001"'): #Set Paging Time Window (PTW). 
                     return False
+                
+            else:
+
+                if not self.send_at_command_check(f'AT+CEDRXS=0'): #Disable eDRX mode.
+                    return False
 
             if apn != None:
                 if not self.send_at_command_check(f'AT+CGDCONT=1,"IP","{apn}"', "OK", timeout=1000): 
@@ -344,7 +364,7 @@ class NBIoT:
                         utils.log_info(f"Operator {plmn} is blacklisted, skipping.")
                         continue
                     
-                    if int(act) != desired_act:
+                    if int(act.strip('\n')) != desired_act:
                         utils.log_info(f"Ignoring operator {plmn} with AcT {act}.")
                         continue
                     
@@ -686,7 +706,7 @@ class NBIoT:
 
         """
 
-        if not self.send_at_command_check(f'AT#XMQTTCON=1,"{username}","{password}","{url}",{port}', timeout = 2000):
+        if not self.send_at_command_check(f'AT#XMQTTCON=1,"{username}","{password}","{url}",{port}', expected_response = "#XMQTTEVT: 0,0", retries=2, timeout = 30000):
             utils.log_error("Failed to configure MQTT connection.")
             return False
         
@@ -743,7 +763,7 @@ class NBIoT:
 
         """
 
-        if not self.send_at_command_check(f'AT#XMQTTSUB="{topic}",{QoS}', timeout = 10000, retries = 5, retry_delay = 10):
+        if not self.send_at_command_check(f'AT#XMQTTSUB="{topic}",{QoS}', timeout = 20000, retries = 5, retry_delay = 10):
             utils.log_error("Failed to configure MQTT connection.")
             return False
         

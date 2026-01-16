@@ -146,6 +146,8 @@ class IsurlogLPPEncoder:
             'setEXTTHHumidityHigh':      {'type': "8B", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67}, # Originalmente size:1 multipl:2? Revisar
             'setEXTTHHumidityLowCond':   {'type': "8C", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setEXTTHHumidityHighCond':  {'type': "8D", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            #New addition to configure max_payload_size 15-01-2026
+            'setMaxPayloadSize': {'type': "8E", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
             
         }
         

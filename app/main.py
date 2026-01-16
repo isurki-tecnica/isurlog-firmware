@@ -1,12 +1,11 @@
 import time
 from machine import Pin, reset, WDT, UART, deepsleep, I2C
-from modules import power_manager, utils, battery_monitor
+from modules import power_manager
+from modules import utils, battery_monitor
 from modules.config_manager import config_manager
 from lib.IsurlogLPP import IsurlogLPPEncoder
 from modules.rtc_memory import RTC_Memory
 from modules.led_manager import LEDManagerULP
-import uio
-import builtins
 from lib.ota import rollback
 
 #Enable WDT
@@ -18,98 +17,6 @@ try:
 except Exception as e:
     print(f"Could not enable Watchdog Timer: {e}")
     wdt = None
-    
-def execute_code(code):
-    buffer = uio.StringIO()
-    try:
-        # Override print to capture its output
-        def print_override(*args, **kwargs):
-            builtins.print(*args, **kwargs, file=buffer)
-        builtins.print, original_print = print_override, builtins.print
-
-        try:
-            # Try to evaluate as an expression
-            result = eval(code)
-            if result is not None:
-                buffer.write(str(result))
-        except SyntaxError:
-            # Otherwise execute as statements
-            exec(code, globals())
-    except Exception as e:
-        return "{}: {}".format(type(e).__name__, str(e))
-    finally:
-        builtins.print = original_print
-
-    output = buffer.getvalue()
-    return output if output else None
-
-def handle_remote_repl():
-    """
-    Enables REPL mode.
-    """
-    base_topic = config_manager.static_config.get("mqtt", {}).get("base_topic", "isurlog")
-    uart = UART(2, baudrate=115200, tx=Pin(4), rx=Pin(2), timeout=1000)
-    command_topic = f"{base_topic}/repl_in/{ser_num}" 
-    print(f"--- Remote REPL Mode Activated. Listening on {command_topic} ---")
-    
-    repl_active = True
-    last_message_time = time.ticks_ms()
-
-    while repl_active:
-        #Read all UART buffer
-        
-        if (time.ticks_diff(time.ticks_ms(), last_message_time) > 120000):
-            print("Disconnecting from online REPL due to timeout...")
-            nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Disconnected")
-            repl_active = False
-            
-        if uart.any():
-            uart_bytes = uart.read()
-
-            try:
-                block_str = uart_bytes.decode('utf-8').strip()
-                lines = block_str.splitlines()
-
-                # Check is it's a MQTT message
-                if lines and lines[0].startswith('#XMQTTMSG:'):
-                    
-                    header_line = lines[0]
-
-                    if len(lines) >= 3:
-                        parts = header_line.split(',')
-
-                        topic_str = lines[1]
-                        message_str = lines[2]
-                        
-                        last_message_time = time.ticks_ms()
-                        
-                        print(f"MQTT MSG on topic '{topic_str}': {message_str}")
-                        
-                        if message_str.strip() == "logout":
-
-                            nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Disconnected")
-                            print("Exit command received. Deactivating REPL.")
-                            response = "REPL session terminated."
-                            repl_active = False
-                            
-                        else:
-                        
-                            command_output = execute_code(message_str)
-                            print(f"Response to received commmand: {command_output}")
-                            nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", command_output)
-                            if wdt:
-                                print("Feeding WDT from REPL task.")
-                                wdt.feed()
-                            
-                    else:
-                        
-                        print(f"Received incomplete MQTT message block: {lines}")
-                
-                else:
-                    print(f"Received non-MQTT data: {block_str}")
-                    
-            except Exception as e:
-                print(f"Error while processing UART data: {e}")
 
 def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10):
     
@@ -558,15 +465,15 @@ async def ble_mode_task(blinky, pm, ser_num):
     print("BLE client disconnected. Continiuing with normal mode...")
     time.sleep(2)
 
-
 if __name__ == "__main__":
 
-    print("\n####WELCOME TO ISURLOG OS v.1.0.1 MICROPYTHON FLAVOUR####\n")
-
+    print("\n####WELCOME TO ISURLOG OS v.1.0.4 MICROPYTHON FLAVOUR####\n")
+    ser_num = config_manager.static_config.get("serial", "c-000")
+    modem_type = config_manager.static_config.get("modem", "nb-iot")
     # --- Power Management ---
     pm = power_manager.PowerManager()
-    pm.set_cpu_freq("low-power")
-    ser_num = config_manager.static_config.get("serial", "c-000")
+    if modem_type != "wifi":
+        pm.set_cpu_freq("low-power")
     print(f"Isurlog with serial number: {ser_num}")
     
     #Init RTC memory
@@ -586,7 +493,8 @@ if __name__ == "__main__":
         if (pm.wakeup_reason == "Power-on reset"):
             pm.set_cpu_freq("balanced")
             blinky.load_ulp() #Load Blinky only on Power-on reset
-            pm.set_cpu_freq("low-power")
+            if modem_type != "wifi":
+                pm.set_cpu_freq("low-power")
         blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500, wake_up_period=2) #Set Blinky blinking.
 
     #Pin Configuration
@@ -615,14 +523,14 @@ if __name__ == "__main__":
         import uasyncio as asyncio
         from modules import ble_manager
         asyncio.run(ble_mode_task(blinky, pm, ser_num))
-        pm.set_cpu_freq("ultra-low-power") # Back to 20MHZ to save power.
-
+        if modem_type != "wifi":
+            pm.set_cpu_freq("low-power")
         
     #Read all sensors (if activated)
     loop_seconds = pm.seconds2wakeup()
     data, alarm_condition = read_all_sensors(pm, register_mode, n_loop = n_loop_cycles, n_seconds = loop_seconds)
 
-    # Get battery voltage from data to configure Blinky later
+    #Get battery voltage from data to configure Blinky later
     found_list = None
     for sublist in data:
       if sublist[1] == 'addVoltageInput':
@@ -672,8 +580,10 @@ if __name__ == "__main__":
 
     # --- NB-IoT Setup and Logic ---
     en_com_module = Pin(EN_COM_MODULE, Pin.OUT, Pin.PULL_UP, value=1, hold=True)
-    modem_type = config_manager.static_config.get("modem", "nb-iot")
 
+    if modem_type == "wifi":
+        from modules import wifi
+        base_topic = config_manager.static_config.get("mqtt", {}).get("base_topic", "isurlog")
     if modem_type == "nb-iot":
         if config_manager.static_config.get("isurreach", False):
             from modules import nb_iot_isurreach_som as nb_iot
@@ -703,7 +613,7 @@ if __name__ == "__main__":
             
             keep_alive = ((config_manager.dynamic_config["general"].get("latency_time", 10) * 60)+20) * config_manager.dynamic_config["general"].get("register_acumulator", 1)
             nb_iot_module.mqtt_configure(ser_num, keep_alive, 0)
-            if not nb_iot_module.mqtt_connect(config_manager.static_config.get("mqtt", {}).get("user", ""), config_manager.static_config.get("mqtt", {}).get("passwd", ""), config_manager.static_config.get("mqtt", {}).get("ip", "80.24.238.36"), config_manager.static_config.get("mqtt", {}).get("port", 1883)):
+            if not nb_iot_module.mqtt_connect(config_manager.static_config.get("mqtt", {}).get("user", ""), config_manager.static_config.get("mqtt", {}).get("passwd", ""), config_manager.static_config.get("mqtt", {}).get("ip", ""), config_manager.static_config.get("mqtt", {}).get("port", 1883)):
                 print("Failed to connect to MQTT broker")
                 pm.configure_wakeup_sources(wake_up_sources)
                 pm.go_to_sleep()
@@ -746,6 +656,145 @@ if __name__ == "__main__":
     if rtc_memory.should_transmit() or alarm_condition or previous_cycle_alarm or pm.wakeup_reason == "RTC GPIO reset" or pm.wakeup_reason == "Watchdog reset": #RTC GPIO reset for magnet wakeup. Watchdog reset for NB-IoT module wakeup.
         rx = Pin(2, hold=False)
         tx = Pin(4, hold=False)
+        
+        if modem_type == "wifi":
+            print("Power-on reset: Initializing Wifi ...")
+            if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
+                blinky.set_ulp_pattern(pulse_num=3, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=200,  wake_up_period=2)
+                
+            if not wifi.is_connected():
+            
+                ssid = config_manager.dynamic_config["communications"]["wifi"].get("ssid", None)
+                password = config_manager.dynamic_config["communications"]["wifi"].get("password", None)
+                
+                if (ssid != None and password != None):
+                    if wifi.do_connect(ssid, password, timeout_seconds=15):
+                        if not pm.rtc_available:
+                            import ntptime
+                            ntptime.settime()
+                            new_time = time.localtime()
+                            pm.set_rtc_time(new_time, mode = "WiFi")
+                            
+                        from modules.umqttsimple import MQTTClient
+                        mqtt_client = MQTTClient(ser_num, config_manager.static_config.get("mqtt", {}).get("ip", ""), user=config_manager.static_config.get("mqtt", {}).get("user", ""), password=config_manager.static_config.get("mqtt", {}).get("passwd", ""))
+                        try:
+                            mqtt_client.connect()
+                            mqtt_client.subscribe(f"{base_topic}/config/{ser_num}")
+                        except Exception as err:
+                            print("Could not connect to the MQTT broker!")
+                            pm.configure_wakeup_sources(wake_up_sources)
+                            pm.go_to_sleep()
+                        
+                    else:
+                        print("Could not establish Wifi connection!")
+                        pm.configure_wakeup_sources(wake_up_sources)
+                        pm.go_to_sleep()
+                else:
+                    print("No SSID and password provided for WiFi.")
+                
+            if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
+                blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=250, delay_on=5, delay_off=20, inter_delay=250,  wake_up_period=5)
+                
+            print("Transmitting data throught WiFi...")
+            payloads = rtc_memory.get_payloads()
+            rtc_memory.clear_memory()
+            print(f"Retrieved payloads: {payloads}")
+        
+            for i, payload in enumerate(payloads):
+                #Publish not empty payloads only.
+                if payload:
+                    print(f"Publishing payload {i+1}: {payload}")
+                    if mqtt_client.publish(f"{base_topic}/datos/{ser_num}", payload):
+                        print(f"Failed to publish payload {i+1}")
+                    time.sleep(1)
+                else:
+                    print(f"Skipping empty payload at index {i+1}")
+                    
+            received_mqtt_messages = mqtt_client.check_msg()
+            print(f"Received MQTT messages: {received_mqtt_messages}")
+            if received_mqtt_messages:
+                print(f"Received {len(received_mqtt_messages)} MQTT message(s).")
+                for topic, msg in received_mqtt_messages:
+                    msg = msg.decode('utf-8')
+                    if msg == "Wake": #WAKE UP MESSAGE
+                        pass
+                    elif msg == "REPL": #ENABLE REMOTE REPL
+                        if not mqtt_client.publish(f"{base_topic}/repl_out/{ser_num}", "Connected"):
+                            mqtt_client.subscribe(f"{base_topic}/repl_in/{ser_num}")
+                            from modules.remote_repl import handle_remote_repl_wifi
+                            handle_remote_repl_wifi(ser_num, base_topic, wdt, mqtt_client)
+                            
+                    elif "update" in msg: #FIRMWARE UPDATE MESSAGE
+                        print("Starting OTA update process...")
+                        update_instructions = msg.split(" ")
+                        if len(update_instructions) == 5:
+                            from modules import update_manager
+                            update_type, server, port, file_name, checksum = update_instructions
+                            print(f"Received instructions: Update_type: {update_type} Server: {server} Port: {port} File: {file_name} Checksum: {checksum}")
+                            
+                            if update_type == "main_update":
+                                if nb_iot_module.download_file(server, port, file_name, file_name, chunk_size=2048):
+                                    if update_manager.verify_file_checksum(checksum, filename = file_name):
+                                        update_manager.perform_update()
+                                        print("Update process finished, rebooting in 5 seconds...")
+                                        if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
+                                            print(f"Failed to publish response")
+                                        time.sleep(5)
+                                        reset()
+
+                            if update_type == "upython_update":
+                                if nb_iot_module.download_file(server, port, file_name, file_name, wdt = wdt, chunk_size=8192):
+                                    if(update_manager.decode_base64_file(file_name, "/micropython_decoded.bin")):
+                                        if update_manager.verify_file_checksum(checksum, filename = "/micropython_decoded.bin"):
+                                            print("Decoding successful!")
+                                            ota_succeded = False
+                                            from lib.ota import update
+                                            try:
+                                                with update.OTA(verbose=True, reboot=False) as ota_updater:
+                                                    with open("/micropython_decoded.bin", "rb") as f:
+                                                        ota_updater.from_stream(f)
+                                                print("OTA update prepared.")
+                                                ota_succeded = True
+                                            except Exception as e_ota:
+                                                print(f"Error during OTA: {e_ota!r}")
+
+                                            # Delete the b64 file after use to free space.
+                                            try:
+                                                import os
+                                                os.remove(file_name)
+                                                print(f"Temporary file '{file_name}' deleted.")
+                                                if ota_succeded:
+                                                    print("Update process finished, rebooting in 5 seconds...")
+                                                    if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
+                                                        print(f"Failed to publish response")
+                                                    time.sleep(5)
+                                                    reset()
+                                            except OSError:
+                                                 pass
+                                        else:
+                                            print("Decoding failed.")
+                        
+                        #If code reaches this point the update was unsuccessful
+                        if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update FAILED"):
+                            print(f"Failed to publish response")
+                            
+                    elif "cron" in msg: #New cron syntax.
+                        print("Received new cron configuration.")
+                        cron_config = msg.split(":")
+                        print(cron_config)
+                        if len(cron_config) == 2:
+                            cron_syntax = cron_config[1]
+                            config_manager.dynamic_config['output_config']['crontab'] = cron_syntax
+                            config_manager.save_dynamic_config()
+                            print(f"Crontab successfully updated to: {cron_syntax}")
+                        
+                    else: #NEW CONFIGURATION MESSAGE
+                        print(f"Processing message on topic: {topic}")
+                        print(f"Message content: {msg}")
+                        decoded_message = encoder.decode(msg)
+                        print(f"New MQTT downlink: {decoded_message}")
+                        config_manager.apply_conf_update(decoded_message) #Save new downlink configuration.
+                    
         if modem_type == "nb-iot":
             if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
                 blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=250, delay_on=5, delay_off=20, inter_delay=250,  wake_up_period=5)
@@ -788,7 +837,8 @@ if __name__ == "__main__":
                     elif msg['message'] == "REPL": #ENABLE REMOTE REPL
                         if nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Connected"):
                             nb_iot_module.mqtt_subscribe(f"{base_topic}/repl_in/{ser_num}", QoS=2)
-                            handle_remote_repl()
+                            from modules.remote_repl import handle_remote_repl_nb_iot
+                            handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module)
                             
                     elif "update" in msg['message']: #FIRMWARE UPDATE MESSAGE
                         print("Starting OTA update process...")
