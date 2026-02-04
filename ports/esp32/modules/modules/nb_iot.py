@@ -4,6 +4,7 @@ import time
 import json
 from modules.config_manager import config_manager
 import ubinascii
+import os
 
 try:
     _ = ConnectionError
@@ -337,8 +338,6 @@ class NBIoT:
             if not self.send_at_command_check("AT+CFUN=1", "OK", timeout=1000): 
                 return False
             
-            
-            
             utils.log_info("Starting smart network selection...")
             is_connected = False
 
@@ -405,6 +404,43 @@ class NBIoT:
                 utils.log_info("eDRX mode set.")
             
         return True
+    
+    def verify_data_connectivity(self):
+        """
+        Verifies if any PDP context is active and retrieves network parameters.
+        
+        Instead of checking a specific CID, we query all contexts to find the 
+        active one assigned by the network (often CID 0 or 1).
+
+        Returns:
+            bool: True if a valid active context is found, False otherwise.
+        """
+        # Sending without a CID index returns all active contexts
+        res = self.send_at_command("AT+CGCONTRDP=0")
+        
+        if res and "+CGCONTRDP:" in res:
+            try:
+                # The response can have multiple lines if multiple contexts are active
+                lines = res.split('\r\n')
+                for line in lines:
+                    if line.startswith("+CGCONTRDP:"):
+                        parts = line.split(',')
+                        # Index 2 is APN, Index 5/6 are DNS (based on your log/image)
+                        if len(parts) >= 3 and parts[2] != "":
+                            active_cid = parts[0].split(': ')[1]
+                            apn = parts[2].strip('"')
+                            utils.log_info(f"Active connection found on CID {active_cid} (APN: {apn})")
+                            
+                            # Log DNS for debugging Vodafone issues
+                            if len(parts) > 6:
+                                utils.log_info(f"DNS assigned: {parts[5]}, {parts[6]}")
+                            
+                            return True
+            except Exception as e:
+                utils.log_error(f"Error parsing CGCONTRDP: {e}")
+
+        utils.log_error("No active data context found. The device is not ready for IP traffic.")
+        return False
     
     def wake_up(self, max_attempts = 5):
         
@@ -586,12 +622,17 @@ class NBIoT:
         Returns:
             True if connected, False otherwise.
         """
-
+        # 1. Check physical/network attachment
         response = self.send_at_command("AT%XMONITOR")
         if response and ("%XMONITOR: 1" in response or "%XMONITOR: 5" in response):
             utils.log_info("NB-IoT module connected to the network.")
-            return True
-
+            # 2. CRITICAL: Check if we actually have data throughput capability
+            if self.verify_data_connectivity():
+                utils.log_info("Device fully connected with IP address.")
+                return True
+            else:
+                utils.log_warning("Attached to network but no IP yet.")
+                
         return False
 
     def wait_for_network_connection(self, timeout=60000):
@@ -606,11 +647,18 @@ class NBIoT:
         """
         start_time = time.ticks_ms()
         while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
+            # 1. Check physical/network attachment
             response = self.send_at_command("AT%XMONITOR")
             if response and ("%XMONITOR: 1" in response or "%XMONITOR: 5" in response):
-                utils.log_info("Device connected to the network.")
-                return True
-            time.sleep_ms(2000)  # Check every 2 seconds
+                
+                # 2. CRITICAL: Check if we actually have data throughput capability
+                if self.verify_data_connectivity():
+                    utils.log_info("Device fully connected with IP address.")
+                    return True
+                else:
+                    utils.log_warning("Attached to network but no IP yet. Retrying...")
+                    
+            time.sleep_ms(2000)
         return False
 
     def get_signal_quality(self):
