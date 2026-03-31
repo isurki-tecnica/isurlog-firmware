@@ -44,8 +44,10 @@ def clear_serial_buffer():
 def get_encrypted_pin_secret():
     """Reads PIN from JSON and returns its AES encrypted version for comparison."""
     try:
-        raw_pin = config_manager.static_config.get("pin", 123456)
+        raw_pin = config_manager.static_config.get("pin", None)
         
+        if raw_pin is None:
+            return None
         # Format integer to 6-digit string with leading zeros
         # Ensure existing string format is preserved
         if isinstance(raw_pin, int):
@@ -61,8 +63,8 @@ ENCRYPTED_SECRET = get_encrypted_pin_secret()
 
 def run_authentication():
     if ENCRYPTED_SECRET is None:
-        print("Error: Config PIN not defined.")
-        machine.reset()
+        print("Error: PIN not defined. Access granted (Skip).")
+        return
 
     # Try to restore existing session
     try:
