@@ -1,15 +1,9 @@
 {
     "log_level": "DEBUG",
-    "serial": "c-804",
+    "serial": "c-000",
     "modem": "nb-iot",
-    "isurreach": false,
-    "mqtt": {
-        "ip": "1.2.3.4",
-        "port": 1883,
-        "user": "user",
-        "passwd": "password",
-        "base_topic": "isurlog"
-    },
+    "isurreach": true,
+    "pin": 123456,
     "pinout":{
         "rs485":{
             "re_pin": 33,
@@ -29,16 +23,17 @@
         "nb-iot":{
             "rx_pin":2,
             "tx_pin": 4,
-            "esp_wake_up":34,
-            "nb_iot_wake_up": 18
+            "esp_wake_up":35,
+            "nb_iot_wake_up": 26
         },
         "control":{
             "en_nbiot_pin": 5,
             "en_5v_pin": 13,
-            "en_vdc_pin":25,
-            "do0_pin": 26
+            "en_vdc_pin":18,
+            "do0_pin": 25
         },
-        "di0_pin": 36,
-        "magnet_pin": 35
+        "di0_pin": 39,
+        "magnet_pin": 36,
+        "mcp_int_pin": 34
     }
 }

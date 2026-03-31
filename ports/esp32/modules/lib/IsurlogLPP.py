@@ -1,3 +1,12 @@
+# Copyright (C) 2026 ISURKI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 from modules import utils
 
 class IsurlogLPPEncoder:
@@ -18,7 +27,9 @@ class IsurlogLPPEncoder:
             'addTemperatureSensor' : {'type':"67", 'size':2, 'multipl':10, 'signed':True, 'min':-3276.7, 'max':3276.7, 'arrLen':3},
             'addHumiditySensor' : {'type':"68", 'size':1, 'multipl':2, 'signed':False, 'min':0, 'max':100, 'arrLen':3},
             'addVoltageInput' : {'type':"74", 'size':2, 'multipl':1, 'signed':False, 'min':0, 'max':65534, 'arrLen':3},
-            'addUnixTime' : {'type':"75", 'size':4, 'multipl':1, 'signed':False, 'min':0, 'max':4294967295, 'arrLen':3}
+            'addUnixTime' : {'type':"75", 'size':4, 'multipl':1, 'signed':False, 'min':0, 'max':4294967295, 'arrLen':3},
+            'addSoCInput'   : {'type':"76", 'size':2, 'multipl':10, 'signed':False, 'min':0, 'max':100.0, 'arrLen':3},
+            'addCRateInput' : {'type':"77", 'size':1, 'multipl':10, 'signed':True, 'min':-12.8, 'max':12.7, 'arrLen':3},
         }
         #Configuration types
         self.config_types = {
@@ -109,24 +120,25 @@ class IsurlogLPPEncoder:
             # -- Isurnode Digital Outputs --
             'setIsurnodeDigitalOutputEnable': {'type': "ED", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setIsurnodeDigitalOutputType': {'type': "EE", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
-            'setIsurnodeDigitalOutputAddress': {'type': "EF", 'size': 2, 'multipl': 1, 'signed': False, 'min': 0, 'max': 65535},
-            'setIsurnodeDigitalOutputLogicOp': {'type': "F0", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
-            'setIsurnodeDigitalOutputRetry': {'type': "FB", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
-            'setIsurnodeDigitalOutputRetrySleep': {'type': "FC", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
-            'setIsurnodeDigitalOutputOnTime': {'type': "FD", 'size': 2, 'multipl': 1, 'signed': False, 'min': 0, 'max': 65535},
-            # (First )
+            'setIsurnodeDigitalOutputLogicOp': {'type': "EF", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 2},
+            'setIsurnodeDigitalOutputOnTime': {'type': "FC", 'size': 2, 'multipl': 1, 'signed': False, 'min': 0, 'max': 65535},
+            
+            # (First output condition)
+            'setIsurnodeDigitalOutputCond1Enable': {'type': "F0", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setIsurnodeDigOutCond1Sensor': {'type': "F1", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
             'setIsurnodeDigOutCond1Low': {'type': "F2", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
             'setIsurnodeDigOutCond1High': {'type': "F3", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
             'setIsurnodeDigOutCond1LowCond': {'type': "F4", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setIsurnodeDigOutCond1HighCond': {'type': "F5", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            # (Second output condition)
-            'setIsurnodeDigOutCond2Sensor': {'type': "F6", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
-            'setIsurnodeDigOutCond2Low': {'type': "F7", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
-            'setIsurnodeDigOutCond2High': {'type': "F8", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
-            'setIsurnodeDigOutCond2LowCond': {'type': "F9", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            'setIsurnodeDigOutCond2HighCond': {'type': "FA", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             
+            # (Second output condition)
+            'setIsurnodeDigitalOutputCond2Enable': {'type': "F6", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setIsurnodeDigOutCond2Sensor': {'type': "F7", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
+            'setIsurnodeDigOutCond2Low': {'type': "F8", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
+            'setIsurnodeDigOutCond2High': {'type': "F9", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
+            'setIsurnodeDigOutCond2LowCond': {'type': "FA", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setIsurnodeDigOutCond2HighCond': {'type': "FB", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+
             'setModbusInputLongInt': {'type': "FE", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             #New additions for more flexible modbus inputs 06-11-2025
             'setModbusInputBaudrate': {'type': "FF", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
@@ -148,7 +160,23 @@ class IsurlogLPPEncoder:
             'setEXTTHHumidityHighCond':  {'type': "8D", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             #New addition to configure max_payload_size 15-01-2026
             'setMaxPayloadSize': {'type': "8E", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
-            
+            #New addition to configure parameters of the new version of Isurlog v3: SoC, CRate, VDCVoltage, Theft alert
+            'setBatteryInputSoC': {'type': "8F", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setBatteryInputCRate': {'type': "90", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setVDCVoltage': {'type': "91", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
+            'setTheftAlert': {'type': "92", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+             #New addition to configure Wireless parameter: MQTT server, WiFi credentials, Nb-IoT connection parameters, LoRaWAN class. --> Only via Bluetooh.
+            'setAPN': {'type': "93", 'size': 0, 'multipl': 1, 'signed': False},
+            'setExternalSIM': {'type': "94", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setConPreference': {'type': "95", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 2},
+            'setWiFiSSID': {'type': "96", 'size': 0, 'multipl': 1, 'signed': False},
+            'setWiFiPsswd': {'type': "97", 'size': 0, 'multipl': 1, 'signed': False},
+            'setLoRaWANClass': {'type': "98", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 2},
+            'setMQTTIP':        {'type': "99", 'size': 0, 'multipl': 1, 'signed': False},
+            'setMQTTPort':      {'type': "9A", 'size': 2, 'multipl': 1, 'signed': False},
+            'setMQTTUser':      {'type': "9B", 'size': 0, 'multipl': 1, 'signed': False},
+            'setMQTTPasswd':    {'type': "9C", 'size': 0, 'multipl': 1, 'signed': False},
+            'setMQTTBaseTopic': {'type': "9D", 'size': 0, 'multipl': 1, 'signed': False},
         }
         
     def encode(self, lpp):
@@ -285,28 +313,46 @@ class IsurlogLPPEncoder:
                     # Ignorar el dato desconocido y continuar (recomendado)
                     raise ValueError(f"Unknown sensor type: {sensor_type_hex}")
 
+                # --- Variable length handling (Strings) ---
+                if sensor_info['size'] == 0:
+                    # Next byte is the length of the string
+                    str_len = int(payload[i:i+2], 16)
+                    i += 2
+                    value_hex = payload[i:i + str_len * 2]
+                    i += str_len * 2
+                    
+                    # Convert hex to string (ASCII)
+                    value_final = ""
+                    for k in range(0, len(value_hex), 2):
+                        value_final += chr(int(value_hex[k:k+2], 16))
+                
+                # --- Fixed length handling (Numeric) ---
+                else:
+                    size = sensor_info['size']
+                    value_hex = payload[i:i + size * 2]
+                    i += size * 2
 
-                size = sensor_info['size']
-                value_hex = payload[i:i + size * 2]
-                i += size * 2
+                    # Conversión del valor
+                    value_int = int(value_hex, 16)
+                    utils.log_info(f"Decoded data 0: {value_int}")
+                    
+                    if sensor_info['signed']:  #Comprobar si es signed
+                        # Convertir a entero con signo (complemento a 2)
+                        max_val = 2**(size * 8)
+                        if value_int >= max_val // 2:
+                            value_int -= max_val
 
-                # Conversión del valor
-                value_int = int(value_hex, 16)
-                utils.log_info(f"Decoded data 0: {value_int}")
-                if sensor_info['signed']:  #Comprobar si es signed
-                    # Convertir a entero con signo (complemento a 2)
-                    max_val = 2**(size * 8)
-                    if value_int >= max_val // 2:
-                        value_int -= max_val
+                    if sensor_info['multipl'] != 1:
+                        value_int = value_int / sensor_info['multipl']
+                    
+                    value_final = value_int
 
-                if sensor_info['multipl'] != 1:
-                    value_int = value_int / sensor_info['multipl']
-
-                data.append({'channel': channel, 'name': sensor_type, 'value': value_int})
+                data.append({'channel': channel, 'name': sensor_type, 'value': value_final})
                 utils.log_info(f"Decoded data: {data}")
+                
             except Exception as e:
-                utils.log_error(f"Error decoding payload at index {i} -->{payload[i:i+2]}error:{e}")
-                break #Detener
+                utils.log_error(f"Error decoding payload at index {i} -->{payload[i:i+2]} error:{e}")
+                break #Break
 
         return data
 

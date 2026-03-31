@@ -1,4 +1,14 @@
 # src/modules/digital_input_ulp.py
+
+# Copyright (C) 2026 ISURKI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 from esp32 import ULP
 from machine import mem32, Pin
 from lib.esp32_ulp import src_to_binary
@@ -7,7 +17,7 @@ from modules.config_manager import config_manager  # Import the config_manager
 
 
 class DigitalInputULP:
-    def __init__(self, io_number=None, debounce_max_count=None, edge_count_to_wake_up=None, timer_period_us=None):
+    def __init__(self, gpio_num = None, debounce_max_count=None, edge_count_to_wake_up=None, timer_period_us=None):
         """
         Initializes the DigitalInputULP module for reading digital pulses using the ULP coprocessor.
 
@@ -30,33 +40,45 @@ class DigitalInputULP:
         self.load_addr, self.entry_addr = 0, 0
 
         # Load configuration, use defaults or config file.
-        self.io_number = io_number if io_number is not None else 0
+        self.gpio_num = gpio_num if gpio_num is not None else config_manager.static_config.get("pinout", {}).get("di0_pin", 36)
+        if self.gpio_num == 36:
+            self.io_number = 0
+            RTC_IO_TOUCH_PAD0_MUX_SEL_M = '(BIT(27))'
+            RTC_IO_TOUCH_PAD0_FUN_IE_M = '(BIT(19))'
+        elif self.gpio_num == 39:
+            self.io_number = 3
+            RTC_IO_TOUCH_PAD0_MUX_SEL_M = '(BIT(24))'
+            RTC_IO_TOUCH_PAD0_FUN_IE_M = '(BIT(4))'
+        else:
+            utils.log_error("Invalid GPIO number for digital input.")
+            return
+        
         self.debounce_max_count = debounce_max_count if debounce_max_count is not None else 3
-        self.edge_count_to_wake_up = edge_count_to_wake_up if edge_count_to_wake_up is not None else config_manager.dynamic_config.get("digital_config", {}).get("wake", 10)
+        self.edge_count_to_wake_up = edge_count_to_wake_up if edge_count_to_wake_up is not None else config_manager.static_config.get("digital_config", {}).get("wake", 10)
         self.timer_period_us = timer_period_us if timer_period_us is not None else 50000
 
         #https://github.com/espressif/esp-idf/blob/v5.0.2/components/soc/esp32/rtc_io_periph.c
         #https://github.com/espressif/esp-idf/blob/v5.0.2/components/soc/esp32/include/soc/rtc_cntl_reg.h
         #https://github.com/espressif/esp-idf/blob/v5.0.2/components/soc/esp32/include/soc/reg_base.h
+        #https://github.com/espressif/esp-idf/blob/master/components/soc/esp32/register/soc/rtc_io_reg.h
         
-        self.source = """
+        self.source = f"""
             #define DR_REG_RTCIO_BASE 0x3ff48400
             #define RTC_IO_TOUCH_PAD0_REG (DR_REG_RTCIO_BASE + 0x7c)
-            #define RTC_IO_TOUCH_PAD0_MUX_SEL_M (BIT(27))
-            #define RTC_IO_TOUCH_PAD0_FUN_IE_M (BIT(19))
+            #define RTC_IO_TOUCH_PAD0_MUX_SEL_M {RTC_IO_TOUCH_PAD0_MUX_SEL_M}
+            #define RTC_IO_TOUCH_PAD0_FUN_IE_M {RTC_IO_TOUCH_PAD0_FUN_IE_M}
             #define RTC_GPIO_IN_REG (DR_REG_RTCIO_BASE + 0x24)
             #define RTC_GPIO_IN_NEXT_S 14
             #define RTC_CNTL_LOW_POWER_ST_REG         (DR_REG_RTCIO_BASE + 0xc0)
             #define RTC_CNTL_RDY_FOR_WAKEUP  (BIT(19))
 
-            /* --- INICIO DE LA MODIFICACIÓN: Añadir Magic Token --- */
+            /* --- Add Magic Token --- */
             .set token, 0xABCD
 
             .bss
                 .global magic
             magic:
                 .long 0
-            /* --- FIN DE LA MODIFICACIÓN --- */
 
                 .global next_edge
             next_edge:
