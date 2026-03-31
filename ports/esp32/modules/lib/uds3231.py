@@ -1,4 +1,7 @@
-# Forked and adapted from https://github.com/adafruit/Adafruit-uRTC/tree/master
+# Forked and adapted from https://github.com/adafruit/Adafruit-uRTC
+# Original Copyright (c) Adafruit Industries
+# Adapted by ISURKI 2026
+# License: MIT
 
 import collections
 import time
@@ -98,6 +101,7 @@ class DS3231(_BaseRTC):
     _ALARM_REGISTERS = (0x08, 0x0b)
     _SQUARE_WAVE_REGISTER = 0x0e
     _TEMPERATURE_REGISTER = 0x11
+    _uEPOCH = 946684800
 
     def lost_power(self):
         return self._flag(self._STATUS_REGISTER, 0b10000000)
@@ -182,5 +186,19 @@ class DS3231(_BaseRTC):
                                 if datetime.second is not None else 0x80])
             self._register(self._ALARM_REGISTERS[alarm] - 1, buffer)
 
-
+    def get_unix_time(self):
+        time_tuple = self.datetime()
+        time_tuple_for_mktime = (
+            time_tuple.year,
+            time_tuple.month,
+            time_tuple.day,
+            time_tuple.hour,
+            time_tuple.minute,
+            time_tuple.second,
+            time_tuple.weekday, # Usamos el weekday del objeto
+            1  # yearday calculado (1 para el 1 de enero)
+        )
+        unix_timestamp = time.mktime(time_tuple_for_mktime)
+        
+        return unix_timestamp + self._uEPOCH
 

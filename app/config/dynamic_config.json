@@ -1,86 +1,156 @@
 {
-   "int_th_sensor":{
-      "humidity_low_cond":false,
-      "humidity_low":30,
-      "humidity_high_cond":false,
-      "temperature_high":30.0,
-      "temperature_low":10.0,
-      "enable":true,
-      "temperature_high_cond":false,
-      "humidity_high":85.0,
-      "temperature_low_cond":false
+   "battery_config":{
+      "crate":false,
+      "power_save":false,
+      "soc":false
    },
-   "ext_th_sensor":{
-      "humidity_low_cond":false,
-      "humidity_low":30,
-      "humidity_high_cond":false,
-      "temperature_high":30.0,
-      "temperature_low":10.0,
-      "enable":true,
-      "temperature_high_cond":false,
-      "humidity_high":85.0,
-      "temperature_low_cond":false
+   "isurnode_config":{
+      "SHT30_sensor":{
+         "temperature_low_cond":true,
+         "humidity_high":85.0,
+         "humidity_low":30,
+         "enable":false,
+         "humidity_low_cond":true,
+         "humidity_high_cond":false,
+         "temperature_high":30.0,
+         "temperature_low":10.0,
+         "temperature_high_cond":false
+      },
+      "slave_address":6,
+      "analog_config":{
+         "pre_acquisition":1000,
+         "trigger_address":100,
+         "inputs":[
+            {
+               "low_cond":false,
+               "zero":0.0,
+               "channel":4,
+               "full_scale":125.0,
+               "high_cond":false,
+               "low":45.0,
+               "enable":false,
+               "high":55.0
+            },
+            {
+               "low_cond":true,
+               "zero":0.0,
+               "channel":5,
+               "full_scale":10.0,
+               "high_cond":false,
+               "low":1.0,
+               "enable":false,
+               "high":9.0
+            },
+            {
+               "low_cond":true,
+               "zero":0.0,
+               "channel":6,
+               "full_scale":10.0,
+               "high_cond":false,
+               "low":1.0,
+               "enable":false,
+               "high":9.0
+            },
+            {
+               "low_cond":true,
+               "zero":0.0,
+               "channel":7,
+               "full_scale":10.0,
+               "high_cond":false,
+               "low":1.0,
+               "enable":false,
+               "high":9.0
+            }
+         ]
+      },
+      "digital_outputs":{
+         "outputs":[
+            {
+               "channel":0,
+               "enable":false,
+               "type":1,
+               "logic_operator":1,
+               "cond1_enable": false,
+               "sensor1": 0,
+               "low1": 10,
+               "low1_cond":false,
+               "high1": 10,
+               "high1_cond":false,
+               "cond2_enable": false,
+               "sensor2": 0,
+               "low2": 10,
+               "low2_cond":false,
+               "high2": 10,
+               "high2_cond":false,
+               "on_time": 1500
+            },
+            {
+               "channel":0,
+               "enable":false,
+               "type":1,
+               "logic_operator":1,
+               "cond1_enable": false,
+               "sensor1": 0,
+               "low1": 10,
+               "low1_cond":false,
+               "high1": 10,
+               "high1_cond":false,
+               "cond2_enable": false,
+               "sensor2": 0,
+               "low2": 10,
+               "low2_cond":false,
+               "high2": 10,
+               "high2_cond":false,
+               "on_time": 1500
+            },
+            {
+               "channel":0,
+               "enable":false,
+               "type":1,
+               "logic_operator":1,
+               "cond1_enable": false,
+               "sensor1": 0,
+               "low1": 10,
+               "low1_cond":false,
+               "high1": 10,
+               "high1_cond":false,
+               "cond2_enable": false,
+               "sensor2": 0,
+               "low2": 10,
+               "low2_cond":false,
+               "high2": 10,
+               "high2_cond":false,
+               "on_time": 1500
+            },
+            {
+               "channel":0,
+               "enable":false,
+               "type":1,
+               "logic_operator":1,
+               "cond1_enable": false,
+               "sensor1": 0,
+               "low1": 10,
+               "low1_cond":false,
+               "high1": 10,
+               "high1_cond":false,
+               "cond2_enable": false,
+               "sensor2": 0,
+               "low2": 10,
+               "low2_cond":false,
+               "high2": 10,
+               "high2_cond":false,
+               "on_time": 1500
+            }
+         ]
+      },
+      "enable":false
    },
-   "analog_config":{
-      "pre_acquisition":1000,
-      "inputs":[
-         {
-            "low_cond":false,
-            "full_scale":25.0,
-            "high_cond":false,
-            "low":0,
-            "high":25.0,
-            "enable":false,
-            "channel":0,
-            "zero":0.0
-         },
-         {
-            "low_cond":true,
-            "full_scale":10.0,
-            "high_cond":false,
-            "low":1.0,
-            "high":9.0,
-            "enable":false,
-            "channel":1,
-            "zero":0.0
-         },
-         {
-            "low_cond":true,
-            "full_scale":10.0,
-            "high_cond":false,
-            "low":1.0,
-            "high":9.0,
-            "enable":false,
-            "channel":2,
-            "zero":0.0
-         },
-         {
-            "low_cond":true,
-            "full_scale":10.0,
-            "high_cond":false,
-            "low":1.0,
-            "high":9.0,
-            "enable":false,
-            "channel":3,
-            "zero":0.0
-         }
-      ]
-   },
-   "general":{
-      "register_mode":1,
-      "compact_register": true,
-      "continuous_mode": false,
-      "loop_cycles": 1,
-      "register_acumulator":1,
-      "rtc_sync":true,
-      "magnet_wakeup":true,
-      "internal_register":false,
-      "debug_led":true,
-      "latency_time":15,
-      "max_payload_size": 128
+   "output_config":{
+      "crontab":"inactive",
+      "active_vdc":false
    },
    "digital_config":{
-      "low_cond":true,
+      "low_cond":false,
       "low":2,
       "counter":false,
       "high":8,
@@ -89,50 +159,140 @@
       "pulse_weight":1,
       "high_cond":false
    },
-   "output_config":{
-      "active_vdc": true,
-      "crontab": "inactive"
+   "analog_config":{
+      "pre_acquisition":1000,
+      "inputs":[
+         {
+            "low_cond":false,
+            "full_scale":125.0,
+            "high_cond":false,
+            "low":45.0,
+            "high":55.0,
+            "enable":false,
+            "channel":0,
+            "zero":-25.0
+         },
+         {
+            "low_cond":false,
+            "full_scale":50.0,
+            "high_cond":true,
+            "low":0.0,
+            "high":10.0,
+            "enable":false,
+            "channel":1,
+            "zero":0.0
+         },
+         {
+            "low_cond":false,
+            "full_scale":125.0,
+            "high_cond":false,
+            "low":45.0,
+            "high":55.0,
+            "enable":false,
+            "channel":2,
+            "zero":-25.0
+         },
+         {
+            "low_cond":false,
+            "full_scale":50.0,
+            "high_cond":false,
+            "low":0.0,
+            "high":10.0,
+            "enable":false,
+            "channel":3,
+            "zero":0.0
+         }
+      ]
+   },
+   "ext_th_sensor":{
+      "humidity_low_cond":false,
+      "humidity_low":0,
+      "humidity_high_cond":false,
+      "temperature_high":50.0,
+      "temperature_low":0.0,
+      "enable":false,
+      "temperature_high_cond":false,
+      "humidity_high":85.0,
+      "temperature_low_cond":false
+   },
+   "general":{
+      "continuous_mode":false,
+      "latency_time":5,
+      "register_mode":0,
+      "internal_register":false,
+      "register_acumulator":1,
+      "rtc_sync":true,
+      "vdc_voltage":12,
+      "magnet_wakeup":true,
+      "debug_led":true,
+      "max_payload_size":128,
+      "compact_register":false,
+      "loop_cycles":1,
+      "theft_alert":false
+   },
+   "int_th_sensor":{
+      "humidity_low_cond":false,
+      "humidity_low":0,
+      "humidity_high_cond":false,
+      "temperature_high":50.0,
+      "temperature_low":0.0,
+      "enable":false,
+      "temperature_high_cond":false,
+      "humidity_high":85.0,
+      "temperature_low_cond":false
    },
    "pt100_config":{
       "high_cond":false,
-      "low":-50.0,
-      "low_cond":true,
-      "wires":4,
+      "low":45.0,
       "enable":false,
-      "high":150.0
+      "wires":4,
+      "low_cond":false,
+      "high":55.0
    },
    "communications":{
-      "nb_iot":{
-         "sim":"external",
-         "mode":"NB-IoT",
+      "mqtt": {
+         "ip": "",
+         "port": 1883,
+         "user": "",
+         "passwd": "",
+         "base_topic": "isurlog"
+      },
+      "cellular_iot":{
+         "external_sim":true,
+         "preference":2,
          "eDRX":true,
-         "apn": "iot.1nce.net"
+         "apn":"",
+         "ntn": false
       },
       "lorawan":{
          "dev_eui":"",
          "app_key":"",
-         "app_eui":""
+         "app_eui":"",
+         "class": 0
       },
       "wifi":{
-         "ssid": "wifi_ssif",
-         "password": "wifi_pass"
+         "ssid":"",
+         "password":""
       }
    },
    "modbus_config":{
+      "data_bits":8,
+      "baudrate":0,
       "pre_acquisition":1000,
+      "parity":0,
       "inputs":[
          {
-            "high":1.7,
-            "slave_address":26,
+            "high":7.5,
+            "slave_address":1,
             "fc":3,
             "enable":false,
             "number_of_decimals":3,
-            "register_address":4,
-            "high_cond":true,
+            "register_address":256,
+            "high_cond":false,
             "low":0.0,
-            "low_cond":true,
+            "low_cond":false,
             "is_FP":false,
-            "offset":0,
+            "offset":7.5,
             "invert":false,
             "channel":0
          },
@@ -146,18 +306,18 @@
             "high_cond":false,
             "low":0.0,
             "low_cond":false,
-            "is_FP":true,
+            "is_FP":false,
             "offset":0.0,
             "invert":false,
             "channel":1
          },
          {
-            "high":0.0,
+            "high":50.0,
             "slave_address":1,
             "fc":3,
             "enable":false,
-            "number_of_decimals":0,
-            "register_address":8,
+            "number_of_decimals":1,
+            "register_address":258,
             "high_cond":false,
             "low":0.0,
             "low_cond":false,
@@ -181,6 +341,7 @@
             "invert":false,
             "channel":3
          }
-      ]
+      ],
+      "stop_bits":1
    }
 }

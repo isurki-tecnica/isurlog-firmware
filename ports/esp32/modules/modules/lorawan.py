@@ -1,3 +1,12 @@
+# Copyright (C) 2026 ISURKI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 from machine import UART, Pin
 from modules import utils
 import time
@@ -18,11 +27,12 @@ class LoRaWAN:
         """
         self.tx_pin = tx_pin if tx_pin is not None else config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("tx_pin", 4)
         self.rx_pin = rx_pin if rx_pin is not None else config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("rx_pin", 2)
+        self.lorawan_class = config_manager.dynamic_config.get("communications", {}).get("lorawan", {}).get("class", 0)
         self.uart = UART(uart_id, baudrate=baudrate, tx=Pin(self.tx_pin), rx=Pin(self.rx_pin), timeout=timeout)
         self.confirmed = False #ACK enabled or disabled.
-        self.connected = False
+        self.downlinks_queue = []
 
-    def send_at_command(self, command, expected_response="OK", timeout=1000):
+    def send_at_command(self, command, expected_response="OK", timeout=1000, wait_full_timeout = False):
         """
         Sends an AT command to the NB-IoT module and waits for a response.
 
@@ -37,7 +47,7 @@ class LoRaWAN:
         self.uart.write(command + "\r\n")
         utils.log_debug(f"Sent AT command: {command}")
 
-        response = self.wait_for_response(expected_response, timeout)
+        response = self._wait_for_response(expected_response, timeout, wait_full_timeout = wait_full_timeout)
 
         if response:
             utils.log_debug(f"Received response: {response}")
@@ -66,30 +76,83 @@ class LoRaWAN:
             time.sleep_ms(1000)  # Wait before retrying
         utils.log_error(f"AT command '{command}' failed after {retries} retries.")
         return False
-
-    def wait_for_response(self, expected_response, timeout):
+    
+    def _parse_rx_evt_urc(self, line):
         """
-        Waits for a specific response from the NB-IoT module.
+        Processes unsolicited notification codes (URCs) from the RAK3172.
+        Extracts downlink data and stores it in the internal queue.
+        """
+        
+        if "+EVT:RX" in line:
+            try:
+                # Expected format: +EVT:RX_1:-35:14:UNICAST:10:00d31f40
+                parts = line.split(':')
+                if len(parts) >= 6:
+                    port = parts[5]
+                    payload = parts[6].strip()
+                    #utils.log_info(f"URC Downlink detected - Port: {port}, Data: {payload}")
+                    self.downlinks_queue.append({'port': port, 'data': payload.upper()})
+                else:
+                    utils.log_debug(f"URC RX Event without payload or incomplete: {line}")
+            except Exception as e:
+                utils.log_error(f"Error parsing RX URC: {e}")
 
+    def _wait_for_response(self, expected_response, timeout, wait_full_timeout = False, command=None): # Added command parameter
+        """
+        Waits for a specific response, processing URCs in the meantime.
         Args:
             expected_response: The expected response string.
             timeout: Timeout in milliseconds.
 
         Returns:
             The full response string if the expected response is found, otherwise None.
+            
         """
         start_time = time.ticks_ms()
-        response = ""
+        buffer = ""
+        response_lines = [] # Stores lines that ARE part of the expected response
+
         while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
             if self.uart.any():
                 try:
-                    response += self.uart.read().decode("utf-8", "ignore")
-                except UnicodeError as e_decode:
-                    print(f"UNICODE ERROR during check: {e_decode}, buffer: {response}")
-                if expected_response in response:
-                    return response
-                utils.log_info(f"Not expected response: {response}")
-        return None
+                    # Read everything available to avoid losing fast URCs
+                    chunk = self.uart.read().decode('utf-8', 'ignore') # Ignore decoding errors
+                    buffer += chunk
+                except Exception as e:
+                     utils.log_error(f"Error reading UART: {e}")
+                     buffer = "" # Clear buffer in case of serious error
+                
+            # Process the buffer line by line
+            while '\r\n' in buffer:
+                line, buffer = buffer.split('\r\n', 1)
+                line = line.strip() # Remove extra spaces
+
+                if not line: # Ignore empty lines
+                    continue
+
+                # Check URCs FIRST
+                if line.startswith("+EVT:RX"):
+                    self._parse_rx_evt_urc(line)
+                    
+                # If it's not a known URC, add it to the response lines
+                response_lines.append(line)
+                # Check if the expected response is in the LAST line or in the set
+                full_response_text = "\r\n".join(response_lines)
+                if expected_response in full_response_text and not wait_full_timeout: 
+                     return full_response_text
+
+            time.sleep_ms(20)
+
+        # Timeout: Return what was accumulated if it contains the response, otherwise None
+        full_response_text = "\r\n".join(response_lines)
+        if expected_response in full_response_text:
+            print(full_response_text)
+            return full_response_text
+        else:
+            # Log what was received if it's not the expected response
+            if response_lines:
+                 utils.log_warning(f"Timeout waiting for '{expected_response}'. Received: {full_response_text}")
+            return None
 
     def set_network_mode(self, mode=1):
         """Sets the network working mode after checking the current mode.
@@ -119,7 +182,7 @@ class LoRaWAN:
             return True
         else:
             utils.log_info(f"Setting network mode to {mode} (current: {current_mode})...")
-            return self._send_at_command_check(f"AT+NWM={mode}") # For set, expect "OK"
+            return self.send_at_command_check(f"AT+NWM={mode}") # For set, expect "OK"
 
     def set_join_mode(self, mode=1):
         """Sets the network join mode after checking the current mode.
@@ -147,9 +210,9 @@ class LoRaWAN:
             return True
         else:
             utils.log_info(f"Setting join mode to {mode} (current: {current_mode})...")
-            return self._send_at_command_check(f"AT+NJM={mode}")
+            return self.send_at_command_check(f"AT+NJM={mode}")
 
-    def set_class(self, class_type='A'):
+    def set_class(self, class_type):
         """Sets the device class after checking the current class.
 
         Args:
@@ -179,7 +242,7 @@ class LoRaWAN:
             return True
         else:
             utils.log_info(f"Setting device class to {class_type.upper()} (current: {current_class})...")
-            return self._send_at_command_check(f"AT+CLASS={class_type.upper()}")
+            return self.send_at_command_check(f"AT+CLASS={class_type.upper()}")
 
     def set_band(self, band=4):
         """Sets the active region after checking the current band.
@@ -207,7 +270,7 @@ class LoRaWAN:
             return True
         else:
             utils.log_info(f"Setting band to {band} (current: {current_band})...")
-            return self._send_at_command_check(f"AT+BAND={band}")
+            return self.send_at_command_check(f"AT+BAND={band}")
     
     def set_confirmed_mode(self, mode):
         """Sets the confirmed mode.
@@ -264,7 +327,7 @@ class LoRaWAN:
       if not self.send_at_command_check(f"AT+JOIN=1:0:{interval}:{attempts}", "OK"):
             return False
       # Now wait for the "Network joined" indication.  This can take some time.
-      response = self.wait_for_response("+EVT:JOINED", timeout=60000)  # Wait up to 60 seconds
+      response = self._wait_for_response("+EVT:JOINED", timeout=60000)  # Wait up to 60 seconds
       if response:
           utils.log_info("Successfully joined LoRaWAN network.")
           return True
@@ -293,9 +356,9 @@ class LoRaWAN:
             True on success, False on failure.  Waits for '+SEND: OK'
         """
         if self.confirmed:
-            response = self.send_at_command(f"AT+SEND={port}:{data}", "+EVT:SEND_CONFIRMED_OK", timeout=10000)  # Longer timeout for sending
+            response = self.send_at_command(f"AT+SEND={port}:{data}", "+EVT:SEND_CONFIRMED_OK", timeout=4000, wait_full_timeout = True)  # Longer timeout for sending
         else:
-            response = self.send_at_command(f"AT+SEND={port}:{data}", "+EVT:TX_DONE", timeout=10000)  # Longer timeout for sending
+            response = self.send_at_command(f"AT+SEND={port}:{data}", "+EVT:TX_DONE", timeout=4000, wait_full_timeout = True)  # Longer timeout for sending
         if response:
             utils.log_info(f"Data sent successfully on port {port}.")
             return True
@@ -371,6 +434,56 @@ class LoRaWAN:
                 utils.log_error(f"Failed to convert hex to bytes: {data_hex} - {e}")
                 return None
         return None
+    
+    def get_next_downlink(self):
+        """
+        Returns the oldest downlink from the queue and removes it.
+        
+        Returns:
+            Dictionary with 'port' and 'data', or None if queue is empty.
+        """
+        if self.downlinks_queue:
+            return self.downlinks_queue.pop(0)
+        return None
+    
+    def _fetch_class_c_downlinks(self):
+        """
+        Queries the RAK3172 for buffered Class C downlinks using the custom ATC+GETDL command.
+        """
+        # Send the command and wait for the final OK response
+        response = self.send_at_command("ATC+GETDL", "OK", timeout=2000)
+        
+        if not response or "EMPTY" in response:
+            return
+
+        # The response will be returned as a multi-line string:
+        # INDEX:1,PORT:10,DATA:AABBCC\r\nINDEX:2,PORT:10,DATA:DDEEFF\r\nOK
+        lines = response.split('\r\n')
+        for line in lines:
+            if "INDEX:" in line and "PORT:" in line and "DATA:" in line:
+                try:
+                    # Split by commas: ['INDEX:1', 'PORT:10', 'DATA:AABBCC']
+                    parts = line.split(',')
+                    # Extract the value after the colon
+                    port = parts[1].split(':')[1]
+                    data = parts[2].split(':')[1].strip()
+                    
+                    utils.log_info(f"Buffered Downlink detected - Port: {port}, Data: {data}")
+                    self.downlinks_queue.append({'port': port, 'data': data.upper()})
+                except Exception as e:
+                    utils.log_error(f"Error parsing buffered downlink line '{line}': {e}")
+
+    def has_downlinks(self):
+        """Checks if there are any pending downlinks in the queue."""
+        
+        if self.lorawan_class == 2: #It's class C.
+            try:
+                self._fetch_class_c_downlinks()
+            except Exception as e:
+                utils.log_error(f"Error checking class in has_downlinks: {e}")
+        
+        # 3. Return downlink buffer size
+        return len(self.downlinks_queue) > 0
         
     def get_network_time(self):
         """Gets the local time from the module.
@@ -443,7 +556,7 @@ class LoRaWAN:
             utils.log_error(f"Error parsing time string from modem: {e}, string: {time_str}")
             return None
 
-    def connect(self):
+    def connect(self, lorawan_class = "A"):
         """
         Configures and joins the LoRaWAN network using settings from config_manager.
 
@@ -468,7 +581,7 @@ class LoRaWAN:
             return False
 
         # Set Class (A, B, or C)
-        if not self.set_class(lorawan_config.get("class", "A")):  # Default to Class A
+        if not self.set_class(lorawan_class):  # Default to Class A
             return False
 
         # Set Band
@@ -497,7 +610,8 @@ class LoRaWAN:
             True if connected, False otherwise.
         """
 
-        response = self.send_at_command("AT+NJS=?")
+        response = self.send_at_command("AT+NJS=?", expected_response = 'AT+NJS')
+        utils.log_info(f"LoRaWAN module response to NJS: {response}.")
         if response and ("AT+NJS=1" in response):
             utils.log_info("LoRaWAN module connected to the network.")
             return True

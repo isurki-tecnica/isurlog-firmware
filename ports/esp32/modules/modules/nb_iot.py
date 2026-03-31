@@ -1,3 +1,12 @@
+# Copyright (C) 2026 ISURKI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 from machine import UART, Pin
 from modules import utils
 import time
@@ -34,8 +43,8 @@ class NBIoT:
         self.uart = UART(uart_id, baudrate=baudrate, tx=Pin(self.tx_pin), rx=Pin(self.rx_pin), rxbuf=8192, timeout=timeout)
         self.received_messages = []
         self.BLACKLIST = {
-            'NB-IoT': ['21401', '21403'],  # Block Orange NB-IoT (MQTT downlinks not working?) and Block Vodafone! (awful performance)
-            'LTE-M':  ['21403']   # Block Vodafone LTE-M (Vodafone does not support eDRX over LTE-M)
+            2: ['21401', '21403'],  # Block Orange NB-IoT (MQTT downlinks not working?) and Block Vodafone! (awful performance)
+            1:  ['21403']   # Block Vodafone LTE-M (Vodafone does not support eDRX over LTE-M)
         }
 
     def send_at_command(self, command, expected_response="OK", timeout=1000):
@@ -53,7 +62,7 @@ class NBIoT:
         self.uart.write(command + "\r\n")
         utils.log_debug(f"Sent AT command: {command}")
 
-        response = self._wait_for_response(expected_response, timeout, command = command)
+        response = self._wait_for_response(expected_response, timeout)
 
         if response:
             utils.log_debug(f"Received response: {response}")
@@ -114,7 +123,7 @@ class NBIoT:
         except Exception as e:
             utils.log_error(f"Error parsing MQTT event URC: {e}, Line: {urc_line}")
 
-    def _wait_for_response(self, expected_response, timeout, command=None): # Added command parameter
+    def _wait_for_response(self, expected_response, timeout): # Added command parameter
         """
         Waits for a specific response, processing URCs in the meantime.
         Args:
@@ -176,7 +185,7 @@ class NBIoT:
                  utils.log_warning(f"Timeout waiting for '{expected_response}'. Received: {full_response_text}")
             return None
     
-    def select_SIM(self, sim="eSIM"):
+    def select_SIM(self, external_sim="eSIM"):
         """
         Selects between the eSIM of the NB-IoT module o the physical external sim.
 
@@ -193,11 +202,11 @@ class NBIoT:
         if not self.send_at_command_check("AT#XGPIOCFG=1,12"): #Set GPIO12 as output.
             return False
         
-        if (sim == "external"):
+        if (external_sim):
             if not self.send_at_command_check("AT#XGPIO=0,12,0"): #Set GPIO12 low.
                 return False
             
-        if (sim == "eSIM"):
+        else:
             if not self.send_at_command_check("AT#XGPIO=0,12,1"): #Set GPIO12 high.
                 return False
     
@@ -243,7 +252,7 @@ class NBIoT:
             
         return networks    
     
-    def connect(self, connection_preference, edrx = True, apn = None):
+    def connect(self, connection_preference, edrx = True, apn = None, ntn = False):
 
         """
         Connects to the NB-IoT network.
@@ -268,12 +277,6 @@ class NBIoT:
             
         else:    
 
-            # --- Configure System Mode (Check First) ---
-            if connection_preference == "LTE-M":
-                desired_mode_val = 1
-            elif connection_preference == "NB-IoT":
-                desired_mode_val = 2
-
             query_response = self.send_at_command("AT%XSYSTEMMODE?", "%XSYSTEMMODE:") # Check response starts with %XSYSTEMMODE:
             current_mode_val = -1 # Indicate unknown state
             if query_response:
@@ -283,9 +286,9 @@ class NBIoT:
                 except (IndexError, ValueError) as e:
                     utils.log_warning(f"Could not parse current system mode: {e}")
 
-            if current_mode_val != desired_mode_val:
-                utils.log_info(f"Setting system mode to {connection_preference} ({desired_mode_val})...")
-                if not self.send_at_command_check(f"AT%XSYSTEMMODE=1,1,0,{desired_mode_val}"):
+            if current_mode_val != connection_preference:
+                utils.log_info(f"Setting system mode to {connection_preference} ...")
+                if not self.send_at_command_check(f"AT%XSYSTEMMODE=1,1,0,{connection_preference}"):
                     utils.log_error("Failed to set system mode.")
                     return False
             else:
@@ -313,9 +316,9 @@ class NBIoT:
             #Configure eDRX mode ---
             if edrx:
 
-                if connection_preference == "LTE-M":
+                if connection_preference == 1:
                     desired_mode_val = 4
-                elif connection_preference == "NB-IoT":
+                elif connection_preference == 2:
                     desired_mode_val = 5
 
                 if not self.send_at_command_check('AT%PERIODICSEARCHCONF=0,0,0,1,"0,10,40,,5","1,300,600,1800,1800,3600"'): #Ultra low power periodic cell search.
@@ -346,9 +349,9 @@ class NBIoT:
             
             if scan_response and "+COPS:" in scan_response:
 
-                if connection_preference == "LTE-M":
+                if connection_preference == 1:
                     desired_act= 7
-                elif connection_preference == "NB-IoT":
+                elif connection_preference == 2:
                     desired_act = 9
                     
                 available_networks = self._parse_cops_response(scan_response)
@@ -407,39 +410,40 @@ class NBIoT:
     
     def verify_data_connectivity(self):
         """
-        Verifies if any PDP context is active and retrieves network parameters.
+        Verifies if any PDP context has a valid IP address assigned using AT+CGDCONT?.
+        This command directly returns the dynamic parameters of the data session.
         
-        Instead of checking a specific CID, we query all contexts to find the 
-        active one assigned by the network (often CID 0 or 1).
-
         Returns:
-            bool: True if a valid active context is found, False otherwise.
+            bool: True if a non-empty IP address is found in any context, False otherwise.
         """
-        # Sending without a CID index returns all active contexts
-        res = self.send_at_command("AT+CGCONTRDP=0")
+        # AT+CGDCONT? returns the current definition of all contexts
+        # Format: +CGDCONT: <cid>,"<PDP_type>","<APN>","<IP_address>",...
+        res = self.send_at_command("AT+CGDCONT?")
         
-        if res and "+CGCONTRDP:" in res:
+        if res and "+CGDCONT:" in res:
             try:
-                # The response can have multiple lines if multiple contexts are active
                 lines = res.split('\r\n')
                 for line in lines:
-                    if line.startswith("+CGCONTRDP:"):
+                    if line.startswith("+CGDCONT:"):
                         parts = line.split(',')
-                        # Index 2 is APN, Index 5/6 are DNS (based on your log/image)
-                        if len(parts) >= 3 and parts[2] != "":
-                            active_cid = parts[0].split(': ')[1]
-                            apn = parts[2].strip('"')
-                            utils.log_info(f"Active connection found on CID {active_cid} (APN: {apn})")
+                        
+                        # We need at least 4 parts to reach the IP address field (index 3)
+                        if len(parts) >= 4:
+                            # Clean the IP address from quotes and whitespace
+                            ip_addr = parts[3].strip('"').strip()
                             
-                            # Log DNS for debugging Vodafone issues
-                            if len(parts) > 6:
-                                utils.log_info(f"DNS assigned: {parts[5]}, {parts[6]}")
-                            
-                            return True
+                            # Check if the IP is valid (not empty and not 0.0.0.0)
+                            if ip_addr and ip_addr != "0.0.0.0":
+                                # Extract CID for logging purposes
+                                cid = parts[0].split(': ')[1]
+                                utils.log_info(f"Verified data session on CID {cid}. IP: {ip_addr}")
+                                return True
+                                
+                utils.log_warning("Contexts found, but no valid IP address assigned yet.")
             except Exception as e:
-                utils.log_error(f"Error parsing CGCONTRDP: {e}")
+                utils.log_error(f"Error parsing CGDCONT response: {e}")
 
-        utils.log_error("No active data context found. The device is not ready for IP traffic.")
+        utils.log_error("No active data context with IP connectivity found.")
         return False
     
     def wake_up(self, max_attempts = 5):

@@ -1,8 +1,18 @@
-# src/modules/rtc_memory.py (FINAL ROBUST VERSION WITH 2KB LIMIT)
+# src/modules/rtc_memory.py
+
+# Copyright (C) 2026 ISURKI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 from machine import RTC
 from modules import utils
 from modules.config_manager import config_manager
+from modules import power_manager
 
 class RTC_Memory:
     def __init__(self, max_payload_size = 256):
@@ -10,8 +20,14 @@ class RTC_Memory:
         # --- CONFIGURATION ---
         self.COUNTER_ADDR = 0
         self.ALARM_FLAG_ADDR = 4  # <-- NEW: 1 byte for the alarm status flag
+        self.MANUAL_EV_FLAG_ADDR = 5  # <-- NEW: 1 byte for the mnaual EV control status flag
         
-        self.PAYLOAD_START_ADDR = 8 # <-- MODIFIED: Payloads now start at byte 8 to leave space for counter and alarm flag (4+1+3 padding)
+        self.EV0_STATE_ADDR = 6  # <-- NEW: 1 byte for EV0 state
+        self.EV1_STATE_ADDR = 7  # <-- NEW: 1 byte for EV1 state
+        self.EV2_STATE_ADDR = 8  # <-- NEW: 1 byte for EV2 state
+        self.EV3_STATE_ADDR = 9  # <-- NEW: 1 byte for EV3 state
+        
+        self.PAYLOAD_START_ADDR = 16 # <-- MODIFIED: Payloads now start at byte 8 to leave space for counter and alarm flag (4+1+1+2 padding)
         self.PAYLOAD_SLOT_SIZE = max_payload_size
         
         # Documented write limit for rtc.memory() on ESP32
@@ -43,6 +59,32 @@ class RTC_Memory:
         buffer = self._get_buffer()
         buffer[self.ALARM_FLAG_ADDR] = 1 if status else 0
         self.rtc.memory(buffer)
+        
+    def get_manual_ev_flag(self):
+        """Reads the manual EV control status flag from the last transmission."""
+        buffer = self.rtc.memory()
+        if len(buffer) < 5:
+            return False
+        return buffer[self.MANUAL_EV_FLAG_ADDR] == 1
+
+    def set_manual_ev_flag(self, status: bool):
+        """Sets the manual EV control status flag in RTC memory."""
+        buffer = self._get_buffer()
+        buffer[self.MANUAL_EV_FLAG_ADDR] =  1 if status else 0
+        self.rtc.memory(buffer)
+        
+    def get_ev_state(self, channel):
+        """Reads the EV state"""
+        buffer = self.rtc.memory()
+        if len(buffer) < 5:
+            return False
+        return buffer[self.EV0_STATE_ADDR + channel]
+    
+    def set_ev_state(self, channel, status):
+        """Sets the last EV stae."""
+        buffer = self._get_buffer()
+        buffer[self.EV0_STATE_ADDR+ channel] = status
+        self.rtc.memory(buffer)
 
     def _get_buffer(self):
         """Internal helper to get/initialize the RTC buffer."""
@@ -65,6 +107,7 @@ class RTC_Memory:
         """Stores a payload in its predefined slot."""
         counter = self.get_counter()
         if counter >= self.max_possible_payloads:
+            utils.log_error(f"RTC memory is full: counter: {counter} max_possible_payloads: {self.max_possible_payloads}")
             return False
 
         if isinstance(payload, str):
@@ -121,3 +164,4 @@ class RTC_Memory:
         return self.get_counter() >= self.n_cycles
 
 
+rtc_memory = RTC_Memory() # Create a single, global instance of the ConfigManager

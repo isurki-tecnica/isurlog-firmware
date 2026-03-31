@@ -1,3 +1,8 @@
+# (c) 2013-2016 Paul Sokolovsky
+# (c) 2026 Modificaciones por ISURKI / Steminds
+# License: MIT
+# Original source: https://github.com/micropython/micropython-lib
+
 try:
     import usocket as socket
 except:
@@ -10,8 +15,7 @@ class MQTTException(Exception):
 
 class MQTTClient:
 
-    def __init__(self, client_id, server, port=0, user=None, password=None, keepalive=0,
-                 ssl=False, ssl_params={}):
+    def __init__(self, client_id, server, port=0, user=None, password=None, keepalive=0, ssl=False, ssl_params={}):
         if port == 0:
             port = 8883 if ssl else 1883
         self.client_id = client_id
@@ -56,8 +60,8 @@ class MQTTClient:
         addr = socket.getaddrinfo(self.server, self.port)[0][-1]
         self.sock.connect(addr)
         if self.ssl:
-            import ussl
-            self.sock = ussl.wrap_socket(self.sock, **self.ssl_params)
+            import ssl
+            self.sock = ssl.wrap_socket(self.sock, **self.ssl_params)
         premsg = bytearray(b"\x10\0\0\0\0\0")
         msg = bytearray(b"\x04MQTT\x04\x02\0\0")
 

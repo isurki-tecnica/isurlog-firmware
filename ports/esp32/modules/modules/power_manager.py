@@ -1,14 +1,23 @@
 # src/modules/deep_sleep.py
+
+# Copyright (C) 2026 ISURKI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 from machine import Pin, deepsleep, I2C, freq, wake_reason, PWM
 import esp32
 import time
 from modules import utils
 import json
-from lib.uds3231 import DS3231
 from modules.config_manager import config_manager
 
 class PowerManager:
-    def __init__(self, sda_pin=None, scl_pin=None, i2c_freq=None, rtc_address=0x68):
+    def __init__(self, sda_pin=None, scl_pin=None, i2c_freq=None):
         """
         Initializes the PowerManager.
 
@@ -19,20 +28,27 @@ class PowerManager:
             rtc_address: I2C address of the DS3231 RTC (default: 0x68).
         """
 
-        self.uEPOCH = 946684800
         self.wakeup_reason = self.get_wakeup_reason()
         utils.log_info(f"ESP32 Wakeup reason: {self.wakeup_reason}")
 
         # I2C configuration from config.json, or use defaults
         self.sda_pin = sda_pin if sda_pin is not None else config_manager.static_config.get("pinout", {}).get("i2c", {}).get("sda_pin", 21)
         self.scl_pin = scl_pin if scl_pin is not None else config_manager.static_config.get("pinout", {}).get("i2c", {}).get("scl_pin", 22)
-        self.en_5v_pin = config_manager.static_config.get("pinout", {}).get("i2c", {}).get("control", 22)
         self.i2c_freq = i2c_freq if i2c_freq is not None else config_manager.static_config.get("i2c_freq", 100000)
 
         # Initialize I2C bus here
-        self.rtc_address = rtc_address
         self.i2c_bus = I2C(0, scl=Pin(self.scl_pin), sda=Pin(self.sda_pin), freq=self.i2c_freq)
-        self.rtc = DS3231(self.i2c_bus, self.rtc_address)
+        
+        if self.ds3231_exists():
+            from lib.uds3231 import DS3231
+            self.rtc = DS3231(self.i2c_bus)
+            self.rtc_ic = "DS3231"
+            
+        elif self.rv3028_exists():
+            from lib.RV3028 import RV3028
+            self.rtc = RV3028(self.i2c_bus)
+            self.rtc_ic = "RV3028"
+            
         self.check_rtc_status()
 
         # Define the pins to be held during deep sleep
@@ -44,6 +60,32 @@ class PowerManager:
             config_manager.static_config.get("pinout", {}).get("control", {}).get("en_vdc_pin", 25)
         ]
 
+    def ds3231_exists(self):
+        """
+        Checks if the DS3231 is connected to the I2C bus.
+        Returns True if found, False otherwise.
+        """
+        try:
+            # Try to read 1 byte from the device address (0x00)
+            self.i2c_bus.readfrom_mem(0x68, 0x00, 1)
+            return True
+        except OSError:
+            # If the device does not respond (NACK), an OSError is raised
+            return False
+        
+    def rv3028_exists(self):
+        """
+        Checks if the RV3028 is connected to the I2C bus.
+        Returns True if found, False otherwise.
+        """
+        try:
+            # Try to read 1 byte from the device address (0x28)
+            self.i2c_bus.readfrom_mem(0x52, 0x28, 1)
+            return True
+        except OSError:
+            # If the device does not respond (NACK), an OSError is raised
+            return False
+
     def check_rtc_status(self):
         """
         Checks the status of the DS3231 RTC.
@@ -52,19 +94,18 @@ class PowerManager:
             True if the RTC is present and time is valid, False otherwise.
         """
         try:
-            self.i2c_bus.readfrom_mem(self.rtc_address, 0x00, 1)  # Check if RTC is present
             if self.rtc.lost_power():  # Check if RTC lost power (and thus time)
-                utils.log_error("DS3231 RTC lost power! Time is invalid.")
+                utils.log_error("RTC lost power! Time is invalid.")
                 self.rtc_available = False
             else:
-                if (self.get_unix_time() < 1763628870): #Time can`t be earlier to the time I'm programming this :) 
+                if (self.rtc.get_unix_time() < 1763628870): #Time can`t be earlier to the time I'm programming this :) 
                     self.rtc_available = False
-                    utils.log_info(f"DS3231 RTC is present and time is not valid: {self.rtc.datetime()}")
+                    utils.log_info(f"RTC is present and time is not valid: {self.rtc.datetime()}")
                 else:
                     self.rtc_available = True
-                    utils.log_info(f"DS3231 RTC is present and time is valid: {self.rtc.datetime()}")
+                    utils.log_info(f"RTC is present and time is valid: {self.rtc.datetime()}")
         except OSError:
-            utils.log_error("DS3231 RTC not detected on I2C bus.")
+            utils.log_error("RTC not detected on I2C bus.")
             self.rtc_available = False
 
     def set_rtc_time(self, time_str, mode = "NB-IoT"):
@@ -91,7 +132,7 @@ class PowerManager:
                 local_time_tuple = (year, month, day, 1, hour, minute, second, 0)  # Weekday and yearday are ignored
                 utils.log_info(f"Local time tuple: {local_time_tuple}")
                 
-                self.rtc.datetime(local_time_tuple)
+                self.rtc.datetime(datetime = local_time_tuple)
                 self.rtc_available = True
                 utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
 
@@ -119,7 +160,32 @@ class PowerManager:
                 local_time_tuple = (year, month, day, 1, hour, minute, second, 0)  # Weekday and yearday are ignored
                 utils.log_info(f"Local time tuple: {local_time_tuple}")
                 
-                self.rtc.datetime(local_time_tuple)
+                self.rtc.datetime(datetime = local_time_tuple)
+                self.rtc_available = True
+                utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
+
+            except (IndexError, ValueError) as e:
+                utils.log_error(f"Error parsing time string from modem: {e}, string: {time_str}")
+                
+        if (mode == "GPS"):
+            try:
+                # "YYYY/MM/DD HH:MM:SS"  
+                parts = time_str.split(" ")
+                date_parts = parts[0].split("-")
+                time_parts = parts[1].split(":")
+
+                year = int(date_parts[0])
+                month = int(date_parts[1])
+                day = int(date_parts[2])
+                hour = int(time_parts[0])
+                minute = int(time_parts[1])
+                second = int(time_parts[2])
+
+                # Create a time tuple in *local* time (as required by mktime)
+                local_time_tuple = (year, month, day, 1, hour, minute, second, 0)  # Weekday and yearday are ignored
+                utils.log_info(f"Local time tuple: {local_time_tuple}")
+                
+                self.rtc.datetime(datetime = local_time_tuple)
                 self.rtc_available = True
                 utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
 
@@ -144,34 +210,12 @@ class PowerManager:
                 local_time_tuple = (year, month, day, 1, hour, minute, second, 0)  # Weekday and yearday are ignored
                 utils.log_info(f"Local time tuple: {local_time_tuple}")
                 
-                self.rtc.datetime(local_time_tuple)
+                self.rtc.datetime(datetime = local_time_tuple)
                 self.rtc_available = True
                 utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
 
             except (IndexError, ValueError) as e:
                 utils.log_error(f"Error parsing time string from modem: {e}, string: {time_str}")
-                
-    def get_unix_time(self):
-        """
-        Gets the time from the DS3231 RTC using a Unix timestamp.
-
-        Return:
-            Unix datetime.
-        """
-        time_tuple = self.rtc.datetime()
-        time_tuple_for_mktime = (
-            time_tuple.year,
-            time_tuple.month,
-            time_tuple.day,
-            time_tuple.hour,
-            time_tuple.minute,
-            time_tuple.second,
-            time_tuple.weekday, # Usamos el weekday del objeto
-            1  # yearday calculado (1 para el 1 de enero)
-        )
-        unix_timestamp = time.mktime(time_tuple_for_mktime)
-        
-        return unix_timestamp + self.uEPOCH
         
     def seconds2wakeup(self):
         """

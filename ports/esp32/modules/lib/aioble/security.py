@@ -30,6 +30,13 @@ _secrets = {}
 _modified = False
 _path = None
 
+# Global variable to store the dynamic PIN
+_fixed_pin = 123456 
+
+def set_fixed_pin(pin):
+    """Update the global PIN used for BLE authentication."""
+    global _fixed_pin
+    _fixed_pin = int(pin)
 
 # Must call this before stack startup.
 def load_secrets(path=None):
@@ -74,10 +81,11 @@ def _save_secrets(arg=None):
 
 def _security_irq(event, data):
     global _modified
-
+    print(f"DEBUG: IRQ Received -> Event ID: {event}")
     if event == _IRQ_ENCRYPTION_UPDATE:
         # Connection has updated (usually due to pairing).
         conn_handle, encrypted, authenticated, bonded, key_size = data
+        print(f"DEBUG: Encryption Update -> Enc:{encrypted}, Auth:{authenticated}, Bonded:{bonded}")
         log_info("encryption update", conn_handle, encrypted, authenticated, bonded, key_size)
         if connection := DeviceConnection._connected.get(conn_handle, None):
             connection.encrypted = encrypted
@@ -131,23 +139,29 @@ def _security_irq(event, data):
             return _secrets.get(key, None)
 
     elif event == _IRQ_PASSKEY_ACTION:
+        # Unpack the connection handle, the required action, and the passkey
         conn_handle, action, passkey = data
-        log_info("passkey action", conn_handle, action, passkey)
-        # if action == _PASSKEY_ACTION_NUMCMP:
-        #     # TODO: Show this passkey and confirm accept/reject.
-        #     accept = 1
-        #     self._ble.gap_passkey(conn_handle, action, accept)
-        # elif action == _PASSKEY_ACTION_DISP:
-        #     # TODO: Generate and display a passkey so the remote device can enter it.
-        #     passkey = 123456
-        #     self._ble.gap_passkey(conn_handle, action, passkey)
-        # elif action == _PASSKEY_ACTION_INPUT:
-        #     # TODO: Ask the user to enter the passkey shown on the remote device.
-        #     passkey = 123456
-        #     self._ble.gap_passkey(conn_handle, action, passkey)
-        # else:
-        #     log_warn("unknown passkey action")
+        log_info("BLE Security: Passkey action requested", conn_handle, action)
+        
+        # This PIN should be retrieved from your static_config.json in production
+        # Remember: It must be a 6-digit integer
+        current_pin = _fixed_pin
 
+        if action == _PASSKEY_ACTION_DISP:
+            # The ESP32 acts as a display: shows this PIN to the central device (smartphone)
+            ble.gap_passkey(conn_handle, action, current_pin)
+
+        elif action == _PASSKEY_ACTION_INPUT:
+            # The ESP32 acts as a keyboard: inputs the PIN displayed by the central device
+            ble.gap_passkey(conn_handle, action, current_pin)
+
+        elif action == _PASSKEY_ACTION_NUMCMP:
+            # Numeric comparison: used to confirm that digits match on both screens
+            # We send 1 to automatically accept the comparison
+            ble.gap_passkey(conn_handle, action, 1)
+
+        else:
+            log_warn("BLE Security: Unknown passkey action received")
 
 def _security_shutdown():
     global _secrets, _modified, _path

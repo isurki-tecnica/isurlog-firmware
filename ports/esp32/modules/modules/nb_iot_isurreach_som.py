@@ -1,3 +1,12 @@
+# Copyright (C) 2026 ISURKI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 from machine import UART, Pin
 from modules import utils
 import time
@@ -33,9 +42,15 @@ class NBIoT:
         self.rx_pin = rx_pin if rx_pin is not None else config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("rx_pin", 2)
         self.uart = UART(uart_id, baudrate=baudrate, tx=Pin(self.tx_pin), rx=Pin(self.rx_pin), rxbuf=8192, timeout=timeout)
         self.received_messages = []
+        # Operators to avoid due to known protocol issues or poor performance
         self.BLACKLIST = {
-            'NB-IoT': ['21403'],  # Block Orange NB-IoT (MQTT downlinks not working?)
-            'LTE-M':  ['21401']   # Block Vodafone LTE-M (Vodafone does not support eDRX over LTE-M)
+            2: [],  # Block Orange NB-IoT 21403 (MQTT downlinks not working?)
+            1:  ['21401']   # Block Vodafone LTE-M (Vodafone does not support eDRX over LTE-M)
+        }
+        # Preferred operators known for high stability and full feature support
+        self.WHITELIST = {
+            2: ['21407', '21403'], #Movistar and Orange
+            1:  ['21407'] #Movistar
         }
 
     def send_at_command(self, command, expected_response="OK", timeout=1000):
@@ -53,7 +68,7 @@ class NBIoT:
         self.uart.write(command + "\r\n")
         utils.log_debug(f"Sent AT command: {command}")
 
-        response = self._wait_for_response(expected_response, timeout, command = command)
+        response = self._wait_for_response(expected_response, timeout)
 
         if response:
             utils.log_debug(f"Received response: {response}")
@@ -113,8 +128,18 @@ class NBIoT:
                  utils.log_warning(f"Could not parse MQTT event URC: {urc_line}")
         except Exception as e:
             utils.log_error(f"Error parsing MQTT event URC: {e}, Line: {urc_line}")
+            
+    def _read_line(self, timeout):
+        """
+        Reads and print nrf response.
+        """
+        start_time = time.ticks_ms()
+        while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
+            line = self.uart.readline()
+            if line:
+                utils.log_info(f'Received data: {line}')
 
-    def _wait_for_response(self, expected_response, timeout, command=None): # Added command parameter
+    def _wait_for_response(self, expected_response, timeout): # Added command parameter
         """
         Waits for a specific response, processing URCs in the meantime.
         Args:
@@ -128,8 +153,9 @@ class NBIoT:
         start_time = time.ticks_ms()
         buffer = ""
         response_lines = [] # Stores lines that ARE part of the expected response
-
+        
         while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
+            #utils.log_info(f"While: {time.ticks_diff(time.ticks_ms(), start_time)}")
             if self.uart.any():
                 try:
                     # Read everything available to avoid losing fast URCs
@@ -152,9 +178,9 @@ class NBIoT:
                     utils.log_info("#XMQTTMSG detected!")
                     #topic_line = self._read_uart_until(f'isurlog/config/{config_manager.static_config.get("serial", "c-000")}' ,text_timeout=6000) # Timeout para el topic
                     self._parse_mqtt_msg_urc(buffer)
-                elif line.startswith("#XMQTTEVT:"):
-                    utils.log_info("#XMQTTEVT detected!")
-                    self._parse_mqtt_evt_urc(line)
+                #elif line.startswith("#XMQTTEVT:"):
+                    #utils.log_info("#XMQTTEVT detected!")
+                    #self._parse_mqtt_evt_urc(line)
                 else:
                     # If it's not a known URC, add it to the response lines
                     response_lines.append(line)
@@ -176,7 +202,7 @@ class NBIoT:
                  utils.log_warning(f"Timeout waiting for '{expected_response}'. Received: {full_response_text}")
             return None
     
-    def select_SIM(self, sim="eSIM"):
+    def select_SIM(self, external_sim="eSIM"):
         """
         Selects between the eSIM of the NB-IoT module o the physical external sim.
 
@@ -193,41 +219,188 @@ class NBIoT:
         if not self.send_at_command_check("AT#XGPIOCFG=1,12"): #Set GPIO12 as output.
             return False
         
-        if (sim == "external"):
+        if (external_sim):
             if not self.send_at_command_check("AT#XGPIO=0,12,0"): #Set GPIO12 low.
                 return False
             
-        if (sim == "eSIM"):
+        else:
             if not self.send_at_command_check("AT#XGPIO=0,12,1"): #Set GPIO12 high.
                 return False
             
     def _parse_cops_response(self, response):
         """
         Parses the response from AT+COPS=? to extract a list of (PLMN, AcT) tuples.
-        Example input: '+COPS: (1,"","","21407",7),(1,"","","21403",7)'
-        Example output: [('21407', '7'), ('21403', '7')]
+        Example input: '+COPS: (1,"","","21407",7),(1,"","","21403",9)\r\nOK\r\n'
+        Example output: [('21407', '7'), ('21403', '9')]
         """
         networks = []
-        if "+COPS:" not in response:
+        if not response or "+COPS:" not in response:
             return networks
         
-        # Remove the '+COPS: ' part and split by '),' which separates entries
-        response_part = response.split('+COPS: ')[1]
-        entries = response_part.split('),(')
-        
-        for entry in entries:
-            try:
+        try:
+            # Remove the '+COPS: ' prefix to isolate the data
+            response_part = response.split('+COPS: ')[1]
+            
+            # Split the string into individual network entries
+            entries = response_part.split('),(')
+            
+            for entry in entries:
                 parts = entry.split(',')
-                # The PLMN is the 4th part, AcT is the 5th
-                plmn = parts[3].strip().replace('"', '')
-                act = parts[4].strip().replace(')', '')
-                if plmn: # Ensure PLMN is not empty
-                    networks.append((plmn, act))
-            except IndexError:
-                continue # Ignore malformed entries
-        return networks
+                
+                # Basic validation to ensure the entry has enough components
+                if len(parts) < 5:
+                    continue
 
-    def connect(self, connection_preference, edrx = True, apn = None):
+                # The PLMN is usually the 4th part (index 3)
+                plmn = parts[3].strip().replace('"', '')
+                
+                # The AcT is the 5th part (index 4)
+                # CRITICAL FIX: The last entry often contains trailing garbage (e.g., "9)\r\nOK").
+                # We split by ')' and take the first part to safely isolate the number.
+                act = parts[4].split(')')[0].strip()
+                
+                # Ensure PLMN is valid and AcT is purely numeric before appending
+                if plmn and act.isdigit():
+                    networks.append((plmn, act))
+                    
+        except Exception as e:
+            # Catch parsing errors to prevent crashing the main application loop
+            print(f"Error parsing COPS response: {e}")
+            
+        return networks
+    
+    def _parse_gps_response(self, response):
+        """
+        Parses the response from GPS to extract latitude, longitude, elevation and datetime.
+        Example input: '#XGPS: 35.457576,139.625090,121.473785,22.199919,0.442868,0.000000,"2021-06-02 06:25:48"'
+        Example output: [35.457576, 139.62509, 121.473785, "2021-06-02 06:25:48"]
+        """
+        gps_data = []
+        if not response or "#XGPS:" not in response:
+            return gps_data
+        
+        try:
+            # Remove the '#XGPS: ' prefix and any leading/trailing whitespace
+            response_part = response.strip().split('#XGPS:')[1].strip()
+            
+            # Split the CSV string into individual components
+            parts = response_part.split(',')
+            
+            # Basic validation to ensure we have at least latitude, longitude and elevation
+            if len(parts) >= 3:
+                # Convert the specific indices to float for numerical processing
+                latitude = float(parts[0].strip())
+                longitude = float(parts[1].strip())
+                elevation = float(parts[2].strip())
+                gps_time = parts[6].strip()
+                gps_time = gps_time.replace('"', '')
+                
+                gps_data = [latitude, longitude, elevation, gps_time]
+                
+        except Exception as e:
+            # Catch parsing errors to prevent crashing the main application loop
+            print(f"Error parsing GPS response: {e}")
+            
+        return gps_data
+    
+    def get_gps_coords(self):
+        
+        """
+        Connects to the NTN NB-IoT network.
+
+        Returns:
+            True if the connection is successful, False otherwise.
+        """
+        
+        if not self.send_at_command_check("AT+CFUN=4"):
+            utils.log_error("Failed to set flight mode.")
+            return False
+
+        if not self.send_at_command_check("AT%XANTCFG=1"):
+            utils.log_error("Failed to set ANT conf.")
+            return False
+        if not self.send_at_command_check("AT%XCOEX0=1,1,1570,1580"):
+            utils.log_error("Failed to enable COEX pin for GPS.")
+            return False
+        if not self.send_at_command_check("AT%XSYSTEMMODE=0,0,1,0,0"):
+            utils.log_error("Failed to set system mode.")
+            return False
+        if not self.send_at_command_check("AT+CFUN=31"):
+            utils.log_error("Failed to enable GPS.")
+            return False
+        if not self.send_at_command_check("AT#XGPS=1,0,0,0", expected_response = "XGPS"):
+            utils.log_error("Failed to start GPS data adquisition.")
+            return False
+        
+        # 1. Get GPS data (can take several minutes)
+        gps_response = self._wait_for_response("#XGPS", timeout=60000)
+        utils.log_info(f"GPS response: {gps_response}")
+        
+        if not self.send_at_command_check("AT#XGPS=0"):
+            utils.log_error("Failed to shutdown GPS stack.")
+            return False
+        
+        if not self.send_at_command_check("AT+CFUN=30"):
+            utils.log_error("Failed to turn off GPS.")
+            return False
+        
+        if gps_response and "XGPS" in gps_response:
+            return self._parse_gps_response(gps_response)
+        
+        return []
+    
+    def connect_ntn(self, lat = None, lon = None, elevation = None, apn = None):
+
+        """
+        Connects to the NTN NB-IoT network.
+
+        Returns:
+            True if the connection is successful, False otherwise.
+        """
+        
+        if lat == None or lon == None or elevation == None:
+            utils.log_info("Can't connect to NTN network without exact position (lat/long/elevation missing). Trying to fix GPS...")
+            gps_data = self.get_gps_coords()
+            if gps_data == []:
+                return False
+            lat = gps_data[0]
+            lon = gps_data[1]
+            elevation = gps_data[2]
+            gps_time = gps_data[3]
+            
+            from modules2 import power_manager
+            pm = power_manager.PowerManager()
+            pm.set_rtc_time(gps_time, mode = "GPS")
+            
+        if apn == None:
+            utils.log_error("Can't connect to NTN network without APN.")
+            return False
+        
+        else:
+
+            if not self.send_at_command_check("AT%XSYSTEMMODE=0,0,0,0,1"):
+                utils.log_error("Failed to set system mode.")
+                return False
+            if not self.send_at_command_check('AT%XBANDLOCK=2,,"23,255,256"'):
+                utils.log_error("Failed to set band lock.")
+                return False
+            if not self.send_at_command_check(f'AT%LOCATION=2,"{lat}","{lon}","{elevation}",10,0'):
+                utils.log_error("Failed to set location.")
+                return False
+            if not self.send_at_command_check(f'AT+CGDCONT=1,"IP","{apn}"'):
+                utils.log_error("Failed to set APN.")
+                return False
+            if not self.send_at_command_check("AT+CFUN=1"):
+                utils.log_error("Failed to turn on the modem.")
+                return False
+            
+            if self.wait_for_network_connection(timeout=300000): # Wait for connection
+                utils.log_info(f"Successfully connected to NTN network!")
+                return True
+                
+        return False
+
+    def connect(self, connection_preference, edrx = True, apn = None, ntn = False):
 
         """
         Connects to the NB-IoT network.
@@ -247,17 +420,14 @@ class NBIoT:
         
         response = self.send_at_command("AT%XMONITOR")
         
-        if response and ("%XMONITOR: 1" in response or "%XMONITOR: 5" in response):
-            utils.log_info("Device was connected to the network.")
+        # 1. Check if already connected with data capability
+        if self.wait_for_network_connection(timeout=1000):
+            utils.log_info("Device already fully connected. Skipping selection.")            
+        else:
+
+            if ntn:
+                return self.connect_ntn(apn = apn)
             
-        else:    
-
-            # --- Configure System Mode (Check First) ---
-            if connection_preference == "LTE-M":
-                desired_mode_val = 1
-            elif connection_preference == "NB-IoT":
-                desired_mode_val = 2
-
             query_response = self.send_at_command("AT%XSYSTEMMODE?", "%XSYSTEMMODE:") # Check response starts with %XSYSTEMMODE:
             current_mode_val = -1 # Indicate unknown state
             if query_response:
@@ -267,9 +437,9 @@ class NBIoT:
                 except (IndexError, ValueError) as e:
                     utils.log_warning(f"Could not parse current system mode: {e}")
 
-            if current_mode_val != desired_mode_val:
-                utils.log_info(f"Setting system mode to {connection_preference} ({desired_mode_val})...")
-                if not self.send_at_command_check(f"AT%XSYSTEMMODE=1,1,0,{desired_mode_val}"):
+            if current_mode_val != connection_preference:
+                utils.log_info(f"Setting system mode to {connection_preference}...")
+                if not self.send_at_command_check(f"AT%XSYSTEMMODE=1,1,0,{connection_preference}"):
                     utils.log_error("Failed to set system mode.")
                     return False
             else:
@@ -297,9 +467,9 @@ class NBIoT:
             #Configure eDRX mode ---
             if edrx:
 
-                if connection_preference == "LTE-M":
+                if connection_preference == 1:
                     desired_mode_val = 4
-                elif connection_preference == "NB-IoT":
+                elif connection_preference == 2:
                     desired_mode_val = 5
 
                 if not self.send_at_command_check('AT%PERIODICSEARCHCONF=0,0,0,1,"0,10,40,,5","1,300,600,1800,1800,3600"'): #Ultra low power periodic cell search.
@@ -317,38 +487,38 @@ class NBIoT:
             if not self.send_at_command_check("AT+CFUN=1", "OK", timeout=1000): 
                 return False
             
-            
-            
             utils.log_info("Starting smart network selection...")
             is_connected = False
 
-            # 1. Scan available networks (puede tardar varios minutos)
+            # 1. Scan available networks (can take several minutes)
             scan_response = self.send_at_command('AT+COPS=?', timeout=300000)
             
             if scan_response and "+COPS:" in scan_response:
                 
-                if connection_preference == "LTE-M":
+                if connection_preference == 1:
                     desired_act= 7
-                elif connection_preference == "NB-IoT":
+                elif connection_preference == 2:
                     desired_act = 9
                     
-                available_networks = self._parse_cops_response(scan_response)
-                current_blacklist = self.BLACKLIST.get(connection_preference, [])
+                available_nets = self._parse_cops_response(scan_response)
+                blacklist = self.BLACKLIST.get(connection_preference, [])
+                whitelist = self.WHITELIST.get(connection_preference, [])
                 
-                utils.log_info(f"Networks found: {[net[0] for net in available_networks]}")
-                utils.log_info(f"Blacklist for {connection_preference}: {current_blacklist}")
+                # Filter by Access Technology and exclude Blacklist
+                valid_nets = [n for n in available_nets if int(n[1]) == desired_act and n[0] not in blacklist]
+                
+                # Sort by priority: Whitelist first, then others
+                priority_group = [n for n in valid_nets if n[0] in whitelist]
+                others_group = [n for n in valid_nets if n[0] not in whitelist]
+                
+                final_candidates = priority_group + others_group
+                utils.log_info(f"Found {len(priority_group)} priority networks and {len(others_group)} regular networks.")
 
                 # 2. Connect only to allowed networks
-                for plmn, act in available_networks:
-                    if plmn in current_blacklist:
-                        utils.log_info(f"Operator {plmn} is blacklisted, skipping.")
-                        continue
+                for plmn, act in final_candidates:
+                    is_priority = plmn in whitelist
+                    utils.log_info(f"Attempting connection to PLMN: {plmn} (Priority: {is_priority})")
                     
-                    if int(act) != desired_act:
-                        utils.log_info(f"Ignoring operator {plmn} with AcT {act}.")
-                        continue
-                    
-                    utils.log_info(f"Attempting manual connection to PLMN: {plmn}...")
                     if self.send_at_command_check(f'AT+COPS=1,2,"{plmn}"', timeout = 10000):
                         if self.wait_for_network_connection(timeout=180000): # 3 min timeout per operator
                             utils.log_info(f"Successfully connected to {plmn}!")
@@ -385,6 +555,44 @@ class NBIoT:
                 utils.log_info("eDRX mode set.")
             
         return True
+    
+    def verify_data_connectivity(self):
+        """
+        Verifies if any PDP context has a valid IP address assigned using AT+CGDCONT?.
+        This command directly returns the dynamic parameters of the data session.
+        
+        Returns:
+            bool: True if a non-empty IP address is found in any context, False otherwise.
+        """
+        # AT+CGDCONT? returns the current definition of all contexts
+        # Format: +CGDCONT: <cid>,"<PDP_type>","<APN>","<IP_address>",...
+        res = self.send_at_command("AT+CGDCONT?")
+        
+        if res and "+CGDCONT:" in res:
+            try:
+                lines = res.split('\r\n')
+                for line in lines:
+                    if line.startswith("+CGDCONT:"):
+                        parts = line.split(',')
+                        
+                        # We need at least 4 parts to reach the IP address field (index 3)
+                        if len(parts) >= 4:
+                            # Clean the IP address from quotes and whitespace
+                            ip_addr = parts[3].strip('"').strip()
+                            
+                            # Check if the IP is valid (not empty and not 0.0.0.0)
+                            if ip_addr and ip_addr != "0.0.0.0":
+                                # Extract CID for logging purposes
+                                cid = parts[0].split(': ')[1]
+                                utils.log_info(f"Verified data session on CID {cid}. IP: {ip_addr}")
+                                return True
+                                
+                utils.log_warning("Contexts found, but no valid IP address assigned yet.")
+            except Exception as e:
+                utils.log_error(f"Error parsing CGDCONT response: {e}")
+
+        utils.log_error("No active data context with IP connectivity found.")
+        return False
     
     def wake_up(self, max_attempts = 5):
         
@@ -566,12 +774,17 @@ class NBIoT:
         Returns:
             True if connected, False otherwise.
         """
-
+        # 1. Check physical/network attachment
         response = self.send_at_command("AT%XMONITOR")
         if response and ("%XMONITOR: 1" in response or "%XMONITOR: 5" in response):
             utils.log_info("NB-IoT module connected to the network.")
-            return True
-
+            # 2. CRITICAL: Check if we actually have data throughput capability
+            if self.verify_data_connectivity():
+                utils.log_info("Device fully connected with IP address.")
+                return True
+            else:
+                utils.log_warning("Attached to network but no IP yet.")
+                
         return False
 
     def wait_for_network_connection(self, timeout=60000):
@@ -586,13 +799,20 @@ class NBIoT:
         """
         start_time = time.ticks_ms()
         while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
+            # 1. Check physical/network attachment
             response = self.send_at_command("AT%XMONITOR")
             if response and ("%XMONITOR: 1" in response or "%XMONITOR: 5" in response):
-                utils.log_info("Device connected to the network.")
-                return True
-            time.sleep(2)  # Check every 2 seconds
+                
+                # 2. CRITICAL: Check if we actually have data throughput capability
+                if self.verify_data_connectivity():
+                    utils.log_info("Device fully connected with IP address.")
+                    return True
+                else:
+                    utils.log_warning("Attached to network but no IP yet. Retrying...")
+                    
+            time.sleep_ms(2000)
         return False
-
+    
     def get_signal_quality(self):
         """
         Gets the signal quality.
@@ -686,7 +906,7 @@ class NBIoT:
 
         """
 
-        if not self.send_at_command_check(f'AT#XMQTTCON=1,"{username}","{password}","{url}",{port}', timeout = 2000):
+        if not self.send_at_command_check(f'AT#XMQTTCON=1,"{username}","{password}","{url}",{port}', expected_response = "#XMQTTEVT: 0,0", retries=2, timeout = 30000):
             utils.log_error("Failed to configure MQTT connection.")
             return False
         
@@ -758,9 +978,28 @@ class NBIoT:
             A list of dictionaries, each containing 'topic' and 'message'.
             Returns an empty list if no messages have been received.
         """
-        messages = self.received_messages
+        messages = self.received_messages 
         self.received_messages = [] # Clear the list after retrieving it
         return messages
+    
+    def send_udp_data(self, server, port, serial_num, payload):
+        """
+        Sends data over UDP.
+
+        Returns:
+            True if success, false otherwise.
+        """
+        if not self.send_at_command_check("AT#XSOCKET=1,2,0"):
+            utils.log_error("Failed to open UDP socket.")
+            return False
+        full_payload = f'{serial_num}:{payload}'
+        if not self.send_at_command_check(f'AT#XSENDTO="{server}",{port},"{full_payload}"', expected_response = "OK", timeout = 10000):
+            utils.log_error("Failed to send UDP data.")
+            return False
+        if not self.send_at_command_check("AT#XSOCKET=0"):
+            utils.log_error("Failed to close UDP socket.")
+            return False
+        return True
 
     def _read_full_response(self, timeout=10000, inactivity_timeout=10000):
         """

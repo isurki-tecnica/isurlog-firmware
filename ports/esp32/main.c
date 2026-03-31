@@ -152,6 +152,13 @@ soft_reset:
         }
     }
 
+    // Check authentication and PIN before getting REPL
+    ret = pyexec_frozen_module("modules/_auth.py", false);
+    if (ret & PYEXEC_FORCED_EXIT) {
+       // Authentication failed, perform soft reboot
+       goto soft_reset_exit;
+    }
+
     for (;;) {
         if (pyexec_mode_kind == PYEXEC_MODE_RAW_REPL) {
             vprintf_like_t vprintf_log = esp_log_set_vprintf(vprintf_null);

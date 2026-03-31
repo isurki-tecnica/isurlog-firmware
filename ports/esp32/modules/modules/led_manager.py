@@ -1,5 +1,15 @@
 # src/modules/digital_input_ulp.py
 # -*- coding: utf-8 -*-
+
+# Copyright (C) 2026 ISURKI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 from esp32 import ULP
 from machine import mem32, Pin
 from lib.esp32_ulp import src_to_binary, src_to_binary_ext

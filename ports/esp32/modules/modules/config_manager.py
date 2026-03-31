@@ -1,4 +1,14 @@
 # src/modules/config_manager.py
+
+# Copyright (C) 2026 ISURKI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 import json
 from modules import utils
 
@@ -15,10 +25,16 @@ CONFIG_MAP = {
     'setContinuousMode': ('general', 'continuous_mode', bool),
     'setLoopCycles': ('general', 'loop_cycles'),
     'setMaxPayloadSize': ('general', 'max_payload_size'),
+    'setVDCVoltage': ('general', 'vdc_voltage'),
+    'setTheftAlert': ('general', 'theft_alert', bool),
+    #Battery configuration
+    'setBatteryInputSoC': ('battery_config', 'soc', bool),
+    'setBatteryInputCRate': ('battery_config', 'crate', bool),
     # LoRaWAN
     'setLoRaWANDevEUI': ('communications', 'lorawan', 'dev_eui', lambda v: f"{v:016X}"),
     'setLoRaWANAppEUI': ('communications', 'lorawan', 'app_eui', lambda v: f"{v:016X}"),
     'setLoRaWANAppKey': ('communications', 'lorawan', 'app_key', lambda v: f"{v:032X}"),
+    'setLoRaWANClass': ('communications', 'lorawan', 'class'),
     # NB-IoT
     'setNB_IoTeDRX': ('communications', 'nb_iot', 'edrx', bool),
     # Analog Inputs
@@ -93,7 +109,6 @@ CONFIG_MAP = {
     'setIsurnodeSlaveAddress': ('isurnode_config', 'slave_address'),
     # Isurnode Analog
     'setIsurnodeAnalogPreAcquisition': ('isurnode_config', 'analog_config', 'pre_acquisition'),
-    'setIsurnodeAnalogTriggerAddress': ('isurnode_config', 'analog_config', 'trigger_address'),
     'setIsurnodeAnalogInputEnable': ('isurnode_config', 'analog_config', 'inputs', '{channel}', 'enable', bool),
     'setIsurnodeAnalogInputZero': ('isurnode_config', 'analog_config', 'inputs', '{channel}', 'zero'),
     'setIsurnodeAnalogInputFullScale': ('isurnode_config', 'analog_config', 'inputs', '{channel}', 'full_scale'),
@@ -101,11 +116,8 @@ CONFIG_MAP = {
     'setIsurnodeAnalogInputHigh': ('isurnode_config', 'analog_config', 'inputs', '{channel}', 'high'),
     'setIsurnodeAnalogInputLowCond': ('isurnode_config', 'analog_config', 'inputs', '{channel}', 'low_cond', bool),
     'setIsurnodeAnalogInputHighCond': ('isurnode_config', 'analog_config', 'inputs', '{channel}', 'high_cond', bool),
-    'setIsurnodeAnalogInputAddress': ('isurnode_config', 'analog_config', 'inputs', '{channel}', 'address'),
     # Isurnode SHT30
     'setIsurnodeSHT30Enable': ('isurnode_config', 'SHT30_sensor', 'enable', bool),
-    'setIsurnodeSHT30TriggerAddress': ('isurnode_config', 'SHT30_sensor', 'trigger_address'),
-    'setIsurnodeSHT30Address': ('isurnode_config', 'SHT30_sensor', 'address'),
     'setIsurnodeSHT30TempLow': ('isurnode_config', 'SHT30_sensor', 'temperature_low'),
     'setIsurnodeSHT30TempHigh': ('isurnode_config', 'SHT30_sensor', 'temperature_high'),
     'setIsurnodeSHT30TempLowCond': ('isurnode_config', 'SHT30_sensor', 'temperature_low_cond', bool),
@@ -117,23 +129,36 @@ CONFIG_MAP = {
     # Isurnode Digital Outputs
     'setIsurnodeDigitalOutputEnable': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'enable', bool),
     'setIsurnodeDigitalOutputType': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'type'),
-    'setIsurnodeDigitalOutputAddress': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'address'),
     'setIsurnodeDigitalOutputLogicOp': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'logic_operator'),
-    'setIsurnodeDigitalOutputRetry': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'retry'),
-    'setIsurnodeDigitalOutputRetrySleep': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'retry_sleep'),
     'setIsurnodeDigitalOutputOnTime': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'on_time'),
     # Isurnode Digital Outputs -> Condition 1
-    'setIsurnodeDigOutCond1Sensor': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'conditions', 0, 'sensor'),
-    'setIsurnodeDigOutCond1Low': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'conditions', 0, 'low'),
-    'setIsurnodeDigOutCond1High': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'conditions', 0, 'high'),
-    'setIsurnodeDigOutCond1LowCond': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'conditions', 0, 'low_cond', bool),
-    'setIsurnodeDigOutCond1HighCond': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'conditions', 0, 'high_cond', bool),
+    'setIsurnodeDigitalOutputCond1Enable': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'cond1_enable'),
+    'setIsurnodeDigOutCond1Sensor': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'sensor1'),
+    'setIsurnodeDigOutCond1Low': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'low1'),
+    'setIsurnodeDigOutCond1High': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'high1'),
+    'setIsurnodeDigOutCond1LowCond': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'low1_cond', bool),
+    'setIsurnodeDigOutCond1HighCond': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'high1_cond', bool),
     # Isurnode Digital Outputs -> Condition 2
-    'setIsurnodeDigOutCond2Sensor': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'conditions', 1, 'sensor'),
-    'setIsurnodeDigOutCond2Low': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'conditions', 1, 'low'),
-    'setIsurnodeDigOutCond2High': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'conditions', 1, 'high'),
-    'setIsurnodeDigOutCond2LowCond': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'conditions', 1, 'low_cond', bool),
-    'setIsurnodeDigOutCond2HighCond': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'conditions', 1, 'high_cond', bool),
+    'setIsurnodeDigitalOutputCond2Enable': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'cond2_enable'),
+    'setIsurnodeDigOutCond2Sensor': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'sensor2'),
+    'setIsurnodeDigOutCond2Low': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'low2'),
+    'setIsurnodeDigOutCond2High': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'high2'),
+    'setIsurnodeDigOutCond2LowCond': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'low2_cond', bool),
+    'setIsurnodeDigOutCond2HighCond': ('isurnode_config', 'digital_outputs', 'outputs', '{channel}', 'high2_cond', bool),
+    #NB-IoT parameters
+    'setAPN': ('communications', 'cellular_iot', 'apn'),
+    'setExternalSIM': ('communications', 'cellular_iot', 'external_sim', bool),
+    'setConPreference': ('communications', 'cellular_iot', 'preference'),
+    #WiFi parameters
+    'setWiFiSSID': ('communications', 'wifi', 'ssid'),
+    'setWiFiPsswd': ('communications', 'wifi', 'password'),
+    #MQTT parameters
+    'setMQTTIP': ('communications', 'mqtt', 'ip'),
+    'setMQTTPort': ('communications', 'mqtt', 'port'),
+    'setMQTTUser': ('communications', 'mqtt', 'user'),
+    'setMQTTPasswd': ('communications', 'mqtt', 'passwd'),
+    'setMQTTBaseTopic': ('communications', 'mqtt', 'base_topic'),
+
 }
 
 class ConfigManager:
@@ -258,7 +283,7 @@ class ConfigManager:
             
         # Save the final configuration only once after all updates are applied
         utils.log_info(f"Final dynamic config to be saved: {self.get_dynamic()}")
-        self.save_dynamic_config()
+        self.save_dynamic_config_pretty()
 
     def save_dynamic_config(self):
         """Saves the current dynamic configuration to its file."""
@@ -268,6 +293,36 @@ class ConfigManager:
             utils.log_info(f"Dynamic configuration saved to {self.dynamic_config_path}")
         except OSError as e:
             utils.log_error(f"Error saving dynamic configuration to {self.dynamic_config_path}: {e}")
+            
+    def save_dynamic_config_pretty(self):
+        """Saves the dynamic configuration with indentation for human readability."""
+        try:
+            # Helper function to indent JSON manually in MicroPython
+            def manual_indent(obj, level=0):
+                spacing = "    " # 4 spaces
+                indent = spacing * level
+                if isinstance(obj, dict):
+                    if not obj: return "{}"
+                    items = [f'\n{spacing * (level + 1)}"{k}": {manual_indent(v, level + 1)}' 
+                             for k, v in obj.items()]
+                    return "{" + ",".join(items) + "\n" + indent + "}"
+                elif isinstance(obj, list):
+                    if not obj: return "[]"
+                    items = [manual_indent(x, level + 1) for x in obj]
+                    return "[" + ", ".join(items) + "]"
+                else:
+                    # Use standard json.dumps for basic types (strings, ints, bools)
+                    return json.dumps(obj)
+
+            # Generate the pretty string
+            pretty_json = manual_indent(self.dynamic_config)
+
+            with open(self.dynamic_config_path, "w") as f:
+                f.write(pretty_json)
+                
+            utils.log_info(f"Dynamic configuration saved (pretty) to {self.dynamic_config_path}")
+        except Exception as e:
+            utils.log_error(f"Error saving pretty configuration: {e}")
 
 # Create a single, global instance of the ConfigManager
 config_manager = ConfigManager()
