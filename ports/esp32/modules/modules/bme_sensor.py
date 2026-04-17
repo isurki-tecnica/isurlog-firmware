@@ -21,7 +21,10 @@ from lib.bme280_float import BME280
 def BME_CHIP_ID(sda_pin=None, scl_pin=None, i2c_freq=None, address=0x76):
     
     """
-    Function to get CHIP_ID of the BME sensor. CHIP_ID is 0x58 (88) for BME280 and 0x61 (97) for BME680
+    Function to get CHIP_ID of the BME sensor:
+    - 0x58 (88) for BMP280
+    - 0x60 (96) for BME280
+    - 0x61 (97) for BME680
     """
     
     sda_pin = sda_pin if sda_pin is not None else config_manager.static_config.get("pinout", {}).get("i2c", {}).get("sda_pin", 18)

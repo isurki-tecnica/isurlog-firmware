@@ -173,7 +173,7 @@ class IsurlogLPPEncoder:
             'setWiFiPsswd': {'type': "97", 'size': 0, 'multipl': 1, 'signed': False},
             'setLoRaWANClass': {'type': "98", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 2},
             'setMQTTIP':        {'type': "99", 'size': 0, 'multipl': 1, 'signed': False},
-            'setMQTTPort':      {'type': "9A", 'size': 2, 'multipl': 1, 'signed': False},
+            'setMQTTPort':      {'type': "9A", 'size': 0, 'multipl': 1, 'signed': False},
             'setMQTTUser':      {'type': "9B", 'size': 0, 'multipl': 1, 'signed': False},
             'setMQTTPasswd':    {'type': "9C", 'size': 0, 'multipl': 1, 'signed': False},
             'setMQTTBaseTopic': {'type': "9D", 'size': 0, 'multipl': 1, 'signed': False},

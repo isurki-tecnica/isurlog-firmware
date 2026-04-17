@@ -149,7 +149,13 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10,
                 from modules import bme_sensor
                 CHIP_ID = bme_sensor.BME_CHIP_ID()
                 
-                if CHIP_ID == 88: #Sensor is BME280
+                if CHIP_ID == 88: #Sensor is BMP280
+                    utils.log_info("Sensor is BMP280!")
+                    bme_sensor = bme_sensor.BME280Sensor()
+                    sensor_data = bme_sensor.read_data()
+                    read_sensors.append(118)
+                    
+                elif CHIP_ID == 96: #Sensor is BME280
                     utils.log_info("Sensor is BME280!")
                     bme_sensor = bme_sensor.BME280Sensor()
                     sensor_data = bme_sensor.read_data()
@@ -597,9 +603,9 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
                 sensor1_id = output_channel.get("sensor1") #Sensor1 asociatted to the regulation.
                 sensor2_id = output_channel.get("sensor2") #Sensor2 asociatted to the regulation.
                 
-                if (pm.wakeup_reason == "Power-on reset"): #Init all EVs as disabled.
+                if (pm.wakeup_reason == "Power-on reset") and not ble: #Init all EVs as disabled.
                     utils.log_info(f'  - Setting valve to default state --> CLOSE.')
-                    modbus_module.write_register(slave_address, channel_out+201, 1)
+                    modbus_module.write_register(slave_address, channel_out*2+201, 1)
                     time.sleep(1)
                     rtc_memory.set_ev_state(channel_out, 0)
 
@@ -678,12 +684,12 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
                 
                     if should_be_active and not rtc_memory.get_ev_state(channel_out):
                         utils.log_info(f"  - Sending OPEN pulse.")
-                        modbus_module.write_register(slave_address, channel_out + 200, 1)
+                        modbus_module.write_register(slave_address, channel_out*2 + 200, 1)
                         time.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
                         rtc_memory.set_ev_state(channel_out, 1)
                     elif not should_be_active and rtc_memory.get_ev_state(channel_out):
                         utils.log_info(f"  - Sending CLOSE pulse.")
-                        modbus_module.write_register(slave_address, channel_out + 201, 1)
+                        modbus_module.write_register(slave_address, channel_out*2 + 201, 1)
                         time.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
                         rtc_memory.set_ev_state(channel_out, 0)
                         
@@ -699,7 +705,7 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
                 if on_time < 150:
                     on_time = 150
                     
-                if pm.wakeup_reason == "Power-on reset":
+                if pm.wakeup_reason == "Power-on reset" and not ble:
                     
                     utils.log_info(f'Setting valve{channel_out} to default state.')
                     modbus_addr =  output_channel.get("channel")*4+200
@@ -813,9 +819,9 @@ def process_sd_ev_manual_command(command):
         
         command = command.strip("EV")
         channel, param = command.split(" ")
-        channel = int(channel)*2
+        channel = int(channel)
         param = int(param)
-        modbus_addr = channel + 200
+        modbus_addr = channel*2 + 200
         
         utils.log_info(f'Channel:{channel} Slave address:{slave_address} Modbus address:{modbus_addr} Param:{param}')
         
@@ -854,18 +860,27 @@ def process_ble_command(received_bytes):
     It converts bytes to a hex string, decodes it, and applies the configuration.
     """
     utils.log_info(f"BLE command received (raw bytes): {repr(received_bytes)}")
-    try:
-        # 1. Convert the received bytes to a hexadecimal string
-        hex_payload = ubinascii.hexlify(received_bytes).decode('ascii')
-        utils.log_info(f"Payload converted to hex: '{hex_payload}'")
-        encoder = IsurlogLPPEncoder()
-        decoded_message = encoder.decode(hex_payload.upper())
+    
+    
+    if b"SD" in received_bytes or b"EV" in received_bytes: #DIGITAL OUTPUT CONTROL  (SSR or LATCHING VALVE)
+        received_bytes = received_bytes.decode('ascii')
+        utils.log_info("Processing manual command...")
+        process_sd_ev_manual_command(received_bytes)
+        
+    else:
+                            
+        try:
+            # 1. Convert the received bytes to a hexadecimal string
+            hex_payload = ubinascii.hexlify(received_bytes).decode('ascii')
+            utils.log_info(f"Payload converted to hex: '{hex_payload}'")
+            encoder = IsurlogLPPEncoder()
+            decoded_message = encoder.decode(hex_payload.upper())
 
-        # 2. Call the function from your ConfigUpdater module to do the work
-        #    This function already decodes and saves the JSON file.
-        config_manager.apply_conf_update(decoded_message)
-    except Exception as e:
-        utils.log_error(f"Fatal error processing BLE command: {e}")
+            # 2. Call the function from your ConfigUpdater module to do the work
+            #    This function already decodes and saves the JSON file.
+            config_manager.apply_conf_update(decoded_message)
+        except Exception as e:
+            utils.log_error(f"Fatal error processing BLE command: {e}")
 
 async def ble_mode_task(blinky, pm, ser_num):
     utils.log_info("Magnet wakeup detected. Starting BLE mode...")
@@ -887,6 +902,7 @@ async def ble_mode_task(blinky, pm, ser_num):
         while not ble.client_disconnected: # Wait until client disconnects
             # Read data from active sensors
             live_data, _ = read_all_sensors(pm, 0, ble = True)
+            live_data, _ = read_isurnode_data(pm, 0, live_data, False, ble = True)
             
             print(live_data)
 
@@ -910,8 +926,8 @@ if __name__ == "__main__":
     print("\n####WELCOME TO ISURLOG OS v.1.0.6 MICROPYTHON FLAVOUR####\n")
     
     if AUTH_FILE in os.listdir():
-        #os.remove(AUTH_FILE)
-        pass
+        os.remove(AUTH_FILE)
+        #pass
     
     ser_num = config_manager.static_config.get("serial", "c-000")
     modem_type = config_manager.static_config.get("modem", "nb-iot")
