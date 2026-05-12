@@ -1,6 +1,6 @@
 import time
 from machine import Pin, reset, WDT, UART, deepsleep, I2C
-from modules import power_manager
+from modules.power_manager import pm
 from modules import utils
 from modules.config_manager import config_manager
 from lib.IsurlogLPP import IsurlogLPPEncoder
@@ -8,7 +8,7 @@ from modules.rtc_memory import RTC_Memory
 from modules.led_manager import LEDManagerULP
 from lib.ota import rollback
 from lib.mcp4017 import MCP4017
-from modules.theft_manager import TheftManager
+from modules.accel_manager import Accelerometer
 import os
 
 AUTH_FILE = 'auth'
@@ -25,7 +25,6 @@ except Exception as e:
 
 def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10, isurnode_enabled = False):
         
-    #pm.rtc.get_unix_time()
     data = [[0, "addUnixTime", pm.rtc.get_unix_time()]]
     alarm_condition = False
 
@@ -35,7 +34,8 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10,
     pt100_config = config_manager.get_dynamic("pt100_config")
     output_config = config_manager.get_dynamic("output_config")
     battery_config = config_manager.get_dynamic("battery_config")
-
+    accel_config = config_manager.get_dynamic("accelerometer_config")
+    
     num_modbus_enabled = sum(ch.get("enable", False) for ch in modbus_config.get("inputs", [])) if modbus_config else 0
     num_analog_enabled = sum(ch.get("enable", False) for ch in analog_config.get("inputs", [])) if analog_config else 0
     pt100_enabled = pt100_config and pt100_config.get("enable", False)
@@ -75,6 +75,26 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10,
         data.append([0, "addVoltageInput", battery_voltage])
     else:
         utils.log_error("Error reading battery voltage.")
+        
+    # LIS2DH12 measurement
+    
+    if accel_config and accel_config.get("enable", False):
+        
+        accel = Accelerometer()
+        if accel.hardware_ready:
+            accel_values  = list(accel.sensor.read_acceleration)
+            utils.log_info(f"Accelerometer acceleration: x: {accel_values[0]}g, y: {accel_values[1]}g, z: {accel_values[2]}g,")
+            data.append([0, "addAccelerometer", accel_values[0], accel_values[1], accel_values[2]])
+            
+            #Check alarms for every axis acceleration
+            for axis_config in accel_config["axles"]:
+                
+                channel = axis_config.get("channel")
+                #Check alarms axis acceleration
+                if (register_mode and (axis_config.get("low_cond", False)) and (accel_values[channel] < axis_config.get("low", 0))):
+                    alarm_condition = True
+                if (register_mode and (axis_config.get("high_cond", False)) and (accel_values[channel] > axis_config.get("high", 0))):
+                    alarm_condition = True
 
     reg_on_t = time.time()
     
@@ -82,7 +102,7 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10,
             
         if num_modbus_enabled > 0 or num_analog_enabled > 0 or pt100_enabled:
             pm.control_vdc(1)
-            time.sleep_ms(250)
+            pm.smart_sleep(250, ble=ble)
             
         if num_modbus_enabled > 0 or pt100_enabled:
             pm.control_5v(1)
@@ -224,7 +244,7 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10,
         if pre_acquisition_time > 0:
             utils.log_info(f"Starting Analog pre-acquisition delay: {pre_acquisition_time} ms")
             while (time.time() - reg_on_t) * 1000 < pre_acquisition_time:
-                time.sleep(0.5)
+                pm.smart_sleep(500, ble=ble)
             utils.log_info("Analog pre-acquisition delay finished.")
 
     if num_modbus_enabled > 0:
@@ -255,7 +275,7 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10,
         if pre_acquisition_time > 0:
             utils.log_info(f"Starting Modbus pre-acquisition delay: {pre_acquisition_time} ms")
             while (time.time() - reg_on_t) * 1000 < pre_acquisition_time:
-                time.sleep(0.5)
+                pm.smart_sleep(500, ble=ble)
             utils.log_info("Modbus pre-acquisition delay finished.")
 
 
@@ -299,7 +319,7 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10,
                 long_int = channel_config.get("long_int", False)
                 
                 value = modbus_module.read_modbus_data(slave_addr, fc, register_addr, is_fp)
-                time.sleep_ms(100)
+                pm.smart_sleep(100, ble=ble)
 
                 if value is not None:
                     if not is_fp:
@@ -358,7 +378,7 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10,
             utils.log_info("Feeding WDT from read_all_sensors task.")
             wdt.feed()
         if (loop_counter < n_loop):
-            time.sleep(5)
+            pm.smart_sleep(5000, ble=ble)
                 
                 
     if (not ble) and (not isurnode_enabled):
@@ -454,7 +474,7 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
         return data, alarm_condition # No changes.
     
     pm.control_vdc(1)
-    time.sleep_ms(250)
+    pm.smart_sleep(250, ble=ble)
     pm.control_5v(1)
 
     from modules import modbus_sensor
@@ -482,13 +502,13 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
             channel = 2 #Fixed channel
             
             if modbus_module.write_register(slave_address, trigger_addr, 1):
-                time.sleep_ms(1000)
+                pm.smart_sleep(1000, ble=ble)
             
                 utils.log_info(f"SHT30: Trigger completed, reading temperature and humidity...")
                 temperature = modbus_module.read_modbus_data(slave_address, 4, read_addr, False)[0]/100
-                time.sleep_ms(150) #Sleep 150ms, STM32L4 is MicroPython is slow.
+                pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 is MicroPython is slow.
                 humidity = modbus_module.read_modbus_data(slave_address, 4, read_addr+1, False)[0]/100
-                time.sleep_ms(150) #Sleep 150ms, STM32L4 is MicroPython is slow.
+                pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 is MicroPython is slow.
                 
                 data.append([channel, "addTemperatureSensor", temperature])
                 data.append([channel, "addHumiditySensor", humidity])
@@ -530,7 +550,7 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
                  remaining_ms = pre_acquisition_time - (now - reg_on_t) * 1000
                  if remaining_ms > 1000:
                       utils.log_info(f"Analog sensor pre-acquisition: waiting {remaining_ms:.0f} ms...")
-                 time.sleep(0.5)
+                 pm.smart_sleep(500, ble=ble)
                  now = time.time()
             utils.log_info("Pre-acquisition delay finished.")
         else:
@@ -543,7 +563,7 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
             # 1. Trigger all analog inputs acquisition at once
             if modbus_module.write_register(slave_address, trigger_addr, 1):
                 
-                time.sleep_ms(1000)
+                pm.smart_sleep(1000, ble=ble)
                 utils.log_info(f"SHT30: Trigger completed, reading temperature and humidity...")
                 
                 # 3. Iterate and read each configured analog input
@@ -568,7 +588,7 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
                             if register_mode and analog_input.get("high_cond", False) and value > analog_input.get("high", 0): # Corrected 'hi' to 'high'
                                 alarm_condition = True
                                 
-                            time.sleep_ms(150) #Sleep 150ms, STM32L4 is MicroPython is slow.
+                            pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 is MicroPython is slow.
                             
                         except Exception as e:
                             utils.log_error(f"Error reading analog input at address {read_addr}: {e}")
@@ -590,7 +610,7 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
             if not output_channel.get("enable", False):
                 continue
 
-            time.sleep(5) #Sleep for recharging the capacitor.
+            pm.smart_sleep(5000, ble=ble) #Sleep for recharging the capacitor.
             channel_out = output_channel.get("channel")
             valve_type = output_channel.get("type") # ON/OFF: 1, Proportional: 2
             
@@ -606,7 +626,7 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
                 if (pm.wakeup_reason == "Power-on reset") and not ble: #Init all EVs as disabled.
                     utils.log_info(f'  - Setting valve to default state --> CLOSE.')
                     modbus_module.write_register(slave_address, channel_out*2+201, 1)
-                    time.sleep(1)
+                    pm.smart_sleep(1000, ble=ble)
                     rtc_memory.set_ev_state(channel_out, 0)
 
                 # Find the LPP type and channel for the required sensor
@@ -685,12 +705,12 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
                     if should_be_active and not rtc_memory.get_ev_state(channel_out):
                         utils.log_info(f"  - Sending OPEN pulse.")
                         modbus_module.write_register(slave_address, channel_out*2 + 200, 1)
-                        time.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
+                        pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 with MicroPython is slow.
                         rtc_memory.set_ev_state(channel_out, 1)
                     elif not should_be_active and rtc_memory.get_ev_state(channel_out):
                         utils.log_info(f"  - Sending CLOSE pulse.")
                         modbus_module.write_register(slave_address, channel_out*2 + 201, 1)
-                        time.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
+                        pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 with MicroPython is slow.
                         rtc_memory.set_ev_state(channel_out, 0)
                         
                 #Append last valve state to data (Only ON-OFF valve and if output rule is defined)
@@ -711,11 +731,11 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
                     modbus_addr =  output_channel.get("channel")*4+200
                     close_addr = modbus_addr + 1
                     modbus_module.write_register(slave_address, close_addr, 1)
-                    time.sleep(1)
+                    pm.smart_sleep(1000, ble=ble)
                     modbus_addr =  output_channel.get("channel")*4+202
                     close_addr = modbus_addr + 1
                     modbus_module.write_register(slave_address, close_addr, 1)
-                    time.sleep(1)
+                    pm.smart_sleep(1000, ble=ble)
                     
                 # Find the LPP type and channel for the required sensor
                 if sensor1_id not in SENSOR_MAP:
@@ -747,11 +767,11 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
                         modbus_module.write_register(slave_address, open_addr, 1)
                         
                         # Wait for the specified duration
-                        time.sleep_ms(on_time)
+                        pm.smart_sleep(on_time, ble=ble)
                         
                         # Send CLOSE pulse
                         modbus_module.write_register(slave_address, close_addr, 1)
-                        time.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
+                        pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 with MicroPython is slow.
                         
                     if output_channel.get("high1_cond", False) and sensor_value > output_channel.get("high1", 0):
                         
@@ -763,11 +783,11 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
                         modbus_module.write_register(slave_address, open_addr, 1)
                         
                         # Wait for the specified duration
-                        time.sleep_ms(on_time)
+                        pm.smart_sleep(on_time, ble=ble)
                         
                         # Send CLOSE pulse
                         modbus_module.write_register(slave_address, close_addr, 1)
-                        time.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
+                        pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 with MicroPython is slow.
 
     if (not ble):
         pm.control_vdc(0)
@@ -778,7 +798,7 @@ def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
     return data, alarm_condition
 
 
-def process_sd_ev_manual_command(command):
+def process_sd_ev_manual_command(command, ble = False):
 
     if "SD" in command:
         
@@ -798,9 +818,9 @@ def process_sd_ev_manual_command(command):
             return
     
         pm.control_vdc(1)
-        time.sleep_ms(250)
+        pm.smart_sleep(250, ble=ble)
         pm.control_5v(1)
-        time.sleep_ms(4000)
+        pm.smart_sleep(4000, ble=ble)
         
         isurnode_config = config_manager.get_dynamic("isurnode_config")
         do_config = isurnode_config.get("digital_outputs")
@@ -843,11 +863,11 @@ def process_sd_ev_manual_command(command):
             modbus_module.write_register(slave_address, open_addr, 1)
             
             # Wait for the specified duration
-            time.sleep_ms(param)
+            pm.smart_sleep(param, ble=ble)
             
             # Send CLOSE pulse
             modbus_module.write_register(slave_address, close_addr, 1)
-            time.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
+            pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 with MicroPython is slow.
             
         pm.control_vdc(0)
         pm.control_5v(0)
@@ -865,7 +885,7 @@ def process_ble_command(received_bytes):
     if b"SD" in received_bytes or b"EV" in received_bytes: #DIGITAL OUTPUT CONTROL  (SSR or LATCHING VALVE)
         received_bytes = received_bytes.decode('ascii')
         utils.log_info("Processing manual command...")
-        process_sd_ev_manual_command(received_bytes)
+        process_sd_ev_manual_command(received_bytes,  ble = True)
         
     else:
                             
@@ -919,20 +939,18 @@ async def ble_mode_task(blinky, pm, ser_num):
                 wdt.feed()
     
     utils.log_info("BLE client disconnected. Continiuing with normal mode...")
-    time.sleep(2)
+    pm.smart_sleep(2000)
 
 if __name__ == "__main__":
 
-    print("\n####WELCOME TO ISURLOG OS v.1.0.6 MICROPYTHON FLAVOUR####\n")
+    print("\n####WELCOME TO ISURLOG OS v.1.0.9 MICROPYTHON FLAVOUR####\n")
     
     if AUTH_FILE in os.listdir():
-        os.remove(AUTH_FILE)
-        #pass
+        #os.remove(AUTH_FILE)
+        pass
     
     ser_num = config_manager.static_config.get("serial", "c-000")
     modem_type = config_manager.static_config.get("modem", "nb-iot")
-    # --- Power Management ---
-    pm = power_manager.PowerManager()
     
     # --- Initialize Variables ---
 
@@ -954,13 +972,13 @@ if __name__ == "__main__":
     Pin(config_manager.static_config.get("pinout", {}).get("rs485", {}).get("re_pin", 33), hold=False)
 
     #Check/Enable anti theft system
-    tft = TheftManager()
-    if tft.hardware_ready:
+    accel = Accelerometer()
+    if accel.hardware_ready:
         if config_manager.dynamic_config["general"].get("theft_alert", False):
-            tft.check_wakeup()
+            accel.check_wakeup()
             wake_up_sources.append(MCP_WAKEUP_PIN_NUM)
         else:
-            tft.disarm()
+            accel.disarm()
     
     if modem_type != "wifi":
         pm.set_cpu_freq("low-power")
@@ -974,10 +992,8 @@ if __name__ == "__main__":
     if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
         
         if (pm.wakeup_reason == "Power-on reset"):
-            pm.set_cpu_freq("balanced")
             blinky.load_ulp() #Load Blinky only on Power-on reset
-            if modem_type != "wifi":
-                pm.set_cpu_freq("low-power")
+            
         blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500, wake_up_period=2) #Set Blinky blinking.
     
     #Set VDC voltage via I2C
@@ -991,7 +1007,7 @@ if __name__ == "__main__":
         
         #Turn on both regulator (for calibration por instance)
         pm.control_vdc(1)
-        time.sleep_ms(250)
+        pm.smart_sleep(250)
         pm.control_5v(1)
         if output_config.get("active_vdc", False):
             pm.control_digital_output(1)
@@ -1197,7 +1213,7 @@ if __name__ == "__main__":
                     utils.log_info(f"Publishing payload {i+1}: {payload}")
                     if mqtt_client.publish(f"{base_topic}/datos/{ser_num}", payload):
                         utils.log_error(f"Failed to publish payload {i+1}")
-                    time.sleep(1)
+                    pm.smart_sleep(500)
                 else:
                     utils.log_info(f"Skipping empty payload at index {i+1}")
                     
@@ -1234,7 +1250,7 @@ if __name__ == "__main__":
                                         utils.log_info("Update process finished, rebooting in 5 seconds...")
                                         if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
                                             utils.log_error(f"Failed to publish response")
-                                        time.sleep(5)
+                                        pm.smart_sleep(5000)
                                         reset()
 
                             if update_type == "upython_update":
@@ -1262,7 +1278,7 @@ if __name__ == "__main__":
                                                     utils.log_info("Update process finished, rebooting in 5 seconds...")
                                                     if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
                                                         utils.log_error(f"Failed to publish response")
-                                                    time.sleep(5)
+                                                    pm.smart_sleep(5000)
                                                     reset()
                                             except OSError:
                                                  pass
@@ -1309,7 +1325,7 @@ if __name__ == "__main__":
                 if not nb_iot_module.mqtt_check_connection():
                     if not nb_iot_module.check_network_connection():
                         nb_iot_module.reset() #Reset NB-IoT module
-                        time.sleep(5)
+                        pm.smart_sleep(5000)
                         reset() #Reset ESP32
                     if not nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", "80.24.238.36"), mqtt_config.get("port", 1883)):
                         utils.log_error("Failed to connect to MQTT broker")
@@ -1317,9 +1333,17 @@ if __name__ == "__main__":
                         pm.go_to_sleep()
                     nb_iot_module.mqtt_subscribe(f"{base_topic}/config/{ser_num}", QoS=2)
                     
+            total_payloads = len(payloads)
             for i, payload in enumerate(payloads):
                 #Publish not empty payloads only.
                 if payload:
+                    if (i == total_payloads - 1) and (config_manager.dynamic_config["communications"]["cellular_iot"].get("signal_data", False)):
+                        signal_data = nb_iot_module.get_signal_data()
+                        extra_data = []
+                        extra_data.append([0, "addModemData", signal_data[0]])
+                        extra_data.append([1, "addModemData", signal_data[1]])
+                        encoded_extra_payload = encoder.encode(extra_data)
+                        payload += encoded_extra_payload
                     utils.log_info(f"Publishing payload {i+1}: {payload}")
                     if not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
                         if not nb_iot_module.mqtt_publish(f"{base_topic}/datos/{ser_num}", payload):
@@ -1327,11 +1351,11 @@ if __name__ == "__main__":
                     else:
                         if not nb_iot_module.check_network_connection():
                             nb_iot_module.reset() #Reset NB-IoT module
-                            time.sleep(5)
+                            pm.smart_sleep(5000)
                             reset() #Reset ESP32
                         if not nb_iot_module.send_udp_data(mqtt_config.get("ip", "80.24.238.36"), mqtt_config.get("port", 1883), ser_num, payload):
                             utils.log_error(f"Failed to publish payload {i+1}")
-                    time.sleep(1)
+                    pm.smart_sleep(500)
                 else:
                     utils.log_info(f"Skipping empty payload at index {i+1}")
                 
@@ -1368,7 +1392,7 @@ if __name__ == "__main__":
                                         utils.log_info("Update process finished, rebooting in 5 seconds...")
                                         if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
                                             utils.log_error(f"Failed to publish response")
-                                        time.sleep(5)
+                                        pm.smart_sleep(5000)
                                         reset()
 
                             if update_type == "upython_update":
@@ -1396,7 +1420,7 @@ if __name__ == "__main__":
                                                     utils.log_info("Update process finished, rebooting in 5 seconds...")
                                                     if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
                                                         utils.log_error(f"Failed to publish response")
-                                                    time.sleep(5)
+                                                    pm.smart_sleep(5000)
                                                     reset()
                                             except OSError:
                                                  pass
@@ -1444,7 +1468,7 @@ if __name__ == "__main__":
                     utils.log_info(f"Publishing payload {i+1}: {payload}")
                     if not lorawan_module.send_uplink(2, payload):
                         utils.log_error(f"Failed to publish payload {i+1}")
-                    time.sleep(1)
+                    pm.smart_sleep(500)
                 else:
                     utils.log_info(f"Skipping empty payload at index {i+1}")
                     
@@ -1489,29 +1513,4 @@ if __name__ == "__main__":
     if continuous_mode:
         deepsleep(1000)
     pm.go_to_sleep()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

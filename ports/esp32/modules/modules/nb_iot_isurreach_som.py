@@ -14,6 +14,7 @@ import json
 from modules.config_manager import config_manager
 import ubinascii
 import os
+from modules.power_manager import pm
 
 try:
     _ = ConnectionError
@@ -76,7 +77,7 @@ class NBIoT:
             utils.log_error(f"Timeout waiting for response to AT command: {command}")
         return response
     
-    def send_at_command_check(self, command, expected_response="OK", timeout=2000, retries=3, retry_delay=1):
+    def send_at_command_check(self, command, expected_response="OK", timeout=2000, retries=3, retry_delay=1000):
         """
         Sends an AT command and checks the response, retrying if necessary.
 
@@ -94,7 +95,7 @@ class NBIoT:
             if response and expected_response in response:
                 return True
             utils.log_warning(f"AT command failed, retrying ({i+1}/{retries})...")
-            time.sleep(retry_delay)  # Wait before retrying
+            pm.smart_sleep(retry_delay)  # Wait before retrying
         utils.log_error(f"AT command '{command}' failed after {retries} retries.")
         return False
     
@@ -190,7 +191,7 @@ class NBIoT:
                     if expected_response in full_response_text:
                          return full_response_text
 
-            time.sleep_ms(20)
+            pm.smart_sleep(20)
 
         # Timeout: Return what was accumulated if it contains the response, otherwise None
         full_response_text = "\r\n".join(response_lines)
@@ -610,7 +611,7 @@ class NBIoT:
         
             if not self.send_at_command_check("AT", "OK", timeout=1000, retries = 1):
                 Pin(config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("nb_iot_wake_up", 18), Pin.OUT, value=0, hold=True)
-                time.sleep_ms(100)
+                pm.smart_sleep(100)
                 Pin(config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("nb_iot_wake_up", 18), Pin.OUT, value=1, hold=True)
                 attempts += 1
             
@@ -677,9 +678,9 @@ class NBIoT:
         EN_COM_MODULE = config_manager.static_config.get("pinout", {}).get("control", {}).get("en_nbiot_pin", 5)
         
         Pin(EN_COM_MODULE, Pin.OUT, Pin.PULL_UP, value=0, hold=True)
-        time.sleep(1)
+        pm.smart_sleep(5000)
         Pin(EN_COM_MODULE, Pin.OUT, Pin.PULL_UP, value=1, hold=True)
-        time.sleep(1)
+        pm.smart_sleep(1000)
 
         return self.send_at_command_check("AT", timeout=4000)
 
@@ -786,6 +787,30 @@ class NBIoT:
                 utils.log_warning("Attached to network but no IP yet.")
                 
         return False
+    
+    def get_signal_data(self):
+        """
+        Retrieves signal quality data from modem.
+
+        Returns:
+            RSRP,RSQR
+        """
+        response = self.send_at_command("AT+CESQ", "+CESQ:", timeout=2000) #Expect a response that starts by "+CESQ:"
+        if response:
+            try:
+                # Extract RSRP and RSQR. Response format: +CESQ: rxlev,ber,rscp,ecno,rsrq,rsrp
+                data = response.split(' ')[1]
+                data = data.split(',')
+                rsrq = int(data[4])
+                rsrp = int(data[5])
+                utils.log_info(f"Modem RSRP: {rsrq} Modem RSQR: {rsrp}")
+                return [rsrq, rsrp]
+            except (IndexError, ValueError) as e:
+                utils.log_error(f"Error parsing modem signal data: {e}, response: {response}")
+                return None
+        else:
+            utils.log_error("Failed to get modem signal data.")
+            return None
 
     def wait_for_network_connection(self, timeout=60000):
         """
@@ -810,25 +835,8 @@ class NBIoT:
                 else:
                     utils.log_warning("Attached to network but no IP yet. Retrying...")
                     
-            time.sleep_ms(2000)
+            pm.smart_sleep(2000)
         return False
-    
-    def get_signal_quality(self):
-        """
-        Gets the signal quality.
-
-        Returns:
-            The signal quality (CSQ) as a string, or None if an error occurred.
-        """
-        response = self.send_at_command("AT+CSQ")
-        if response:
-            # Parse the response to extract the CSQ value
-            # Example response: +CSQ: 18,99
-            parts = response.split(":")
-            if len(parts) == 2:
-                csq_part = parts[1].split(",")[0].strip()
-                return csq_part
-        return None
     
     def get_ip_address(self):
         """
@@ -963,7 +971,7 @@ class NBIoT:
 
         """
 
-        if not self.send_at_command_check(f'AT#XMQTTSUB="{topic}",{QoS}', timeout = 10000, retries = 5, retry_delay = 10):
+        if not self.send_at_command_check(f'AT#XMQTTSUB="{topic}",{QoS}', timeout = 10000, retries = 5, retry_delay = 10000):
             utils.log_error("Failed to configure MQTT connection.")
             return False
         
@@ -1033,13 +1041,13 @@ class NBIoT:
                     urc_count = response_bytes.count(urc_pattern)
 
                     if urc_count >= 2:
-                        time.sleep_ms(50) # Short final wait
+                        pm.smart_sleep(50) # Short final wait
                         if self.uart.any(): response_bytes.extend(self.uart.read(self.uart.any()))
                         utils.log_info(f"READ_USER_OPT: Second {urc_pattern!r} detected ({len(response_bytes)} bytes).")
                         return bytes(response_bytes) # Success
             else:
                 # CRITICAL! Only sleep if there is NO data.
-                time.sleep_ms(1) # Yield CPU very briefly
+                pm.smart_sleep(1) # Yield CPU very briefly
 
             # Failsafe: Inactivity timeout
             if time.ticks_diff(time.ticks_ms(), last_data_time) > inactivity_timeout:
@@ -1107,7 +1115,7 @@ class NBIoT:
             data = self.uart.read(self.uart.any())
             if data:
                 bytes_cleared += len(data)
-            time.sleep_ms(5)
+            pm.smart_sleep(5)
         if bytes_cleared > 0:
             utils.log_warning(f"CLEAR_UART: Discarded {bytes_cleared} unexpected bytes from UART buffer.")
 
@@ -1268,7 +1276,7 @@ class NBIoT:
                         if not is_last_chunk and bytes_written < expected_bytes_in_chunk - 2:
                             utils.log_error(f"Error USER: Chunk {chunk_start}-{chunk_end} incorrect size. Expected: {expected_bytes_in_chunk}, Received: {bytes_written}.")
                             #raise ValueError("Incorrect chunk size received")
-                            time.sleep(10)
+                            pm.smart_sleep(10000)
                             self._clear_uart_buffer()
                         
                         else:
@@ -1296,7 +1304,7 @@ class NBIoT:
                         self.send_at_command("AT#XHTTPCCON=0", "OK", timeout=5000)
                         connection_open = False # Mark as closed
                         utils.log_info("Waiting 10 seconds before retrying...")
-                        time.sleep(10)
+                        pm.smart_sleep(10000)
                         # DO NOT clear buffer here, the reconnect at the start of the loop will do it
                         # <<< END NEW LOGIC >>>
 

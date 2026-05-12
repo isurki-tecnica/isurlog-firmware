@@ -16,9 +16,9 @@ import math
 from modules import utils
 from modules.config_manager import config_manager
 
-class TheftManager:
+class Accelerometer:
     """
-    Manages security and anti-tamper logic using the LIS2DH12 accelerometer 
+    Manages the LIS2DH12 accelerometer 
     and MCP23008 port expander to trigger ESP32 wakeups.
     """
 
@@ -61,11 +61,11 @@ class TheftManager:
             self.SAMPLES_FOR_ALERT = 3
             self.hardware_ready = True
             
-            utils.log_info("Compatible hardware for theft manager.")
+            utils.log_info("Compatible hardware for accelerometer.")
         
         else:
             
-            utils.log_error("Incompatible hardware for theft manager.")
+            utils.log_error("Incompatible hardware for accelerometer.")
             
 
     def check_wakeup(self, on_theft_confirmed=None):

@@ -12,6 +12,7 @@ from modules import utils
 import time
 import json
 from modules.config_manager import config_manager
+from modules2.power_manager import pm
 
 class LoRaWAN:
     def __init__(self, uart_id, tx_pin, rx_pin, baudrate=9600, timeout=1000):
@@ -73,7 +74,7 @@ class LoRaWAN:
             if response and expected_response in response:
                 return True
             utils.log_warning(f"AT command failed, retrying ({i+1}/{retries})...")
-            time.sleep_ms(1000)  # Wait before retrying
+            pm.smart_sleep(1000)  # Wait before retrying
         utils.log_error(f"AT command '{command}' failed after {retries} retries.")
         return False
     
@@ -141,7 +142,7 @@ class LoRaWAN:
                 if expected_response in full_response_text and not wait_full_timeout: 
                      return full_response_text
 
-            time.sleep_ms(20)
+            pm.smart_sleep(20) 
 
         # Timeout: Return what was accumulated if it contains the response, otherwise None
         full_response_text = "\r\n".join(response_lines)
@@ -283,7 +284,6 @@ class LoRaWAN:
         
         self.confirmed = mode
         return self.send_at_command_check(f"AT+CFM={mode}")
-
 
     def set_dev_eui(self, dev_eui):
         """Sets the Device EUI.
