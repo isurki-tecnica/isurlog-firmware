@@ -26,10 +26,12 @@ class IsurlogLPPEncoder:
             'addTemperatureInput' : {'type':"66", 'size':2, 'multipl':10, 'signed':True, 'min':-3276.7, 'max':3276.7, 'arrLen':3},
             'addTemperatureSensor' : {'type':"67", 'size':2, 'multipl':10, 'signed':True, 'min':-3276.7, 'max':3276.7, 'arrLen':3},
             'addHumiditySensor' : {'type':"68", 'size':1, 'multipl':2, 'signed':False, 'min':0, 'max':100, 'arrLen':3},
+            'addAccelerometer' : {'type':"71", 'size':6, 'multipl':1000, 'signed':True, 'min':-32.768, 'max':32.767, 'arrLen':5},
             'addVoltageInput' : {'type':"74", 'size':2, 'multipl':1, 'signed':False, 'min':0, 'max':65534, 'arrLen':3},
             'addUnixTime' : {'type':"75", 'size':4, 'multipl':1, 'signed':False, 'min':0, 'max':4294967295, 'arrLen':3},
             'addSoCInput'   : {'type':"76", 'size':2, 'multipl':10, 'signed':False, 'min':0, 'max':100.0, 'arrLen':3},
             'addCRateInput' : {'type':"77", 'size':1, 'multipl':10, 'signed':True, 'min':-12.8, 'max':12.7, 'arrLen':3},
+            'addModemData' : {'type':"78", 'size':1, 'multipl':1, 'signed':False, 'min':0, 'max':255, 'arrLen':3},
         }
         #Configuration types
         self.config_types = {
@@ -177,6 +179,13 @@ class IsurlogLPPEncoder:
             'setMQTTUser':      {'type': "9B", 'size': 0, 'multipl': 1, 'signed': False},
             'setMQTTPasswd':    {'type': "9C", 'size': 0, 'multipl': 1, 'signed': False},
             'setMQTTBaseTopic': {'type': "9D", 'size': 0, 'multipl': 1, 'signed': False},
+            'setSignalData': {'type': "9E", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            #New addtion to configure LIS2DH12 accelerometer parameters 02-05-26
+            'setAccelEnable': {'type': "00", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setAccellowCond': {'type': "01", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setAccelhighCond': {'type': "02", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            'setAccelLow':    {'type': "03", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
+            'setAccelHigh':    {'type': "04", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
         }
         
     def encode(self, lpp):

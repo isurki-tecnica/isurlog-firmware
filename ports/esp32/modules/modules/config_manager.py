@@ -149,6 +149,7 @@ CONFIG_MAP = {
     'setAPN': ('communications', 'cellular_iot', 'apn'),
     'setExternalSIM': ('communications', 'cellular_iot', 'external_sim', bool),
     'setConPreference': ('communications', 'cellular_iot', 'preference'),
+    'setSignalData': ('communications', 'cellular_iot', 'signal_data', bool),
     #WiFi parameters
     'setWiFiSSID': ('communications', 'wifi', 'ssid'),
     'setWiFiPsswd': ('communications', 'wifi', 'password'),
@@ -158,7 +159,12 @@ CONFIG_MAP = {
     'setMQTTUser': ('communications', 'mqtt', 'user'),
     'setMQTTPasswd': ('communications', 'mqtt', 'passwd'),
     'setMQTTBaseTopic': ('communications', 'mqtt', 'base_topic'),
-
+    #New addtion to configure LIS2DH12 accelerometer parameters 02-05-26
+    'setAccelEnable': ('accelerometer_config', 'enable', bool),
+    'setAccellowCond': ('accelerometer_config', 'axles', '{channel}', 'low_cond', bool),
+    'setAccelhighCond': ('accelerometer_config', 'axles', '{channel}', 'high_cond', bool),
+    'setAccelLow': ('accelerometer_config', 'axles', '{channel}', 'low'),
+    'setAccelHigh': ('accelerometer_config', 'axles', '{channel}', 'high'),
 }
 
 class ConfigManager:

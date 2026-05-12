@@ -12,7 +12,6 @@
 from machine import RTC
 from modules import utils
 from modules.config_manager import config_manager
-from modules import power_manager
 
 class RTC_Memory:
     def __init__(self, max_payload_size = 256):
