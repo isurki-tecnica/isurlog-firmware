@@ -184,6 +184,22 @@ class lis2dh12(object):
         # Keeps the interrupt active until the SRC registers are read
         # Vital for MCP23008 and ESP32 Deep Sleep startup time
         self._write_data(LIS2DH12_CTRL_REG5, 0x0A)
+        
+    def set_int_open_drain(self, enable=True):
+        """
+        Configura los pines INT1 e INT2 como Open-Drain (True) o Push-Pull (False).
+        """
+        # Leer valor actual del registro CTRL_REG3 (0x22)
+        current_val = self._read_data(LIS2DH12_CTRL_REG3, 1)[0]
+        
+        if enable:
+            # Poner a 1 el Bit 1 (PP_OD)
+            new_val = current_val | 0x02
+        else:
+            # Poner a 0 el Bit 1 (PP_OD)
+            new_val = current_val & ~0x02
+            
+        self._write_data(LIS2DH12_CTRL_REG3, new_val)
 
     def start_sensor(self):
         '''

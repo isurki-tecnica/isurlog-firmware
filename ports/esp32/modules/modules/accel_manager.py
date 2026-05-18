@@ -162,16 +162,19 @@ class Accelerometer:
         Puts the LIS2DH12 into Power-Down mode (0.5µA) and disables 
         MCP23008 interrupts to achieve minimum power consumption.
         """
-        utils.log_info("[SEC] Disarming system and entering Power-Down mode...")
+        utils.log_info("[SEC] Dsisarming system and entering Power-Down mode...")
         try:
             # 1. LIS2DH12: Set ODR to 0 to enter Power-Down (IddPdn = 0.5µA)
+            self.sensor._write_data(0x1E, 0x90) # In order to disable the internal pull-up on the SDO/SA0 pin, write 90h in CTRL_REG0 (1Eh).
+            self.sensor.set_int_open_drain(True)
             self.sensor.set_mode(3)
             
             # 2. MCP23008: Disable interrupt on GP6
-            self.mcp.pin(6, mode=1, pullup=1, interrupt_enable=0)
+            self.mcp.pin(6, mode=1, pullup=0, interrupt_enable=0)
+            self.mcp.pin(7, mode=1, pullup=0, interrupt_enable=0)
             
             # 3. MCP23008: Force Push-Pull and Active High polarity.
-            self.mcp.config(interrupt_polarity=1, interrupt_open_drain=False)
+            self.mcp.config(interrupt_polarity=1, interrupt_open_drain=True)
             
             utils.log_info("System disarmed. Hardware in ultra-low power state.")
         except Exception as e:
