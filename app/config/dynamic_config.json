@@ -204,6 +204,32 @@
          }
       ]
    },
+   "accelerometer_config":{
+   "enable":true,
+   "axles":[
+      {
+         "low_cond":false,
+         "high_cond":false,
+         "low":0.0,
+         "high":1.0,
+         "channel":0
+      },
+      {
+         "low_cond":false,
+         "high_cond":false,
+         "low":0.0,
+         "high":1.0,
+         "channel":1
+      },
+      {
+         "low_cond":false,
+         "high_cond":false,
+         "low":0.0,
+         "high":1.0,
+         "channel":2
+      }
+   ]
+},
    "ext_th_sensor":{
       "humidity_low_cond":false,
       "humidity_low":0,
@@ -262,7 +288,8 @@
          "preference":2,
          "eDRX":true,
          "apn":"",
-         "ntn": false
+         "ntn": false,
+         "signal_data": false
       },
       "lorawan":{
          "dev_eui":"",

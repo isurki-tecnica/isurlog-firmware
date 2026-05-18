@@ -233,7 +233,7 @@ class PowerManager:
             ms (int): The duration to sleep in milliseconds.
         """
         if ms >= 50 and not ble:
-            lightsleep(ms)
+            time.sleep_ms(ms)
         else:
             time.sleep_ms(ms)
         

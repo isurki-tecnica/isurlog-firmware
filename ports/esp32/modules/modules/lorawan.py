@@ -12,7 +12,7 @@ from modules import utils
 import time
 import json
 from modules.config_manager import config_manager
-from modules2.power_manager import pm
+from modules.power_manager import pm
 
 class LoRaWAN:
     def __init__(self, uart_id, tx_pin, rx_pin, baudrate=9600, timeout=1000):
