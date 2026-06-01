@@ -143,10 +143,10 @@ class IsurlogLPPEncoder:
 
             'setModbusInputLongInt': {'type': "FE", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             #New additions for more flexible modbus inputs 06-11-2025
-            'setModbusInputBaudrate': {'type': "FF", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
-            'setModbusInputDataBits': {'type': "80", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
-            'setModbusInputStopBits': {'type': "81", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
-            'setModbusInputParity': {'type': "82", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
+            'setModbusInputBaudrate': {'type': "FF", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 4},
+            'setModbusInputDataBits': {'type': "80", 'size': 1, 'multipl': 1, 'signed': False, 'min': 7, 'max': 8},
+            'setModbusInputStopBits': {'type': "81", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 2},
+            'setModbusInputParity': {'type': "82", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 2},
             #New addition to enable continious mode and configure number of loops per reading cycle 11-11-2025
             'setContinuousMode': {'type': "83", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setLoopCycles': {'type': "84", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},

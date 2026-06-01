@@ -943,7 +943,7 @@ async def ble_mode_task(blinky, pm, ser_num):
 
 if __name__ == "__main__":
 
-    print("\n####WELCOME TO ISURLOG OS v.1.0.9 MICROPYTHON FLAVOUR####\n")
+    print("\n####WELCOME TO ISURLOG OS v.1.1.1 MICROPYTHON FLAVOUR####\n")
     
     if AUTH_FILE in os.listdir():
         os.remove(AUTH_FILE)
@@ -1275,8 +1275,9 @@ if __name__ == "__main__":
                         reset() #Reset ESP32
                     if not nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", "80.24.238.36"), mqtt_config.get("port", 1883)):
                         utils.log_error("Failed to connect to MQTT broker")
-                        pm.configure_wakeup_sources(wake_up_sources)
-                        pm.go_to_sleep()
+                        nb_iot_module.reset() #Reset NB-IoT module
+                        pm.smart_sleep(5000)
+                        reset() #Reset ESP32
                     nb_iot_module.mqtt_subscribe(f"{base_topic}/config/{ser_num}", QoS=2)
                     
             total_payloads = len(payloads)
@@ -1344,28 +1345,35 @@ if __name__ == "__main__":
                                             utils.log_info("OTA update prepared.")
                                             ota_succeded = True
                                         except Exception as e_ota:
-                                            utils.log_error(f"Error during OTA: {e_ota!r}")
+                                            utils.log_error(f"Error during .bin OTA update: {e_ota!r}")
 
                                         # Delete the b64 file after use to free space. Download main.py
                                         try:
                                             import os
-                                            os.remove(up_file_name)
+                                            os.remove("micropython.b64.txt")
+                                            os.remove("micropython.bin")
                                             utils.log_info(f"Temporary file '{up_file_name}' deleted.")
                                             if ota_succeded:
-                                              if nb_iot_module.download_file(server, port, main_file_name, "update_candidate.py", chunk_size=2048):
-                                                    if update_manager.verify_file_checksum(checksum, filename = "update_candidate.py"):
-                                                        update_manager.perform_update()
-                                                        utils.log_info("Update process finished, rebooting in 5 seconds...")
-                                                        if nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
-                                                            utils.log_error(f"Failed to publish response")
-                                                            pm.smart_sleep(5000)
-                                                            reset()                                                            
-                                        except OSError:
-                                             pass
+                                                nb_iot_module.download_file(server, port, main_file_name, "update_candidate.py", chunk_size=2048)
+                                                if update_manager.verify_file_checksum(main_checksum, filename = "update_candidate.py"):
+                                                    update_manager.perform_update()
+                                                    os.remove("update_candidate.py")
+                                                    utils.log_info("Update process finished, rebooting in 5 seconds...")
+                                                    if nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
+                                                        utils.log_error(f"Failed to publish response")
+                                                        pm.smart_sleep(5000)
+                                                        reset()
+                                                        
+                                                else:
+                                                    os.remove("update_candidate.py")
+                                        except Exception as e_ota:
+                                            utils.log_error(f"Error during .py OTA update: {e_ota!r}")
+                                            pass
                                     else:
                                         utils.log_error("Decoding failed.")
                         
                         #If code reaches this point the update was unsuccessful
+                        rollback.cancel_force()
                         if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update FAILED"):
                             utils.log_error(f"Failed to publish response")
                             
@@ -1451,4 +1459,3 @@ if __name__ == "__main__":
     if continuous_mode:
         deepsleep(1000)
     pm.go_to_sleep()
-

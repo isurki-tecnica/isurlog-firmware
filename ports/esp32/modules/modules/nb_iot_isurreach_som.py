@@ -476,7 +476,7 @@ class NBIoT:
                 if not self.send_at_command_check('AT%PERIODICSEARCHCONF=0,0,0,1,"0,10,40,,5","1,300,600,1800,1800,3600"'): #Ultra low power periodic cell search.
                     return False
                              
-                if not self.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0011"'): #Enable eDRX mode.
+                if not self.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0101"'): #Enable eDRX mode.
                     return False
                 
                 if not self.send_at_command_check(f'AT%XPTW={desired_mode_val},"0001"'): #Set Paging Time Window (PTW). 
@@ -1370,7 +1370,7 @@ class NBIoT:
             try:
                 stat_info = os.stat(local_filename)
                 if stat_info[6] > 0:
-                    os.remove(local_filename)
+                    #os.remove(local_filename)
                     utils.log_warning(f"Incomplete/corrupt USER file '{local_filename}' deleted.")
             except OSError:
                 pass

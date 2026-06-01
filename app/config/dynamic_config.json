@@ -205,7 +205,7 @@
       ]
    },
    "accelerometer_config":{
-   "enable":true,
+   "enable":false,
    "axles":[
       {
          "low_cond":false,
