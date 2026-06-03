@@ -943,11 +943,11 @@ async def ble_mode_task(blinky, pm, ser_num):
 
 if __name__ == "__main__":
 
-    print("\n####WELCOME TO ISURLOG OS v.1.1.2 MICROPYTHON FLAVOUR####\n")
+    print("\n####WELCOME TO ISURLOG OS v.1.1.3 MICROPYTHON FLAVOUR####\n")
     
     if AUTH_FILE in os.listdir():
         os.remove(AUTH_FILE)
-        #pass
+        pass
     
     ser_num = config_manager.static_config.get("serial", "c-000")
     modem_type = config_manager.static_config.get("modem", "nb-iot")
