@@ -476,10 +476,10 @@ class NBIoT:
                 if not self.send_at_command_check('AT%PERIODICSEARCHCONF=0,0,0,1,"0,10,40,,5","1,300,600,1800,1800,3600"'): #Ultra low power periodic cell search.
                     return False
                              
-                if not self.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0101"'): #Enable eDRX mode.
+                if not self.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0010"'): #Enable eDRX mode.
                     return False
                 
-                if not self.send_at_command_check(f'AT%XPTW={desired_mode_val},"0001"'): #Set Paging Time Window (PTW). 
+                if not self.send_at_command_check(f'AT%XPTW={desired_mode_val},"0000"'): #Set Paging Time Window (PTW). 
                     return False
 
             if apn != None:
