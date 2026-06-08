@@ -45,12 +45,12 @@ class NBIoT:
         self.received_messages = []
         # Operators to avoid due to known protocol issues or poor performance
         self.BLACKLIST = {
-            2: [],  # Block Orange NB-IoT 21403 (MQTT downlinks not working?)
+            2: ['21403'],  # Block Orange NB-IoT 21403 (MQTT downlinks not working?)
             1:  ['21401']   # Block Vodafone LTE-M (Vodafone does not support eDRX over LTE-M)
         }
         # Preferred operators known for high stability and full feature support
         self.WHITELIST = {
-            2: ['21407', '21403'], #Movistar and Orange
+            2: ['21407'], #Movistar
             1:  ['21407'] #Movistar
         }
 
@@ -476,7 +476,7 @@ class NBIoT:
                 if not self.send_at_command_check('AT%PERIODICSEARCHCONF=0,0,0,1,"0,10,40,,5","1,300,600,1800,1800,3600"'): #Ultra low power periodic cell search.
                     return False
                              
-                if not self.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0010"'): #Enable eDRX mode.
+                if not self.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0011"'): #Enable eDRX mode.
                     return False
                 
                 if not self.send_at_command_check(f'AT%XPTW={desired_mode_val},"0000"'): #Set Paging Time Window (PTW). 
