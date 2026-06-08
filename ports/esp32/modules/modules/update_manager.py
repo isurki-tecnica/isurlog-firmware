@@ -216,3 +216,25 @@ def perform_update(candidate_file='update_candidate.py', target_file='main.py'):
         except Exception as restore_e:
             utils.log_error(f"Could not restore backup: {restore_e}. System may be unstable.")
         return False
+    
+def clean_flash(file_list):
+    """Checks if the files in the provided list exist in the current directory
+
+    and deletes them if they do.
+
+    Args:
+        file_list (list): A list of strings containing the filenames to check
+        and remove.
+    """
+    # Read the current directory once for efficiency
+    files_in_dir = os.listdir()
+
+    for filename in file_list:
+        if filename in files_in_dir:
+            try:
+                os.remove(filename)
+                utils.log_info(f"Successfully deleted: {filename}")
+            except OSError as e:
+                utils.log_error(f"Could not delete {filename} (it might be a folder): {e}")
+        else:
+            utils.log_warning(f"File does not exist: {filename}")

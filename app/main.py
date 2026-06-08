@@ -943,11 +943,11 @@ async def ble_mode_task(blinky, pm, ser_num):
 
 if __name__ == "__main__":
 
-    print("\n####WELCOME TO ISURLOG OS v.1.1.3 MICROPYTHON FLAVOUR####\n")
+    print("\n####WELCOME TO ISURLOG OS v.1.1.4 MICROPYTHON FLAVOUR####\n")
     
     if AUTH_FILE in os.listdir():
         os.remove(AUTH_FILE)
-        pass
+        #pass
     
     ser_num = config_manager.static_config.get("serial", "c-000")
     modem_type = config_manager.static_config.get("modem", "nb-iot")
@@ -1329,6 +1329,8 @@ if __name__ == "__main__":
                         update_instructions = msg['message'].split(" ")
                         if len(update_instructions) == 7:
                             from modules import update_manager
+                            #Clear previous files.
+                            update_manager.clean_flash(["micropython.b64.txt", "micropython.bin", "update_candidate.py"])
                             _ , server, port, up_file_name, up_checksum, main_file_name, main_checksum = update_instructions
                             utils.log_info(f"Received instructions: Server: {server} Port: {port} up_File: {up_file_name} up_Checksum: {up_checksum} main_File: {main_file_name} main_Checksum: {main_checksum}")
 
@@ -1347,25 +1349,18 @@ if __name__ == "__main__":
                                         except Exception as e_ota:
                                             utils.log_error(f"Error during .bin OTA update: {e_ota!r}")
 
-                                        # Delete the b64 file after use to free space. Download main.py
+                                        #Delete the b64 and bin file after use to free space. Download main.py
                                         try:
-                                            import os
-                                            os.remove("micropython.b64.txt")
-                                            os.remove("micropython.bin")
-                                            utils.log_info(f"Temporary file '{up_file_name}' deleted.")
+                                            update_manager.clean_flash(["micropython.b64.txt", "micropython.bin", "update_candidate.py"])
                                             if ota_succeded:
                                                 nb_iot_module.download_file(server, port, main_file_name, "update_candidate.py", chunk_size=2048)
                                                 if update_manager.verify_file_checksum(main_checksum, filename = "update_candidate.py"):
                                                     update_manager.perform_update()
-                                                    os.remove("update_candidate.py")
                                                     utils.log_info("Update process finished, rebooting in 5 seconds...")
                                                     if nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
                                                         utils.log_error(f"Failed to publish response")
                                                         pm.smart_sleep(5000)
                                                         reset()
-                                                        
-                                                else:
-                                                    os.remove("update_candidate.py")
                                         except Exception as e_ota:
                                             utils.log_error(f"Error during .py OTA update: {e_ota!r}")
                                             pass
@@ -1374,6 +1369,8 @@ if __name__ == "__main__":
                         
                         #If code reaches this point the update was unsuccessful
                         rollback.cancel_force()
+                        #Clear all files.
+                        update_manager.clean_flash(["micropython.b64.txt", "micropython.bin", "update_candidate.py"])
                         if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update FAILED"):
                             utils.log_error(f"Failed to publish response")
                             
