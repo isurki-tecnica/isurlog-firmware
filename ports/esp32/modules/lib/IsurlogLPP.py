@@ -32,6 +32,7 @@ class IsurlogLPPEncoder:
             'addSoCInput'   : {'type':"76", 'size':2, 'multipl':10, 'signed':False, 'min':0, 'max':100.0, 'arrLen':3},
             'addCRateInput' : {'type':"77", 'size':1, 'multipl':10, 'signed':True, 'min':-12.8, 'max':12.7, 'arrLen':3},
             'addModemData' : {'type':"78", 'size':1, 'multipl':1, 'signed':False, 'min':0, 'max':255, 'arrLen':3},
+            'addScriptError' : {'type':"79", 'size':1, 'multipl':1, 'signed':False, 'min':0, 'max':1, 'arrLen':3},
             'addGPSData': {'type':"88", 'size':9, 'multipl':10000, 'signed':True, 'min':-900000, 'max':900000, 'arrLen':5},
         }
         #Configuration types
@@ -187,6 +188,8 @@ class IsurlogLPPEncoder:
             'setAccelhighCond': {'type': "02", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setAccelLow':    {'type': "03", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
             'setAccelHigh':    {'type': "04", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
+            #New addtion to enable user scripts.
+            'setUserScriptEnable':    {'type': "05", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
         }
         
     def encode(self, lpp):

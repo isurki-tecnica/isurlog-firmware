@@ -970,15 +970,6 @@ if __name__ == "__main__":
     Pin(config_manager.static_config.get("pinout", {}).get("rs485", {}).get("ro_pin", 14), Pin.IN, Pin.PULL_UP, hold=False)
     Pin(config_manager.static_config.get("pinout", {}).get("rs485", {}).get("di_pin", 23), hold=False)
     Pin(config_manager.static_config.get("pinout", {}).get("rs485", {}).get("re_pin", 33), hold=False)
-
-    #Check/Enable anti theft system
-    accel = Accelerometer()
-    if accel.hardware_ready:
-        if config_manager.dynamic_config["general"].get("theft_alert", False):
-            accel.check_wakeup()
-            wake_up_sources.append(MCP_WAKEUP_PIN_NUM)
-        else:
-            accel.disarm()
     
     if modem_type != "wifi":
         pm.set_cpu_freq("low-power")
@@ -1034,24 +1025,30 @@ if __name__ == "__main__":
         found_list = sublist
         break
     battery_voltage = found_list[2]
+    
+    
+    #----- USER SCRIPT ------
+    if "user_script.py" in os.listdir():
+        if config_manager.dynamic_config["general"].get("user_script", False):
+            try:
+                import sys
+                if "user_script" in sys.modules:
+                    del sys.modules["user_script"]
+                import user_script
+                data = user_script.process(data)
+            except Exception as e:
+                utils.log_error("Error in user script:", e)
+        else:
+            try:
+                import os
+                os.remove("user_script.py")
+            except Exception as e:
+                utils.log_error("Error removing user script:", e)
 
     # --- Encode data to Isurlog LPP format ---
     encoder = IsurlogLPPEncoder()
     utils.log_info(f"Data to encode: {data}")
     encoded_payload = encoder.encode(data)
-    
-    compact_register = config_manager.get_dynamic("general").get("compact_register", False)
-    
-    if compact_register:
-        cycle = rtc_memory.get_counter()
-        is_last_cycle = cycle >= rtc_memory.n_cycles - 1
-        
-        # We discard the payload (store an empty string) if:
-        # - It's NOT the last cycle before a scheduled send.
-        # - alarm_condition == False
-        if not is_last_cycle and not alarm_condition:
-            utils.log_info("Compact profile enabled: Discarding non-alarm, intermediate reading.")
-            encoded_payload = ""
 
     internal_register = config_manager.get_dynamic("general").get("internal_register", False)
 
@@ -1118,7 +1115,6 @@ if __name__ == "__main__":
                 keep_alive = ((config_manager.dynamic_config["general"].get("latency_time", 10) * 60)+20) * config_manager.dynamic_config["general"].get("register_acumulator", 1)
                 nb_iot_module.mqtt_configure(ser_num, keep_alive, 0)
                 if not nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
-                    utils.log_error("Failed to connect to MQTT broker")
                     pm.configure_wakeup_sources(wake_up_sources)
                     pm.go_to_sleep()
             
@@ -1208,14 +1204,11 @@ if __name__ == "__main__":
             utils.log_info(f"Retrieved payloads: {payloads}")
         
             for i, payload in enumerate(payloads):
-                #Publish not empty payloads only.
-                if payload:
-                    utils.log_info(f"Publishing payload {i+1}: {payload}")
-                    if mqtt_client.publish(f"{base_topic}/datos/{ser_num}", payload):
-                        utils.log_error(f"Failed to publish payload {i+1}")
-                    pm.smart_sleep(500)
-                else:
-                    utils.log_info(f"Skipping empty payload at index {i+1}")
+
+                utils.log_info(f"Publishing payload {i+1}: {payload}")
+                if mqtt_client.publish(f"{base_topic}/datos/{ser_num}", payload):
+                    utils.log_error(f"Failed to publish payload {i+1}")
+                pm.smart_sleep(500)
                     
             received_mqtt_messages = mqtt_client.check_msg()
             utils.log_info(f"Received MQTT messages: {received_mqtt_messages}")
@@ -1274,7 +1267,6 @@ if __name__ == "__main__":
                         pm.smart_sleep(5000)
                         reset() #Reset ESP32
                     if not nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", "80.24.238.36"), mqtt_config.get("port", 1883)):
-                        utils.log_error("Failed to connect to MQTT broker")
                         nb_iot_module.reset() #Reset NB-IoT module
                         pm.smart_sleep(5000)
                         reset() #Reset ESP32
@@ -1282,29 +1274,25 @@ if __name__ == "__main__":
                     
             total_payloads = len(payloads)
             for i, payload in enumerate(payloads):
-                #Publish not empty payloads only.
-                if payload:
-                    if (i == total_payloads - 1) and (config_manager.dynamic_config["communications"]["cellular_iot"].get("signal_data", False)):
-                        signal_data = nb_iot_module.get_signal_data()
-                        extra_data = []
-                        extra_data.append([0, "addModemData", signal_data[0]])
-                        extra_data.append([1, "addModemData", signal_data[1]])
-                        encoded_extra_payload = encoder.encode(extra_data)
-                        payload += encoded_extra_payload
-                    utils.log_info(f"Publishing payload {i+1}: {payload}")
-                    if not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
-                        if not nb_iot_module.mqtt_publish(f"{base_topic}/datos/{ser_num}", payload):
-                            utils.log_error(f"Failed to publish payload {i+1}")
-                    else:
-                        if not nb_iot_module.check_network_connection():
-                            nb_iot_module.reset() #Reset NB-IoT module
-                            pm.smart_sleep(5000)
-                            reset() #Reset ESP32
-                        if not nb_iot_module.send_udp_data(mqtt_config.get("ip", "80.24.238.36"), mqtt_config.get("port", 1883), ser_num, payload):
-                            utils.log_error(f"Failed to publish payload {i+1}")
-                    pm.smart_sleep(500)
+                if (i == total_payloads - 1) and (config_manager.dynamic_config["communications"]["cellular_iot"].get("signal_data", False)):
+                    signal_data = nb_iot_module.get_signal_data()
+                    extra_data = []
+                    extra_data.append([0, "addModemData", signal_data[0]])
+                    extra_data.append([1, "addModemData", signal_data[1]])
+                    encoded_extra_payload = encoder.encode(extra_data)
+                    payload += encoded_extra_payload
+                utils.log_info(f"Publishing payload {i+1}: {payload}")
+                if not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
+                    if not nb_iot_module.mqtt_publish(f"{base_topic}/datos/{ser_num}", payload):
+                        utils.log_error(f"Failed to publish payload {i+1}")
                 else:
-                    utils.log_info(f"Skipping empty payload at index {i+1}")
+                    if not nb_iot_module.check_network_connection():
+                        nb_iot_module.reset() #Reset NB-IoT module
+                        pm.smart_sleep(5000)
+                        reset() #Reset ESP32
+                    if not nb_iot_module.send_udp_data(mqtt_config.get("ip", "80.24.238.36"), mqtt_config.get("port", 1883), ser_num, payload):
+                        utils.log_error(f"Failed to publish payload {i+1}")
+                pm.smart_sleep(500)
                 
             received_mqtt_messages = nb_iot_module.get_mqtt_messages()
 
@@ -1406,14 +1394,11 @@ if __name__ == "__main__":
             utils.log_info(f"Retrieved payloads: {payloads}")
                 
             for i, payload in enumerate(payloads):
-                #Publish not empty payloads only.
-                if payload:
-                    utils.log_info(f"Publishing payload {i+1}: {payload}")
-                    if not lorawan_module.send_uplink(2, payload):
-                        utils.log_error(f"Failed to publish payload {i+1}")
-                    pm.smart_sleep(500)
-                else:
-                    utils.log_info(f"Skipping empty payload at index {i+1}")
+
+                utils.log_info(f"Publishing payload {i+1}: {payload}")
+                if not lorawan_module.send_uplink(2, payload):
+                    utils.log_error(f"Failed to publish payload {i+1}")
+                pm.smart_sleep(500)
                     
             if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
                 blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500, wake_up_period=2)
@@ -1440,6 +1425,38 @@ if __name__ == "__main__":
                         config_manager.apply_conf_update(decoded_downlink) #Save new downlink configuration.
                     
             lorawan_module.sleep()
+            
+    #Check/Enable anti theft system
+    accel = Accelerometer()
+    if accel.hardware_ready:
+        if config_manager.dynamic_config["general"].get("theft_alert", False):
+            theft_confirmed = accel.check_wakeup()
+            wake_up_sources.append(MCP_WAKEUP_PIN_NUM)
+            if theft_confirmed:
+                if modem_type == "nb-iot" and config_manager.static_config.get("isurreach", False):
+                    from modules import nb_iot_isurreach_som as nb_iot
+                    rx = Pin(2, hold=False)
+                    tx = Pin(4, hold=False)
+                    nb_iot_module = nb_iot.NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)
+                    nb_iot_module.wake_up()
+                    gps_data = nb_iot_module.get_gps_coords()
+
+                    if nb_iot_module.send_at_command_check(f'AT%XSYSTEMMODE=1,1,0,{config_manager.dynamic_config["communications"]["cellular_iot"].get("preference", 0)}'):
+                        nb_iot_module.send_at_command_check("AT+CFUN=1")
+                        nb_iot_module.wait_for_network_connection(timeout=180000)
+                        keep_alive = ((config_manager.dynamic_config["general"].get("latency_time", 10) * 60)+20) * config_manager.dynamic_config["general"].get("register_acumulator", 1)
+                        nb_iot_module.mqtt_configure(ser_num, keep_alive, 0)
+                        mqtt_config = config_manager.get_dynamic("communications").get("mqtt")
+                        if nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
+                            base_topic = mqtt_config.get("base_topic", "isurlog")
+                            if gps_data != []:
+                                lat = gps_data[0]
+                                lon = gps_data[1]
+                                elev = gps_data[2]
+                                nb_iot_module.mqtt_publish(f"{base_topic}/alarms/{ser_num}", f"{lat,lon, elev}")
+                                                    
+        else:
+            accel.disarm()
             
     if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
         

@@ -91,19 +91,24 @@ class Accelerometer:
                     utils.log_warning("Potential tamper on GP6 (Accelerometer).")
                     if self._verify_theft():
                         utils.log_warning("THEFT ALERT CONFIRMED.")
+                        return True
                     else:
                         utils.log_warning("False alarm. Re-arming system...")
-                        self.arm()
+                    self.arm()
+                    return False
                 else:
                     utils.log_warning("Wakeup from MCP but GP6 flag is clear.")
+                    return False
             
-            elif other_int_pin.value() == 0:
-                utils.log_info("Wakeup triggered by secondary pin.")
+            else:
+                utils.log_info("Wakeup triggered by other interrupt source.")
+                return False
         else:
             utils.log_info("Cold boot or manual reset. Initializing sensors...")
             # Perform full MCP initialization on power-on
             self.mcp = MCP23008(self.i2c, address=self.mcp_addr, start_init=True)
             self.arm()
+            return False
 
     def _verify_theft(self):
         """
@@ -149,7 +154,9 @@ class Accelerometer:
             self.sensor.configure_interrupts(move=True, click=False, move_ths=0x14)
             
             # 2. MCP23008: Pin 6 as input with interrupt enabled
-            self.mcp.pin(6, mode=1, pullup=1, interrupt_enable=1)
+            self.sensor._write_data(0x1E, 0x90) # In order to disable the internal pull-up on the SDO/SA0 pin, write 90h in CTRL_REG0 (1Eh).
+            self.mcp.pin(6, mode=1, pullup=0, interrupt_enable=1)
+            self.mcp.pin(7, mode=1, pullup=0, interrupt_enable=0)
             self.mcp.config(interrupt_polarity=1) # Active High for EXT1 compatibility
             
             utils.log_info("System Armed.")

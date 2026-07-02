@@ -252,7 +252,6 @@
       "magnet_wakeup":true,
       "debug_led":true,
       "max_payload_size":128,
-      "compact_register":false,
       "loop_cycles":1,
       "theft_alert":false
    },
