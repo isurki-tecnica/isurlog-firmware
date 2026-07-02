@@ -27,6 +27,7 @@ CONFIG_MAP = {
     'setMaxPayloadSize': ('general', 'max_payload_size'),
     'setVDCVoltage': ('general', 'vdc_voltage'),
     'setTheftAlert': ('general', 'theft_alert', bool),
+    'setUserScriptEnable': ('general', 'user_script', bool),
     #Battery configuration
     'setBatteryInputSoC': ('battery_config', 'soc', bool),
     'setBatteryInputCRate': ('battery_config', 'crate', bool),

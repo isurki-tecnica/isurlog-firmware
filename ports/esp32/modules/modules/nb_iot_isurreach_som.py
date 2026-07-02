@@ -304,7 +304,7 @@ class NBIoT:
             
         return gps_data
     
-    def get_gps_coords(self):
+    def get_gps_coords(self, ntn=False):
         
         """
         Connects to the NTN NB-IoT network.
@@ -312,20 +312,24 @@ class NBIoT:
         Returns:
             True if the connection is successful, False otherwise.
         """
-        
+
         if not self.send_at_command_check("AT+CFUN=4"):
             utils.log_error("Failed to set flight mode.")
             return False
-
         if not self.send_at_command_check("AT%XANTCFG=1"):
             utils.log_error("Failed to set ANT conf.")
             return False
         if not self.send_at_command_check("AT%XCOEX0=1,1,1570,1580"):
             utils.log_error("Failed to enable COEX pin for GPS.")
             return False
-        if not self.send_at_command_check("AT%XSYSTEMMODE=0,0,1,0,0"):
-            utils.log_error("Failed to set system mode.")
-            return False
+        if ntn:
+            if not self.send_at_command_check("AT%XSYSTEMMODE=0,0,1,0,0"):
+                utils.log_error("Failed to set system mode.")
+                return False
+        else:
+            if not self.send_at_command_check("AT%XSYSTEMMODE=0,0,1,0"):
+                utils.log_error("Failed to set system mode.")
+                return False
         if not self.send_at_command_check("AT+CFUN=31"):
             utils.log_error("Failed to enable GPS.")
             return False
@@ -361,7 +365,7 @@ class NBIoT:
         
         if lat == None or lon == None or elevation == None:
             utils.log_info("Can't connect to NTN network without exact position (lat/long/elevation missing). Trying to fix GPS...")
-            gps_data = self.get_gps_coords()
+            gps_data = self.get_gps_coords(ntn=True)
             if gps_data == []:
                 return False
             lat = gps_data[0]
