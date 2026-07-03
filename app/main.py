@@ -9,6 +9,7 @@ from modules.led_manager import LEDManagerULP
 from lib.ota import rollback
 from lib.mcp4017 import MCP4017
 from modules.accel_manager import Accelerometer
+from modules.version import VERSION
 import os
 
 AUTH_FILE = 'auth'
@@ -943,7 +944,7 @@ async def ble_mode_task(blinky, pm, ser_num):
 
 if __name__ == "__main__":
 
-    print("\n####WELCOME TO ISURLOG OS v.1.1.4 MICROPYTHON FLAVOUR####\n")
+    print("\n####WELCOME TO ISURLOG OS v.{} MICROPYTHON FLAVOUR####\n".format(VERSION))
     
     if AUTH_FILE in os.listdir():
         os.remove(AUTH_FILE)
@@ -1303,10 +1304,9 @@ if __name__ == "__main__":
                         pass
                     
                     elif msg['message'] == "REPL": #ENABLE REMOTE REPL
-                        if nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Connected"):
-                            nb_iot_module.mqtt_subscribe(f"{base_topic}/repl_in/{ser_num}", QoS=2)
-                            from modules.remote_repl import handle_remote_repl_nb_iot
-                            handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module)
+                        
+                        from modules.remote_repl import handle_remote_repl_nb_iot
+                        handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module, config_manager.dynamic_config["communications"]["cellular_iot"].get("preference", 0), config_manager.get_dynamic("communications").get("mqtt"))
                             
                     elif "SD" in msg['message'] or "EV" in msg['message']: #DIGITAL OUTPUT CONTROL  (SSR or LATCHING VALVE)
                         utils.log_info("Processing manual command...")
@@ -1440,6 +1440,7 @@ if __name__ == "__main__":
                     nb_iot_module = nb_iot.NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)
                     nb_iot_module.wake_up()
                     gps_data = nb_iot_module.get_gps_coords()
+                    gps_data = [43.3312, -1.7723, 25.5]
 
                     if nb_iot_module.send_at_command_check(f'AT%XSYSTEMMODE=1,1,0,{config_manager.dynamic_config["communications"]["cellular_iot"].get("preference", 0)}'):
                         nb_iot_module.send_at_command_check("AT+CFUN=1")
