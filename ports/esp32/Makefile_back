@@ -3,7 +3,6 @@
 # This is a simple, convenience wrapper around idf.py (which uses cmake).
 
 include ../../py/verbose.mk
-.DEFAULT_GOAL := all
 
 # Select the board to build for:
 ifdef BOARD_DIR
@@ -42,21 +41,7 @@ DEVICE += $(PORT_ARG) $(BAUD_ARG)
 
 PYTHON ?= python3
 
-# --- Firmware version from command line ---
-VERSION ?=
-VERSION_MODULE_DIR ?= modules/modules
-VERSION_PY := $(VERSION_MODULE_DIR)/version.py
-
-.PHONY: all clean deploy erase submodules FORCE genversion check-version
-
-check-version:
-ifeq ($(VERSION),)
-	$(error Debes indicar VERSION. Ejemplo: make BOARD=$(BOARD) BOARD_VARIANT=$(BOARD_VARIANT) VERSION=1.1.7)
-endif
-
-genversion: check-version
-	@echo "VERSION = \"$(VERSION)\"" > $(VERSION_PY)
-	@echo "Version de firmware: $(VERSION) -> $(VERSION_PY)"
+.PHONY: all clean deploy erase submodules FORCE
 
 CMAKE_ARGS =
 
@@ -88,7 +73,7 @@ define RUN_IDF_PY
 	$(Q)idf.py $(IDFPY_FLAGS) -B $(BUILD) $(1)
 endef
 
-all: genversion
+all:
 	$(Q)idf.py $(IDFPY_FLAGS) -B $(BUILD) build || (echo -e $(HELP_BUILD_ERROR); false)
 	$(Q)$(PYTHON) makeimg.py \
 		$(BUILD)/sdkconfig \
