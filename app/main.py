@@ -24,7 +24,24 @@ except Exception as e:
     print(f"Could not enable Watchdog Timer: {e}")
     wdt = None
 
-def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10, isurnode_enabled = False):
+def should_resync_rtc():
+    """
+    Decides whether the RTC should be resynced against the network:
+    - Always if the RTC lost power (time is invalid).
+    - Also periodically, every 'rtc_resync_interval_h' hours, even if the RTC never lost power,
+      to correct for long-term drift of the DS3231/RV3028 crystal.
+    Relies on pm, rtc_memory and config_manager being already set as module-level globals
+    by the time this is called (pm/config_manager at import time, rtc_memory inside
+    the __main__ block before any transmission logic runs).
+    """
+    if pm.rtc_lost_power:
+        return True
+    interval_h = config_manager.dynamic_config["general"].get("rtc_sync_int", 7)*24
+    if interval_h == 0:
+        return False
+    return rtc_memory.rtc_resync_due(pm.rtc.get_unix_time(), interval_h * 3600)
+
+def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isurnode_enabled = False):
         
     data = [[0, "addUnixTime", pm.rtc.get_unix_time()]]
     alarm_condition = False
@@ -84,7 +101,7 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10,
         accel = Accelerometer()
         if accel.hardware_ready:
             accel_values  = list(accel.sensor.read_acceleration)
-            utils.log_info(f"Accelerometer acceleration: x: {accel_values[0]}g, y: {accel_values[1]}g, z: {accel_values[2]}g,")
+            utils.log_info(f"Accelerometer acceleration: x: {accel_values[0]}g, y: {accel_values[1]}g, z: {accel_values[2]}g")
             data.append([0, "addAccelerometer", accel_values[0], accel_values[1], accel_values[2]])
             
             #Check alarms for every axis acceleration
@@ -434,25 +451,14 @@ def read_all_sensors(pm, register_mode, ble = False, n_loop = 1, n_seconds = 10,
                 utils.log_info(f"No valid Modbus-Gen Ch {channel} readings obtained.")
                 data.append([channel, "addModbusGenericInput", 0])
                 
-        
-    do_config = config_manager.get_dynamic("output_config")
-    latency_time = config_manager.dynamic_config["general"].get("latency_time", 10) * 60
-    if do_config:
-        if not output_config.get("active_vdc", False) and output_config.get("crontab", "inactive") != "inactive":
-            from lib import crontab
-                
-            cron = output_config.get("crontab", "inactive")
-            utils.log_info(f'ON Cron job for DO is configured: {cron}')
-            entry = crontab.CronTab(cron)
-            
-            if entry.test():
-                pm.control_digital_output(1)
-            else:
-                pm.control_digital_output(0)
+    
+    # Digital outputs
+    
+    # TODO: Proccess outputs :)
     
     return data, alarm_condition
 
-def read_isurnode_data(pm, register_mode, data, alarm_condition, ble = False):
+def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
     
     SENSOR_MAP = {
     0: ("addAnalogInput", 0),
@@ -922,8 +928,8 @@ async def ble_mode_task(blinky, pm, ser_num):
     if ble.client_connected:        
         while not ble.client_disconnected: # Wait until client disconnects
             # Read data from active sensors
-            live_data, _ = read_all_sensors(pm, 0, ble = True)
-            live_data, _ = read_isurnode_data(pm, 0, live_data, False, ble = True)
+            live_data, _ = read_all_sensors(0, ble = True)
+            live_data, _ = read_isurnode_data(0, live_data, False, ble = True)
             
             print(live_data)
 
@@ -1016,8 +1022,8 @@ if __name__ == "__main__":
     loop_seconds = pm.seconds2wakeup()
     isurnode_config = config_manager.get_dynamic("isurnode_config")
         
-    data, alarm_condition = read_all_sensors(pm, register_mode, n_loop = n_loop_cycles, n_seconds = loop_seconds, isurnode_enabled = isurnode_config.get("enable", False))
-    data, alarm_condition = read_isurnode_data(pm, register_mode, data, alarm_condition)
+    data, alarm_condition = read_all_sensors(register_mode, n_loop = n_loop_cycles, n_seconds = loop_seconds, isurnode_enabled = isurnode_config.get("enable", False))
+    data, alarm_condition = read_isurnode_data(register_mode, data, alarm_condition)
 
     #Get battery voltage from data to configure Blinky later
     found_list = None
@@ -1026,7 +1032,6 @@ if __name__ == "__main__":
         found_list = sublist
         break
     battery_voltage = found_list[2]
-    
     
     #----- USER SCRIPT ------
     if "user_script.py" in os.listdir():
@@ -1041,7 +1046,6 @@ if __name__ == "__main__":
                 utils.log_error("Error in user script:", e)
         else:
             try:
-                import os
                 os.remove("user_script.py")
             except Exception as e:
                 utils.log_error("Error removing user script:", e)
@@ -1119,10 +1123,11 @@ if __name__ == "__main__":
                     pm.configure_wakeup_sources(wake_up_sources)
                     pm.go_to_sleep()
             
-            if not pm.rtc_available and not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
+            if should_resync_rtc() and not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
                 new_time = nb_iot_module.get_network_time()
                 utils.log_info(f"New requested time UTC: {new_time}")
                 pm.set_rtc_time(new_time)
+                rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
                 
             if not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
                 nb_iot_module.mqtt_subscribe(f"{base_topic}/config/{ser_num}", QoS=2)
@@ -1142,7 +1147,7 @@ if __name__ == "__main__":
                 pm.configure_wakeup_sources(wake_up_sources)
                 pm.go_to_sleep()
             lorawan_module.set_confirmed_mode(0) # Enable/disable send ACK (optional)
-            if not pm.rtc_available:
+            if should_resync_rtc():
                 lorawan_module.request_time() #Enable LoRaWAN time requests (time is available after 1st transmission)
             if not rtc_memory.should_transmit():
                 lorawan_module.sleep()
@@ -1172,12 +1177,13 @@ if __name__ == "__main__":
                 
                 if (ssid != None and password != None):
                     if wifi.do_connect(ssid, password, timeout_seconds=15):
-                        if not pm.rtc_available:
+                        if should_resync_rtc():
                             import ntptime
                             ntptime.settime()
                             new_time = time.localtime()
                             utils.log_info(f"New requested time UTC: {new_time}")
                             pm.set_rtc_time(new_time, mode = "WiFi")
+                            rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
                         
                     else:
                         utils.log_error("Could not establish Wifi connection!")
@@ -1228,16 +1234,6 @@ if __name__ == "__main__":
                     elif "SD" in msg or "EV" in msg: #DIGITAL OUTPUT CONTROL  (SSR or LATCHING VALVE)
                         utils.log_info("Processing manual command...")
                         process_sd_ev_manual_command(msg)
-                            
-                    elif "cron" in msg: #New cron syntax.
-                        utils.log_info("Received new cron configuration.")
-                        cron_config = msg.split(":")
-                        print(cron_config)
-                        if len(cron_config) == 2:
-                            cron_syntax = cron_config[1]
-                            config_manager.dynamic_config['output_config']['crontab'] = cron_syntax
-                            config_manager.save_dynamic_config_pretty()
-                            utils.log_info(f"Crontab successfully updated to: {cron_syntax}")
                         
                     else: #NEW CONFIGURATION MESSAGE
                         utils.log_info(f"Processing message on topic: {topic}")
@@ -1272,6 +1268,22 @@ if __name__ == "__main__":
                         pm.smart_sleep(5000)
                         reset() #Reset ESP32
                     nb_iot_module.mqtt_subscribe(f"{base_topic}/config/{ser_num}", QoS=2)
+
+                if should_resync_rtc():
+                    new_time = nb_iot_module.get_network_time()
+                    utils.log_info(f"New requested time UTC: {new_time}")
+                    pm.set_rtc_time(new_time)
+                    rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
+            else:
+                if should_resync_rtc():
+                    if not nb_iot_module.check_network_connection():
+                        nb_iot_module.reset() #Reset NB-IoT module
+                        pm.smart_sleep(5000)
+                        reset() #Reset ESP32
+                    new_time = nb_iot_module.get_network_time()
+                    utils.log_info(f"New requested time UTC: {new_time}")
+                    pm.set_rtc_time(new_time)
+                    rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
                     
             total_payloads = len(payloads)
             for i, payload in enumerate(payloads):
@@ -1362,15 +1374,6 @@ if __name__ == "__main__":
                         if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update FAILED"):
                             utils.log_error(f"Failed to publish response")
                             
-                    elif "cron" in msg['message']: #New cron syntax.
-                        utils.log_info("Received new cron configuration.")
-                        cron_config = msg['message'].split(":")
-                        print(cron_config)
-                        if len(cron_config) == 2:
-                            cron_syntax = cron_config[1]
-                            config_manager.dynamic_config['output_config']['crontab'] = cron_syntax
-                            config_manager.save_dynamic_config()
-                            utils.log_info(f"Crontab successfully updated to: {cron_syntax}")
                         
                     else: #NEW CONFIGURATION MESSAGE
                         utils.log_info(f"Processing message on topic: {msg['topic']}")
@@ -1389,6 +1392,8 @@ if __name__ == "__main__":
                     lorawan_module.reset() #Reset LoRaWAN module
                     reset() #Reset ESP32
             utils.log_info("Transmitting data throught LoRaWAN...")
+            if should_resync_rtc():
+                lorawan_module.request_time() #Enable LoRaWAN time request on this uplink, so get_network_time() below has something to read
             payloads = rtc_memory.get_payloads()
             rtc_memory.clear_memory()
             utils.log_info(f"Retrieved payloads: {payloads}")
@@ -1402,10 +1407,11 @@ if __name__ == "__main__":
                     
             if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
                 blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500, wake_up_period=2)
-            if not pm.rtc_available: #Time should be available now.
+            if should_resync_rtc(): #Time should be available now, if it was requested above.
                 new_time = lorawan_module.get_network_time()
                 utils.log_info(f"New requested time UTC: {new_time}")
                 pm.set_rtc_time(new_time, mode = "LoRaWAN")
+                rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
             
             while lorawan_module.has_downlinks():
                 downlink = lorawan_module.get_next_downlink()
