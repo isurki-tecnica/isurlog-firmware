@@ -20,11 +20,14 @@ class RTC_Memory:
         self.COUNTER_ADDR = 0
         self.ALARM_FLAG_ADDR = 4  # <-- NEW: 1 byte for the alarm status flag
         self.MANUAL_EV_FLAG_ADDR = 5  # <-- NEW: 1 byte for the mnaual EV control status flag
+        self.MANUAL_SD_FLAG_ADDR = 6  # <-- NEW: 1 byte for the mnaual SD control status flag
         
-        self.EV0_STATE_ADDR = 6  # <-- NEW: 1 byte for EV0 state
-        self.EV1_STATE_ADDR = 7  # <-- NEW: 1 byte for EV1 state
-        self.EV2_STATE_ADDR = 8  # <-- NEW: 1 byte for EV2 state
-        self.EV3_STATE_ADDR = 9  # <-- NEW: 1 byte for EV3 state
+        self.EV0_STATE_ADDR = 7  # <-- NEW: 1 byte for EV0 state
+        self.EV1_STATE_ADDR = 8  # <-- NEW: 1 byte for EV1 state
+        self.EV2_STATE_ADDR = 9  # <-- NEW: 1 byte for EV2 state
+        self.EV3_STATE_ADDR = 10  # <-- NEW: 1 byte for EV3 state
+        
+        self.LAST_RTC_SYNC_ADDR = 11  # <-- NEW: 4 bytes, unix timestamp since last time sinc.
         
         self.PAYLOAD_START_ADDR = 16 # <-- MODIFIED: Payloads now start at byte 8 to leave space for counter and alarm flag (4+1+1+2 padding)
         self.PAYLOAD_SLOT_SIZE = max_payload_size
@@ -58,6 +61,26 @@ class RTC_Memory:
         buffer = self._get_buffer()
         buffer[self.ALARM_FLAG_ADDR] = 1 if status else 0
         self.rtc.memory(buffer)
+        
+    def get_last_rtc_sync(self):
+        """Reads the unix timestamp of the last successful RTC sync. Returns 0 if never synced (or lost on power-on reset)."""
+        buffer = self.rtc.memory()
+        if len(buffer) < self.LAST_RTC_SYNC_ADDR + 4:
+            return 0
+        return int.from_bytes(buffer[self.LAST_RTC_SYNC_ADDR:self.LAST_RTC_SYNC_ADDR + 4], 'little')
+
+    def set_last_rtc_sync(self, unix_time):
+        """Stores the unix timestamp of a just-completed RTC sync."""
+        buffer = self._get_buffer()
+        buffer[self.LAST_RTC_SYNC_ADDR:self.LAST_RTC_SYNC_ADDR + 4] = int(unix_time).to_bytes(4, 'little')
+        self.rtc.memory(buffer)
+
+    def rtc_resync_due(self, current_unix_time, interval_s):
+        """True if more than interval_s has elapsed since the last RTC sync, or if it never happened."""
+        last_sync = self.get_last_rtc_sync()
+        if last_sync == 0:
+            return True
+        return (current_unix_time - last_sync) >= interval_s
         
     def get_manual_ev_flag(self):
         """Reads the manual EV control status flag from the last transmission."""
@@ -161,6 +184,3 @@ class RTC_Memory:
     def should_transmit(self):
         """Checks if it is time to transmit."""
         return self.get_counter() >= self.n_cycles
-
-
-rtc_memory = RTC_Memory() # Create a single, global instance of the ConfigManager

@@ -94,19 +94,19 @@ class PowerManager:
             True if the RTC is present and time is valid, False otherwise.
         """
         try:
-            if self.rtc.lost_power():  # Check if RTC lost power (and thus time)
+            if self.rtc.lost_power():
                 utils.log_error("RTC lost power! Time is invalid.")
-                self.rtc_available = False
+                self.rtc_lost_power = True
             else:
-                if (self.rtc.get_unix_time() < 1763628870): #Time can`t be earlier to the time I'm programming this :) 
-                    self.rtc_available = False
+                if (self.rtc.get_unix_time() < 1763628870):
+                    self.rtc_lost_power = True
                     utils.log_info(f"RTC is present and time is not valid: {self.rtc.datetime()}")
                 else:
-                    self.rtc_available = True
+                    self.rtc_lost_power = False
                     utils.log_info(f"RTC is present and time is valid: {self.rtc.datetime()}")
         except OSError:
             utils.log_error("RTC not detected on I2C bus.")
-            self.rtc_available = False
+            self.rtc_lost_power = True
 
     def set_rtc_time(self, time_str, mode = "NB-IoT"):
         """
@@ -133,7 +133,7 @@ class PowerManager:
                 utils.log_info(f"Local time tuple: {local_time_tuple}")
                 
                 self.rtc.datetime(datetime = local_time_tuple)
-                self.rtc_available = True
+                self.rtc_lost_power = False
                 utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
 
             except (IndexError, ValueError) as e:
@@ -161,7 +161,7 @@ class PowerManager:
                 utils.log_info(f"Local time tuple: {local_time_tuple}")
                 
                 self.rtc.datetime(datetime = local_time_tuple)
-                self.rtc_available = True
+                self.rtc_lost_power = False
                 utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
 
             except (IndexError, ValueError) as e:
@@ -186,7 +186,7 @@ class PowerManager:
                 utils.log_info(f"Local time tuple: {local_time_tuple}")
                 
                 self.rtc.datetime(datetime = local_time_tuple)
-                self.rtc_available = True
+                self.rtc_lost_power = False
                 utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
 
             except (IndexError, ValueError) as e:
@@ -211,7 +211,7 @@ class PowerManager:
                 utils.log_info(f"Local time tuple: {local_time_tuple}")
                 
                 self.rtc.datetime(datetime = local_time_tuple)
-                self.rtc_available = True
+                self.rtc_lost_power = False
                 utils.log_info(f"Local time tuple: {self.rtc.datetime()}")
 
             except (IndexError, ValueError) as e:
@@ -245,9 +245,9 @@ class PowerManager:
         Returns:
             The number of seconds until the next wakeup time.
         """
-        if config_manager.dynamic_config["general"].get("rtc_sync", False) and self.rtc_available:
+        if config_manager.dynamic_config["general"].get("rtc_sync", False) and not self.rtc_lost_power:
 
-            if not self.rtc_available:
+            if self.rtc_lost_power:
                 utils.log_error("RTC not available for time synchronization.")
                 return config_manager.dynamic_config["general"].get("latency_time", 10) * 60 # Default to latency_time if RTC is not available
             
