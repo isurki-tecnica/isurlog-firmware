@@ -1446,7 +1446,6 @@ if __name__ == "__main__":
                     nb_iot_module = nb_iot.NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)
                     nb_iot_module.wake_up()
                     gps_data = nb_iot_module.get_gps_coords()
-                    gps_data = [43.3312, -1.7723, 25.5]
 
                     if nb_iot_module.send_at_command_check(f'AT%XSYSTEMMODE=1,1,0,{config_manager.dynamic_config["communications"]["cellular_iot"].get("preference", 0)}'):
                         nb_iot_module.send_at_command_check("AT+CFUN=1")
