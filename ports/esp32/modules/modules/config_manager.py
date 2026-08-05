@@ -208,28 +208,51 @@ class ConfigManager:
     def _set_nested_value(self, config, path, value, channel):
         """
         Navigates a nested dictionary and list structure to set a value.
+
+        Note: if a segment of the path is followed by the '{channel}'
+        placeholder, that segment must be a LIST (it will be indexed by
+        an integer channel number), not a dict. When that segment does
+        not exist yet, we must create it as a list; otherwise the
+        channel index ends up stored as a dict key (which then gets
+        serialized as a string key like "0", "1", "2" in JSON).
         """
         current_level = config
         for i, key in enumerate(path):
+            is_last = (i == len(path) - 1)
+            # Does the *next* path segment expect this level to be a list?
+            next_is_channel = (not is_last) and (path[i + 1] == '{channel}')
+
             # Substitute {channel} placeholder with the actual channel index
             if key == '{channel}':
                 key = channel
-            
+
             # If we are at the last key, set the value
-            if i == len(path) - 1:
+            if is_last:
                 if isinstance(current_level, dict):
                     current_level[key] = value
-                elif isinstance(current_level, list) and isinstance(key, int) and 0 <= key < len(current_level):
-                    current_level[key] = value # This case is less common for the last element
+                elif isinstance(current_level, list) and isinstance(key, int):
+                    # Grow the list with empty dicts if the index doesn't exist yet
+                    while len(current_level) <= key:
+                        current_level.append({})
+                    current_level[key] = value
                 else:
                     utils.log_error(f"Invalid path: cannot set value at key '{key}'")
                     return False
             else:
-                # Navigate deeper
+                # Navigate deeper, creating containers of the right type on demand
                 if isinstance(current_level, dict):
-                    current_level = current_level.setdefault(key, {})
-                elif isinstance(current_level, list) and isinstance(key, int) and 0 <= key < len(current_level):
+                    if key not in current_level:
+                        current_level[key] = [] if next_is_channel else {}
                     current_level = current_level[key]
+                elif isinstance(current_level, list):
+                    if isinstance(key, int):
+                        # Grow the list with empty dicts if the index doesn't exist yet
+                        while len(current_level) <= key:
+                            current_level.append({})
+                        current_level = current_level[key]
+                    else:
+                        utils.log_error(f"Invalid path or index: key '{key}' not found or out of bounds.")
+                        return False
                 else:
                     utils.log_error(f"Invalid path or index: key '{key}' not found or out of bounds.")
                     return False

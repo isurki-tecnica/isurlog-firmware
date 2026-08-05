@@ -77,7 +77,7 @@ class IsurlogLPPEncoder:
             'setModbusInputLowCond':      {'type': "C5", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setModbusInputHighCond':     {'type': "C6", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setPT100Enable':             {'type': "C7", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            'setPT100Wires':              {'type': "C8", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1}, # Debería ser min:2, max:4 ? Revisar definición
+            'setPT100Wires':              {'type': "C8", 'size': 1, 'multipl': 1, 'signed': False, 'min': 2, 'max': 4}, # Debería ser min:2, max:4 ? Revisar definición
             'setPT100Low':                {'type': "C9", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
             'setPT100High':               {'type': "CA", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
             'setPT100LowCond':            {'type': "CB", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
@@ -190,6 +190,8 @@ class IsurlogLPPEncoder:
             'setAccelHigh':    {'type': "04", 'size': 2, 'multipl': 100, 'signed': True, 'min': -327.68, 'max': 327.67},
             #New addtion to enable user scripts.
             'setUserScriptEnable':    {'type': "05", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
+            # DOWNLINK ID
+            'setDownlinkID':      {'type': "06", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255}
         }
         
     def encode(self, lpp):
