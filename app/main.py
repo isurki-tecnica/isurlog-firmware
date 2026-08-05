@@ -105,14 +105,15 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
             data.append([0, "addAccelerometer", accel_values[0], accel_values[1], accel_values[2]])
             
             #Check alarms for every axis acceleration
-            for axis_config in accel_config["axles"]:
-                
-                channel = axis_config.get("channel")
-                #Check alarms axis acceleration
-                if (register_mode and (axis_config.get("low_cond", False)) and (accel_values[channel] < axis_config.get("low", 0))):
-                    alarm_condition = True
-                if (register_mode and (axis_config.get("high_cond", False)) and (accel_values[channel] > axis_config.get("high", 0))):
-                    alarm_condition = True
+            if "axles" in accel_config:
+                for axis_config in accel_config["axles"]:
+                    
+                    channel = axis_config.get("channel")
+                    #Check alarms axis acceleration
+                    if (register_mode and (axis_config.get("low_cond", False)) and (accel_values[channel] < axis_config.get("low", 0))):
+                        alarm_condition = True
+                    if (register_mode and (axis_config.get("high_cond", False)) and (accel_values[channel] > axis_config.get("high", 0))):
+                        alarm_condition = True
 
     reg_on_t = time.time()
     
@@ -1084,12 +1085,9 @@ if __name__ == "__main__":
         from modules import wifi
         mqtt_config = config_manager.get_dynamic("communications").get("mqtt")
         base_topic = mqtt_config.get("base_topic", "isurlog")
-    if modem_type == "nb-iot":
-        if config_manager.static_config.get("isurreach", False):
-            from modules import nb_iot_isurreach_som as nb_iot
-        else:
-            from modules import nb_iot
         
+    if modem_type == "nb-iot":
+        from modules import nb_iot_isurreach_som as nb_iot
         mqtt_config = config_manager.get_dynamic("communications").get("mqtt")
         base_topic = mqtt_config.get("base_topic", "isurlog")
         wake_up_sources.append(config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("esp_wake_up", 34))

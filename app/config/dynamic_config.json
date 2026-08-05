@@ -70,76 +70,76 @@
                "enable":false,
                "type":1,
                "logic_operator":1,
-               "cond1_enable": false,
-               "sensor1": 0,
-               "low1": 10,
+               "cond1_enable":false,
+               "sensor1":0,
+               "low1":10,
                "low1_cond":false,
-               "high1": 10,
+               "high1":10,
                "high1_cond":false,
-               "cond2_enable": false,
-               "sensor2": 0,
-               "low2": 10,
+               "cond2_enable":false,
+               "sensor2":0,
+               "low2":10,
                "low2_cond":false,
-               "high2": 10,
+               "high2":10,
                "high2_cond":false,
-               "on_time": 1500
+               "on_time":1500
             },
             {
                "channel":0,
                "enable":false,
                "type":1,
                "logic_operator":1,
-               "cond1_enable": false,
-               "sensor1": 0,
-               "low1": 10,
+               "cond1_enable":false,
+               "sensor1":0,
+               "low1":10,
                "low1_cond":false,
-               "high1": 10,
+               "high1":10,
                "high1_cond":false,
-               "cond2_enable": false,
-               "sensor2": 0,
-               "low2": 10,
+               "cond2_enable":false,
+               "sensor2":0,
+               "low2":10,
                "low2_cond":false,
-               "high2": 10,
+               "high2":10,
                "high2_cond":false,
-               "on_time": 1500
+               "on_time":1500
             },
             {
                "channel":0,
                "enable":false,
                "type":1,
                "logic_operator":1,
-               "cond1_enable": false,
-               "sensor1": 0,
-               "low1": 10,
+               "cond1_enable":false,
+               "sensor1":0,
+               "low1":10,
                "low1_cond":false,
-               "high1": 10,
+               "high1":10,
                "high1_cond":false,
-               "cond2_enable": false,
-               "sensor2": 0,
-               "low2": 10,
+               "cond2_enable":false,
+               "sensor2":0,
+               "low2":10,
                "low2_cond":false,
-               "high2": 10,
+               "high2":10,
                "high2_cond":false,
-               "on_time": 1500
+               "on_time":1500
             },
             {
                "channel":0,
                "enable":false,
                "type":1,
                "logic_operator":1,
-               "cond1_enable": false,
-               "sensor1": 0,
-               "low1": 10,
+               "cond1_enable":false,
+               "sensor1":0,
+               "low1":10,
                "low1_cond":false,
-               "high1": 10,
+               "high1":10,
                "high1_cond":false,
-               "cond2_enable": false,
-               "sensor2": 0,
-               "low2": 10,
+               "cond2_enable":false,
+               "sensor2":0,
+               "low2":10,
                "low2_cond":false,
-               "high2": 10,
+               "high2":10,
                "high2_cond":false,
-               "on_time": 1500
+               "on_time":1500
             }
          ]
       },
@@ -205,31 +205,31 @@
       ]
    },
    "accelerometer_config":{
-   "enable":false,
-   "axles":[
-      {
-         "low_cond":false,
-         "high_cond":false,
-         "low":0.0,
-         "high":1.0,
-         "channel":0
-      },
-      {
-         "low_cond":false,
-         "high_cond":false,
-         "low":0.0,
-         "high":1.0,
-         "channel":1
-      },
-      {
-         "low_cond":false,
-         "high_cond":false,
-         "low":0.0,
-         "high":1.0,
-         "channel":2
-      }
-   ]
-},
+      "enable":false,
+      "axles":[
+         {
+            "low_cond":false,
+            "high_cond":false,
+            "low":0.0,
+            "high":1.0,
+            "channel":0
+         },
+         {
+            "low_cond":false,
+            "high_cond":false,
+            "low":0.0,
+            "high":1.0,
+            "channel":1
+         },
+         {
+            "low_cond":false,
+            "high_cond":false,
+            "low":0.0,
+            "high":1.0,
+            "channel":2
+         }
+      ]
+   },
    "ext_th_sensor":{
       "humidity_low_cond":false,
       "humidity_low":0,
@@ -248,14 +248,14 @@
       "internal_register":false,
       "register_acumulator":1,
       "rtc_sync":true,
-      "rtc_sync_int": 7,
+      "rtc_sync_int":7,
       "vdc_voltage":12,
       "magnet_wakeup":true,
       "debug_led":true,
       "max_payload_size":128,
       "loop_cycles":1,
       "theft_alert":false,
-      "user_script": true
+      "user_script":true
    },
    "int_th_sensor":{
       "humidity_low_cond":false,
@@ -277,26 +277,26 @@
       "high":55.0
    },
    "communications":{
-      "mqtt": {
-         "ip": "",
-         "port": 1883,
-         "user": "",
-         "passwd": "",
-         "base_topic": "isurlog"
+      "mqtt":{
+         "ip":"",
+         "port":1883,
+         "user":"",
+         "passwd":"",
+         "base_topic":"isurlog"
       },
       "cellular_iot":{
          "external_sim":true,
          "preference":2,
          "eDRX":true,
          "apn":"",
-         "ntn": false,
-         "signal_data": false
+         "ntn":false,
+         "signal_data":false
       },
       "lorawan":{
          "dev_eui":"",
          "app_key":"",
          "app_eui":"",
-         "class": 0
+         "class":0
       },
       "wifi":{
          "ssid":"",

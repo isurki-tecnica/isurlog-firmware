@@ -414,6 +414,10 @@ class NBIoT:
             True if the connection is successful, False otherwise.
         """
 
+        if connection_preference == 0:
+            utils.log_warning("Automatic connection_preference (0) is not supported yet. Forcing NB-IoT (2) for this connection attempt.")
+            connection_preference = 2
+
         if not self.send_at_command_check("AT"):
             return False
 
@@ -501,7 +505,7 @@ class NBIoT:
             if scan_response and "+COPS:" in scan_response:
                 
                 if connection_preference == 1:
-                    desired_act= 7
+                    desired_act = 7
                 elif connection_preference == 2:
                     desired_act = 9
                     
