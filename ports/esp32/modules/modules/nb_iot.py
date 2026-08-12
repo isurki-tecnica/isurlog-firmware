@@ -12,8 +12,9 @@ from modules import utils
 import time
 import json
 from modules.config_manager import config_manager
-import ubinascii
 import os
+from modules.power_manager import pm
+import asyncio
 
 try:
     _ = ConnectionError
@@ -42,12 +43,18 @@ class NBIoT:
         self.rx_pin = rx_pin if rx_pin is not None else config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("rx_pin", 2)
         self.uart = UART(uart_id, baudrate=baudrate, tx=Pin(self.tx_pin), rx=Pin(self.rx_pin), rxbuf=8192, timeout=timeout)
         self.received_messages = []
+        # Operators to avoid due to known protocol issues or poor performance
         self.BLACKLIST = {
-            2: ['21401', '21403'],  # Block Orange NB-IoT (MQTT downlinks not working?) and Block Vodafone! (awful performance)
-            1:  ['21403']   # Block Vodafone LTE-M (Vodafone does not support eDRX over LTE-M)
+            2: ['21403'],  # Block Orange NB-IoT 21403 (MQTT downlinks not working?)
+            1:  ['21401']   # Block Vodafone LTE-M (Vodafone does not support eDRX over LTE-M)
+        }
+        # Preferred operators known for high stability and full feature support
+        self.WHITELIST = {
+            2: ['21407'], #Movistar
+            1:  ['21407'] #Movistar
         }
 
-    def send_at_command(self, command, expected_response="OK", timeout=1000):
+    async def send_at_command(self, command, expected_response="OK", timeout=1000):
         """
         Sends an AT command to the NB-IoT module and waits for a response.
 
@@ -62,7 +69,7 @@ class NBIoT:
         self.uart.write(command + "\r\n")
         utils.log_debug(f"Sent AT command: {command}")
 
-        response = self._wait_for_response(expected_response, timeout)
+        response = await self._wait_for_response(expected_response, timeout)
 
         if response:
             utils.log_debug(f"Received response: {response}")
@@ -70,7 +77,7 @@ class NBIoT:
             utils.log_error(f"Timeout waiting for response to AT command: {command}")
         return response
     
-    def send_at_command_check(self, command, expected_response="OK", timeout=2000, retries=3, retry_delay=1):
+    async def send_at_command_check(self, command, expected_response="OK", timeout=2000, retries=3, retry_delay=1000):
         """
         Sends an AT command and checks the response, retrying if necessary.
 
@@ -84,11 +91,13 @@ class NBIoT:
             True if the command was successful, False otherwise.
         """
         for i in range(retries):
-            response = self.send_at_command(command, expected_response, timeout)
+            response = await self.send_at_command(command, expected_response, timeout)
             if response and expected_response in response:
                 return True
             utils.log_warning(f"AT command failed, retrying ({i+1}/{retries})...")
-            time.sleep_ms(retry_delay*1000)  # Wait before retrying
+            
+            await asyncio.sleep_ms(retry_delay)  # Wait before retrying
+            
         utils.log_error(f"AT command '{command}' failed after {retries} retries.")
         return False
     
@@ -123,7 +132,7 @@ class NBIoT:
         except Exception as e:
             utils.log_error(f"Error parsing MQTT event URC: {e}, Line: {urc_line}")
 
-    def _wait_for_response(self, expected_response, timeout): # Added command parameter
+    async def _wait_for_response(self, expected_response, timeout): # Added command parameter
         """
         Waits for a specific response, processing URCs in the meantime.
         Args:
@@ -137,8 +146,9 @@ class NBIoT:
         start_time = time.ticks_ms()
         buffer = ""
         response_lines = [] # Stores lines that ARE part of the expected response
-
+        
         while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
+            #utils.log_info(f"While: {time.ticks_diff(time.ticks_ms(), start_time)}")
             if self.uart.any():
                 try:
                     # Read everything available to avoid losing fast URCs
@@ -161,9 +171,7 @@ class NBIoT:
                     utils.log_info("#XMQTTMSG detected!")
                     #topic_line = self._read_uart_until(f'isurlog/config/{config_manager.static_config.get("serial", "c-000")}' ,text_timeout=6000) # Timeout para el topic
                     self._parse_mqtt_msg_urc(buffer)
-                #elif line.startswith("#XMQTTEVT:"):
-                    #utils.log_info("#XMQTTEVT detected!")
-                    #self._parse_mqtt_evt_urc(line)
+
                 else:
                     # If it's not a known URC, add it to the response lines
                     response_lines.append(line)
@@ -173,7 +181,8 @@ class NBIoT:
                     if expected_response in full_response_text:
                          return full_response_text
 
-            time.sleep_ms(20)
+            # 2. CAMBIO: Reemplazamos pm.smart_sleep por la espera cooperativa asíncrona
+            await asyncio.sleep_ms(20)
 
         # Timeout: Return what was accumulated if it contains the response, otherwise None
         full_response_text = "\r\n".join(response_lines)
@@ -185,7 +194,7 @@ class NBIoT:
                  utils.log_warning(f"Timeout waiting for '{expected_response}'. Received: {full_response_text}")
             return None
     
-    def select_SIM(self, external_sim="eSIM"):
+    async def select_SIM(self, external_sim="eSIM"):
         """
         Selects between the eSIM of the NB-IoT module o the physical external sim.
 
@@ -193,23 +202,25 @@ class NBIoT:
             sim: eSIM or external.
 
         Returns:
-            True if successfull.
+            True if successful.
         """
         
-        if not self.send_at_command_check("AT+CFUN=0"): #Modem must be disabled before changing the SIM
+        if not await self.send_at_command_check("AT+CFUN=0"): # Modem must be disabled before changing the SIM
             return False
         
-        if not self.send_at_command_check("AT#XGPIOCFG=1,12"): #Set GPIO12 as output.
+        if not await self.send_at_command_check("AT#XGPIOCFG=1,12"): # Set GPIO12 as output.
             return False
         
         if (external_sim):
-            if not self.send_at_command_check("AT#XGPIO=0,12,0"): #Set GPIO12 low.
+            if not await self.send_at_command_check("AT#XGPIO=0,12,0"): # Set GPIO12 low.
                 return False
             
         else:
-            if not self.send_at_command_check("AT#XGPIO=0,12,1"): #Set GPIO12 high.
+            if not await self.send_at_command_check("AT#XGPIO=0,12,1"): # Set GPIO12 high.
                 return False
-    
+            
+        return True
+            
     def _parse_cops_response(self, response):
         """
         Parses the response from AT+COPS=? to extract a list of (PLMN, AcT) tuples.
@@ -250,9 +261,140 @@ class NBIoT:
             # Catch parsing errors to prevent crashing the main application loop
             print(f"Error parsing COPS response: {e}")
             
-        return networks    
+        return networks
     
-    def connect(self, connection_preference, edrx = True, apn = None, ntn = False):
+    def _parse_gps_response(self, response):
+        """
+        Parses the response from GPS to extract latitude, longitude, elevation and datetime.
+        Example input: '#XGPS: 35.457576,139.625090,121.473785,22.199919,0.442868,0.000000,"2021-06-02 06:25:48"'
+        Example output: [35.457576, 139.62509, 121.473785, "2021-06-02 06:25:48"]
+        """
+        gps_data = []
+        if not response or "#XGPS:" not in response:
+            return gps_data
+        
+        try:
+            # Remove the '#XGPS: ' prefix and any leading/trailing whitespace
+            response_part = response.strip().split('#XGPS:')[1].strip()
+            
+            # Split the CSV string into individual components
+            parts = response_part.split(',')
+            
+            # Basic validation to ensure we have at least latitude, longitude and elevation
+            if len(parts) >= 3:
+                # Convert the specific indices to float for numerical processing
+                latitude = float(parts[0].strip())
+                longitude = float(parts[1].strip())
+                elevation = float(parts[2].strip())
+                gps_time = parts[6].strip()
+                gps_time = gps_time.replace('"', '')
+                
+                gps_data = [latitude, longitude, elevation, gps_time]
+                
+        except Exception as e:
+            # Catch parsing errors to prevent crashing the main application loop
+            print(f"Error parsing GPS response: {e}")
+            
+        return gps_data
+    
+    async def get_gps_coords(self, ntn=False):
+        """
+        Connects to the NTN NB-IoT network.
+
+        Returns:
+            True if the connection is successful, False otherwise.
+        """
+
+        if not await self.send_at_command_check("AT+CFUN=4"):
+            utils.log_error("Failed to set flight mode.")
+            return False
+        if not await self.send_at_command_check("AT%XANTCFG=1"):
+            utils.log_error("Failed to set ANT conf.")
+            return False
+        if not await self.send_at_command_check("AT%XCOEX0=1,1,1570,1580"):
+            utils.log_error("Failed to enable COEX pin for GPS.")
+            return False
+        if ntn:
+            if not await self.send_at_command_check("AT%XSYSTEMMODE=0,0,1,0,0"):
+                utils.log_error("Failed to set system mode.")
+                return False
+        else:
+            if not await self.send_at_command_check("AT%XSYSTEMMODE=0,0,1,0"):
+                utils.log_error("Failed to set system mode.")
+                return False
+        if not await self.send_at_command_check("AT+CFUN=31"):
+            utils.log_error("Failed to enable GPS.")
+            return False
+        if not await self.send_at_command_check("AT#XGPS=1,0,0,0", expected_response = "XGPS"):
+            utils.log_error("Failed to start GPS data adquisition.")
+            return False
+                
+        gps_response = await self._wait_for_response("#XGPS", timeout=60000)
+        utils.log_info(f"GPS response: {gps_response}")
+        
+        if not await self.send_at_command_check("AT#XGPS=0"):
+            utils.log_error("Failed to shutdown GPS stack.")
+            return False
+        
+        if not await self.send_at_command_check("AT+CFUN=30"):
+            utils.log_error("Failed to turn off GPS.")
+            return False
+        
+        if gps_response and "XGPS" in gps_response:
+            return self._parse_gps_response(gps_response)
+        
+        return []
+    
+    async def connect_ntn(self, lat = None, lon = None, elevation = None, apn = None):
+
+        """
+        Connects to the NTN NB-IoT network.
+
+        Returns:
+            True if the connection is successful, False otherwise.
+        """
+        
+        if lat == None or lon == None or elevation == None:
+            utils.log_info("Can't connect to NTN network without exact position (lat/long/elevation missing). Trying to fix GPS...")
+            gps_data = await self.get_gps_coords(ntn=True)
+            if gps_data == []:
+                return False
+            lat = gps_data[0]
+            lon = gps_data[1]
+            elevation = gps_data[2]
+            gps_time = gps_data[3]
+            
+            pm.set_rtc_time(gps_time, mode = "GPS")
+            
+        if apn == None:
+            utils.log_error("Can't connect to NTN network without APN.")
+            return False
+        
+        else:
+
+            if not await self.send_at_command_check("AT%XSYSTEMMODE=0,0,0,0,1"):
+                utils.log_error("Failed to set system mode.")
+                return False
+            if not await self.send_at_command_check('AT%XBANDLOCK=2,,"23,255,256"'):
+                utils.log_error("Failed to set band lock.")
+                return False
+            if not await self.send_at_command_check(f'AT%LOCATION=2,"{lat}","{lon}","{elevation}",10,0'):
+                utils.log_error("Failed to set location.")
+                return False
+            if not await self.send_at_command_check(f'AT+CGDCONT=1,"IP","{apn}"'):
+                utils.log_error("Failed to set APN.")
+                return False
+            if not await self.send_at_command_check("AT+CFUN=1"):
+                utils.log_error("Failed to turn on the modem.")
+                return False
+            
+            if await self.wait_for_network_connection(timeout=300000): # Wait for connection
+                utils.log_info(f"Successfully connected to NTN network!")
+                return True
+                
+        return False
+
+    async def connect(self, connection_preference, edrx = True, apn = None, ntn = False):
 
         """
         Connects to the NB-IoT network.
@@ -261,59 +403,60 @@ class NBIoT:
             True if the connection is successful, False otherwise.
         """
 
-        if not self.send_at_command_check("AT"):
+        if connection_preference == 0:
+            utils.log_warning("Automatic connection_preference (0) is not supported yet. Forcing NB-IoT (2) for this connection attempt.")
+            connection_preference = 2
+
+        if not await self.send_at_command_check("AT"):
             return False
 
-        if not self.send_at_command_check("AT#XSLMVER"):  
+        if not await self.send_at_command_check("AT#XSLMVER"):  
             return False
         
-        if not self.send_at_command_check("AT+CGMR"):  
+        if not await self.send_at_command_check("AT+CGMR"):  
             return False
         
-        response = self.send_at_command("AT%XMONITOR")
+        response = await self.send_at_command("AT%XMONITOR")
         
-        if response and ("%XMONITOR: 1" in response or "%XMONITOR: 5" in response):
-            utils.log_info("Device was connected to the network.")
+        if await self.wait_for_network_connection(timeout=1000):
+            utils.log_info("Device already fully connected. Skipping selection.")            
+        else:
             
-        else:    
-
-            query_response = self.send_at_command("AT%XSYSTEMMODE?", "%XSYSTEMMODE:") # Check response starts with %XSYSTEMMODE:
-            current_mode_val = -1 # Indicate unknown state
+            query_response = await self.send_at_command("AT%XSYSTEMMODE?", "%XSYSTEMMODE:") 
+            current_mode_val = -1 
             if query_response:
                 try:
-                    # Example response: %XSYSTEMMODE: 1,1,0,2
                     current_mode_val = int(query_response.strip().split(',')[-1])
                 except (IndexError, ValueError) as e:
                     utils.log_warning(f"Could not parse current system mode: {e}")
 
             if current_mode_val != connection_preference:
-                utils.log_info(f"Setting system mode to {connection_preference} ...")
-                if not self.send_at_command_check(f"AT%XSYSTEMMODE=1,1,0,{connection_preference}"):
+                utils.log_info(f"Setting system mode to {connection_preference}...")
+                if not await self.send_at_command_check(f"AT%XSYSTEMMODE=1,1,0,{connection_preference}"):
                     utils.log_error("Failed to set system mode.")
                     return False
             else:
                 utils.log_info(f"System mode already set correctly ({current_mode_val}). Skipping.")
                 
-            # --- Configure RAI --> Release Assistance Indication (Check First) ---
+            # --- Configure RAI --> Release Assistance Indication ---
 
-            query_response = self.send_at_command("AT%XRAI?", "%XRAI:") # Check response starts with %XSYSTEMMODE:
-            current_mode_val = -1 # Indicate unknown state
+            query_response = await self.send_at_command("AT%RAI?", "%RAI:") 
+            current_mode_val = -1 
             if query_response:
                 try:
-                    # Example response: %XRAI: 0
                     current_mode_val = int(query_response.strip().split(": ")[-1])
                 except (IndexError, ValueError) as e:
                     utils.log_warning(f"Could not parse RAI: {e}")
 
-            if current_mode_val != 3:
-                utils.log_info(f"Setting RAI to 3...")
-                if not self.send_at_command_check("AT%XRAI=3"):
+            if current_mode_val != 1:
+                utils.log_info(f"Setting RAI to 1...")
+                if not await self.send_at_command_check("AT%RAI=1"):
                     utils.log_error("Failed to set RAI.")
                     return False
             else:
                 utils.log_info(f"RAI already set correctly ({current_mode_val}). Skipping.")
                 
-            #Configure eDRX mode ---
+            # --- Configure eDRX mode ---
             if edrx:
 
                 if connection_preference == 1:
@@ -321,94 +464,87 @@ class NBIoT:
                 elif connection_preference == 2:
                     desired_mode_val = 5
 
-                if not self.send_at_command_check('AT%PERIODICSEARCHCONF=0,0,0,1,"0,10,40,,5","1,300,600,1800,1800,3600"'): #Ultra low power periodic cell search.
+                if not await self.send_at_command_check('AT%PERIODICSEARCHCONF=0,0,0,1,"0,10,40,,5","1,300,600,1800,1800,3600"'): 
                     return False
                              
-                if not self.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0011"'): #Enable eDRX mode.
+                if not await self.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0011"'): 
                     return False
                 
-                if not self.send_at_command_check(f'AT%XPTW={desired_mode_val},"0001"'): #Set Paging Time Window (PTW). 
-                    return False
-                
-            else:
-
-                if not self.send_at_command_check(f'AT+CEDRXS=0'): #Disable eDRX mode.
+                if not await self.send_at_command_check(f'AT%XPTW={desired_mode_val},"0000"'): 
                     return False
 
             if apn != None:
-                if not self.send_at_command_check(f'AT+CGDCONT=1,"IP","{apn}"', "OK", timeout=1000): 
+                if not await self.send_at_command_check(f'AT+CGDCONT=1,"IP","{apn}"', "OK", timeout=1000): 
                     return False
-            if not self.send_at_command_check("AT+CFUN=1", "OK", timeout=1000): 
+            if not await self.send_at_command_check("AT+CFUN=1", "OK", timeout=1000): 
                 return False
             
             utils.log_info("Starting smart network selection...")
             is_connected = False
 
-            # 1. Scan available networks (puede tardar varios minutos)
-            scan_response = self.send_at_command('AT+COPS=?', timeout=300000)
+            scan_response = await self.send_at_command('AT+COPS=?', timeout=300000)
             
             if scan_response and "+COPS:" in scan_response:
-
+                
                 if connection_preference == 1:
                     desired_act= 7
                 elif connection_preference == 2:
                     desired_act = 9
-                    
-                available_networks = self._parse_cops_response(scan_response)
-                current_blacklist = self.BLACKLIST.get(connection_preference, [])
                 
-                utils.log_info(f"Networks found: {[net[0] for net in available_networks]}")
-                utils.log_info(f"Blacklist for {connection_preference}: {current_blacklist}")
+                available_nets = self._parse_cops_response(scan_response)
+                blacklist = self.BLACKLIST.get(connection_preference, [])
+                whitelist = self.WHITELIST.get(connection_preference, [])
+                
+                valid_nets = [n for n in available_nets if int(n[1]) == desired_act and n[0] not in blacklist]
+                priority_group = [n for n in valid_nets if n[0] in whitelist]
+                others_group = [n for n in valid_nets if n[0] not in whitelist]
+                
+                final_candidates = priority_group + others_group
+                utils.log_info(f"Found {len(priority_group)} priority networks and {len(others_group)} regular networks.")
 
                 # 2. Connect only to allowed networks
-                for plmn, act in available_networks:
-                    if plmn in current_blacklist:
-                        utils.log_info(f"Operator {plmn} is blacklisted, skipping.")
-                        continue
+                for plmn, act in final_candidates:
+                    is_priority = plmn in whitelist
+                    utils.log_info(f"Attempting connection to PLMN: {plmn} (Priority: {is_priority})")
                     
-                    if int(act.strip('\n')) != desired_act:
-                        utils.log_info(f"Ignoring operator {plmn} with AcT {act}.")
-                        continue
-                    
-                    utils.log_info(f"Attempting manual connection to PLMN: {plmn}...")
-                    if self.send_at_command_check(f'AT+COPS=1,2,"{plmn}"', timeout = 10000):
-                        if self.wait_for_network_connection(timeout=180000): # 3 min timeout per operator
+                    if await self.send_at_command_check(f'AT+COPS=1,2,"{plmn}"', timeout = 10000):
+                        # Async wait of 1 minute for each operator.
+                        if await self.wait_for_network_connection(timeout=30000): 
                             utils.log_info(f"Successfully connected to {plmn}!")
                             is_connected = True
                             break
                     utils.log_warning(f"Failed to initiate connection to {plmn}.")
             
-            # 3. Plan B: If manual fails, switch back to auto
+            # 3. Plan B: Automatic Fallback
             if not is_connected:
                 utils.log_warning("Manual selection failed. Falling back to automatic mode.")
-                self.send_at_command_check('AT+COPS=0')
-                is_connected = self.wait_for_network_connection(timeout=600000)
+                await self.send_at_command_check('AT+COPS=0')
+                is_connected = await self.wait_for_network_connection(timeout=60000)
 
             if not is_connected:
                 utils.log_error("Failed to connect to any network.")
                 return False
             
-            if not self.send_at_command_check('AT+CPSMS=0'): #Disable PSM mode.
+            if not await self.send_at_command_check('AT+CPSMS=0'): 
                 return False            
         
-            if not self.send_at_command_check("AT+CPSMS?", "OK", timeout=1000): 
+            if not await self.send_at_command_check("AT+CPSMS?", "OK", timeout=1000): 
                 return False
 
-            if not self.send_at_command_check("AT%XMONITOR", "OK", timeout=1000): 
+            if not await self.send_at_command_check("AT%XMONITOR", "OK", timeout=1000): 
                 return False
 
         utils.log_info("Connected to NB-IoT network.")
         
         if edrx:
-            
-            if not self.send_at_command("AT+CEDRXRDP", expected_response = "CEDRXRDP", timeout=4000):
+            if not await self.send_at_command("AT+CEDRXRDP", expected_response = "CEDRXRDP", timeout=4000):
                 utils.log_error("Failed to set eDRX mode.")
             else:
                 utils.log_info("eDRX mode set.")
             
         return True
     
-    def verify_data_connectivity(self):
+    async def verify_data_connectivity(self):
         """
         Verifies if any PDP context has a valid IP address assigned using AT+CGDCONT?.
         This command directly returns the dynamic parameters of the data session.
@@ -418,7 +554,8 @@ class NBIoT:
         """
         # AT+CGDCONT? returns the current definition of all contexts
         # Format: +CGDCONT: <cid>,"<PDP_type>","<APN>","<IP_address>",...
-        res = self.send_at_command("AT+CGDCONT?")
+        
+        res = await self.send_at_command("AT+CGDCONT?")
         
         if res and "+CGDCONT:" in res:
             try:
@@ -446,8 +583,7 @@ class NBIoT:
         utils.log_error("No active data context with IP connectivity found.")
         return False
     
-    def wake_up(self, max_attempts = 5):
-        
+    async def wake_up(self, max_attempts = 5):
         """
         Wake up NB-IoT module from sleep (AT#XSLEEP=2 or AT#XSLEEP=0)
 
@@ -460,9 +596,11 @@ class NBIoT:
         
         while (not active) and (attempts < max_attempts):
         
-            if not self.send_at_command_check("AT", "OK", timeout=1000, retries = 1):
+            if not await self.send_at_command_check("AT", "OK", timeout=1000, retries = 1):
                 Pin(config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("nb_iot_wake_up", 18), Pin.OUT, value=0, hold=True)
-                time.sleep_ms(100)
+                
+                await asyncio.sleep_ms(100)
+                
                 Pin(config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("nb_iot_wake_up", 18), Pin.OUT, value=1, hold=True)
                 attempts += 1
             
@@ -473,8 +611,7 @@ class NBIoT:
         utils.log_info("Could not wake up NB-IoT module.")
         return False
     
-    def sleep(self):
-        
+    async def sleep(self):
         """
         Enter Sleep. In this mode, both the SLM service and the LTE connection are maintained.
 
@@ -482,14 +619,13 @@ class NBIoT:
             True if enter sleep state was successful, False otherwise.
         """
 
-        if not self.send_at_command_check("AT#XSLEEP=2", "OK", timeout=1000): # SLM service and the LTE connection are maintained.
+        if not await self.send_at_command_check("AT#XSLEEP=2", "OK", timeout=1000): # SLM service and the LTE connection are maintained.
             return False
 
         utils.log_info("NB-IoT module to sleep, SLM service and the LTE connection are maintained.")
         return True
     
-    def disconnect(self):
-        
+    async def disconnect(self):
         """
         Enter Idle. In this mode, both the SLM service and the LTE connection are terminated.
 
@@ -497,17 +633,16 @@ class NBIoT:
             True if disconnection was successful, False otherwise.
         """
 
-        if not self.send_at_command_check("AT+CFUN=4", "OK", timeout=1000): # Set flight mode.
+        if not await self.send_at_command_check("AT+CFUN=4", "OK", timeout=1000): # Set flight mode.
             return False
 
-        if not self.send_at_command_check("AT#XSLEEP=0", "OK", timeout=1000): # SLM service and the LTE connection are terminated.
+        if not await self.send_at_command_check("AT#XSLEEP=0", "OK", timeout=1000): # SLM service and the LTE connection are terminated.
             return False
 
         utils.log_info("Disconnected from NB-IoT network.")
         return True
     
-    def reset(self):
-        
+    async def reset(self):
         """
         Performs a soft reset of the nRF91 Series SiP
 
@@ -515,10 +650,9 @@ class NBIoT:
             True if reset was successful, False otherwise.
         """
 
-        return self.send_at_command_check("AT#XRESET", "Ready", timeout=4000)
+        return await self.send_at_command_check("AT#XRESET", "Ready", timeout=4000)
     
-    def hard_reset(self):
-        
+    async def hard_reset(self):
         """
         Performs a hard reset of the nRF91 Series SiP
 
@@ -529,117 +663,58 @@ class NBIoT:
         EN_COM_MODULE = config_manager.static_config.get("pinout", {}).get("control", {}).get("en_nbiot_pin", 5)
         
         Pin(EN_COM_MODULE, Pin.OUT, Pin.PULL_UP, value=0, hold=True)
-        time.sleep_ms(1000)
+        
+        await asyncio.sleep_ms(5000)
+        
         Pin(EN_COM_MODULE, Pin.OUT, Pin.PULL_UP, value=1, hold=True)
-        time.sleep_ms(1000)
+        
+        await asyncio.sleep_ms(1000)
 
-        return self.send_at_command_check("AT", timeout=4000)
+        return await self.send_at_command_check("AT", timeout=4000)
 
-    def get_imei_ccid(self):
-        """
-        Gets IMEI and CCID of the eSIM.
-
-        Returns:
-            A dictionary containing the IMEI and CCID, or None if an error occurred.
-
-        Example:
-            nb_iot_module = NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)
-            imei_ccid_data  = nb_iot_module.get_imei_ccid()
-            if imei_ccid_data:
-                imei = imei_ccid_data["imei"]
-                ccid = imei_ccid_data["ccid"]
-                utils.log_info(f"IMEI: {imei}")
-                utils.log_info(f"CCID: {ccid}")
-            else:
-                utils.log_error("Failed to get IMEI and CCID.")
-        """
-        imei = None
-        ccid = None
-
-        # Get IMEI
-        response = self.send_at_command("AT+CGSN=1", "OK")
-        if response:
-            lines = response.split("\r\n")
-            for line in lines:
-                if "+CGSN:" in line:
-                    imei = line.split(":")[1].strip().replace('"', '') # Extrae el IMEI y elimina las comillas
-                    break
-
-        # Set CFUN to 41
-        self.send_at_command("AT+CFUN=41")
-
-        # Get CCID
-        response = self.send_at_command("AT%XICCID", "OK", timeout=3000)
-        if response:
-            lines = response.split("\r\n")
-            for line in lines:
-                if "%XICCID:" in line:
-                    ccid = line.split(":")[1].strip()
-                    break
-
-        if imei and ccid:
-            return {"imei": imei, "ccid": ccid}
-        else:
-            utils.log_error("Failed to get IMEI and/or CCID.")
-            return None
-
-    def register_SIM(self):
-        """
-        Registers the SIM in the network.
-
-        Returns:
-            True if the registration is successful, False otherwise.
-
-        Example:
-            nb_iot_module = NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)
-            if nb_iot_module.register_sim():
-                utils.log_info("SIM registered successfully.")
-            else:
-                utils.log_error("SIM registration failed.")
-        """
-        # Enable the modem
-        if not self.send_at_command_check("AT+CFUN=1"):
-            utils.log_error("Failed to enable modem.")
-            return False
-
-        # Wait for network connection (adjust timeout as needed)
-        if not self.wait_for_network_connection(timeout=600000):
-            utils.log_error("Timeout waiting for network connection.")
-            return False
-
-        # Complete registration
-        if not self.send_at_command_check('AT#XHTTPCCON=1,"d.actinius.io",14000,123322', timeout=5000):
-            utils.log_error("Failed to execute AT#XHTTPCCON.")
-            return False
-
-        if not self.send_at_command_check('AT#XHTTPCREQ="POST","/v1/tx/reg/complete",""', timeout=5000):
-            utils.log_error("Failed to execute AT#XHTTPCREQ.")
-            return False
-
-        utils.log_info("SIM registration successful.")
-        return True
-
-    def check_network_connection(self):
+    async def check_network_connection(self):
         """
         Checks if module is connected to the network.
 
         Returns:
             True if connected, False otherwise.
         """
-        # 1. Check physical/network attachment
-        response = self.send_at_command("AT%XMONITOR")
+        response = await self.send_at_command("AT%XMONITOR")
         if response and ("%XMONITOR: 1" in response or "%XMONITOR: 5" in response):
             utils.log_info("NB-IoT module connected to the network.")
-            # 2. CRITICAL: Check if we actually have data throughput capability
-            if self.verify_data_connectivity():
+            
+            if await self.verify_data_connectivity():
                 utils.log_info("Device fully connected with IP address.")
                 return True
             else:
                 utils.log_warning("Attached to network but no IP yet.")
                 
         return False
+    
+    async def get_signal_data(self):
+        """
+        Retrieves signal quality data from modem.
 
-    def wait_for_network_connection(self, timeout=60000):
+        Returns:
+            RSRP,RSQR
+        """
+        response = await self.send_at_command("AT+CESQ", "+CESQ:", timeout=2000) 
+        if response:
+            try:
+                data = response.split(' ')[1]
+                data = data.split(',')
+                rsrq = int(data[4])
+                rsrp = int(data[5])
+                utils.log_info(f"Modem RSRP: {rsrq} Modem RSQR: {rsrp}")
+                return [rsrq, rsrp]
+            except (IndexError, ValueError) as e:
+                utils.log_error(f"Error parsing modem signal data: {e}, response: {response}")
+                return None
+        else:
+            utils.log_error("Failed to get modem signal data.")
+            return None
+
+    async def wait_for_network_connection(self, timeout=60000):
         """
         Waits for the device to connect to the network.
 
@@ -651,66 +726,45 @@ class NBIoT:
         """
         start_time = time.ticks_ms()
         while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
-            # 1. Check physical/network attachment
-            response = self.send_at_command("AT%XMONITOR")
+            response = await self.send_at_command("AT%XMONITOR")
             if response and ("%XMONITOR: 1" in response or "%XMONITOR: 5" in response):
                 
-                # 2. CRITICAL: Check if we actually have data throughput capability
-                if self.verify_data_connectivity():
+                if await self.verify_data_connectivity():
                     utils.log_info("Device fully connected with IP address.")
                     return True
                 else:
                     utils.log_warning("Attached to network but no IP yet. Retrying...")
                     
-            time.sleep_ms(2000)
+            await asyncio.sleep_ms(2000)
+            
         return False
-
-    def get_signal_quality(self):
-        """
-        Gets the signal quality.
-
-        Returns:
-            The signal quality (CSQ) as a string, or None if an error occurred.
-        """
-        response = self.send_at_command("AT+CSQ")
-        if response:
-            # Parse the response to extract the CSQ value
-            # Example response: +CSQ: 18,99
-            parts = response.split(":")
-            if len(parts) == 2:
-                csq_part = parts[1].split(",")[0].strip()
-                return csq_part
-        return None
     
-    def get_ip_address(self):
+    async def get_ip_address(self):
         """
         Gets the IP address assigned to the module.
 
         Returns:
             The IP address as a string, or None if an error occurred.
         """
-        response = self.send_at_command("AT+CGPADDR=1")
+        response = await self.send_at_command("AT+CGPADDR=1")
         if response and "+CGPADDR: 1," in response:
-            # Parse the response to extract the IP address
-            # Example response: +CGPADDR: 1,"10.123.45.67"
             parts = response.split(",")
             if len(parts) == 2:
                 ip_address = parts[1].replace('"', "")
                 return ip_address
         return None
     
-    def get_network_time(self):
+    async def get_network_time(self):
         """Gets the current time from the modem's RTC (using AT+CCLK?).
 
         Returns:
             The time as a string in the format "yy/MM/dd,hh:mm:ss+TZ",
             or None if an error occurred.  This is the format returned by the modem.
         """
-        response = self.send_at_command("AT+CCLK?", "+CCLK:", timeout=2000) #Expect a response that starts by "+CCLK:"
+        response = await self.send_at_command("AT+CCLK?", "+CCLK:", timeout=2000) 
         if response:
             try:
-                # Extract time string. Response format: +CCLK: "yy/MM/dd,hh:mm:ss+TZ"
-                time_str = response.split('"')[1]  # Get the part within quotes
+                time_str = response.split('"')[1]  
                 utils.log_info(f"Modem time: {time_str}")
                 return time_str
             except (IndexError, ValueError) as e:
@@ -720,7 +774,7 @@ class NBIoT:
             utils.log_error("Failed to get time from modem.")
             return None
     
-    def mqtt_configure(self, client_id, keep_alive, clean_session):
+    async def mqtt_configure(self, client_id, keep_alive, clean_session):
 
         """
         Configure the MQTT client before connecting to a broker.
@@ -735,14 +789,14 @@ class NBIoT:
 
         """
 
-        if not self.send_at_command_check(f'AT#XMQTTCFG="{client_id}",{keep_alive},{clean_session}', timeout = 2000):
+        if not await self.send_at_command_check(f'AT#XMQTTCFG="{client_id}",{keep_alive},{clean_session}', timeout = 2000):
             utils.log_error("Failed to configure MQTT connection.")
             return False
         
         utils.log_info("MQTT connection successfully configured.")
         return True
     
-    def mqtt_connect(self, username, password, url, port):
+    async def mqtt_connect(self, username, password, url, port):
 
         """
         Connect to the MQTT client.
@@ -758,14 +812,14 @@ class NBIoT:
 
         """
 
-        if not self.send_at_command_check(f'AT#XMQTTCON=1,"{username}","{password}","{url}",{port}', expected_response = "#XMQTTEVT: 0,0", retries=2, timeout = 30000):
+        if not await self.send_at_command_check(f'AT#XMQTTCON=1,"{username}","{password}","{url}",{port}', expected_response = "#XMQTTEVT: 0,0", retries=2, timeout = 30000):
             utils.log_error("Failed to configure MQTT connection.")
             return False
         
         utils.log_info("MQTT connection successfully configured.")
         return True
     
-    def mqtt_check_connection(self):
+    async def mqtt_check_connection(self):
 
         """
         Checks if the MQTT client is still connected to the broker.
@@ -775,7 +829,7 @@ class NBIoT:
 
         """
 
-        res = self.send_at_command("AT#XMQTTCON?", timeout = 1000)
+        res = await self.send_at_command("AT#XMQTTCON?", timeout = 1000)
         if res.strip("\r\nOK") == '#XMQTTCON: 0':
             utils.log_info("MQTT connection is closed.")
             return False
@@ -783,7 +837,7 @@ class NBIoT:
             utils.log_info("MQTT connection is alive.")
             return True
         
-    def mqtt_publish(self, topic, msg):
+    async def mqtt_publish(self, topic, msg):
 
         """
         Publish MQTT message.
@@ -796,14 +850,14 @@ class NBIoT:
 
         """
 
-        if not self.send_at_command_check(f'AT#XMQTTPUB="{topic}","{msg}",0,0', timeout = 2000):
+        if not await self.send_at_command_check(f'AT#XMQTTPUB="{topic}","{msg}",0,0', timeout = 2000):
             utils.log_error("Failed to configure MQTT connection.")
             return False
         
         utils.log_info(f"MQTT message successfully published to: {topic}")
         return True
     
-    def mqtt_subscribe(self, topic, QoS = 1):
+    async def mqtt_subscribe(self, topic, QoS = 1):
 
         """
         Susbscribe MQTT message.
@@ -815,7 +869,7 @@ class NBIoT:
 
         """
 
-        if not self.send_at_command_check(f'AT#XMQTTSUB="{topic}",{QoS}', timeout = 20000, retries = 5, retry_delay = 10):
+        if not await self.send_at_command_check(f'AT#XMQTTSUB="{topic}",{QoS}', timeout = 10000, retries = 5, retry_delay = 10000):
             utils.log_error("Failed to configure MQTT connection.")
             return False
         
@@ -830,10 +884,29 @@ class NBIoT:
             A list of dictionaries, each containing 'topic' and 'message'.
             Returns an empty list if no messages have been received.
         """
-        messages = self.received_messages
+        messages = self.received_messages 
         self.received_messages = [] # Clear the list after retrieving it
         return messages
     
+    async def send_udp_data(self, server, port, serial_num, payload):
+        """
+        Sends data over UDP.
+
+        Returns:
+            True if success, false otherwise.
+        """
+        if not await self.send_at_command_check("AT#XSOCKET=1,2,0"):
+            utils.log_error("Failed to open UDP socket.")
+            return False
+        full_payload = f'{serial_num}:{payload}'
+        if not await self.send_at_command_check(f'AT#XSENDTO="{server}",{port},"{full_payload}"', expected_response = "OK", timeout = 10000):
+            utils.log_error("Failed to send UDP data.")
+            return False
+        if not await self.send_at_command_check("AT#XSOCKET=0"):
+            utils.log_error("Failed to close UDP socket.")
+            return False
+        return True
+
     def _read_full_response(self, timeout=10000, inactivity_timeout=10000):
         """
         - Uses the 2 URCs logic to detect the end.
@@ -866,13 +939,13 @@ class NBIoT:
                     urc_count = response_bytes.count(urc_pattern)
 
                     if urc_count >= 2:
-                        time.sleep_ms(50) # Short final wait
+                        pm.smart_sleep(50) # Short final wait
                         if self.uart.any(): response_bytes.extend(self.uart.read(self.uart.any()))
                         utils.log_info(f"READ_USER_OPT: Second {urc_pattern!r} detected ({len(response_bytes)} bytes).")
                         return bytes(response_bytes) # Success
             else:
                 # CRITICAL! Only sleep if there is NO data.
-                time.sleep_ms(1) # Yield CPU very briefly
+                pm.smart_sleep(1) # Yield CPU very briefly
 
             # Failsafe: Inactivity timeout
             if time.ticks_diff(time.ticks_ms(), last_data_time) > inactivity_timeout:
@@ -940,7 +1013,7 @@ class NBIoT:
             data = self.uart.read(self.uart.any())
             if data:
                 bytes_cleared += len(data)
-            time.sleep_ms(5)
+            pm.smart_sleep(5)
         if bytes_cleared > 0:
             utils.log_warning(f"CLEAR_UART: Discarded {bytes_cleared} unexpected bytes from UART buffer.")
 
@@ -1101,7 +1174,7 @@ class NBIoT:
                         if not is_last_chunk and bytes_written < expected_bytes_in_chunk - 2:
                             utils.log_error(f"Error USER: Chunk {chunk_start}-{chunk_end} incorrect size. Expected: {expected_bytes_in_chunk}, Received: {bytes_written}.")
                             #raise ValueError("Incorrect chunk size received")
-                            time.sleep(10)
+                            pm.smart_sleep(10000)
                             self._clear_uart_buffer()
                         
                         else:
@@ -1129,7 +1202,7 @@ class NBIoT:
                         self.send_at_command("AT#XHTTPCCON=0", "OK", timeout=5000)
                         connection_open = False # Mark as closed
                         utils.log_info("Waiting 10 seconds before retrying...")
-                        time.sleep(10)
+                        pm.smart_sleep(10000)
                         # DO NOT clear buffer here, the reconnect at the start of the loop will do it
                         # <<< END NEW LOGIC >>>
 
@@ -1141,6 +1214,10 @@ class NBIoT:
 
                 # <<< REMOVED PAUSE BETWEEN SUCCESSFUL CHUNKS >>>
                 # time.sleep(1)
+                
+                #Feed WDT so it doesn't trigger during big downloads.
+                if wdt != None:
+                    wdt.feed()
 
             # Download nominally finished
             utils.log_info(f"--- Download USER Nominally Finished ({bytes_downloaded} bytes) ---")
@@ -1191,7 +1268,7 @@ class NBIoT:
             try:
                 stat_info = os.stat(local_filename)
                 if stat_info[6] > 0:
-                    os.remove(local_filename)
+                    #os.remove(local_filename)
                     utils.log_warning(f"Incomplete/corrupt USER file '{local_filename}' deleted.")
             except OSError:
                 pass

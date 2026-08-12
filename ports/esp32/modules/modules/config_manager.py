@@ -28,6 +28,7 @@ CONFIG_MAP = {
     'setVDCVoltage': ('general', 'vdc_voltage'),
     'setTheftAlert': ('general', 'theft_alert', bool),
     'setUserScriptEnable': ('general', 'user_script', bool),
+    'setMaxRetryCon': ('general', 'max_retry_connection'),
     #Battery configuration
     'setBatteryInputSoC': ('battery_config', 'soc', bool),
     'setBatteryInputCRate': ('battery_config', 'crate', bool),

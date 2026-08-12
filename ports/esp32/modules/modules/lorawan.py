@@ -11,8 +11,8 @@ from machine import UART, Pin
 from modules import utils
 import time
 import json
+import asyncio
 from modules.config_manager import config_manager
-from modules.power_manager import pm
 
 class LoRaWAN:
     def __init__(self, uart_id, tx_pin, rx_pin, baudrate=9600, timeout=1000):
@@ -33,7 +33,7 @@ class LoRaWAN:
         self.confirmed = False #ACK enabled or disabled.
         self.downlinks_queue = []
 
-    def send_at_command(self, command, expected_response="OK", timeout=1000, wait_full_timeout = False):
+    async def send_at_command(self, command, expected_response="OK", timeout=1000, wait_full_timeout = False):
         """
         Sends an AT command to the NB-IoT module and waits for a response.
 
@@ -48,7 +48,7 @@ class LoRaWAN:
         self.uart.write(command + "\r\n")
         utils.log_debug(f"Sent AT command: {command}")
 
-        response = self._wait_for_response(expected_response, timeout, wait_full_timeout = wait_full_timeout)
+        response = await self._wait_for_response(expected_response, timeout, wait_full_timeout = wait_full_timeout)
 
         if response:
             utils.log_debug(f"Received response: {response}")
@@ -56,7 +56,7 @@ class LoRaWAN:
             utils.log_error(f"Timeout waiting for response to AT command: {command}")
         return response
     
-    def send_at_command_check(self, command, expected_response="OK", timeout=2000, retries=3):
+    async def send_at_command_check(self, command, expected_response="OK", timeout=2000, retries=3):
         """
         Sends an AT command and checks the response, retrying if necessary.
 
@@ -70,11 +70,11 @@ class LoRaWAN:
             True if the command was successful, False otherwise.
         """
         for i in range(retries):
-            response = self.send_at_command(command, expected_response, timeout)
+            response = await self.send_at_command(command, expected_response, timeout)
             if response and expected_response in response:
                 return True
             utils.log_warning(f"AT command failed, retrying ({i+1}/{retries})...")
-            pm.smart_sleep(1000)  # Wait before retrying
+            await asyncio.sleep_ms(1000)  # Wait before retrying
         utils.log_error(f"AT command '{command}' failed after {retries} retries.")
         return False
     
@@ -98,7 +98,7 @@ class LoRaWAN:
             except Exception as e:
                 utils.log_error(f"Error parsing RX URC: {e}")
 
-    def _wait_for_response(self, expected_response, timeout, wait_full_timeout = False, command=None): # Added command parameter
+    async def _wait_for_response(self, expected_response, timeout, wait_full_timeout = False, command=None): # Added command parameter
         """
         Waits for a specific response, processing URCs in the meantime.
         Args:
@@ -142,7 +142,7 @@ class LoRaWAN:
                 if expected_response in full_response_text and not wait_full_timeout: 
                      return full_response_text
 
-            pm.smart_sleep(20) 
+            await asyncio.sleep_ms(20)
 
         # Timeout: Return what was accumulated if it contains the response, otherwise None
         full_response_text = "\r\n".join(response_lines)
@@ -155,7 +155,7 @@ class LoRaWAN:
                  utils.log_warning(f"Timeout waiting for '{expected_response}'. Received: {full_response_text}")
             return None
 
-    def set_network_mode(self, mode=1):
+    async def set_network_mode(self, mode=1):
         """Sets the network working mode after checking the current mode.
 
         Args:
@@ -165,7 +165,7 @@ class LoRaWAN:
         Returns: True on success or if already set, False on failure.
         """
 
-        query_response = self.send_at_command("AT+NWM=?", "AT+NWM=") # Expect response starting with AT+NWM=
+        query_response = await self.send_at_command("AT+NWM=?", "AT+NWM=") # Expect response starting with AT+NWM=
         current_mode = -1 # Indicate unknown state
         if query_response:
             try:
@@ -183,9 +183,9 @@ class LoRaWAN:
             return True
         else:
             utils.log_info(f"Setting network mode to {mode} (current: {current_mode})...")
-            return self.send_at_command_check(f"AT+NWM={mode}") # For set, expect "OK"
+            return await self.send_at_command_check(f"AT+NWM={mode}") # For set, expect "OK"
 
-    def set_join_mode(self, mode=1):
+    async def set_join_mode(self, mode=1):
         """Sets the network join mode after checking the current mode.
 
         Args:
@@ -193,7 +193,7 @@ class LoRaWAN:
 
         Returns: True on success or if already set, False on failure.
         """
-        query_response = self.send_at_command("AT+NJM=?", "AT+NJM=") # Expect response starting with AT+NJM=
+        query_response = await self.send_at_command("AT+NJM=?", "AT+NJM=") # Expect response starting with AT+NJM=
         current_mode = -1
         if query_response:
             try:
@@ -211,9 +211,9 @@ class LoRaWAN:
             return True
         else:
             utils.log_info(f"Setting join mode to {mode} (current: {current_mode})...")
-            return self.send_at_command_check(f"AT+NJM={mode}")
+            return await self.send_at_command_check(f"AT+NJM={mode}")
 
-    def set_class(self, class_type):
+    async def set_class(self, class_type):
         """Sets the device class after checking the current class.
 
         Args:
@@ -225,7 +225,7 @@ class LoRaWAN:
             utils.log_error("Invalid LoRaWAN class. Must be A, B, or C.")
             return False
 
-        query_response = self.send_at_command("AT+CLASS=?", "AT+CLASS=") # Expect response starting with AT+CLASS=
+        query_response = await self.send_at_command("AT+CLASS=?", "AT+CLASS=") # Expect response starting with AT+CLASS=
         current_class = "" # Default to empty string if not parsed
         if query_response:
             try:
@@ -243,9 +243,9 @@ class LoRaWAN:
             return True
         else:
             utils.log_info(f"Setting device class to {class_type.upper()} (current: {current_class})...")
-            return self.send_at_command_check(f"AT+CLASS={class_type.upper()}")
+            return await self.send_at_command_check(f"AT+CLASS={class_type.upper()}")
 
-    def set_band(self, band=4):
+    async def set_band(self, band=4):
         """Sets the active region after checking the current band.
 
         Args:
@@ -253,7 +253,7 @@ class LoRaWAN:
 
         Returns: True on success or if already set, False on failure.
         """
-        query_response = self.send_at_command("AT+BAND=?", "AT+BAND=") # Expect response starting with AT+BAND=
+        query_response = await self.send_at_command("AT+BAND=?", "AT+BAND=") # Expect response starting with AT+BAND=
         current_band = -1
         if query_response:
             try:
@@ -271,9 +271,9 @@ class LoRaWAN:
             return True
         else:
             utils.log_info(f"Setting band to {band} (current: {current_band})...")
-            return self.send_at_command_check(f"AT+BAND={band}")
+            return await self.send_at_command_check(f"AT+BAND={band}")
     
-    def set_confirmed_mode(self, mode):
+    async def set_confirmed_mode(self, mode):
         """Sets the confirmed mode.
 
         Args:
@@ -283,9 +283,9 @@ class LoRaWAN:
         """
         
         self.confirmed = mode
-        return self.send_at_command_check(f"AT+CFM={mode}")
+        return await self.send_at_command_check(f"AT+CFM={mode}")
 
-    def set_dev_eui(self, dev_eui):
+    async def set_dev_eui(self, dev_eui):
         """Sets the Device EUI.
 
         Args:
@@ -293,9 +293,9 @@ class LoRaWAN:
 
         Returns: True on success, False on failure.
         """
-        return self.send_at_command_check(f"AT+DEVEUI={dev_eui}")
+        return await self.send_at_command_check(f"AT+DEVEUI={dev_eui}")
 
-    def set_app_eui(self, app_eui):
+    async def set_app_eui(self, app_eui):
         """Sets the Application EUI.
 
         Args:
@@ -303,9 +303,9 @@ class LoRaWAN:
 
         Returns: True on success, False on failure.
         """
-        return self.send_at_command_check(f"AT+APPEUI={app_eui}")
+        return await self.send_at_command_check(f"AT+APPEUI={app_eui}")
 
-    def set_app_key(self, app_key):
+    async def set_app_key(self, app_key):
         """Sets the Application Key.
 
         Args:
@@ -313,9 +313,9 @@ class LoRaWAN:
 
         Returns: True on success, False on failure.
         """
-        return self.send_at_command_check(f"AT+APPKEY={app_key}")
+        return await self.send_at_command_check(f"AT+APPKEY={app_key}")
 
-    def join_network(self, attempts=3, interval=8):
+    async def join_network(self, attempts=3, interval=8):
       """Joins the LoRaWAN network.
 
       Args:
@@ -324,10 +324,10 @@ class LoRaWAN:
 
       Returns: True on success, False on failure.  Waits for +JOIN: Network joined
       """
-      if not self.send_at_command_check(f"AT+JOIN=1:0:{interval}:{attempts}", "OK"):
+      if not await self.send_at_command_check(f"AT+JOIN=1:0:{interval}:{attempts}", "OK"):
             return False
       # Now wait for the "Network joined" indication.  This can take some time.
-      response = self._wait_for_response("+EVT:JOINED", timeout=60000)  # Wait up to 60 seconds
+      response = await self._wait_for_response("+EVT:JOINED", timeout=60000)  # Wait up to 60 seconds
       if response:
           utils.log_info("Successfully joined LoRaWAN network.")
           return True
@@ -335,7 +335,7 @@ class LoRaWAN:
           utils.log_error("Failed to join LoRaWAN network.")
           return False
 
-    def request_time(self, ):
+    async def request_time(self, ):
         """Requests the current date and time.
 
         Args:
@@ -343,9 +343,9 @@ class LoRaWAN:
 
         Returns: True on success, False on failure.
         """
-        return self.send_at_command_check(f"AT+TIMEREQ=1")
+        return await self.send_at_command_check(f"AT+TIMEREQ=1")
 
-    def send_uplink(self, port, data):
+    async def send_uplink(self, port, data):
         """Sends data over the LoRaWAN network.
 
         Args:
@@ -356,84 +356,15 @@ class LoRaWAN:
             True on success, False on failure.  Waits for '+SEND: OK'
         """
         if self.confirmed:
-            response = self.send_at_command(f"AT+SEND={port}:{data}", "+EVT:SEND_CONFIRMED_OK", timeout=4000, wait_full_timeout = True)  # Longer timeout for sending
+            response = await self.send_at_command(f"AT+SEND={port}:{data}", "+EVT:SEND_CONFIRMED_OK", timeout=4000, wait_full_timeout = True)  # Longer timeout for sending
         else:
-            response = self.send_at_command(f"AT+SEND={port}:{data}", "+EVT:TX_DONE", timeout=4000, wait_full_timeout = True)  # Longer timeout for sending
+            response = await self.send_at_command(f"AT+SEND={port}:{data}", "+EVT:TX_DONE", timeout=4000, wait_full_timeout = True)  # Longer timeout for sending
         if response:
             utils.log_info(f"Data sent successfully on port {port}.")
             return True
         else:
             utils.log_error(f"Failed to send data on port {port}.")
             return False
-        
-    def get_downlink(self):
-        
-        """This command is used to access the last received data in hex format.
-
-        Returns:
-            Payload if data, None otherwise.  Waits for '+SEND: OK'
-        """
-        response = self.send_at_command("AT+RECV=?", "AT+RECV=", timeout=1000)  # Longer timeout for sending
-        
-        if response:
-            data = response.split("=")[1]
-            data = data.split("OK")[0]
-            data = data.strip("\r\n")
-            if data == "0:":
-                utils.log_info(f"No downlink received.")
-                return None
-            else:
-                port, data = data.split(":")
-                utils.log_info(f"Data received on port {port}: {data}")
-                return data
-        else:
-            utils.log_error(f"Failed to get response.")
-            return None
-        
-    def get_downlink_hex(self):
-        """Obtiene el último downlink como string hexadecimal."""
-
-        response = self.send_at_command("AT+RECV=?", "AT+RECV=", timeout=1000)
-        if response:
-             try:
-                 # '+RECV=P:xxxxxxxx'
-                 if "OK" in response and ":" in response:
-                     parts = response.split(':')
-                     if len(parts) >= 2 and parts[0].startswith("+RECV="):
-                          port_data = parts[0].split('=')[1] # Obtiene P
-                          data_hex = parts[1].split('\r')[0].split('\n')[0] # Obtiene xxxxxxxx
-                          if data_hex:
-                              utils.log_info(f"Hex data received on port {port_data}: {data_hex}")
-                              return data_hex
-                          else:
-                              # Puede ser un downlink vacío o solo ACK
-                              utils.log_info(f"Empty downlink or ACK received.")
-                              return None
-                     else:
-                          # No es un formato de downlink esperado o no hay datos
-                           return None
-                 else:
-                     # No hubo respuesta o fue inesperada
-                     return None
-             except Exception as e:
-                 utils.log_error(f"Error parsing downlink response: {e}")
-                 return None
-        else:
-            utils.log_error(f"Failed to get downlink response.")
-            return None
-
-
-    def get_downlink_bytes(self):
-        """Obtiene el último downlink como objeto bytes."""
-        data_hex = self.get_downlink_hex()
-        if data_hex:
-            try:
-                # Convertir hexadecimal a bytes
-                return binascii.unhexlify(data_hex)
-            except (ValueError, TypeError) as e:
-                utils.log_error(f"Failed to convert hex to bytes: {data_hex} - {e}")
-                return None
-        return None
     
     def get_next_downlink(self):
         """
@@ -446,12 +377,41 @@ class LoRaWAN:
             return self.downlinks_queue.pop(0)
         return None
     
-    def _fetch_class_c_downlinks(self):
+    async def get_downlink_messages(self):
+        """
+        Retrieves and clears all pending downlinks, in the same generic
+        shape used by the other transports (WiFi/NB-IoT): a list of dicts
+        with 'topic' and 'message', so downlink_manager.py can process any
+        transport the same way.
+
+        LoRaWAN downlinks arrive as raw hex ('data'). If those bytes happen
+        to be valid ASCII text (a manual SD/EV command), it's decoded to
+        plain text. Otherwise the raw hex is kept in 'message' as-is, so it
+        can still be fed straight into the LPP decoder as a config update.
+
+        Returns:
+            A list of dicts: [{'topic': 'port_10', 'message': 'SD1 ON'}, ...]
+            Empty list if there are no pending downlinks.
+        """
+        messages = []
+        while await self.has_downlinks():
+            downlink = self.get_next_downlink()
+            if downlink['data'] is None:
+                continue
+            try:
+                text = bytes.fromhex(downlink['data']).decode('utf-8')
+            except Exception:
+                text = downlink['data']  # Not text: keep as hex (binary LPP config payload).
+
+            messages.append({'topic': f"port_{downlink['port']}", 'message': text})
+        return messages
+    
+    async def _fetch_class_c_downlinks(self):
         """
         Queries the RAK3172 for buffered Class C downlinks using the custom ATC+GETDL command.
         """
         # Send the command and wait for the final OK response
-        response = self.send_at_command("ATC+GETDL", "OK", timeout=2000)
+        response = await self.send_at_command("ATC+GETDL", "OK", timeout=2000)
         
         if not response or "EMPTY" in response:
             return
@@ -473,25 +433,25 @@ class LoRaWAN:
                 except Exception as e:
                     utils.log_error(f"Error parsing buffered downlink line '{line}': {e}")
 
-    def has_downlinks(self):
+    async def has_downlinks(self):
         """Checks if there are any pending downlinks in the queue."""
         
         if self.lorawan_class == 2: #It's class C.
             try:
-                self._fetch_class_c_downlinks()
+                await self._fetch_class_c_downlinks()
             except Exception as e:
                 utils.log_error(f"Error checking class in has_downlinks: {e}")
         
         # 3. Return downlink buffer size
         return len(self.downlinks_queue) > 0
         
-    def get_network_time(self):
+    async def get_network_time(self):
         """Gets the local time from the module.
 
         Returns:
             The local time as a string (format: hhmmss on MM/DD/YYYY), or None on failure.
         """
-        response = self.send_at_command("AT+LTIME=?", "AT+LTIME=", timeout=5000)
+        response = await self.send_at_command("AT+LTIME=?", "AT+LTIME=", timeout=5000)
         if response:
             try:
                 # Extract time string. Example response: "+LTIME: 04h36m00s on 11/27/2023"
@@ -506,19 +466,19 @@ class LoRaWAN:
             utils.log_error("Failed to get local time from LoRaWAN module.")
             return None
 
-    def enable_auto_sleep(self):
+    async def enable_auto_sleep(self):
         """Enable RAK3172 auto sleep.  LPM makes the device sleep automatically after sending AT commands.
 
         Returns: True on success, False on failure.
         """
-        return self.send_at_command("AT+LPM=1")
+        return await self.send_at_command("AT+LPM=1")
     
-    def sleep(self):
+    async def sleep(self):
         """Puts the module into sleep mode.
 
         Returns: True on success, False on failure.
         """
-        return self.send_at_command("AT+SLEEP")
+        return await self.send_at_command("AT+SLEEP")
         
     def modem_time_to_unix(self, time_str):
         """
@@ -556,7 +516,7 @@ class LoRaWAN:
             utils.log_error(f"Error parsing time string from modem: {e}, string: {time_str}")
             return None
 
-    def connect(self, lorawan_class = "A"):
+    async def connect(self, lorawan_class = "A", attempts = 1):
         """
         Configures and joins the LoRaWAN network using settings from config_manager.
 
@@ -569,40 +529,40 @@ class LoRaWAN:
         # Load configuration from config_manager
         lorawan_config = config_manager.dynamic_config["communications"].get("lorawan", {})
 
-        if not self.send_at_command_check("AT"):
+        if not await self.send_at_command_check("AT"):
             return False
 
         # Set Network Mode (LoRaWAN)
-        if not self.set_network_mode(lorawan_config.get("network_mode", 1)):  # Default to LoRaWAN
+        if not await self.set_network_mode(lorawan_config.get("network_mode", 1)):  # Default to LoRaWAN
             return False
 
         # Set Join Mode (OTAA or ABP)
-        if not self.set_join_mode(lorawan_config.get("join_mode", 1)):  # Default to OTAA
+        if not await self.set_join_mode(lorawan_config.get("join_mode", 1)):  # Default to OTAA
             return False
 
         # Set Class (A, B, or C)
-        if not self.set_class(lorawan_class):  # Default to Class A
+        if not await self.set_class(lorawan_class):  # Default to Class A
             return False
 
         # Set Band
-        if not self.set_band(lorawan_config.get("band", 4)):  # Default to EU868
+        if not await self.set_band(lorawan_config.get("band", 4)):  # Default to EU868
             return False
 
         # Set DEVEUI, APPEUI, and APPKEY
-        if not self.set_dev_eui(lorawan_config.get("dev_eui")):
+        if not await self.set_dev_eui(lorawan_config.get("dev_eui")):
             return False
-        if not self.set_app_eui(lorawan_config.get("app_eui")):
+        if not await self.set_app_eui(lorawan_config.get("app_eui")):
             return False
-        if not self.set_app_key(lorawan_config.get("app_key")):
+        if not await self.set_app_key(lorawan_config.get("app_key")):
             return False
 
         # Join the network
-        if not self.join_network():
+        if not await self.join_network(attempts = attempts):
             return False
 
         return True
 
-    def check_network_connection(self):
+    async def check_network_connection(self):
         """
         Checks if module is connected to the network.
 
@@ -610,7 +570,7 @@ class LoRaWAN:
             True if connected, False otherwise.
         """
 
-        response = self.send_at_command("AT+NJS=?", expected_response = 'AT+NJS')
+        response = await self.send_at_command("AT+NJS=?", expected_response = 'AT+NJS')
         utils.log_info(f"LoRaWAN module response to NJS: {response}.")
         if response and ("AT+NJS=1" in response):
             utils.log_info("LoRaWAN module connected to the network.")
@@ -618,7 +578,7 @@ class LoRaWAN:
 
         return False
     
-    def reset(self):
+    async def reset(self):
         
         """
         Performs a soft reset of the nRF91 Series SiP
@@ -627,5 +587,4 @@ class LoRaWAN:
             True if reset was successful, False otherwise.
         """
 
-        return self.send_at_command_check("ATZ", "LoRaWAN", timeout=4000)
-
+        return await self.send_at_command_check("ATZ", "LoRaWAN", timeout=4000)

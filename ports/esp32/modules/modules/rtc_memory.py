@@ -183,4 +183,4 @@ class RTC_Memory:
 
     def should_transmit(self):
         """Checks if it is time to transmit."""
-        return self.get_counter() >= self.n_cycles
+        return self.get_counter() >= self.n_cycles - 1 #-1 because when this functions executes, the last payload is still pending to add to RTC mem.

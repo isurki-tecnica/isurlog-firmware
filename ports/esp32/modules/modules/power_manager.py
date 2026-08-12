@@ -217,25 +217,6 @@ class PowerManager:
             except (IndexError, ValueError) as e:
                 utils.log_error(f"Error parsing time string from modem: {e}, string: {time_str}")
                 
-    def smart_sleep(self, ms, ble = False):
-        """
-        Optimizes power consumption during delays based on duration and Bluetooh status.
-
-        This function chooses between 'machine.lightsleep()' and 'time.sleep_ms()'
-        to balance energy savings and system overhead. For durations >= 50ms, 
-        it enters light sleep mode to significantly reduce CPU current draw. 
-        For shorter durations, it uses a standard busy-wait sleep to avoid 
-        the latency and overhead associated with power-mode transitions.
-        If BLE is enabled, it always goes for 'time.sleep_ms()' to avoid
-        turning BLE off.
-
-        Args:
-            ms (int): The duration to sleep in milliseconds.
-        """
-        if ms >= 50 and not ble:
-            time.sleep_ms(ms)
-        else:
-            time.sleep_ms(ms)
         
     def seconds2wakeup(self):
         """

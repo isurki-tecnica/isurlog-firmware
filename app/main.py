@@ -3,6 +3,7 @@ from machine import Pin, reset, WDT, UART, deepsleep, I2C
 from modules.power_manager import pm
 from modules import utils
 from modules.config_manager import config_manager
+from modules2 import downlink_manager
 from lib.IsurlogLPP import IsurlogLPPEncoder
 from modules.rtc_memory import RTC_Memory
 from modules.led_manager import LEDManagerULP
@@ -11,7 +12,25 @@ from lib.mcp4017 import MCP4017
 from modules.accel_manager import Accelerometer
 from modules.version import VERSION
 import os
+import asyncio
 
+
+# --- GLOBALS & COOPERATIVE SYNCHRONIZATION ---
+connection_ok = asyncio.Event()  # Informational flag: there is an active connection right now
+telemetry_idle = asyncio.Event()      # Set when there is no telemetry in progress (allows sleeping)
+read_sensor_idle = asyncio.Event()
+# --- Flag shared between the hard IRQ and the asyncio task ---
+telemetry_trigger = asyncio.ThreadSafeFlag()
+telemetry_idle.set()
+nb_iot_module = None # Shared modem instance (UART-safe)
+mqtt_client = None  # Shared MQTT instance
+lorawan_module = None  # Shared LoRaWAN modem instance
+rtc_memory = None
+modem_type = None  # Set once in __main__ from static_config (doesn't change at runtime)
+battery_voltage = None
+modem_lock = asyncio.Lock()           # Serializes ALL modem access between concurrent tasks
+encoder = IsurlogLPPEncoder()
+wake_up_sources = []
 AUTH_FILE = 'auth'
 
 #Enable WDT
@@ -23,16 +42,87 @@ try:
 except Exception as e:
     print(f"Could not enable Watchdog Timer: {e}")
     wdt = None
+    
+
+def init_lorawan_module():
+    """
+    Centralized, single-point initialization of the LoRaWAN modem driver.
+    Called both at startup (main) and defensively from any function that
+    uses nb_iot_module, so as not to depend on an implicit call order.
+    """
+    global lorawan_module
+    if lorawan_module is None:
+        from modules import lorawan
+        rx = Pin(4, hold=False)
+        tx = Pin(2, hold=False)
+        lorawan_module = lorawan.LoRaWAN(uart_id=2, tx_pin=2, rx_pin=4, baudrate=115200)
+ 
+        # Class C devices can receive downlinks at any time; add the same
+        # wake pin NB-IoT uses for eDRX, so an incoming Class C downlink can
+        # wake the ESP32 from deepsleep too.
+        lorawan_config = config_manager.dynamic_config["communications"].get("lorawan", {})
+        if lorawan_config.get("class", 0) == 2:
+            wake_up_pin = config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("esp_wake_up", 35)
+            if wake_up_pin not in wake_up_sources:
+                wake_up_sources.append(wake_up_pin)
+
+def init_nb_iot_module():
+    """
+    Centralized, single-point initialization of the LoRaWAN modem driver,
+    mirroring init_nb_iot_module(). en_com_module (created unconditionally
+    in __main__) already handles the shared enable pin, so nothing extra
+    is needed for that here.
+    """
+    global nb_iot_module
+    if nb_iot_module is None:
+        from modules import nb_iot
+        rx = Pin(2, hold=False)
+        tx = Pin(4, hold=False)
+        nb_iot_module = nb_iot.NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)
+
+        #Add wake-up source for eDRX.
+        wake_up_pin = config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("esp_wake_up", 35)
+        if wake_up_pin not in wake_up_sources:
+            wake_up_sources.append(wake_up_pin)
+
+def init_mqtt_client():
+    """
+    Centralized, single-point initialization of the WiFi MQTT client object,
+    mirroring init_nb_iot_module(). Just creates the object if it doesn't
+    exist yet -- actually connecting/subscribing still happens in
+    establish_network_connection(), same as nb_iot_module.connect() does.
+    """
+    global mqtt_client
+    if mqtt_client is None:
+        from modules.umqttsimple import MQTTClient
+        mqtt_config, _ = get_mqtt_settings()
+        mqtt_client = MQTTClient(ser_num, mqtt_config.get("ip", ""), user=mqtt_config.get("user", ""), password=mqtt_config.get("passwd", ""), ssl=True)
+
+def init_rtc_memory():
+    """
+    Centralized, single-point initialization of rtc_memory, mirroring
+    init_nb_iot_module(). Any function that needs rtc_memory can call this
+    defensively first instead of assuming it was already created elsewhere.
+    """
+    global rtc_memory
+    if rtc_memory is None:
+        rtc_memory = RTC_Memory(max_payload_size=config_manager.dynamic_config["general"].get("max_payload_size", 256))
+
+
+def get_mqtt_settings():
+    """
+    Returns (mqtt_config, base_topic). Looked up fresh on every call (unlike
+    modem_type) since dynamic_config can change at runtime via a config
+    downlink.
+    """
+    mqtt_config = config_manager.get_dynamic("communications").get("mqtt")
+    base_topic = mqtt_config.get("base_topic", "isurlog")
+    return mqtt_config, base_topic
 
 def should_resync_rtc():
     """
-    Decides whether the RTC should be resynced against the network:
-    - Always if the RTC lost power (time is invalid).
-    - Also periodically, every 'rtc_resync_interval_h' hours, even if the RTC never lost power,
-      to correct for long-term drift of the DS3231/RV3028 crystal.
-    Relies on pm, rtc_memory and config_manager being already set as module-level globals
-    by the time this is called (pm/config_manager at import time, rtc_memory inside
-    the __main__ block before any transmission logic runs).
+    True if the RTC should be resynced: it lost power, or it's been more
+    than 'rtc_sync_int' hours since the last sync (crystal drift correction).
     """
     if pm.rtc_lost_power:
         return True
@@ -41,7 +131,9 @@ def should_resync_rtc():
         return False
     return rtc_memory.rtc_resync_due(pm.rtc.get_unix_time(), interval_h * 3600)
 
-def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isurnode_enabled = False):
+async def read_all_sensors(upload_mode, ble = False, n_loop = 1, n_seconds = 10, isurnode_enabled = False):
+    
+    global battery_voltage
         
     data = [[0, "addUnixTime", pm.rtc.get_unix_time()]]
     alarm_condition = False
@@ -105,15 +197,14 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
             data.append([0, "addAccelerometer", accel_values[0], accel_values[1], accel_values[2]])
             
             #Check alarms for every axis acceleration
-            if "axles" in accel_config:
-                for axis_config in accel_config["axles"]:
-                    
-                    channel = axis_config.get("channel")
-                    #Check alarms axis acceleration
-                    if (register_mode and (axis_config.get("low_cond", False)) and (accel_values[channel] < axis_config.get("low", 0))):
-                        alarm_condition = True
-                    if (register_mode and (axis_config.get("high_cond", False)) and (accel_values[channel] > axis_config.get("high", 0))):
-                        alarm_condition = True
+            for axis_config in accel_config["axles"]:
+                
+                channel = axis_config.get("channel")
+                #Check alarms axis acceleration
+                if (upload_mode and (axis_config.get("low_cond", False)) and (accel_values[channel] < axis_config.get("low", 0))):
+                    alarm_condition = True
+                if (upload_mode and (axis_config.get("high_cond", False)) and (accel_values[channel] > axis_config.get("high", 0))):
+                    alarm_condition = True
 
     reg_on_t = time.time()
     
@@ -121,7 +212,7 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
             
         if num_modbus_enabled > 0 or num_analog_enabled > 0 or pt100_enabled:
             pm.control_vdc(1)
-            pm.smart_sleep(250, ble=ble)
+            await asyncio.sleep_ms(250)
             
         if num_modbus_enabled > 0 or pt100_enabled:
             pm.control_5v(1)
@@ -143,9 +234,9 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
             data.append([0, "addDigitalInput", pulses])
             
             #Check alarms
-            if (register_mode and (digital_config.get("low_cond", False)) and (pulses*digital_config.get("pulse_weight", 1) < digital_config.get("low", 0))):
+            if (upload_mode and (digital_config.get("low_cond", False)) and (pulses*digital_config.get("pulse_weight", 1) < digital_config.get("low", 0))):
                 alarm_condition = True
-            if (register_mode and (digital_config.get("high_cond", False)) and (pulses*digital_config.get("pulse_weight", 1) > digital_config.get("high", 0))):
+            if (upload_mode and (digital_config.get("high_cond", False)) and (pulses*digital_config.get("pulse_weight", 1) > digital_config.get("high", 0))):
                 alarm_condition = True
         
         #Digital input state mode
@@ -154,7 +245,7 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
             digital_input = Pin(DIO0_PIN, Pin.IN)
             state = digital_input.value()
             data.append([0, "addDigitalInput", state])
-            if state == 0:
+            if state == 0 and DIO0_PIN not in wake_up_sources:
                 wake_up_sources.append(DIO0_PIN)
                 
     # Internal temperature and humidity sensor (BME680 or SHT30)
@@ -214,15 +305,15 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
                 data.append([len(read_sensors)-1, "addHumiditySensor", sensor_data['humidity']])
 
                 #Check temperature alarms
-                if (register_mode and (th_config.get("temperature_low_cond", False)) and (sensor_data['temperature'] < th_config.get("temperature_low", 0))):
+                if (upload_mode and (th_config.get("temperature_low_cond", False)) and (sensor_data['temperature'] < th_config.get("temperature_low", 0))):
                     alarm_condition = True
-                if (register_mode and (th_config.get("temperature_high_cond", False)) and (sensor_data['temperature'] > th_config.get("temperature_high", 0))):
+                if (upload_mode and (th_config.get("temperature_high_cond", False)) and (sensor_data['temperature'] > th_config.get("temperature_high", 0))):
                     alarm_condition = True
 
                 #Check humidity alarms
-                if (register_mode and (th_config.get("humidity_low_cond", False)) and (sensor_data['humidity'] < th_config.get("humidity_low", 0))):
+                if (upload_mode and (th_config.get("humidity_low_cond", False)) and (sensor_data['humidity'] < th_config.get("humidity_low", 0))):
                     alarm_condition = True
-                if (register_mode and (th_config.get("humidity_high_cond", False)) and (sensor_data['humidity'] > th_config.get("humidity_high", 0))):
+                if (upload_mode and (th_config.get("humidity_high_cond", False)) and (sensor_data['humidity'] > th_config.get("humidity_high", 0))):
                     alarm_condition = True
                     
         else:
@@ -263,7 +354,7 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
         if pre_acquisition_time > 0:
             utils.log_info(f"Starting Analog pre-acquisition delay: {pre_acquisition_time} ms")
             while (time.time() - reg_on_t) * 1000 < pre_acquisition_time:
-                pm.smart_sleep(500, ble=ble)
+                await asyncio.sleep_ms(500)
             utils.log_info("Analog pre-acquisition delay finished.")
 
     if num_modbus_enabled > 0:
@@ -294,7 +385,7 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
         if pre_acquisition_time > 0:
             utils.log_info(f"Starting Modbus pre-acquisition delay: {pre_acquisition_time} ms")
             while (time.time() - reg_on_t) * 1000 < pre_acquisition_time:
-                pm.smart_sleep(500, ble=ble)
+                await asyncio.sleep_ms(500)
             utils.log_info("Modbus pre-acquisition delay finished.")
 
 
@@ -313,9 +404,9 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
                 count_pt100 += 1
                 
                 # Check alarms
-                if (register_mode and (pt100_config.get("low_cond", False)) and (temperature < pt100_config.get("low", 0))):
+                if (upload_mode and (pt100_config.get("low_cond", False)) and (temperature < pt100_config.get("low", 0))):
                     alarm_condition = True
-                if (register_mode and (pt100_config.get("high_cond", False)) and (temperature > pt100_config.get("high", 0))):
+                if (upload_mode and (pt100_config.get("high_cond", False)) and (temperature > pt100_config.get("high", 0))):
                     alarm_condition = True
             else:
                 utils.log_info(f"  Loop {loop_counter}: Error reading PT100 temperature.")
@@ -338,7 +429,7 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
                 long_int = channel_config.get("long_int", False)
                 
                 value = modbus_module.read_modbus_data(slave_addr, fc, register_addr, is_fp)
-                pm.smart_sleep(100, ble=ble)
+                await asyncio.sleep_ms(100)
 
                 if value is not None:
                     if not is_fp:
@@ -361,9 +452,9 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
                         count_modbus[channel] += 1
 
                     # Check alarms
-                    if register_mode and channel_config.get("low_cond", False) and value < channel_config.get("low", 0):
+                    if upload_mode and channel_config.get("low_cond", False) and value < channel_config.get("low", 0):
                         alarm_condition = True
-                    if register_mode and channel_config.get("high_cond", False) and value > channel_config.get("high", 0):
+                    if upload_mode and channel_config.get("high_cond", False) and value > channel_config.get("high", 0):
                         alarm_condition = True
                 else:
                     utils.log_info(f"  Loop {loop_counter}: Error reading Modbus channel {channel}.")
@@ -384,9 +475,9 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
                     count_analog[channel] += 1
 
                     # Check alarms 
-                    if register_mode and channel_config.get("low_cond", False) and value < channel_config.get("low", 0):
+                    if upload_mode and channel_config.get("low_cond", False) and value < channel_config.get("low", 0):
                         alarm_condition = True
-                    if register_mode and channel_config.get("high_cond", False) and value > channel_config.get("high", 0):
+                    if upload_mode and channel_config.get("high_cond", False) and value > channel_config.get("high", 0):
                         alarm_condition = True
                 else:
                     utils.log_info(f"  Loop {loop_counter}: Error reading Analog channel {channel}.")
@@ -397,7 +488,7 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
             utils.log_info("Feeding WDT from read_all_sensors task.")
             wdt.feed()
         if (loop_counter < n_loop):
-            pm.smart_sleep(5000, ble=ble)
+            await asyncio.sleep_ms(5000)
                 
                 
     if (not ble) and (not isurnode_enabled):
@@ -459,7 +550,7 @@ def read_all_sensors(register_mode, ble = False, n_loop = 1, n_seconds = 10, isu
     
     return data, alarm_condition
 
-def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
+async def read_isurnode_data(upload_mode, data, alarm_condition, ble = False):
     
     SENSOR_MAP = {
     0: ("addAnalogInput", 0),
@@ -482,7 +573,7 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
         return data, alarm_condition # No changes.
     
     pm.control_vdc(1)
-    pm.smart_sleep(250, ble=ble)
+    await asyncio.sleep_ms(250)
     pm.control_5v(1)
 
     from modules import modbus_sensor
@@ -510,13 +601,13 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
             channel = 2 #Fixed channel
             
             if modbus_module.write_register(slave_address, trigger_addr, 1):
-                pm.smart_sleep(1000, ble=ble)
+                await asyncio.sleep_ms(1000)
             
                 utils.log_info(f"SHT30: Trigger completed, reading temperature and humidity...")
                 temperature = modbus_module.read_modbus_data(slave_address, 4, read_addr, False)[0]/100
-                pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 is MicroPython is slow.
+                await asyncio.sleep_ms(150) #Sleep 150ms, STM32L4 is MicroPython is slow.
                 humidity = modbus_module.read_modbus_data(slave_address, 4, read_addr+1, False)[0]/100
-                pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 is MicroPython is slow.
+                await asyncio.sleep_ms(150) #Sleep 150ms, STM32L4 is MicroPython is slow.
                 
                 data.append([channel, "addTemperatureSensor", temperature])
                 data.append([channel, "addHumiditySensor", humidity])
@@ -524,15 +615,15 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
                 utils.log_info(f"SHT30: Reading completed -> Temperature={temperature}C, Humidity={humidity}%")
                 
                 #Check temperature alarms
-                if (register_mode and (sht30_config.get("temperature_low_cond", False)) and (temperature < sht30_config.get("temperature_low", 0))):
+                if (upload_mode and (sht30_config.get("temperature_low_cond", False)) and (temperature < sht30_config.get("temperature_low", 0))):
                     alarm_condition = True
-                if (register_mode and (sht30_config.get("temperature_high_cond", False)) and (temperature > sht30_config.get("temperature_high", 0))):
+                if (upload_mode and (sht30_config.get("temperature_high_cond", False)) and (temperature > sht30_config.get("temperature_high", 0))):
                     alarm_condition = True
 
                 #Check humidity alarms
-                if (register_mode and (sht30_config.get("humidity_low_cond", False)) and (humidity < sht30_config.get("humidity_low", 0))):
+                if (upload_mode and (sht30_config.get("humidity_low_cond", False)) and (humidity < sht30_config.get("humidity_low", 0))):
                     alarm_condition = True
-                if (register_mode and (sht30_config.get("humidity_high_cond", False)) and (humidity > sht30_config.get("humidity_high", 0))):
+                if (upload_mode and (sht30_config.get("humidity_high_cond", False)) and (humidity > sht30_config.get("humidity_high", 0))):
                     alarm_condition = True
 
             else:
@@ -558,7 +649,7 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
                  remaining_ms = pre_acquisition_time - (now - reg_on_t) * 1000
                  if remaining_ms > 1000:
                       utils.log_info(f"Analog sensor pre-acquisition: waiting {remaining_ms:.0f} ms...")
-                 pm.smart_sleep(500, ble=ble)
+                 await asyncio.sleep_ms(500)
                  now = time.time()
             utils.log_info("Pre-acquisition delay finished.")
         else:
@@ -571,7 +662,7 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
             # 1. Trigger all analog inputs acquisition at once
             if modbus_module.write_register(slave_address, trigger_addr, 1):
                 
-                pm.smart_sleep(1000, ble=ble)
+                await asyncio.sleep_ms(1000)
                 utils.log_info(f"SHT30: Trigger completed, reading temperature and humidity...")
                 
                 # 3. Iterate and read each configured analog input
@@ -590,13 +681,13 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
                             data.append([channel, "addAnalogInput", value])
                             utils.log_info(f"  - Read addr {read_addr}: {value}")
 
-                            # Check alarms (assuming register_mode and alarm_condition are defined earlier)
-                            if register_mode and analog_input.get("low_cond", False) and value < analog_input.get("low", 0):
+                            # Check alarms (assuming upload_mode and alarm_condition are defined earlier)
+                            if upload_mode and analog_input.get("low_cond", False) and value < analog_input.get("low", 0):
                                 alarm_condition = True
-                            if register_mode and analog_input.get("high_cond", False) and value > analog_input.get("high", 0): # Corrected 'hi' to 'high'
+                            if upload_mode and analog_input.get("high_cond", False) and value > analog_input.get("high", 0): # Corrected 'hi' to 'high'
                                 alarm_condition = True
                                 
-                            pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 is MicroPython is slow.
+                            await asyncio.sleep_ms(150) #Sleep 150ms, STM32L4 is MicroPython is slow.
                             
                         except Exception as e:
                             utils.log_error(f"Error reading analog input at address {read_addr}: {e}")
@@ -618,7 +709,7 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
             if not output_channel.get("enable", False):
                 continue
 
-            pm.smart_sleep(5000, ble=ble) #Sleep for recharging the capacitor.
+            await asyncio.sleep_ms(5000) #Sleep for recharging the capacitor.
             channel_out = output_channel.get("channel")
             valve_type = output_channel.get("type") # ON/OFF: 1, Proportional: 2
             
@@ -634,7 +725,7 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
                 if (pm.wakeup_reason == "Power-on reset") and not ble: #Init all EVs as disabled.
                     utils.log_info(f'  - Setting valve to default state --> CLOSE.')
                     modbus_module.write_register(slave_address, channel_out*2+201, 1)
-                    pm.smart_sleep(1000, ble=ble)
+                    await asyncio.sleep_ms(1000)
                     rtc_memory.set_ev_state(channel_out, 0)
 
                 # Find the LPP type and channel for the required sensor
@@ -713,12 +804,12 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
                     if should_be_active and not rtc_memory.get_ev_state(channel_out):
                         utils.log_info(f"  - Sending OPEN pulse.")
                         modbus_module.write_register(slave_address, channel_out*2 + 200, 1)
-                        pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 with MicroPython is slow.
+                        await asyncio.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
                         rtc_memory.set_ev_state(channel_out, 1)
                     elif not should_be_active and rtc_memory.get_ev_state(channel_out):
                         utils.log_info(f"  - Sending CLOSE pulse.")
                         modbus_module.write_register(slave_address, channel_out*2 + 201, 1)
-                        pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 with MicroPython is slow.
+                        await asyncio.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
                         rtc_memory.set_ev_state(channel_out, 0)
                         
                 #Append last valve state to data (Only ON-OFF valve and if output rule is defined)
@@ -739,11 +830,11 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
                     modbus_addr =  output_channel.get("channel")*4+200
                     close_addr = modbus_addr + 1
                     modbus_module.write_register(slave_address, close_addr, 1)
-                    pm.smart_sleep(1000, ble=ble)
+                    await asyncio.sleep_ms(1000)
                     modbus_addr =  output_channel.get("channel")*4+202
                     close_addr = modbus_addr + 1
                     modbus_module.write_register(slave_address, close_addr, 1)
-                    pm.smart_sleep(1000, ble=ble)
+                    await asyncio.sleep_ms(1000)
                     
                 # Find the LPP type and channel for the required sensor
                 if sensor1_id not in SENSOR_MAP:
@@ -775,11 +866,11 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
                         modbus_module.write_register(slave_address, open_addr, 1)
                         
                         # Wait for the specified duration
-                        pm.smart_sleep(on_time, ble=ble)
+                        await asyncio.sleep_ms(on_time)
                         
                         # Send CLOSE pulse
                         modbus_module.write_register(slave_address, close_addr, 1)
-                        pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 with MicroPython is slow.
+                        await asyncio.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
                         
                     if output_channel.get("high1_cond", False) and sensor_value > output_channel.get("high1", 0):
                         
@@ -791,11 +882,11 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
                         modbus_module.write_register(slave_address, open_addr, 1)
                         
                         # Wait for the specified duration
-                        pm.smart_sleep(on_time, ble=ble)
+                        await asyncio.sleep_ms(on_time)
                         
                         # Send CLOSE pulse
                         modbus_module.write_register(slave_address, close_addr, 1)
-                        pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 with MicroPython is slow.
+                        await asyncio.sleep_ms(150) #Sleep 150ms, STM32L4 with MicroPython is slow.
 
     if (not ble):
         pm.control_vdc(0)
@@ -806,82 +897,549 @@ def read_isurnode_data(register_mode, data, alarm_condition, ble = False):
     return data, alarm_condition
 
 
-def process_sd_ev_manual_command(command, ble = False):
+async def sensor_reading_task():
+    """
+    Reads all sensors periodically and stores the LPP payload in rtc_memory
+    (same steps the old single-shot main.py did inline: user_script, encode,
+    optional internal flash copy, store_payload).
 
-    if "SD" in command:
+    Manages read_sensor_idle: cleared while reading, set once stored (even on
+    error) so battery_sleep_governor() and run_telemetry_cycle() know it's safe to
+    sleep / grab payloads.
+    """
+    
+    global rtc_memory
+
+    while True:
         
-        command = command.strip("SD")
-        out_num, state = command.split(" ")
-        out_num = int(out_num)
+        read_sensor_idle.clear()  # Block sleep/telemetry while a reading is in progress
+        continuous_mode = False
         
-        if state == 'ON':
-            pm.control_digital_output(1)
-        else:
-            pm.control_digital_output(0)
+        try:
+            upload_mode = config_manager.get_dynamic("general").get("upload_mode", 0)
+            continuous_mode = config_manager.get_dynamic("general").get("continuous_mode", False)
+            isurnode_config = config_manager.get_dynamic("isurnode_config")
+            latency_s = config_manager.dynamic_config["general"].get("latency_time", 10) * 60
+            loop_seconds = pm.seconds2wakeup()
+            
+            if not continuous_mode:
+                n_loop_cycles = config_manager.get_dynamic("general").get("loop_cycles", 1)
+                
+            else:
+                n_loop_cycles = latency_s//5 + 1
+
+            data, alarm_condition = await read_all_sensors(upload_mode, n_loop=n_loop_cycles, n_seconds=loop_seconds, isurnode_enabled=isurnode_config.get("enable", False))
+            data, alarm_condition = await read_isurnode_data(upload_mode, data, alarm_condition)
+
+            if alarm_condition:
+                # Known as soon as this cycle's reading is done, well before
+                # read_sensor_idle is set below -- run_telemetry_cycle() can start
+                # waking the modem right away instead of waiting for
+                # scheduled_telemetry_task's next pass (up to latency_time away).
+                _trigger_send_telemetry("alarm detected this cycle")
+
+            #----- USER SCRIPT ------
+            if "user_script.py" in os.listdir():
+                if config_manager.dynamic_config["general"].get("user_script", False):
+                    try:
+                        import sys
+                        if "user_script" in sys.modules:
+                            del sys.modules["user_script"]
+                        import user_script
+                        data = user_script.process(data)
+                    except Exception as e:
+                        utils.log_error("Error in user script:", e)
+                else:
+                    try:
+                        os.remove("user_script.py")
+                    except Exception as e:
+                        utils.log_error("Error removing user script:", e)
+
+            # --- Encode data to Isurlog LPP format ---
+            utils.log_info(f"Data to encode: {data}")
+            encoded_payload = encoder.encode(data)
+
+            internal_register = config_manager.get_dynamic("general").get("internal_register", False)
+
+            if encoded_payload:
+                utils.log_info(f"Encoded Payload: {encoded_payload}")
+                if internal_register:
+                    from modules import internal_storage
+                    internal_storage_module = internal_storage.InternalStorage()
+                    if internal_storage_module.store_payload(encoded_payload):
+                        utils.log_info(f"Payload stored in internal flash: {encoded_payload}")
+                    else:
+                        utils.log_error(f"Failed to store payload in internal flash: {encoded_payload}")
+                else:
+                    utils.log_info("Internal register is disabled.")
+            else:
+                utils.log_error("Encoding failed. Sending empty payload")
+                encoded_payload = ""  # Send empty payload on failure
+
+            if not rtc_memory.store_payload(encoded_payload):
+                utils.log_error("Could not store payload in RTC memory.")
+            else:
+                utils.log_info(f"Stored payload. Cycle {rtc_memory.get_counter()} of {rtc_memory.n_cycles}")
+
+            #Update alarm flag so run_telemetry_cycle()/theft logic can see it changed this cycle.
+            rtc_memory.set_alarm_flag(alarm_condition)
+
+            if wdt:
+                utils.log_info("Feeding WDT from sensor_reading_task.")
+                wdt.feed()
+
+        except Exception as e:
+            utils.log_error(f"[TASK: SENSORS] Reading failed: {e}")
+            latency_s = config_manager.dynamic_config["general"].get("latency_time", 10) * 60
+
+        finally:
+            read_sensor_idle.set()  # Unblock sleep/telemetry regardless of outcome
+
+
+        if not continuous_mode:
+            await asyncio.sleep(latency_s)
+
+
+async def establish_network_connection(force_hard_reset=False, max_retry_connection_lorawan = 1):
+    """
+    Establishes the network connection and configures the MQTT/NTP sockets
+    or the LoRaWAN join, depending on modem_type.
+    Returns True if the connection was successful, False otherwise.
+    Must always be called under modem_lock.
+
+    force_hard_reset: for NB-IoT, skips the modem hard_reset by default (a
+    cold-booted modem doesn't need one, and it's the slowest recovery step)
+    -- only pass True once a plain connect() attempt has already failed.
+    """
+
+    mqtt_config, base_topic = get_mqtt_settings()
+    if status_led.is_enabled():
+        status_led.set_ulp_pattern(pulse_num=3, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=200, wake_up_period=2)
+
+    if modem_type == "nb-iot":
         
+        global nb_iot_module
+        utils.log_info("Initializing NB-IoT network registration...")
+
+        if force_hard_reset:
+            utils.log_warning("Retry escalation: hard-resetting the NB-IoT modem.")
+            await nb_iot_module.hard_reset()
+        
+        await nb_iot_module.select_SIM(config_manager.dynamic_config["communications"]["cellular_iot"].get("external_sim", True))
+
+        preference = config_manager.dynamic_config["communications"]["cellular_iot"].get("preference", 0)
+        apn = config_manager.dynamic_config["communications"]["cellular_iot"].get("apn", None)
+
+        if not await nb_iot_module.connect(preference, apn=apn):
+            utils.log_error("Failed to connect to NB-IoT cellular cells.")
+            return False
+
+        keep_alive = ((config_manager.dynamic_config["general"].get("latency_time", 10) * 60) + 20) * config_manager.dynamic_config["general"].get("register_acumulator", 1)
+        await nb_iot_module.mqtt_configure(ser_num, keep_alive, 0)
+
+        if not await nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
+            utils.log_error("Failed to establish MQTT Broker connection.")
+            return False
+
+        if should_resync_rtc():
+            new_time = await nb_iot_module.get_network_time()
+            utils.log_info(f"New requested time UTC: {new_time}")
+            pm.set_rtc_time(new_time, mode = "NB-IoT")
+            rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
+
+        await nb_iot_module.mqtt_subscribe(f"{base_topic}/config/{ser_num}", QoS=2)
+        return True
+
+    elif modem_type == "wifi":
+        
+        global mqtt_client
+        from modules import wifi
+        utils.log_info("Initializing Wifi connection...")
+
+        if not wifi.is_connected():
+            ssid = config_manager.dynamic_config["communications"]["wifi"].get("ssid", None)
+            password = config_manager.dynamic_config["communications"]["wifi"].get("password", None)
+
+            if ssid is not None and password is not None:
+                if await wifi.do_connect(ssid, password, timeout_seconds=15):
+                    if should_resync_rtc():
+                        import ntptime
+                        try:
+                            ntptime.settime()
+                            new_time = time.localtime()
+                            utils.log_info(f"New requested time UTC: {new_time}")
+                            pm.set_rtc_time(new_time, mode="WiFi")
+                            rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
+                        except Exception as ntp_err:
+                            utils.log_error(f"NTP Synchronization failed: {ntp_err}")
+                else:
+                    utils.log_error("Could not establish Wifi connection!")
+                    return False
+            else:
+                utils.log_warning("No SSID and password configured for WiFi.")
+                return False
+            
+        try:
+            mqtt_client.connect(clean_session=True)
+            mqtt_client.subscribe(f"{base_topic}/config/{ser_num}", qos=1)
+        except Exception as err:
+            utils.log_error(f"Could not connect to the MQTT broker: {err}")
+            return False
+        
+        return True
+    
+    
+    elif modem_type == "lorawan":
+
+        global lorawan_module
+        utils.log_info("Initializing LoRaWAN network join...")
+        
+        if force_hard_reset:
+            utils.log_warning("Retry escalation: hard-resetting the LoRaWAN modem.")
+            await lorawan_module.reset()
+
+        lorawan_config = config_manager.dynamic_config["communications"].get("lorawan", {})
+        class_map = {0: "A", 1: "B", 2: "C"}
+
+        if not await lorawan_module.connect(lorawan_class=class_map[lorawan_config.get("class", 0)], attempts = max_retry_connection_lorawan):
+            utils.log_error("Failed to connect to LoRaWAN")
+            return False
+
+        await lorawan_module.set_confirmed_mode(0)  # Enable/disable send ACK (optional)
+        return True
+    
+    return False
+
+
+def _trigger_send_telemetry(reason):
+    """
+    Kicks off run_telemetry_cycle() as its own task if none is already in flight.
+    Shared by every trigger source (IRQ pin, alarm detected mid-reading,
+    scheduled accumulator check) so there's exactly one place that decides
+    whether a send is already running.
+    """
+    if telemetry_idle.is_set():
+        utils.log_info(f"[TASK: TELEMETRY] Triggered by {reason}.")
+        telemetry_idle.clear()  # Blocks deepsleep until this finishes
+        asyncio.create_task(run_telemetry_cycle())
     else:
-        
-        if "Clear" in command: #Clear EV manual control flag
-            rtc_memory.set_manual_ev_flag(False)
-            return
+        utils.log_info(f"[TASK: TELEMETRY] Trigger ({reason}) ignored, telemetry already in progress.")
+
+
+def _telemetry_pin_isr(pin):
+    """
+    Runs in hard interrupt context: must be minimal (no allocations, no I2C/UART,
+    no asyncio calls). Just signals the flag; the real work happens in
+    telemetry_trigger_task() below.
+    """
+    telemetry_trigger.set()
+
+
+async def telemetry_trigger_task():
+    """
+    Waits for the IO35 rising-edge signal and forces a telemetry upload,
+    regardless of the normal scheduled cycle (seconds_until_next_telemetry_cycle)
+    and regardless of whether a telemetry task is already in flight.
+    """
+    wake_up_pin = config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("esp_wake_up", 35)
+    while True:
+        await telemetry_trigger.wait()
+        _trigger_send_telemetry(f"external IRQ on IO{wake_up_pin}")
+
+async def publish_payload(payload):
+    """Publishes a single, already-built payload. Connection, wake_up() and
+    signal_data handling are run_telemetry_cycle()'s job, not this function's --
+    this just puts the payload on the wire."""
+
+    global nb_iot_module
+    mqtt_config, base_topic = get_mqtt_settings()
     
-        pm.control_vdc(1)
-        pm.smart_sleep(250, ble=ble)
-        pm.control_5v(1)
-        pm.smart_sleep(4000, ble=ble)
-        
-        isurnode_config = config_manager.get_dynamic("isurnode_config")
-        do_config = isurnode_config.get("digital_outputs")
-        slave_address = isurnode_config.get("slave_address")
-        modbus_config = config_manager.get_dynamic("modbus_config")
-        
-        from modules import modbus_sensor
-        baudrate_map = {0: 9600, 1: 19200, 2: 38400, 3: 57600, 4: 115200}
-        parity_map = {0: None, 1: 0, 2: 1}
-        modbus_module = modbus_sensor.ModbusSensor(
-            baudrate=baudrate_map[modbus_config.get("baudrate", 0)],
-            data_bits=modbus_config.get("data_bits", 8),
-            parity=parity_map[modbus_config.get("parity", 0)],
-            stop_bits=modbus_config.get("stop_bits", 1)
-        )
-        
-        command = command.strip("EV")
-        channel, param = command.split(" ")
-        channel = int(channel)
-        param = int(param)
-        modbus_addr = channel*2 + 200
-        
-        utils.log_info(f'Channel:{channel} Slave address:{slave_address} Modbus address:{modbus_addr} Param:{param}')
-        
-        if param == 1 or param == 0: # ON/OFF valve
+    if status_led.is_enabled():
+        status_led.set_ulp_pattern(pulse_num=1, n_micro_pulses=250, delay_on=5, delay_off=20, inter_delay=250, wake_up_period=5)
+
+    if modem_type == "nb-iot":
+
+        utils.log_info("Transmitting data through NB-IoT...")
+        utils.log_info(f"Publishing payload: {payload}")
+
+        if not await nb_iot_module.mqtt_publish(f"{base_topic}/datos/{ser_num}", payload):
+            utils.log_error("Failed to publish payload through cellular MQTT client.")
+
+    elif modem_type == "wifi":
+
+        utils.log_info("Transmitting data through WiFi...")
+        utils.log_info(f"Publishing payload: {payload}")
+
+        if not mqtt_client.publish(f"{base_topic}/datos/{ser_num}", payload):
+            utils.log_error("Failed to publish payload on WiFi broker.")
             
-            rtc_memory.set_ev_state(channel, 1)
-            if param == 0:
-                modbus_addr += 1
-                rtc_memory.set_ev_state(channel, 0)
-            modbus_module.write_register(slave_address, modbus_addr, 1)
+    elif modem_type == "lorawan":
+
+        utils.log_info("Transmitting data through LoRaWAN...")
+        utils.log_info(f"Publishing payload: {payload}")
+
+        if not await lorawan_module.send_uplink(2, payload):
+            utils.log_error("Failed to publish payload through LoRaWAN.")
             
-        else: # Proportional valve
-            
-            param = int(param)
-            open_addr = modbus_addr
-            close_addr = modbus_addr + 1
-            
-            # Send OPEN pulse
-            modbus_module.write_register(slave_address, open_addr, 1)
-            
-            # Wait for the specified duration
-            pm.smart_sleep(param, ble=ble)
-            
-            # Send CLOSE pulse
-            modbus_module.write_register(slave_address, close_addr, 1)
-            pm.smart_sleep(150, ble=ble) #Sleep 150ms, STM32L4 with MicroPython is slow.
-            
-        pm.control_vdc(0)
-        pm.control_5v(0)
+async def run_telemetry_cycle():
+    """
+    Connects (or verifies the connection) and processes downlinks. Whether
+    payloads actually get published depends on rtc_memory.should_transmit(),
+    checked after read_sensor_idle so it reflects this cycle's data.
+    Retries the connection for up to max_retry_connection attempts,
+    then gives up until the next wake-up rather than draining the
+    battery on a lost cause.
+    """
     
-    rtc_memory.set_manual_ev_flag(True)
+    global rtc_memory
+
+    mqtt_config, base_topic = get_mqtt_settings()
+    print("[TASK: TELEMETRY] Sending telemetry for this wake-up.")
+    
+    max_retry_connection = config_manager.dynamic_config["general"].get("max_retry_connection", 2) 
+
+    try:
+        if modem_type == "nb-iot":
+            
+            global nb_iot_module
+
+            async with modem_lock:
+                await nb_iot_module.wake_up()
+                cellular_connected = await nb_iot_module.check_network_connection()
+
+                retry_attempt = 0
+                while not cellular_connected and retry_attempt < max_retry_connection:
+                    await establish_network_connection(force_hard_reset=(retry_attempt > 0))
+                    cellular_connected = await nb_iot_module.check_network_connection()
+                    retry_attempt += 1
+                    if not cellular_connected:
+                        await asyncio.sleep(5)
                         
+                if cellular_connected:
+                    
+                    mqtt_connected = await nb_iot_module.mqtt_check_connection()
+                    
+                    retry_attempt = 0
+                    while not mqtt_connected and retry_attempt < max_retry_connection:
+                        await nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883))
+                        mqtt_connected = await nb_iot_module.mqtt_check_connection()
+                        retry_attempt += 1
+                        if not mqtt_connected:
+                            await asyncio.sleep(15)
+
+                    if mqtt_connected:
+                        connection_ok.set()
+                        print("[TASK: TELEMETRY] Connected. Processing downlink and uploading telemetry...")
+                        await downlink_manager.process_nbiot_downlinks(nb_iot_module, rtc_memory, wdt, ser_num, base_topic)
+                        
+                        print("[TASK: TELEMETRY] Downlinks processed.")
+                        
+                        await read_sensor_idle.wait()
+                        payloads = rtc_memory.get_payloads()
+                        rtc_memory.clear_memory()
+                        utils.log_info(f"Retrieved payloads: {payloads}")
+                        
+                        total_payloads = len(payloads)
+                        for i, payload in enumerate(payloads):
+                            if (i == total_payloads - 1) and (config_manager.dynamic_config["communications"]["cellular_iot"].get("signal_data", False)):
+                                signal_data = await nb_iot_module.get_signal_data()
+                                extra_data = []
+                                extra_data.append([0, "addModemData", signal_data[0]])
+                                extra_data.append([1, "addModemData", signal_data[1]])
+                                encoded_extra_payload = encoder.encode(extra_data)
+                                payload += encoded_extra_payload
+                            utils.log_info(f"Publishing payload {i+1}: {payload}")
+                        
+                            await publish_payload(payload)
+                    
+                    else:
+                        connection_ok.clear()
+                        utils.log_error(f"[TASK: TELEMETRY] No MQTT connection after {max_retry_connection} retries. Will retry on the next wake-up.")                    
+
+                else:
+                    connection_ok.clear()
+                    utils.log_error(f"[TASK: TELEMETRY] No cellular connection after {max_retry_connection} retries. Will retry on the next wake-up.")
+                    
+                await nb_iot_module.sleep()
+
+        elif modem_type == "wifi":
+            
+            global mqtt_client
+            from modules import wifi
+
+            wifi_connected = wifi.is_connected()
+            retry_attempt = 0
+            while not wifi_connected and retry_attempt < max_retry_connection:
+                wifi_connected = await establish_network_connection()
+                retry_attempt += 1
+                if not wifi_connected:
+                    await asyncio.sleep(5)
+
+            if wifi_connected:
+                connection_ok.set()
+
+                print("[TASK: TELEMETRY] Connected. Processing downlink and uploading telemetry...")
+                await downlink_manager.process_wifi_downlinks(mqtt_client, rtc_memory, wdt, ser_num, base_topic)
+                
+                print("[TASK: TELEMETRY] Downlinks processed.")
+
+                await read_sensor_idle.wait()
+                payloads = rtc_memory.get_payloads()
+                rtc_memory.clear_memory()
+                utils.log_info(f"Retrieved payloads: {payloads}")
+
+                for i, payload in enumerate(payloads):
+                    utils.log_info(f"Publishing payload {i+1}: {payload}")
+                    await publish_payload(payload)
+                    
+                try:
+                    mqtt_client.disconnect()
+                    await wifi.do_disconnect()
+                except Exception as err:
+                    utils.log_error(f"Error while disconnecting from the MQTT broker and turning off WiFi: {err}")
+                
+            else:
+                connection_ok.clear()
+                utils.log_error(f"[TASK: TELEMETRY] No connection after {retry_attempt} attempt(s). Will retry on the next wake-up.")
+
+        elif modem_type == "lorawan":
+
+            global lorawan_module
+
+            async with modem_lock:
+                lorawan_connected = await lorawan_module.check_network_connection()
+
+                retry_attempt = 0
+                while not lorawan_connected and retry_attempt < max_retry_connection:
+                    await establish_network_connection(force_hard_reset=(retry_attempt > 0), max_retry_connection_lorawan = max_retry_connection)
+                    lorawan_connected = await lorawan_module.check_network_connection()
+                    retry_attempt += 1
+                    if not lorawan_connected:
+                        await asyncio.sleep(5)
+
+                if lorawan_connected:
+                    connection_ok.set()
+                    print("[TASK: TELEMETRY] Connected. Uploading telemetry...")
+
+                    # request_time()/get_network_time() are tied to the uplink itself
+                    # (the module only returns the network time in response to a
+                    # transmission), not to the connection phase like NB-IoT/WiFi.
+                    resync_requested = should_resync_rtc()
+                    if resync_requested:
+                        await lorawan_module.request_time()  # Enable time request on this uplink
+
+                    await read_sensor_idle.wait()
+                    payloads = rtc_memory.get_payloads()
+                    rtc_memory.clear_memory()
+                    utils.log_info(f"Retrieved payloads: {payloads}")
+
+                    for i, payload in enumerate(payloads):
+                        utils.log_info(f"Publishing payload {i+1}: {payload}")
+                        await publish_payload(payload)
+
+                    if resync_requested:  # Time should be available now, since it was requested on the uplink above
+                        new_time = await lorawan_module.get_network_time()
+                        utils.log_info(f"New requested time UTC: {new_time}")
+                        pm.set_rtc_time(new_time, mode="LoRaWAN")
+                        rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
+
+                    await downlink_manager.process_lorawan_downlinks(lorawan_module, rtc_memory)
+
+                else:
+                    connection_ok.clear()
+                    utils.log_error(f"[TASK: TELEMETRY] No connection after {retry_attempt} attempt(s). Will retry on the next wake-up.")
+                    
+                await lorawan_module.sleep()
+
+
+    except Exception as e:
+        utils.log_error(f"[TASK: TELEMETRY] Upload failed: {e}")
+
+    finally:
+        telemetry_idle.set()  # Unblocks deepsleep, whether or not the send succeeded
+
+
+async def scheduled_telemetry_task():
+    """
+    Perpetual task deciding, once per cycle, whether it's worth waking the
+    modem at all: should_transmit() (accumulator due), previous_cycle_alarm
+    (confirm recovery right after an alarm), or a boot reason (checked only
+    on the first iteration, since pm.wakeup_reason never changes otherwise).
+
+    This cycle's own alarm isn't known yet at this point (only after
+    read_all_sensors() inside sensor_reading_task()), which is why that task
+    triggers run_telemetry_cycle() itself when it finds one instead of waiting
+    for this loop's next pass. Both funnel through _trigger_send_telemetry().
+
+    Doesn't wait on read_sensor_idle: the point is for run_telemetry_cycle()'s
+    connection work to overlap with sensor_reading_task(), not wait for it.
+    """
+    
+    boot_wakeup_reasons = ("RTC GPIO reset", "Watchdog reset", "Power-on reset")  # RTC GPIO reset: magnet wakeup. Watchdog reset: NB-IoT module wakeup.
+    first_iteration = True
+
+    while True:
+        previous_cycle_alarm = rtc_memory.get_alarm_flag()
+        boot_requires_telemetry = first_iteration and pm.wakeup_reason in boot_wakeup_reasons
+        first_iteration = False
+
+        if rtc_memory.should_transmit():
+            _trigger_send_telemetry("accumulator due")
+        elif previous_cycle_alarm:
+            _trigger_send_telemetry("previous-cycle alarm")
+        elif boot_requires_telemetry:
+            _trigger_send_telemetry(f"boot ({pm.wakeup_reason})")
+        else:
+            utils.log_info(f"[TASK: SCHEDULE] Not due yet (cycle {rtc_memory.get_counter()} of {rtc_memory.n_cycles}). Skipping modem wake-up.")
+
+        latency_s = config_manager.dynamic_config["general"].get("latency_time", 10) * 60
+        await asyncio.sleep(latency_s)
+
+async def battery_sleep_governor():
+    """
+    Single decision point for deepsleep: sleeps once sensor reading and
+    telemetry are both idle and the modem isn't in use, unless
+    continuous_mode keeps it always on.
+    """
+    while True:
+
+        if read_sensor_idle.is_set() and telemetry_idle.is_set() and not modem_lock.locked():
+            rollback.cancel() #We can cancel rollback protection if program reaches this point.
+            continuous_mode = config_manager.get_dynamic("general").get("continuous_mode", False)
+            if not continuous_mode:
+                
+                if status_led.is_enabled():
+                    if (battery_voltage < 3600):
+                        status_led.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500, wake_up_period=20)
+                    else:
+                        status_led.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500,  wake_up_period=10)
+            
+                pm.configure_wakeup_sources(wake_up_sources)
+                pm.go_to_sleep()
+
+        await asyncio.sleep_ms(500)
+
+async def _theft_alert_nbiot(nb_iot_module, ser_num):
+    """Sends a one-off GPS alarm over NB-IoT when the accelerometer confirms
+    tampering. Independent of the main gather; not worth parallelizing."""
+    await nb_iot_module.wake_up()
+    gps_data = await nb_iot_module.get_gps_coords()
+
+    if await nb_iot_module.send_at_command_check(f'AT%XSYSTEMMODE=1,1,0,{config_manager.dynamic_config["communications"]["cellular_iot"].get("preference", 0)}'):
+        await nb_iot_module.send_at_command_check("AT+CFUN=1")
+        await nb_iot_module.wait_for_network_connection(timeout=180000)
+        keep_alive = ((config_manager.dynamic_config["general"].get("latency_time", 10) * 60) + 20) * config_manager.dynamic_config["general"].get("register_acumulator", 1)
+        await nb_iot_module.mqtt_configure(ser_num, keep_alive, 0)
+        mqtt_config = config_manager.get_dynamic("communications").get("mqtt")
+        if await nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
+            base_topic = mqtt_config.get("base_topic", "isurlog")
+            if gps_data != []:
+                lat = gps_data[0]
+                lon = gps_data[1]
+                elev = gps_data[2]
+                await nb_iot_module.mqtt_publish(f"{base_topic}/alarms/{ser_num}", f"{lat, lon, elev}")
+
+
 def process_ble_command(received_bytes):
     """
     Processes commands received via BLE.
@@ -893,15 +1451,14 @@ def process_ble_command(received_bytes):
     if b"SD" in received_bytes or b"EV" in received_bytes: #DIGITAL OUTPUT CONTROL  (SSR or LATCHING VALVE)
         received_bytes = received_bytes.decode('ascii')
         utils.log_info("Processing manual command...")
-        process_sd_ev_manual_command(received_bytes,  ble = True)
+        downlink_manager.process_sd_ev_manual_command(received_bytes, rtc_memory, ble=True)
         
     else:
                             
         try:
             # 1. Convert the received bytes to a hexadecimal string
-            hex_payload = ubinascii.hexlify(received_bytes).decode('ascii')
+            hex_payload = binascii.hexlify(received_bytes).decode('ascii')
             utils.log_info(f"Payload converted to hex: '{hex_payload}'")
-            encoder = IsurlogLPPEncoder()
             decoded_message = encoder.decode(hex_payload.upper())
 
             # 2. Call the function from your ConfigUpdater module to do the work
@@ -910,32 +1467,31 @@ def process_ble_command(received_bytes):
         except Exception as e:
             utils.log_error(f"Fatal error processing BLE command: {e}")
 
-async def ble_mode_task(blinky, pm, ser_num):
+async def ble_mode_task():
     utils.log_info("Magnet wakeup detected. Starting BLE mode...")
     
     # Init Bluetooh manager
     ble = ble_manager.BLEManager(device_name=f"Isurlog-{ser_num}", command_callback=process_ble_command)
     ble_start = time.time()
     
-    if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
-        blinky.set_ulp_pattern(pulse_num=5, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=200,  wake_up_period=2)
+    if status_led.is_enabled():
+        status_led.set_ulp_pattern(pulse_num=5, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=200,  wake_up_period=2)
     
     while (not ble.client_connected) and (time.time() - ble_start < 120):
         await asyncio.sleep(2)
         
-    if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
-        blinky.set_ulp_pattern(pulse_num=3, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=200,  wake_up_period=2)
+    if status_led.is_enabled():
+        status_led.set_ulp_pattern(pulse_num=3, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=200,  wake_up_period=2)
         
     if ble.client_connected:        
         while not ble.client_disconnected: # Wait until client disconnects
             # Read data from active sensors
-            live_data, _ = read_all_sensors(0, ble = True)
-            live_data, _ = read_isurnode_data(0, live_data, False, ble = True)
+            live_data, _ = await read_all_sensors(0, ble = True)
+            live_data, _ = await read_isurnode_data(0, live_data, False, ble = True)
             
             print(live_data)
 
             # Encode and send by bluetooh
-            encoder = IsurlogLPPEncoder()
             live_payload = encoder.encode(live_data)
             if live_payload:
                 ble.update_data_payload(live_payload)
@@ -947,7 +1503,31 @@ async def ble_mode_task(blinky, pm, ser_num):
                 wdt.feed()
     
     utils.log_info("BLE client disconnected. Continiuing with normal mode...")
-    pm.smart_sleep(2000)
+    await asyncio.sleep_ms(1000)
+    
+async def main():
+    
+    if modem_type == "nb-iot":
+        init_nb_iot_module()
+
+    if modem_type == "wifi":
+        init_mqtt_client()
+        
+    if modem_type == "lorawan":
+        init_lorawan_module()
+        
+    wake_up_pin = config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("esp_wake_up", 35)
+    telemetry_pin = Pin(wake_up_pin, Pin.IN)
+    telemetry_pin.irq(trigger=Pin.IRQ_RISING, handler=_telemetry_pin_isr)        
+
+    tasks = [
+        scheduled_telemetry_task(),
+        sensor_reading_task(),
+        battery_sleep_governor(),
+        telemetry_trigger_task(),
+    ]
+
+    await asyncio.gather(*tasks)
 
 if __name__ == "__main__":
 
@@ -962,10 +1542,6 @@ if __name__ == "__main__":
     
     # --- Initialize Variables ---
 
-    wake_up_sources = []
-    register_mode = config_manager.get_dynamic("general").get("register_mode", 0) #Register mode, 0 normal, 1 conditional
-    continuous_mode = config_manager.get_dynamic("general").get("continuous_mode", False)
-    n_loop_cycles = config_manager.get_dynamic("general").get("loop_cycles", 1)
     vdc_voltage = config_manager.get_dynamic("general").get("vdc_voltage", 12)
     
     #Pin Configuration
@@ -984,16 +1560,34 @@ if __name__ == "__main__":
     utils.log_info(f"Isurlog with serial number: {ser_num}")
     
     #Init RTC memory
-    rtc_memory = RTC_Memory(max_payload_size = config_manager.dynamic_config["general"].get("max_payload_size", 256))
+    init_rtc_memory()
 
-    # Declare Blinky <º)))><
-    blinky = LEDManagerULP()
-    if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
+    # Declare status_led <º)))><
+    status_led = LEDManagerULP()
+    if status_led.is_enabled():
         
         if (pm.wakeup_reason == "Power-on reset"):
-            blinky.load_ulp() #Load Blinky only on Power-on reset
+            status_led.load_ulp() #Load status_led only on Power-on reset
             
-        blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500, wake_up_period=2) #Set Blinky blinking.
+        status_led.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500, wake_up_period=2) #Set status_led blinking.
+        
+        
+    #Check/Enable anti theft system
+    accel = Accelerometer()
+    if accel.hardware_ready:
+        if config_manager.dynamic_config["general"].get("theft_alert", False):
+            theft_confirmed = accel.check_wakeup()
+            wake_up_sources.append(MCP_WAKEUP_PIN_NUM)
+            if theft_confirmed and modem_type == "nb-iot" and config_manager.static_config.get("isurreach", False):
+                
+                if status_led.is_enabled():
+                    status_led.set_ulp_pattern(pulse_num=0, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=5000, wake_up_period=10) #Disable status LED.
+                    
+                init_nb_iot_module()
+                asyncio.run(_theft_alert_nbiot(nb_iot_module, ser_num))
+                
+        else:
+            accel.disarm()
     
     #Set VDC voltage via I2C
     pot = MCP4017()
@@ -1012,468 +1606,17 @@ if __name__ == "__main__":
             pm.control_digital_output(1)
         pm.set_cpu_freq("balanced") #CPU to 80 MHZ. BLE/WiFi does not work below 80MHZ
         #Import BLE libraries
-        import ubinascii
-        import uasyncio as asyncio
+        import binascii
         from modules import ble_manager
-        asyncio.run(ble_mode_task(blinky, pm, ser_num))
+        asyncio.run(ble_mode_task())
         if modem_type != "wifi":
             pm.set_cpu_freq("low-power")
         
-    #Read all sensors (if activated)
-    loop_seconds = pm.seconds2wakeup()
-    isurnode_config = config_manager.get_dynamic("isurnode_config")
-        
-    data, alarm_condition = read_all_sensors(register_mode, n_loop = n_loop_cycles, n_seconds = loop_seconds, isurnode_enabled = isurnode_config.get("enable", False))
-    data, alarm_condition = read_isurnode_data(register_mode, data, alarm_condition)
-
-    #Get battery voltage from data to configure Blinky later
-    found_list = None
-    for sublist in data:
-      if sublist[1] == 'addVoltageInput':
-        found_list = sublist
-        break
-    battery_voltage = found_list[2]
-    
-    #----- USER SCRIPT ------
-    if "user_script.py" in os.listdir():
-        if config_manager.dynamic_config["general"].get("user_script", False):
-            try:
-                import sys
-                if "user_script" in sys.modules:
-                    del sys.modules["user_script"]
-                import user_script
-                data = user_script.process(data)
-            except Exception as e:
-                utils.log_error("Error in user script:", e)
-        else:
-            try:
-                os.remove("user_script.py")
-            except Exception as e:
-                utils.log_error("Error removing user script:", e)
-
-    # --- Encode data to Isurlog LPP format ---
-    encoder = IsurlogLPPEncoder()
-    utils.log_info(f"Data to encode: {data}")
-    encoded_payload = encoder.encode(data)
-
-    internal_register = config_manager.get_dynamic("general").get("internal_register", False)
-
-    if encoded_payload:
-        utils.log_info(f"Encoded Payload: {encoded_payload}")
-        if internal_register:
-            from modules import internal_storage
-            internal_storage_module = internal_storage.InternalStorage()
-            if internal_storage_module.store_payload(encoded_payload): 
-                utils.log_info(f"Payload stored in internal flash: {encoded_payload}")
-            else:
-                utils.log_error(f"Failed to store payload in internal flash: {encoded_payload}")
-        else:
-            utils.log_info("Internal register is disabled.")
-    else:
-        utils.log_error("Encoding failed. Sending empty payload")
-        encoded_payload = ""  # Send empty payload on failure
-        
-    if not rtc_memory.store_payload(encoded_payload):
-        utils.log_error("Could not store payload in RTC memory.")
-    else:
-        utils.log_info(f"Stored payload. Cycle {rtc_memory.get_counter()} of {rtc_memory.n_cycles}")
-
-    # --- NB-IoT Setup and Logic ---
+    # --- NB-IoT/WiFi/LoRaWAN Setup and Logic ---
     en_com_module = Pin(EN_COM_MODULE, Pin.OUT, Pin.PULL_UP, value=1, hold=True)
 
-    if modem_type == "wifi":
-        from modules import wifi
-        mqtt_config = config_manager.get_dynamic("communications").get("mqtt")
-        base_topic = mqtt_config.get("base_topic", "isurlog")
-        
-    if modem_type == "nb-iot":
-        from modules import nb_iot_isurreach_som as nb_iot
-        mqtt_config = config_manager.get_dynamic("communications").get("mqtt")
-        base_topic = mqtt_config.get("base_topic", "isurlog")
-        wake_up_sources.append(config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("esp_wake_up", 34))
-        
-    if modem_type == "lorawan":
-        from modules import lorawan
-        lorawan_config = config_manager.dynamic_config["communications"].get("lorawan", {})
-        if lorawan_config.get("class", 0) == 2:
-            wake_up_sources.append(config_manager.static_config.get("pinout", {}).get("nb-iot", {}).get("esp_wake_up", 34))
-
-    #First boot, connect to NB-IoT o LoRaWAN network
-    if pm.wakeup_reason == "Power-on reset":
-        if modem_type == "nb-iot":
-            utils.log_info("Power-on reset: Initializing NB-IoT ...")
-            if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
-                blinky.set_ulp_pattern(pulse_num=3, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=200,  wake_up_period=2)
-            nb_iot_module = nb_iot.NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)
-            nb_iot_module.hard_reset()
-            nb_iot_module.select_SIM(config_manager.dynamic_config["communications"]["cellular_iot"].get("external_sim", True))
-            
-            if not nb_iot_module.connect(config_manager.dynamic_config["communications"]["cellular_iot"].get("preference", 0), apn = config_manager.dynamic_config["communications"]["cellular_iot"].get("apn", None), ntn = config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False)):
-                utils.log_error("Failed to connect to NB-IoT")
-                pm.configure_wakeup_sources(wake_up_sources)
-                pm.go_to_sleep()
-                
-            if not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
-            
-                keep_alive = ((config_manager.dynamic_config["general"].get("latency_time", 10) * 60)+20) * config_manager.dynamic_config["general"].get("register_acumulator", 1)
-                nb_iot_module.mqtt_configure(ser_num, keep_alive, 0)
-                if not nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
-                    pm.configure_wakeup_sources(wake_up_sources)
-                    pm.go_to_sleep()
-            
-            if should_resync_rtc() and not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
-                new_time = nb_iot_module.get_network_time()
-                utils.log_info(f"New requested time UTC: {new_time}")
-                pm.set_rtc_time(new_time)
-                rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
-                
-            if not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
-                nb_iot_module.mqtt_subscribe(f"{base_topic}/config/{ser_num}", QoS=2)
-            
-            if not rtc_memory.should_transmit():
-                nb_iot_module.sleep()
-            
-        if modem_type == "lorawan":
-            utils.log_info("Power-on reset: Initializing LoRaWAN...")
-            if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
-                blinky.set_ulp_pattern(pulse_num=3, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=200,  wake_up_period=2)
-            en_lorawan = Pin(EN_COM_MODULE, Pin.OUT, value=1, hold=True)
-            lorawan_module = lorawan.LoRaWAN(uart_id=2, tx_pin=2, rx_pin=4, baudrate=115200)
-            class_map = {0: "A", 1: "B", 2: "C"}
-            if not lorawan_module.connect(lorawan_class = class_map[lorawan_config.get("class", 0)]):
-                utils.log_error("Failed to connect to LoRaWAN")
-                pm.configure_wakeup_sources(wake_up_sources)
-                pm.go_to_sleep()
-            lorawan_module.set_confirmed_mode(0) # Enable/disable send ACK (optional)
-            if should_resync_rtc():
-                lorawan_module.request_time() #Enable LoRaWAN time requests (time is available after 1st transmission)
-            if not rtc_memory.should_transmit():
-                lorawan_module.sleep()
-            #lorawan_module.enable_auto_sleep() # Enable auto sleep.
-                
-    #Get previous alarm flag from rtc memory.
-    previous_cycle_alarm = rtc_memory.get_alarm_flag()
-    #Update rtc memory alarm_flag
-    rtc_memory.set_alarm_flag(alarm_condition)
-    
-    utils.log_info(f"Previous cycle alarm flag: {previous_cycle_alarm}. Current cycle alarm flag: {alarm_condition}")
-                
-    #NB-IoT or LoRaWAN connection should already be established.
-    if rtc_memory.should_transmit() or alarm_condition or previous_cycle_alarm or pm.wakeup_reason == "RTC GPIO reset" or pm.wakeup_reason == "Watchdog reset" or pm.wakeup_reason == "Power-on reset": #RTC GPIO reset for magnet wakeup. Watchdog reset for NB-IoT module wakeup.
-        rx = Pin(2, hold=False)
-        tx = Pin(4, hold=False)
-        
-        if modem_type == "wifi":
-            utils.log_info("Power-on reset: Initializing Wifi ...")
-            if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
-                blinky.set_ulp_pattern(pulse_num=3, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=200,  wake_up_period=2)
-                
-            if not wifi.is_connected():
-            
-                ssid = config_manager.dynamic_config["communications"]["wifi"].get("ssid", None)
-                password = config_manager.dynamic_config["communications"]["wifi"].get("password", None)
-                
-                if (ssid != None and password != None):
-                    if wifi.do_connect(ssid, password, timeout_seconds=15):
-                        if should_resync_rtc():
-                            import ntptime
-                            ntptime.settime()
-                            new_time = time.localtime()
-                            utils.log_info(f"New requested time UTC: {new_time}")
-                            pm.set_rtc_time(new_time, mode = "WiFi")
-                            rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
-                        
-                    else:
-                        utils.log_error("Could not establish Wifi connection!")
-                        pm.configure_wakeup_sources(wake_up_sources)
-                        pm.go_to_sleep()
-                else:
-                    utils.log_warning("No SSID and password provided for WiFi.")
-                
-            if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
-                blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=250, delay_on=5, delay_off=20, inter_delay=250,  wake_up_period=5)
-                
-            from modules.umqttsimple import MQTTClient
-            mqtt_client = MQTTClient(ser_num, mqtt_config.get("ip", ""), user=mqtt_config.get("user", ""), password=mqtt_config.get("passwd", ""), ssl = True)
-            try:
-                mqtt_client.connect(clean_session=True)
-                mqtt_client.subscribe(f"{base_topic}/config/{ser_num}", qos=1)
-            except Exception as err:
-                utils.log_error("Could not connect to the MQTT broker!")
-                pm.configure_wakeup_sources(wake_up_sources)
-                pm.go_to_sleep()
-                
-            utils.log_info("Transmitting data throught WiFi...")
-            payloads = rtc_memory.get_payloads()
-            rtc_memory.clear_memory()
-            utils.log_info(f"Retrieved payloads: {payloads}")
-        
-            for i, payload in enumerate(payloads):
-
-                utils.log_info(f"Publishing payload {i+1}: {payload}")
-                if mqtt_client.publish(f"{base_topic}/datos/{ser_num}", payload):
-                    utils.log_error(f"Failed to publish payload {i+1}")
-                pm.smart_sleep(500)
-                    
-            received_mqtt_messages = mqtt_client.check_msg()
-            utils.log_info(f"Received MQTT messages: {received_mqtt_messages}")
-            if received_mqtt_messages:
-                utils.log_info(f"Received {len(received_mqtt_messages)} MQTT message(s).")
-                for topic, msg in received_mqtt_messages:
-                    msg = msg.decode('utf-8')
-                    if msg == "Wake": #WAKE UP MESSAGE
-                        pass
-                    elif msg == "REPL": #ENABLE REMOTE REPL
-                        if not mqtt_client.publish(f"{base_topic}/repl_out/{ser_num}", "Connected"):
-                            mqtt_client.subscribe(f"{base_topic}/repl_in/{ser_num}")
-                            from modules.remote_repl import handle_remote_repl_wifi
-                            handle_remote_repl_wifi(ser_num, base_topic, wdt, mqtt_client)
-                            
-                    elif "SD" in msg or "EV" in msg: #DIGITAL OUTPUT CONTROL  (SSR or LATCHING VALVE)
-                        utils.log_info("Processing manual command...")
-                        process_sd_ev_manual_command(msg)
-                        
-                    else: #NEW CONFIGURATION MESSAGE
-                        utils.log_info(f"Processing message on topic: {topic}")
-                        utils.log_info(f"Message content: {msg}")
-                        decoded_message = encoder.decode(msg)
-                        utils.log_info(f"New MQTT downlink: {decoded_message}")
-                        config_manager.apply_conf_update(decoded_message) #Save new downlink configuration.
-                        
-                mqtt_client.publish(f"{base_topic}/config/{ser_num}", b"", retain=True, qos=1) #Delete retained message!
-                
-            mqtt_client.disconnect()
-            wifi.do_disconnect()
-                    
-        if modem_type == "nb-iot":
-            if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
-                blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=250, delay_on=5, delay_off=20, inter_delay=250,  wake_up_period=5)
-            nb_iot_module = nb_iot.NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)
-            utils.log_info("Transmitting data throught NB-IoT...")
-            payloads = rtc_memory.get_payloads()
-            rtc_memory.clear_memory()
-            utils.log_info(f"Retrieved payloads: {payloads}")
-
-            nb_iot_module.wake_up()  # Wake up *only* when transmitting
-            if not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
-                if not nb_iot_module.mqtt_check_connection():
-                    if not nb_iot_module.check_network_connection():
-                        nb_iot_module.reset() #Reset NB-IoT module
-                        pm.smart_sleep(5000)
-                        reset() #Reset ESP32
-                    if not nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", "80.24.238.36"), mqtt_config.get("port", 1883)):
-                        nb_iot_module.reset() #Reset NB-IoT module
-                        pm.smart_sleep(5000)
-                        reset() #Reset ESP32
-                    nb_iot_module.mqtt_subscribe(f"{base_topic}/config/{ser_num}", QoS=2)
-
-                if should_resync_rtc():
-                    new_time = nb_iot_module.get_network_time()
-                    utils.log_info(f"New requested time UTC: {new_time}")
-                    pm.set_rtc_time(new_time)
-                    rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
-            else:
-                if should_resync_rtc():
-                    if not nb_iot_module.check_network_connection():
-                        nb_iot_module.reset() #Reset NB-IoT module
-                        pm.smart_sleep(5000)
-                        reset() #Reset ESP32
-                    new_time = nb_iot_module.get_network_time()
-                    utils.log_info(f"New requested time UTC: {new_time}")
-                    pm.set_rtc_time(new_time)
-                    rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
-                    
-            total_payloads = len(payloads)
-            for i, payload in enumerate(payloads):
-                if (i == total_payloads - 1) and (config_manager.dynamic_config["communications"]["cellular_iot"].get("signal_data", False)):
-                    signal_data = nb_iot_module.get_signal_data()
-                    extra_data = []
-                    extra_data.append([0, "addModemData", signal_data[0]])
-                    extra_data.append([1, "addModemData", signal_data[1]])
-                    encoded_extra_payload = encoder.encode(extra_data)
-                    payload += encoded_extra_payload
-                utils.log_info(f"Publishing payload {i+1}: {payload}")
-                if not config_manager.dynamic_config["communications"]["cellular_iot"].get("ntn", False):
-                    if not nb_iot_module.mqtt_publish(f"{base_topic}/datos/{ser_num}", payload):
-                        utils.log_error(f"Failed to publish payload {i+1}")
-                else:
-                    if not nb_iot_module.check_network_connection():
-                        nb_iot_module.reset() #Reset NB-IoT module
-                        pm.smart_sleep(5000)
-                        reset() #Reset ESP32
-                    if not nb_iot_module.send_udp_data(mqtt_config.get("ip", "80.24.238.36"), mqtt_config.get("port", 1883), ser_num, payload):
-                        utils.log_error(f"Failed to publish payload {i+1}")
-                pm.smart_sleep(500)
-                
-            received_mqtt_messages = nb_iot_module.get_mqtt_messages()
-
-            if received_mqtt_messages:
-                utils.log_info(f"Received {len(received_mqtt_messages)} MQTT message(s).")
-                for msg in received_mqtt_messages:
-                    if msg['message'] == "Wake": #WAKE UP MESSAGE
-                        pass
-                    
-                    elif msg['message'] == "REPL": #ENABLE REMOTE REPL
-                        
-                        from modules.remote_repl import handle_remote_repl_nb_iot
-                        handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module, config_manager.dynamic_config["communications"]["cellular_iot"].get("preference", 0), config_manager.get_dynamic("communications").get("mqtt"))
-                            
-                    elif "SD" in msg['message'] or "EV" in msg['message']: #DIGITAL OUTPUT CONTROL  (SSR or LATCHING VALVE)
-                        utils.log_info("Processing manual command...")
-                        process_sd_ev_manual_command(msg['message'])
-                            
-                    elif "update" in msg['message']: #FIRMWARE UPDATE MESSAGE
-                        utils.log_info("Starting OTA update process...")
-                        update_instructions = msg['message'].split(" ")
-                        if len(update_instructions) == 7:
-                            from modules import update_manager
-                            #Clear previous files.
-                            update_manager.clean_flash(["micropython.b64.txt", "micropython.bin", "update_candidate.py"])
-                            _ , server, port, up_file_name, up_checksum, main_file_name, main_checksum = update_instructions
-                            utils.log_info(f"Received instructions: Server: {server} Port: {port} up_File: {up_file_name} up_Checksum: {up_checksum} main_File: {main_file_name} main_Checksum: {main_checksum}")
-
-                            if nb_iot_module.download_file(server, port, up_file_name, "micropython.b64.txt", wdt = wdt, chunk_size=8192):
-                                if(update_manager.decode_base64_file("micropython.b64.txt", "micropython.bin")):
-                                    if update_manager.verify_file_checksum(up_checksum, filename = "micropython.bin"):
-                                        utils.log_info("Decoding successful!")
-                                        ota_succeded = False
-                                        from lib.ota import update
-                                        try:
-                                            with update.OTA(verbose=True, reboot=False) as ota_updater:
-                                                with open("/micropython.bin", "rb") as f:
-                                                    ota_updater.from_stream(f)
-                                            utils.log_info("OTA update prepared.")
-                                            ota_succeded = True
-                                        except Exception as e_ota:
-                                            utils.log_error(f"Error during .bin OTA update: {e_ota!r}")
-
-                                        #Delete the b64 and bin file after use to free space. Download main.py
-                                        try:
-                                            update_manager.clean_flash(["micropython.b64.txt", "micropython.bin", "update_candidate.py"])
-                                            if ota_succeded:
-                                                nb_iot_module.download_file(server, port, main_file_name, "update_candidate.py", chunk_size=2048)
-                                                if update_manager.verify_file_checksum(main_checksum, filename = "update_candidate.py"):
-                                                    update_manager.perform_update()
-                                                    utils.log_info("Update process finished, rebooting in 5 seconds...")
-                                                    if nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
-                                                        utils.log_error(f"Failed to publish response")
-                                                        pm.smart_sleep(5000)
-                                                        reset()
-                                        except Exception as e_ota:
-                                            utils.log_error(f"Error during .py OTA update: {e_ota!r}")
-                                            pass
-                                    else:
-                                        utils.log_error("Decoding failed.")
-                        
-                        #If code reaches this point the update was unsuccessful
-                        rollback.cancel_force()
-                        #Clear all files.
-                        update_manager.clean_flash(["micropython.b64.txt", "micropython.bin", "update_candidate.py"])
-                        if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update FAILED"):
-                            utils.log_error(f"Failed to publish response")
-                            
-                        
-                    else: #NEW CONFIGURATION MESSAGE
-                        utils.log_info(f"Processing message on topic: {msg['topic']}")
-                        utils.log_info(f"Message content: {msg['message']}")
-                        decoded_message = encoder.decode(msg['message'])
-                        utils.log_info(f"New MQTT downlink: {decoded_message}")
-                        config_manager.apply_conf_update(decoded_message) #Save new downlink configuration.
-                        
-            nb_iot_module.sleep()
-            
-        if modem_type == "lorawan":
-            if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
-                blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=250, delay_on=5, delay_off=20, inter_delay=250,  wake_up_period=5)
-            lorawan_module = lorawan.LoRaWAN(uart_id=2, tx_pin=2, rx_pin=4, baudrate=115200)
-            if not lorawan_module.check_network_connection():
-                    lorawan_module.reset() #Reset LoRaWAN module
-                    reset() #Reset ESP32
-            utils.log_info("Transmitting data throught LoRaWAN...")
-            if should_resync_rtc():
-                lorawan_module.request_time() #Enable LoRaWAN time request on this uplink, so get_network_time() below has something to read
-            payloads = rtc_memory.get_payloads()
-            rtc_memory.clear_memory()
-            utils.log_info(f"Retrieved payloads: {payloads}")
-                
-            for i, payload in enumerate(payloads):
-
-                utils.log_info(f"Publishing payload {i+1}: {payload}")
-                if not lorawan_module.send_uplink(2, payload):
-                    utils.log_error(f"Failed to publish payload {i+1}")
-                pm.smart_sleep(500)
-                    
-            if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
-                blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500, wake_up_period=2)
-            if should_resync_rtc(): #Time should be available now, if it was requested above.
-                new_time = lorawan_module.get_network_time()
-                utils.log_info(f"New requested time UTC: {new_time}")
-                pm.set_rtc_time(new_time, mode = "LoRaWAN")
-                rtc_memory.set_last_rtc_sync(pm.rtc.get_unix_time())
-            
-            while lorawan_module.has_downlinks():
-                downlink = lorawan_module.get_next_downlink()
-                utils.log_info(f"New message on port {downlink['port']}: {downlink['data']}")
-                if downlink['data'] != None:
-                    try:
-                        manual_command = bytes.fromhex(downlink['data']).decode('utf-8')
-                    except Exception as err:
-                        manual_command = "None"
-                    
-                    if "SD" in manual_command or "EV" in manual_command: #DIGITAL OUTPUT CONTROL  (SSR or LATCHING VALVE)
-                        utils.log_info("Processing manual command...")
-                        process_sd_ev_manual_command(manual_command)
-                    else:
-                        decoded_downlink = encoder.decode(downlink['data'])
-                        utils.log_info(f"New downlink: {decoded_downlink}")
-                        config_manager.apply_conf_update(decoded_downlink) #Save new downlink configuration.
-                    
-            lorawan_module.sleep()
-            
-    #Check/Enable anti theft system
-    accel = Accelerometer()
-    if accel.hardware_ready:
-        if config_manager.dynamic_config["general"].get("theft_alert", False):
-            theft_confirmed = accel.check_wakeup()
-            wake_up_sources.append(MCP_WAKEUP_PIN_NUM)
-            if theft_confirmed:
-                if modem_type == "nb-iot" and config_manager.static_config.get("isurreach", False):
-                    from modules import nb_iot_isurreach_som as nb_iot
-                    rx = Pin(2, hold=False)
-                    tx = Pin(4, hold=False)
-                    nb_iot_module = nb_iot.NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)
-                    nb_iot_module.wake_up()
-                    gps_data = nb_iot_module.get_gps_coords()
-
-                    if nb_iot_module.send_at_command_check(f'AT%XSYSTEMMODE=1,1,0,{config_manager.dynamic_config["communications"]["cellular_iot"].get("preference", 0)}'):
-                        nb_iot_module.send_at_command_check("AT+CFUN=1")
-                        nb_iot_module.wait_for_network_connection(timeout=180000)
-                        keep_alive = ((config_manager.dynamic_config["general"].get("latency_time", 10) * 60)+20) * config_manager.dynamic_config["general"].get("register_acumulator", 1)
-                        nb_iot_module.mqtt_configure(ser_num, keep_alive, 0)
-                        mqtt_config = config_manager.get_dynamic("communications").get("mqtt")
-                        if nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
-                            base_topic = mqtt_config.get("base_topic", "isurlog")
-                            if gps_data != []:
-                                lat = gps_data[0]
-                                lon = gps_data[1]
-                                elev = gps_data[2]
-                                nb_iot_module.mqtt_publish(f"{base_topic}/alarms/{ser_num}", f"{lat,lon, elev}")
-                                                    
-        else:
-            accel.disarm()
-            
-    if (config_manager.dynamic_config["general"].get("debug_led", False)) and (not(config_manager.dynamic_config["digital_config"].get("counter", False))):
-        
-        if (battery_voltage < 3600):
-            
-            blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500, wake_up_period=20)
-            
-        else:
-            
-            blinky.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500,  wake_up_period=10)
-
-    pm.configure_wakeup_sources(wake_up_sources)
-    rollback.cancel() #We can cancel rollback protection if program reaches this point.
-    if continuous_mode:
-        deepsleep(1000)
-    pm.go_to_sleep()
+    # --- EVENT LOOP START ---
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("ESP32 execution stopped by user.")

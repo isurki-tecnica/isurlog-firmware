@@ -9,7 +9,7 @@
 
 import network
 import time
-
+import asyncio 
 # CRA 4.5 Requirement: Minimum security level (WPA2)
 # 0: Open, 1: WEP, 2: WPA-PSK, 3: WPA2-PSK, 4: WPA/WPA2-PSK, 5: WPA2/WPA3-PSK, 6: WPA3-PSK
 MIN_SAFE_AUTH_MODE = 3
@@ -24,7 +24,7 @@ def is_connected():
     sta_if = network.WLAN(network.STA_IF)
     return sta_if.isconnected()
 
-def do_connect(ssid, password, timeout_seconds=15):
+async def do_connect(ssid, password, timeout_seconds=15):
     """
     Connects to a Wi-Fi network ensuring CRA 4.5 security compliance.
     Only allows connections to WPA2 or WPA3 networks.
@@ -65,7 +65,7 @@ def do_connect(ssid, password, timeout_seconds=15):
             if time.time() - start_time > timeout_seconds:
                 print('Connection timed out!')
                 return False
-            time.sleep(0.5)
+            await asyncio.sleep_ms(500)
             
     if sta_if.isconnected():
         print('Secure connection established:', sta_if.ifconfig())
@@ -73,7 +73,7 @@ def do_connect(ssid, password, timeout_seconds=15):
     
     return False
 
-def do_disconnect():
+async def do_disconnect():
     """
     Disconnects from the Wi-Fi network and safely turns off the radio.
     """
@@ -90,7 +90,7 @@ def do_disconnect():
         sta_if.active(False)
         
         # 3. Brief wait for the ESP32 driver to finish internal cleanup
-        time.sleep(0.2)
+        await asyncio.sleep_ms(250)
         
     print('Wi-Fi deactivated.')
     return True
