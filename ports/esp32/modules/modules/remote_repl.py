@@ -12,6 +12,7 @@ import builtins
 from machine import UART, Pin
 import time
 from modules import utils
+import asyncio
 
 REPL_TIMEOUT = 120000  # ms, configurable using remote console via "REPL_TIMEOUT = <valor>"
 
@@ -82,7 +83,7 @@ def handle_remote_repl_wifi(ser_num, base_topic, wdt, mqtt_client):
                     utils.log_info(f"Response to received commmand: {command_output}")
                     mqtt_client.publish(f"{base_topic}/repl_out/{ser_num}", command_output)
     
-def handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module, connection_preference, mqtt_config):
+async def handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module, connection_preference, mqtt_config):
     """
     Enables REPL mode NB-IoT.
     """
@@ -90,19 +91,23 @@ def handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module, connectio
         desired_mode_val = 4
     elif connection_preference == 2:
         desired_mode_val = 5
-    
+    else:
+        # TODO: Handle auto mode?
+        desired_mode_val = 5
+        utils.log_error(f"handle_remote_repl_nb_iot: no eDRX mode defined for connection_preference={connection_preference}. Switching to NB-IoT.")
+
     utils.log_info("Reconfiguring NB-IoT parameters for faster REPL response...")
-    nb_iot_module.send_at_command_check("AT+CFUN=4")
-    nb_iot_module.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0000"')
-    nb_iot_module.send_at_command_check("AT+CFUN=1")
-    nb_iot_module.wait_for_network_connection(timeout=180000)
+    await nb_iot_module.send_at_command_check("AT+CFUN=4")
+    await nb_iot_module.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0000"')
+    await nb_iot_module.send_at_command_check("AT+CFUN=1")
+    await nb_iot_module.wait_for_network_connection(timeout=180000)
     utils.log_info("NB-IoT parameters configured.")
     
-    if nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
+    if await nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
         utils.log_info("MQTT connection restablished.")
         
-        if nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Connected"):
-            nb_iot_module.mqtt_subscribe(f"{base_topic}/repl_in/{ser_num}", QoS=2)
+        if await nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Connected"):
+            await nb_iot_module.mqtt_subscribe(f"{base_topic}/repl_in/{ser_num}", QoS=2)
     
             uart = UART(2, baudrate=115200, tx=Pin(4), rx=Pin(2), timeout=1000)
             command_topic = f"{base_topic}/repl_in/{ser_num}" 
@@ -113,7 +118,7 @@ def handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module, connectio
 
             while repl_active:
                 
-                time.sleep(1)
+                await asyncio.sleep(1)
                 
                 #Feed Watchdog  
                 if wdt:
@@ -122,7 +127,7 @@ def handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module, connectio
                 #Check timeout  
                 if (time.ticks_diff(time.ticks_ms(), last_message_time) > REPL_TIMEOUT):
                     utils.log_info("Disconnecting from online REPL due to timeout...")
-                    nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Disconnected")
+                    await nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Disconnected")
                     repl_active = False
                     
                 #Read all UART buffer   
@@ -149,7 +154,7 @@ def handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module, connectio
                                 
                                 if message_str.strip() == "logout":
 
-                                    nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Disconnected")
+                                    await nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", "Disconnected")
                                     utils.log_info("Exit command received. Deactivating REPL.")
                                     response = "REPL session terminated."
                                     repl_active = False
@@ -158,7 +163,7 @@ def handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module, connectio
                                 
                                     command_output = execute_code(message_str)
                                     utils.log_info(f"Response to received commmand: {command_output}")
-                                    nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", command_output)
+                                    await nb_iot_module.mqtt_publish(f"{base_topic}/repl_out/{ser_num}", command_output)
                                     
                             else:
                                 
@@ -174,13 +179,13 @@ def handle_remote_repl_nb_iot(ser_num, base_topic, wdt, nb_iot_module, connectio
         utils.log_error(f"Error while reconnecting to MQTT server.")
         
     utils.log_info("Reconfiguring NB-IoT parameters for low power consumption...")
-    nb_iot_module.send_at_command_check("AT+CFUN=4")
-    nb_iot_module.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0011"')
-    nb_iot_module.send_at_command_check("AT+CFUN=1")
-    nb_iot_module.wait_for_network_connection(timeout=180000)
+    await nb_iot_module.send_at_command_check("AT+CFUN=4")
+    await nb_iot_module.send_at_command_check(f'AT+CEDRXS=1,{desired_mode_val},"0011"')
+    await nb_iot_module.send_at_command_check("AT+CFUN=1")
+    await nb_iot_module.wait_for_network_connection(timeout=180000)
     utils.log_info("NB-IoT parameters configured.")
     
-    if nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
+    if await nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
         utils.log_info("MQTT connection restablished.")
     else:
         utils.log_error(f"Error while reconnecting to MQTT server.")

@@ -244,18 +244,19 @@
    "general":{
       "continuous_mode":false,
       "latency_time":5,
-      "register_mode":0,
+      "upload_mode":0,
       "internal_register":false,
       "register_acumulator":1,
       "rtc_sync":true,
-      "rtc_sync_int":7,
+      "rtc_sync_int": 7,
       "vdc_voltage":12,
       "magnet_wakeup":true,
       "debug_led":true,
       "max_payload_size":128,
       "loop_cycles":1,
       "theft_alert":false,
-      "user_script":true
+      "user_script":false,
+      "max_retry_connection": 2
    },
    "int_th_sensor":{
       "humidity_low_cond":false,
@@ -287,7 +288,6 @@
       "cellular_iot":{
          "external_sim":true,
          "preference":2,
-         "eDRX":true,
          "apn":"",
          "ntn":false,
          "signal_data":false

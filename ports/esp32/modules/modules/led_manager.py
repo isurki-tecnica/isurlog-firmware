@@ -15,6 +15,7 @@ from machine import mem32, Pin
 from lib.esp32_ulp import src_to_binary, src_to_binary_ext
 import time
 from modules import utils
+from modules.config_manager import config_manager
 
 class LEDManagerULP:
     def __init__(self, timer_period_us= 10*1_000_000):
@@ -157,6 +158,17 @@ class LEDManagerULP:
         self.binary = b'ulp\x00\x0c\x00\xa4\x00 \x00\x00\x00\x90\x02\x80r\x01\x00\x00\xd0\x12\x00\x80r&\x00 p(\x00@\x80#\x05\xc4\x18\x03\x05\xdc\x1b\x90\x02\x80r\x11\x00\x80r\x01\x00\x00h\xa1\x02\x80r\x04\x00\x00\xd0\xb1\x02\x80r\x07\x00\x00\xd0\x00\x05\xdc\x1b,\x00\x00@\x00\x01\xdc\x1b\xd1\x02\x80r\x06\x00\x00\xd0\xff\xff\x00@\x1a\x00 r\\\x00@\x80L\x00\x00\x80.\x00\x00@\x1f\x00 rl\x00@\x808\x00\x00\x80\x11\x00\x80r\x11\x00 p\x94\x00@\x80\xf1\x02\x80r\x06\x00\x00\xd0\xff\xff\x00@\x1a\x00 r\x90\x00@\x80\x80\x00\x00\x800\x00\x00@\x10\x00 r\xa0\x00@\x800\x00\x00\x80\x00\x00\x00\xb0\x00\x00\x00\x00\x01\x00\x00\x00\x14\x00\x00\x00(\x00\x00\x00\x02\x00\x00\x00*q\x00\x00=\x00\x00\x00=\t\x00\x00'
         self.ulp = None
         self.timer_period_us = timer_period_us
+        
+    def is_enabled(self):
+        """
+        Returns True if the debug LED should be blinking this cycle:
+          - 'debug_led' must be enabled in the general config, and
+          - the digital input pulse counter must NOT be active, since it
+            uses the same ULP coprocessor as the LED and both can't run
+            at the same time.
+        """
+        return (config_manager.dynamic_config["general"].get("debug_led", False)
+                and not config_manager.dynamic_config["digital_config"].get("counter", False))
 
     def load_ulp(self):
         """Loads the ULP program into the coprocessor."""

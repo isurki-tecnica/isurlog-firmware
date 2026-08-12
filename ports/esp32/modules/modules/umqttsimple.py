@@ -129,6 +129,8 @@ class MQTTClient:
             struct.pack_into("!H", pkt, 0, pid)
             self.sock.write(pkt, 2)
         self.sock.write(msg)
+        if qos == 0:
+            return True
         if qos == 1:
             while 1:
                 op = self.wait_msg()
@@ -138,7 +140,7 @@ class MQTTClient:
                     rcv_pid = self.sock.read(2)
                     rcv_pid = rcv_pid[0] << 8 | rcv_pid[1]
                     if pid == rcv_pid:
-                        return
+                        return True
         elif qos == 2:
             assert 0
 
