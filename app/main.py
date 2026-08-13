@@ -3,7 +3,7 @@ from machine import Pin, reset, WDT, UART, deepsleep, I2C
 from modules.power_manager import pm
 from modules import utils
 from modules.config_manager import config_manager
-from modules2 import downlink_manager
+from modules import downlink_manager
 from lib.IsurlogLPP import IsurlogLPPEncoder
 from modules.rtc_memory import RTC_Memory
 from modules.led_manager import LEDManagerULP
@@ -75,7 +75,7 @@ def init_nb_iot_module():
     """
     global nb_iot_module
     if nb_iot_module is None:
-        from modules import nb_iot
+        from modules import nb_iot_async as nb_iot
         rx = Pin(2, hold=False)
         tx = Pin(4, hold=False)
         nb_iot_module = nb_iot.NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)

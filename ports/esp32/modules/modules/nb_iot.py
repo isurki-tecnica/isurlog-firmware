@@ -13,7 +13,6 @@ import time
 import json
 from modules.config_manager import config_manager
 import os
-from modules.power_manager import pm
 import asyncio
 
 try:
@@ -364,6 +363,7 @@ class NBIoT:
             elevation = gps_data[2]
             gps_time = gps_data[3]
             
+            from modules.power_manager import pm
             pm.set_rtc_time(gps_time, mode = "GPS")
             
         if apn == None:
@@ -939,13 +939,13 @@ class NBIoT:
                     urc_count = response_bytes.count(urc_pattern)
 
                     if urc_count >= 2:
-                        pm.smart_sleep(50) # Short final wait
+                        time.sleep_ms(50) # Short final wait
                         if self.uart.any(): response_bytes.extend(self.uart.read(self.uart.any()))
                         utils.log_info(f"READ_USER_OPT: Second {urc_pattern!r} detected ({len(response_bytes)} bytes).")
                         return bytes(response_bytes) # Success
             else:
                 # CRITICAL! Only sleep if there is NO data.
-                pm.smart_sleep(1) # Yield CPU very briefly
+                time.sleep_ms(1) # Yield CPU very briefly
 
             # Failsafe: Inactivity timeout
             if time.ticks_diff(time.ticks_ms(), last_data_time) > inactivity_timeout:
@@ -1013,14 +1013,14 @@ class NBIoT:
             data = self.uart.read(self.uart.any())
             if data:
                 bytes_cleared += len(data)
-            pm.smart_sleep(5)
+            time.sleep_ms(5)
         if bytes_cleared > 0:
             utils.log_warning(f"CLEAR_UART: Discarded {bytes_cleared} unexpected bytes from UART buffer.")
 
 
     # --- Main Function (YOUR Original + 8KB Chunk + No Pause on Success + RECONNECT ON RETRY) ---
     # <<< chunk_size default to 8192 >>>
-    def download_file(self, ip_address, port, filename, local_filename, wdt = None, chunk_size=8192):
+    async def download_file(self, ip_address, port, filename, local_filename, wdt = None, chunk_size=8192):
         """
         - WITHOUT connection check before each successful GET.
         - Retry: Long Pause + Close/Reopen Connection + Clear Buffer.
@@ -1050,7 +1050,7 @@ class NBIoT:
             # STAGE 1: Open connection, request first chunk and get size
             utils.log_info(f"STEP 1: Connecting and requesting first chunk...")
             connect_command = f'AT#XHTTPCCON=1,"{ip_address}",{port}'
-            if not self.send_at_command_check(connect_command, "OK", timeout=20000, retries=1):
+            if not await self.send_at_command_check(connect_command, "OK", timeout=20000, retries=1):
                 utils.log_error("HTTP USER: Failed to open initial connection.")
                 return False
             utils.log_info("HTTP USER: Connection open.")
@@ -1138,11 +1138,11 @@ class NBIoT:
                     # <<< ADDED: Verify/Reconnect BEFORE requesting >>>
                     # It's safer to do it here in case the server closed the connection
                     # after the previous chunk (even if we requested keep-alive)
-                    conn_status_resp = self.send_at_command('AT#XHTTPCCON?', '#XHTTPCCON:', timeout=5000)
+                    conn_status_resp = await self.send_at_command('AT#XHTTPCCON?', '#XHTTPCCON:', timeout=5000)
                     if not (conn_status_resp and '#XHTTPCCON: 1,' in conn_status_resp):
                         utils.log_warning("HTTP USER: Connection lost before request. Reconnecting...")
                         # self.send_at_command_check("AT#XHTTPCCON=0", "OK", timeout=5000) # Unnecessary if already closed
-                        if not self.send_at_command_check(connect_command, "OK", timeout=20000, retries=1):
+                        if not await self.send_at_command_check(connect_command, "OK", timeout=20000, retries=1):
                             raise ConnectionError("Failed to reconnect USER") # Use standard
                         utils.log_info("HTTP USER: Reconnected.")
                         connection_open = True # Ensure flag
@@ -1174,7 +1174,7 @@ class NBIoT:
                         if not is_last_chunk and bytes_written < expected_bytes_in_chunk - 2:
                             utils.log_error(f"Error USER: Chunk {chunk_start}-{chunk_end} incorrect size. Expected: {expected_bytes_in_chunk}, Received: {bytes_written}.")
                             #raise ValueError("Incorrect chunk size received")
-                            pm.smart_sleep(10000)
+                            time.sleep(10)
                             self._clear_uart_buffer()
                         
                         else:
@@ -1199,10 +1199,10 @@ class NBIoT:
                         # <<< NEW RETRY LOGIC (FORCE CLOSE/REOPEN) >>>
                         utils.log_info("Closing HTTP connection before retrying...")
                         # Use simple send_at_command, don't check response here
-                        self.send_at_command("AT#XHTTPCCON=0", "OK", timeout=5000)
+                        await self.send_at_command("AT#XHTTPCCON=0", "OK", timeout=5000)
                         connection_open = False # Mark as closed
                         utils.log_info("Waiting 10 seconds before retrying...")
-                        pm.smart_sleep(10000)
+                        time.sleep(10)
                         # DO NOT clear buffer here, the reconnect at the start of the loop will do it
                         # <<< END NEW LOGIC >>>
 
@@ -1231,10 +1231,10 @@ class NBIoT:
             # Close connection at the end
             if connection_open:
                 # Check status before closing
-                conn_status_resp = self.send_at_command('AT#XHTTPCCON?', '#XHTTPCCON:', timeout=5000)
+                conn_status_resp = await self.send_at_command('AT#XHTTPCCON?', '#XHTTPCCON:', timeout=5000)
                 if conn_status_resp and '#XHTTPCCON: 1,' in conn_status_resp:
                     utils.log_info("HTTP USER: Closing connection (finally)...")
-                    self.send_at_command_check("AT#XHTTPCCON=0", "OK", timeout=10000)
+                    await self.send_at_command_check("AT#XHTTPCCON=0", "OK", timeout=10000)
                 else:
                     # If it was already closed (e.g., by an error not caught before finally), do nothing
                     utils.log_info("HTTP USER: Connection was already closed in finally.")
