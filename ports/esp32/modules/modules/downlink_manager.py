@@ -132,7 +132,7 @@ def process_sd_ev_manual_command(command, rtc_memory, ble=False):
     rtc_memory.set_manual_ev_flag(True)
 
 
-def _handle_ota_update(text, nb_iot_module, wdt, ser_num, base_topic):
+async def _handle_ota_update(text, nb_iot_module, wdt, ser_num, base_topic):
     """Flujo de actualizacion OTA. Solo llega aqui desde downlinks NB-IoT."""
     from machine import reset
     from modules import update_manager
@@ -150,7 +150,7 @@ def _handle_ota_update(text, nb_iot_module, wdt, ser_num, base_topic):
             f"main_File: {main_file_name} main_Checksum: {main_checksum}"
         )
 
-        if nb_iot_module.download_file(server, port, up_file_name, "micropython.b64.txt", wdt=wdt, chunk_size=8192):
+        if await nb_iot_module.download_file(server, port, up_file_name, "micropython.b64.txt", wdt=wdt, chunk_size=8192):
             if update_manager.decode_base64_file("micropython.b64.txt", "micropython.bin"):
                 if update_manager.verify_file_checksum(up_checksum, filename="micropython.bin"):
                     utils.log_info("Decoding successful!")
@@ -168,11 +168,11 @@ def _handle_ota_update(text, nb_iot_module, wdt, ser_num, base_topic):
                     try:
                         update_manager.clean_flash(["micropython.b64.txt", "micropython.bin", "update_candidate.py"])
                         if ota_succeded:
-                            nb_iot_module.download_file(server, port, main_file_name, "update_candidate.py", chunk_size=2048)
+                            await nb_iot_module.download_file(server, port, main_file_name, "update_candidate.py", chunk_size=2048)
                             if update_manager.verify_file_checksum(main_checksum, filename="update_candidate.py"):
                                 update_manager.perform_update()
                                 utils.log_info("Update process finished, rebooting in 5 seconds...")
-                                if nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
+                                if await nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
                                     utils.log_error("Failed to publish response")
                                     pm.smart_sleep(5000)
                                     reset()
@@ -184,7 +184,7 @@ def _handle_ota_update(text, nb_iot_module, wdt, ser_num, base_topic):
     # If code reached this point, update wasn't completed.
     rollback.cancel_force()
     update_manager.clean_flash(["micropython.b64.txt", "micropython.bin", "update_candidate.py"])
-    if not nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update FAILED"):
+    if not await nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update FAILED"):
         utils.log_error("Failed to publish response")
 
 
@@ -266,7 +266,7 @@ async def process_nbiot_downlinks(nb_iot_module, rtc_memory, wdt, ser_num, base_
             process_sd_ev_manual_command(msg, rtc_memory)
 
         elif "update" in msg:
-            _handle_ota_update(msg, nb_iot_module, wdt, ser_num, base_topic)
+            await _handle_ota_update(msg, nb_iot_module, wdt, ser_num, base_topic)
 
         else:
             downlink_IDs.append(apply_config(msg))
