@@ -75,7 +75,7 @@ def init_nb_iot_module():
     """
     global nb_iot_module
     if nb_iot_module is None:
-        from modules import nb_iot_async as nb_iot
+        from modules import nb_iot
         rx = Pin(2, hold=False)
         tx = Pin(4, hold=False)
         nb_iot_module = nb_iot.NBIoT(uart_id=2, tx_pin=4, rx_pin=2, baudrate=115200)
@@ -1600,7 +1600,7 @@ if __name__ == "__main__":
         
         #Turn on both regulator (for calibration por instance)
         pm.control_vdc(1)
-        pm.smart_sleep(250)
+        time.sleep_ms(250)
         pm.control_5v(1)
         if output_config.get("active_vdc", False):
             pm.control_digital_output(1)
