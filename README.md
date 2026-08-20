@@ -1,113 +1,64 @@
+![ISURLOG — Industrial NB-IoT/LoRa Datalogger](docs/img/gh-banner-isurlog.jpg)
 
-The ISURLOG Firmware Project
-=====================================
+# ISURLOG Firmware
 
-This is the custom MicroPython firmware (based on v1.25.0) for the ISURKI ISURLOG IoT Datalogger.
-It aims to provide a reliable and optimized firmware for data logging applications, leveraging the flexibility of MicroPython.
+Open-source MicroPython firmware for the **ISURLOG**, ISURKI's industrial IoT datalogger.
 
----
-
-WARNING: This project is derived from MicroPython v1.25.0 and includes custom modifications. While effort is made to maintain stability, it is subject to changes and may differ from upstream MicroPython.
-
----
-
-Build Environment
------------------
-The recommended build environment is **Ubuntu Linux**.
-
-For Windows users, native compilation is complex and **not recommended**. Please use the **Windows Subsystem for Linux (WSL)** and follow the Ubuntu instructions below for a more stable and straightforward setup.
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/isurki-tecnica/isurlog-firmware)
+![GitHub Release Date](https://img.shields.io/github/release-date/isurki-tecnica/isurlog-firmware)
+![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue)
+![GitHub issues](https://img.shields.io/github/issues/isurki-tecnica/isurlog-firmware)
 
 ---
 
-Build Instructions (Ubuntu / WSL)
----------------------------------
+## What is ISURLOG?
 
-### Step 1: Install System Dependencies
+**ISURLOG** is an ESP32-based industrial datalogger built for field deployments where power is scarce and connectivity is never guaranteed. The same board reads real industrial signals and gets its data out over whichever network is actually available at the site — NB-IoT, LoRaWAN, or Wi-Fi, exclusively per unit, plus a local Bluetooth Low Energy link for on-site setup and diagnostics.
 
-Open your Ubuntu terminal and install all required packages:
-
-```bash
-sudo apt update && sudo apt upgrade -y
-sudo apt-get install build-essential libffi-dev git pkg-config
-sudo apt install -y git wget curl flex bison gperf python3 python3-pip python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
-```
-
-### Step 2: Clone and Install ESP-IDF
-
-This firmware requires **ESP-IDF v5.2.x**. We recommend `v5.2.6` for optimal compatibility with the MicroPython base.
-
-```bash
-# Create a directory for ESP-IDF
-mkdir -p ~/esp
-cd ~/esp
-
-# Clone the correct version
-git clone -b v5.4.1 --recursive [https://github.com/espressif/esp-idf.git](https://github.com/espressif/esp-idf.git)
-
-# Install the toolchain
-cd esp-idf
-./install.sh esp32
-```
-
-### Step 3: Activate ESP-IDF Environment
-
-You must "source" the export script in your terminal to set environment variables. To make this permanent for every new terminal session, add it to your profile:
-
-```bash
-# Add the export command to your profile
-echo -e '\n. $HOME/esp/esp-idf/export.sh' >> ~/.profile
-
-# Source it for the current session
-source $HOME/esp/esp-idf/export.sh
-```
-
-### Step 4: Clone This Repository
-
-Clone this private firmware repository to your system:
-
-```bash
-cd ~
-git clone [https://github.com/isurki-tecnica/isurlog-firmware.git](https://github.com/isurki-tecnica/isurlog-firmware.git)
-
-# Navigate into the repo
-cd isurlog-firmware
-
-# Switch to our working branch (if not already on 'main')
-git checkout main
-```
-
-### Step 5: Compile the Firmware
-
-Finally, navigate to the `esp32` port directory within the cloned repository and run the build commands:
-
-```bash
-# Navigate to the ESP32 port
-cd ports/esp32
-
-# Clean any previous builds (optional, but recommended for fresh builds)
-make BOARD=ESP32_GENERIC BOARD_VARIANT=SPIRAM clean
-
-# Download MicroPython specific submodules
-make submodules
-
-# Start the build process
-make BOARD=ESP32_GENERIC BOARD_VARIANT=SPIRAM
-```
+* **Industrial-grade sensing:** 4-20 mA / 0-10 V analog inputs, Modbus RTU (RS485), PT100/PT1000 (2/3/4-wire), digital pulse counting, internal/external temperature & humidity, an on-board accelerometer for tamper/vandalism detection, and Isurnode expansion support.
+* **Built for batteries:** as low as **~20 µA** in deep sleep, with the ESP32 waking on a schedule, on an external interrupt, or on-demand from the network (eDRX/Class C).
+* **One firmware, three networks:** NB-IoT (Nordic nRF9160/nRF9151) and LoRaWAN (RAK3172, RUI3/AT) are interchangeable on the same hardware; Wi-Fi is available where cellular/LoRa coverage isn't. All three enforce modern security (WPA2+, TLS, LoRaWAN OTAA).
+* **Remotely manageable, not just remotely readable:** configuration, sensor setup, firmware updates (OTA and wired), and even a live MicroPython REPL are all reachable from **[IsurDASH](https://isurdash.isurki.com)**, ISURKI's cloud platform — without a truck roll.
+* **Real MicroPython, not a black box:** this is a genuine fork of [MicroPython](https://micropython.org), with ISURKI's own application code and drivers frozen in as regular Python modules (`app/`, `ports/esp32/modules/`) — readable, debuggable, and hackable, not a proprietary firmware blob.
+* **Open data, no lock-in:** integrate directly with historical (InfluxDB) or real-time (MQTT) data access — see the reference implementations in the wiki, including a live public demo you can query with zero setup.
 
 ---
 
-Firmware File Location
-----------------------
-The compiled firmware `.bin` file will be generated in the following directory, accessible from both your WSL environment and Windows:
+## Documentation
 
-`ports/esp32/build-ESP32_GENERIC-SPIRAM/firmware.bin`
+Everything — hardware, firmware architecture, the IsurDASH platform, and data integration APIs — lives in the **[Project Wiki](https://github.com/isurki-tecnica/isurlog-firmware/wiki)**.
+
+| I want to... | Start here |
+| :--- | :--- |
+| Install and operate an ISURLOG in the field | [Sensor Connections](https://github.com/isurki-tecnica/isurlog-firmware/wiki/2-Sensor-Connections), [Installation and Commissioning](https://github.com/isurki-tecnica/isurlog-firmware/wiki/5-Installation-and-Commissioning) |
+| Manage a fleet from IsurDASH | [7. IsurDASH Platform](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7-IsurDASH-Platform) |
+| Build, modify, or contribute to the firmware | [1. Build Environment Setup](https://github.com/isurki-tecnica/isurlog-firmware/wiki/1-Build-Environment-Setup), [2.1 Module & Library Reference](https://github.com/isurki-tecnica/isurlog-firmware/wiki/2.1-Module-and-Library-Reference), [7. Contribution Guide](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7-Contribution-Guide) |
+| Pull ISURLOG data into my own systems | [9. Data Access Overview](https://github.com/isurki-tecnica/isurlog-firmware/wiki/9-Data-Access-Overview) |
 
 ---
 
-Application Code (`app/`)
-------------------------
-This repository also contains the `/app` folder.
+## Firmware Releases
 
-**IMPORTANT:** The contents of this folder (`main.py`, `config/`, etc.) are **NOT** compiled into the firmware. These files represent the Python application logic and must be uploaded manually to the ESP32's filesystem (using tools like Thonny or rshell) *after* flashing the `firmware.bin`. This allows for flexible updates to the application logic without recompiling the entire firmware.
+Every release publishes ready-to-flash binaries — the ESP32 firmware, plus the NB-IoT (nRF9151) and LoRaWAN (RAK3172) modem firmware — so you don't need to compile anything unless you're modifying the firmware itself.
 
-```
+➡️ **[Releases](https://github.com/isurki-tecnica/isurlog-firmware/releases)**
+
+Prefer a guided, no-cable-required update? IsurDASH can push new ESP32 firmware to a deployed device directly — see **[7.8 Device Maintenance](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7.8-Device-Maintenance)**.
+
+---
+
+## Contributing
+
+Bug fixes, new sensor drivers, and documentation improvements are all welcome — see the **[Contribution Guide](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7-Contribution-Guide)** for how this repository is organized (it's a full MicroPython fork — ISURKI's own code lives in `app/` and `ports/esp32/modules/`) and how to submit a pull request.
+
+---
+
+## License
+
+This project is a derivative work of [MicroPython](https://github.com/micropython/micropython) (MIT-licensed). Due to the inclusion of GPL-3.0-licensed components, the combined work is distributed under the **GNU General Public License v3.0** — see [`LICENSE`](LICENSE) for the full text.
+
+## Quick Links
+
+* **IsurDASH Cloud Platform:** [isurdash.isurki.com/login](https://isurdash.isurki.com/login)
+* **3D-Printed Accessories:** [Printables @isurki_3854777](https://www.printables.com/@isurki_3854777/models)
+* **Support:** (+34) 943-635437 · tecnica@isurki.com
