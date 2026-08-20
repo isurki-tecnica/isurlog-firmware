@@ -15,7 +15,7 @@ Open-source MicroPython firmware for the **ISURLOG**, ISURKI's industrial IoT da
 
 **ISURLOG** is an ESP32-based industrial datalogger built for field deployments where power is scarce and connectivity is never guaranteed. The same board reads real industrial signals and gets its data out over whichever network is actually available at the site — NB-IoT, LoRaWAN, or Wi-Fi, exclusively per unit, plus a local Bluetooth Low Energy link for on-site setup and diagnostics.
 
-* **Industrial-grade sensing:** 4-20 mA / 0-10 V analog inputs, Modbus RTU (RS485), PT100/PT1000 (2/3/4-wire), digital pulse counting, internal/external temperature & humidity, an on-board accelerometer for tamper/vandalism detection, and Isurnode expansion support.
+* **Industrial-grade sensing:** 4-20 mA analog inputs, Modbus RTU (RS485), PT100/PT1000 (2/3/4-wire), digital pulse counting, internal/external temperature & humidity, an on-board accelerometer for tamper/vandalism detection, and Isurnode expansion support.
 * **Built for batteries:** as low as **~20 µA** in deep sleep, with the ESP32 waking on a schedule, on an external interrupt, or on-demand from the network (eDRX/Class C).
 * **One firmware, three networks:** NB-IoT (Nordic nRF9160/nRF9151) and LoRaWAN (RAK3172, RUI3/AT) are interchangeable on the same hardware; Wi-Fi is available where cellular/LoRa coverage isn't. All three enforce modern security (WPA2+, TLS, LoRaWAN OTAA).
 * **Remotely manageable, not just remotely readable:** configuration, sensor setup, firmware updates (OTA and wired), and even a live MicroPython REPL are all reachable from **[IsurDASH](https://isurdash.isurki.com)**, ISURKI's cloud platform — without a truck roll.
