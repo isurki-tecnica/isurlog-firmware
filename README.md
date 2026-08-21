@@ -19,7 +19,7 @@ Open-source MicroPython firmware for the **ISURLOG**, ISURKI's industrial IoT da
 * **Built for batteries:** as low as **~20 µA** in deep sleep, with the ESP32 waking on a schedule, on an external interrupt, or on-demand from the network (eDRX/Class C).
 * **One firmware, three networks:** NB-IoT (Nordic nRF9160/nRF9151) and LoRaWAN (RAK3172, RUI3/AT) are interchangeable on the same hardware; Wi-Fi is available where cellular/LoRa coverage isn't. All three enforce modern security (WPA2+, TLS, LoRaWAN OTAA).
 * **Remotely manageable, not just remotely readable:** configuration, sensor setup, firmware updates (OTA and wired), and even a live MicroPython REPL are all reachable from **[IsurDASH](https://isurdash.isurki.com)**, ISURKI's cloud platform — without a truck roll.
-* **Real MicroPython, not a black box:** this is a genuine fork of [MicroPython](https://micropython.org), with ISURKI's own application code and drivers frozen in as regular Python modules (`app/`, `ports/esp32/modules/`) — readable, debuggable, and hackable, not a proprietary firmware blob.
+* **Real MicroPython, not a black box:** this is a genuine fork of [MicroPython](https://micropython.org), with ISURKI's own drivers frozen into the firmware binary (`ports/esp32/modules/`) and the application logic (`app/main.py` + its two config files) deployed on top, either via IsurDASH's guided upload or manually — readable, debuggable, and hackable at every layer, not a proprietary firmware blob.
 * **Open data, no lock-in:** integrate directly with historical (InfluxDB) or real-time (MQTT) data access — see the reference implementations in the wiki, including a live public demo you can query with zero setup.
 
 ---
