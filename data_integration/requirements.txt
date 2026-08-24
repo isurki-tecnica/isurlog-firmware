@@ -1,0 +1,3 @@
+influxdb-client
+matplotlib
+paho-mqtt

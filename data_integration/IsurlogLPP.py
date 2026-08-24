@@ -11,8 +11,14 @@ sensor_types = {
     'addTemperatureInput' : {'type':"66", 'size':2, 'multipl':10, 'signed':True, 'min':-3276.7, 'max':3276.7, 'arrLen':3},
     'addTemperatureSensor' : {'type':"67", 'size':2, 'multipl':10, 'signed':True, 'min':-3276.7, 'max':3276.7, 'arrLen':3},
     'addHumiditySensor' : {'type':"68", 'size':1, 'multipl':2, 'signed':False, 'min':0, 'max':100, 'arrLen':3}, #'max':127.5
+    'addAccelerometer' : {'type':"71", 'size':6, 'multipl':1000, 'signed':True, 'min':-32.768, 'max':32.767, 'arrLen':5},
     'addVoltageInput' : {'type':"74", 'size':2, 'multipl':1, 'signed':False, 'min':0, 'max':65534, 'arrLen':3},
-    'addUnixTime' : {'type':"75", 'size':4, 'multipl':1, 'signed':False, 'min':0, 'max':4294967295, 'arrLen':3}
+    'addUnixTime' : {'type':"75", 'size':4, 'multipl':1, 'signed':False, 'min':0, 'max':4294967295, 'arrLen':3},
+    'addSoCInput' : {'type':"76", 'size':2, 'multipl':10, 'signed':False, 'min':0, 'max':100.0, 'arrLen':3},
+    'addCRateInput' : {'type':"77", 'size':1, 'multipl':10, 'signed':True, 'min':-12.8, 'max':12.7, 'arrLen':3},
+    'addModemData' : {'type':"78", 'size':1, 'multipl':1, 'signed':False, 'min':0, 'max':255, 'arrLen':3},
+    'addScriptError' : {'type':"79", 'size':1, 'multipl':1, 'signed':False, 'min':0, 'max':1, 'arrLen':3},
+    'addGPSData': {'type':"88", 'size':9, 'multipl':10000, 'signed':True, 'min':-900000, 'max':900000, 'arrLen':5},
 }
 
 config_types = {
@@ -172,17 +178,38 @@ def decodeIsurlogLPP(payload):
             value_hex = payload[i:i + size * 2]
             i += size * 2
 
-            # Conversión del valor
-            value_int = int(value_hex, 16)
-            if sensor_info['signed']:  #Comprobar si es signed
-                # Convertir a entero con signo (complemento a 2)
-                max_val = 2**(size * 8)
-                if value_int >= max_val // 2:
-                    value_int -= max_val
+            # Multi-value sensors (e.g. accelerometer X/Y/Z) pack several
+            # sub-values into a single chunk - split and decode each one
+            # separately instead of treating the whole chunk as one integer.
+            num_values = sensor_info['arrLen'] - 2
+            if num_values > 1:
+                sub_size = size // num_values
+                sub_labels = {
+                    'addAccelerometer': ['X', 'Y', 'Z'],
+                    'addGPSData': ['Lat', 'Lon', 'Alt'],
+                }.get(sensor_type, [str(k) for k in range(num_values)])
 
-            value = value_int / sensor_info['multipl']
+                for k in range(num_values):
+                    chunk_hex = value_hex[k * sub_size * 2:(k + 1) * sub_size * 2]
+                    sub_int = int(chunk_hex, 16)
+                    if sensor_info['signed']:
+                        max_val = 2 ** (sub_size * 8)
+                        if sub_int >= max_val // 2:
+                            sub_int -= max_val
+                    sub_value = sub_int / sensor_info['multipl']
+                    data.append({'channel': channel, 'name': f"{sensor_type}{sub_labels[k]}", 'value': sub_value})
+            else:
+                # Conversión del valor
+                value_int = int(value_hex, 16)
+                if sensor_info['signed']:  #Comprobar si es signed
+                    # Convertir a entero con signo (complemento a 2)
+                    max_val = 2**(size * 8)
+                    if value_int >= max_val // 2:
+                        value_int -= max_val
 
-            data.append({'channel': channel, 'name': sensor_type, 'value': value})
+                value = value_int / sensor_info['multipl']
+
+                data.append({'channel': channel, 'name': sensor_type, 'value': value})
             print(f"Decoded data: {data}", file = sys.stderr)
         except Exception as e:
             print(f"Error decoding payload at index {i}: {e}", file = sys.stderr)

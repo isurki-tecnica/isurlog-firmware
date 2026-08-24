@@ -24,6 +24,19 @@ Open-source MicroPython firmware for the **ISURLOG**, ISURKI's industrial IoT da
 
 ---
 
+## See It in Action
+
+Don't just take our word for it — try the real platform and pull real data yourself, no signup required:
+
+* **IsurDASH demo account** — log in at [isurdash.isurki.com/login](https://isurdash.isurki.com/login) and explore the dashboard, device list, alarms, and configuration screens for yourself:
+  * **Email:** `isurdash.demo@gmail.com`
+  * **Password:** `TEST123456`
+* **Data integration examples** — two ready-to-run Python scripts in [`data_integration/`](data_integration/), pre-filled with public demo credentials so they work immediately:
+  * [`isurlog_influx_demo.py`](data_integration/isurlog_influx_demo.py) — pulls historical sensor data (including a live soil moisture probe) from InfluxDB and charts it.
+  * [`isurlog_mqtt_demo.py`](data_integration/isurlog_mqtt_demo.py) — subscribes to the same device's live MQTT stream and updates the charts in real time as new readings arrive.
+
+---
+
 ## Documentation
 
 Everything — hardware, firmware architecture, the IsurDASH platform, and data integration APIs — lives in the **[Project Wiki](https://github.com/isurki-tecnica/isurlog-firmware/wiki)**.
@@ -47,6 +60,35 @@ Prefer a guided, no-cable-required update? IsurDASH can push new ESP32 firmware 
 
 ---
 
+## Roadmap
+
+ISURLOG is an actively maintained product with real field deployments, not a prototype — development is continuous, and this table is kept honest about what's battle-tested versus what's a newer, still-hardening addition.
+
+| Feature | Type | Status | Available Since |
+| :--- | :--- | :--- | :--- |
+| NB-IoT / LoRaWAN / BLE connectivity | Hardware + Firmware | ✅ Stable | v1.0.0 |
+| Wi-Fi connectivity & remote REPL over Wi-Fi | Firmware | ✅ Stable | v1.0.5-beta |
+| Core sensors (Analog, Digital, Modbus, PT100) | Firmware | ✅ Stable | v1.0.0 |
+| Internal (SHT30) & external (BME280) temperature/humidity sensors | Firmware | ✅ Stable | v1.0.3 |
+| IsurDASH integration (remote config, OTA updates, live REPL) | Firmware | ✅ Stable | v1.0.0 |
+| Historical (InfluxDB) & real-time (MQTT) data access | Firmware | ✅ Stable | v1.0.0 |
+| NB-IoT signal quality logging (RSRQ/RSRP) | Firmware | ✅ Stable | FW v1.1.6 |
+| Configurable sensor supply voltage (9-24V) | Hardware | ✅ Stable | PCB v3.0 |
+| Vandalism alert (accelerometer + GPS position) | Hardware + Firmware | ✅ Stable | PCB v3.0 · FW v1.1.6 |
+| Battery type & State of Charge reporting | Hardware + Firmware | ✅ Stable | PCB v3.0 · FW v1.1.9 |
+| Internal accelerometer (LIS2DH12) alarm thresholds | Firmware | ✅ Stable | FW v1.1.6 |
+| Asynchronous function architecture for parallel task execution, reducing the time the datalogger is powered on | Firmware | 🧪 Experimental | v2.0.1 (pre-release) |
+| Non-rechargeable Li-SOCl2 battery support | Hardware | 🧪 Experimental | PCB v3.3 |
+| Larger transmission buffer using external I2C EEPROM (24LC1025), removing the current RTC RAM size limitation | Firmware | 🧪 Experimental | — |
+| Accelerometer alarm → forced immediate transmission | Firmware | 🔜 Planned | — |
+| Automatic NB-IoT/LTE-M connection mode | Firmware | 🔜 Planned | — |
+| DECT NR+ (chip-capable via nRF9151) | Firmware | 🔜 Planned | — |
+| Isurnode Modbus expansion module | Hardware + Firmware | 🔜 Planned | — |
+| TinyML — on-device inference for lightweight tasks like local anomaly detection or predictive maintenance, without a round trip to the cloud | Firmware | 🔜 Planned | — |
+| Migration from ESP32 to ESP32-S3 or the newly-announced ESP32-S31 (final choice not yet decided) — native USB and a RISC-V LP core in place of today's ULP FSM coprocessor | Hardware + Firmware | 🔜 Planned | — |
+
+---
+
 ## Contributing
 
 Bug fixes, new sensor drivers, and documentation improvements are all welcome — see the **[Contribution Guide](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7-Contribution-Guide)** for how this repository is organized (it's a full MicroPython fork — ISURKI's own code lives in `app/` and `ports/esp32/modules/`) and how to submit a pull request.
@@ -62,3 +104,7 @@ This project is a derivative work of [MicroPython](https://github.com/micropytho
 * **IsurDASH Cloud Platform:** [isurdash.isurki.com/login](https://isurdash.isurki.com/login)
 * **3D-Printed Accessories:** [Printables @isurki_3854777](https://www.printables.com/@isurki_3854777/models)
 * **Support:** (+34) 943-635437 · tecnica@isurki.com
+
+---
+
+If ISURLOG is useful or interesting to you, star the repository to follow its development.
