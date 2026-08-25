@@ -9,6 +9,8 @@ Open-source MicroPython firmware for the **ISURLOG**, ISURKI's industrial IoT da
 ![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue)
 ![GitHub issues](https://img.shields.io/github/issues/isurki-tecnica/isurlog-firmware)
 
+🌐 **Read in your language** *(auto-translated via Google Translate)*: [Español](https://translate.google.com/translate?sl=en&tl=es&u=https://github.com/isurki-tecnica/isurlog-firmware) · [Français](https://translate.google.com/translate?sl=en&tl=fr&u=https://github.com/isurki-tecnica/isurlog-firmware) · [Euskara](https://translate.google.com/translate?sl=en&tl=eu&u=https://github.com/isurki-tecnica/isurlog-firmware) · [Català](https://translate.google.com/translate?sl=en&tl=ca&u=https://github.com/isurki-tecnica/isurlog-firmware)
+
 ---
 
 ## What is ISURLOG?
