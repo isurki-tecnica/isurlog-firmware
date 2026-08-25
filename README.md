@@ -43,7 +43,7 @@ Everything — hardware, firmware architecture, the IsurDASH platform, and data 
 
 | I want to... | Start here |
 | :--- | :--- |
-| Install and operate an ISURLOG in the field | [Sensor Connections](https://github.com/isurki-tecnica/isurlog-firmware/wiki/2-Sensor-Connections), [Installation and Commissioning](https://github.com/isurki-tecnica/isurlog-firmware/wiki/5-Installation-and-Commissioning) |
+| Install and operate an ISURLOG in the field | [2. Sensor Connections](https://github.com/isurki-tecnica/isurlog-firmware/wiki/2-Sensor-Connections), [5. Installation and Commissioning](https://github.com/isurki-tecnica/isurlog-firmware/wiki/5-Installation-and-Commissioning) |
 | Manage a fleet from IsurDASH | [7. IsurDASH Platform](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7-IsurDASH-Platform) |
 | Build, modify, or contribute to the firmware | [1. Build Environment Setup](https://github.com/isurki-tecnica/isurlog-firmware/wiki/1-Build-Environment-Setup), [2.1 Module & Library Reference](https://github.com/isurki-tecnica/isurlog-firmware/wiki/2.1-Module-and-Library-Reference), [7. Contribution Guide](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7-Contribution-Guide) |
 | Pull ISURLOG data into my own systems | [9. Data Access Overview](https://github.com/isurki-tecnica/isurlog-firmware/wiki/9-Data-Access-Overview) |
@@ -57,6 +57,12 @@ Every release publishes ready-to-flash binaries — the ESP32 firmware, plus the
 ➡️ **[Releases](https://github.com/isurki-tecnica/isurlog-firmware/releases)**
 
 Prefer a guided, no-cable-required update? IsurDASH can push new ESP32 firmware to a deployed device directly — see **[7.8 Device Maintenance](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7.8-Device-Maintenance)**.
+
+---
+
+## Troubleshooting
+
+Running into an issue in the field — batteries draining faster than expected, gaps in the received data, a Modbus sensor that won't respond, or BLE that won't pair? Check the **[Troubleshooting](https://github.com/isurki-tecnica/isurlog-firmware/wiki/Troubleshooting)** wiki page before reaching out to support — it covers the most common causes and how to fix them, and grows as new issues come up.
 
 ---
 
