@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/">
+        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/flashing-application-upload/">
       
       
+        <link rel="prev" href="../module-library-reference/">
       
-        <link rel="next" href="sensor-connections/">
+      
+        <link rel="next" href="../gpio-mapping/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>ISURLOG Docs</title>
+        <title>3. Flashing and Application Upload - ISURLOG Docs</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#isurlog-industrial-iot-datalogger-open-source" class="md-skip">
+        <a href="#3-flashing-and-application-upload" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              3. Flashing and Application Upload
             
           </span>
         </div>
@@ -228,7 +230,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -255,37 +257,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -301,48 +276,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#where-to-begin" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where to begin
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Resources
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -424,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sensor-connections/" class="md-nav__link">
+      <a href="../sensor-connections/" class="md-nav__link">
         
   
   
@@ -452,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="power-supply/" class="md-nav__link">
+      <a href="../power-supply/" class="md-nav__link">
         
   
   
@@ -480,7 +413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="power-budget/" class="md-nav__link">
+      <a href="../power-budget/" class="md-nav__link">
         
   
   
@@ -508,7 +441,7 @@
   
   
     <li class="md-nav__item">
-      <a href="communications/" class="md-nav__link">
+      <a href="../communications/" class="md-nav__link">
         
   
   
@@ -536,7 +469,7 @@
   
   
     <li class="md-nav__item">
-      <a href="installation-commissioning/" class="md-nav__link">
+      <a href="../installation-commissioning/" class="md-nav__link">
         
   
   
@@ -564,7 +497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="datalogger-operation/" class="md-nav__link">
+      <a href="../datalogger-operation/" class="md-nav__link">
         
   
   
@@ -661,7 +594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-platform/" class="md-nav__link">
+      <a href="../isurdash-platform/" class="md-nav__link">
         
   
   
@@ -689,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-access-login/" class="md-nav__link">
+      <a href="../isurdash-access-login/" class="md-nav__link">
         
   
   
@@ -717,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-dashboard/" class="md-nav__link">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
         
   
   
@@ -745,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-devices/" class="md-nav__link">
+      <a href="../isurdash-devices/" class="md-nav__link">
         
   
   
@@ -773,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-alarms/" class="md-nav__link">
+      <a href="../isurdash-alarms/" class="md-nav__link">
         
   
   
@@ -801,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-users/" class="md-nav__link">
+      <a href="../isurdash-users/" class="md-nav__link">
         
   
   
@@ -829,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-profiles/" class="md-nav__link">
+      <a href="../isurdash-profiles/" class="md-nav__link">
         
   
   
@@ -857,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-tags/" class="md-nav__link">
+      <a href="../isurdash-tags/" class="md-nav__link">
         
   
   
@@ -885,7 +818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-maintenance/" class="md-nav__link">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
         
   
   
@@ -921,7 +854,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference-parameters/" class="md-nav__link">
+      <a href="../reference-parameters/" class="md-nav__link">
         
   
   
@@ -953,8 +886,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -983,11 +918,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -1008,7 +943,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1026,7 +961,7 @@
   
   
     <li class="md-nav__item">
-      <a href="build-environment/" class="md-nav__link">
+      <a href="../build-environment/" class="md-nav__link">
         
   
   
@@ -1054,7 +989,7 @@
   
   
     <li class="md-nav__item">
-      <a href="architecture-overview/" class="md-nav__link">
+      <a href="../architecture-overview/" class="md-nav__link">
         
   
   
@@ -1082,7 +1017,7 @@
   
   
     <li class="md-nav__item">
-      <a href="module-library-reference/" class="md-nav__link">
+      <a href="../module-library-reference/" class="md-nav__link">
         
   
   
@@ -1107,10 +1042,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="flashing-application-upload/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Flashing and Application Upload
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1126,6 +1088,115 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#31-required-external-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Required External Hardware
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Required External Hardware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-pcb-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key PCB Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-flashing-the-firmware-core-firmwarebin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Flashing the Firmware Core (firmware.bin)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Flashing the Firmware Core (firmware.bin)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-connect-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Connect Hardware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-enter-download-mode-boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Enter Download Mode (BOOT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-use-flashing-tool-eg-thonny-or-esptoolpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Use Flashing Tool (e.g., Thonny or esptool.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-uploading-application-code-layer-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Uploading Application Code (Layer 2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1138,7 +1209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gpio-mapping/" class="md-nav__link">
+      <a href="../gpio-mapping/" class="md-nav__link">
         
   
   
@@ -1166,7 +1237,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nbiot-modem-guide/" class="md-nav__link">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
         
   
   
@@ -1194,7 +1265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="lorawan-modem-guide/" class="md-nav__link">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
         
   
   
@@ -1222,7 +1293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contribution-guide/" class="md-nav__link">
+      <a href="../contribution-guide/" class="md-nav__link">
         
   
   
@@ -1277,21 +1348,88 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#where-to-begin" class="md-nav__link">
+  <a href="#31-required-external-hardware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Where to begin
+        3.1 Required External Hardware
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Required External Hardware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-pcb-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key PCB Components
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#quick-resources" class="md-nav__link">
+  <a href="#32-flashing-the-firmware-core-firmwarebin" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Resources
+        3.2 Flashing the Firmware Core (firmware.bin)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Flashing the Firmware Core (firmware.bin)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-connect-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Connect Hardware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-enter-download-mode-boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Enter Download Mode (BOOT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-use-flashing-tool-eg-thonny-or-esptoolpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Use Flashing Tool (e.g., Thonny or esptool.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-uploading-application-code-layer-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Uploading Application Code (Layer 2)
       
     </span>
   </a>
@@ -1318,44 +1456,55 @@
   
 
 
-<h1 id="isurlog-industrial-iot-datalogger-open-source">ISURLOG: Industrial IoT Datalogger (Open Source)</h1>
+<h1 id="3-flashing-and-application-upload">3. Flashing and Application Upload</h1>
+<p>This guide covers the two distinct steps required for setting up the ISURLOG development environment: first, flashing the MicroPython binary, and second, uploading the application logic.</p>
 <div class="admonition note">
-<p class="admonition-title">Migration in progress</p>
-<p>Use and Hardware and Firmware Development (Modules A and B) have fully moved here. Data Integration &amp; APIs and Troubleshooting are still on the <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki">GitHub Wiki</a></strong> for now, and will move here too.</p>
+<p class="admonition-title">Just installing an official release, not developing firmware?</p>
+<p>IsurDASH has a guided firmware update tool (<strong>Serial port (USB)</strong> method) that walks you through this same RST/BOOT sequence with a friendlier UI — see <strong>7.8. Device Maintenance</strong>. This page is for developers flashing a custom/locally-built <code>firmware.bin</code> that isn't a published release.</p>
 </div>
-<p>The ISURLOG datalogger is a highly versatile <strong>ESP32-based</strong> device that integrates multiple functionalities for data acquisition and logging in diverse environments. It is a complete and efficient solution for monitoring industrial signals (4-20mA, Modbus RS485, PT100) with advanced connectivity (NB-IoT/LoRaWAN, Wi-Fi, and Bluetooth).
-This datalogger runs on an <strong>optimized MicroPython firmware</strong> for low power consumption (20µA in sleep mode), making it ideal for battery-powered applications.</p>
-<p><img alt="image" height="780" src="images/home-pcb-photo.png" width="884" /></p>
-<h2 id="where-to-begin">Where to begin</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">🛠️ Use and Hardware</th>
-<th style="text-align: left;">💻 Firmware Development</th>
-<th style="text-align: left;">☁️ Data Integration &amp; APIs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Installation, sensor setup, and IsurDASH.</td>
-<td style="text-align: left;">Build environment, architecture, contributing.</td>
-<td style="text-align: left;">Historical/real-time data access, downlink API.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="sensor-connections/">2. Sensor Connections</a></td>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="build-environment/">1. Build Environment Setup</a></td>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/9-Data-Access-Overview">9. Data Access Overview ↗</a></td>
-</tr>
-</tbody>
-</table>
-<p>Running into a problem in the field? See <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/Troubleshooting">Troubleshooting ↗</a> (still on the wiki). Want to estimate battery life? Try the interactive <a href="power-budget/">Power Budget calculator</a>.</p>
-<h2 id="quick-resources">Quick Resources</h2>
+<h2 id="31-required-external-hardware">3.1 Required External Hardware</h2>
+<p>The ISURLOG board does <strong>not</strong> include an integrated USB-to-UART converter. Developers must use an <strong>external UART TTL to USB converter</strong> to communicate with and flash the ESP32.</p>
+<h3 id="key-pcb-components">Key PCB Components</h3>
+<p>Identify the necessary buttons and the serial programming port (UART) on the <strong>ISURLOG</strong> PCB:</p>
 <ul>
-<li><strong>GitHub Repository:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware">isurki-tecnica/isurlog-firmware</a></li>
-<li><strong>Firmware Releases:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/releases">Releases page</a></li>
-<li><strong>IsurDASH Cloud Platform Login:</strong> <a href="https://isurdash.isurki.com/login">https://isurdash.isurki.com/login</a></li>
-<li><strong>Technical Support:</strong> (+34) 943-635437 or tecnica@isurki.com.</li>
+<li><strong>Buttons:</strong> RESET and BOOT.</li>
+<li><strong>Programming Port:</strong> The UART port, labeled "<strong>ESP</strong>".</li>
 </ul>
+<p><img alt="image" src="../images/3fw-flashing-esp-uart-port.jpg" width="740" /></p>
+<h2 id="32-flashing-the-firmware-core-firmwarebin">3.2 Flashing the Firmware Core (firmware.bin)</h2>
+<p>This procedure puts the ESP32 into download mode to load the compiled <code>firmware.bin</code> file (Layer 1).</p>
+<h3 id="step-1-connect-hardware">Step 1: Connect Hardware</h3>
+<ol>
+<li>Connect the external USB-UART converter to the "<strong>ESP</strong>" port pins on the <strong>ISURLOG</strong> PCB.</li>
+<li>Ensure you have the compiled <code>firmware.bin</code> file ready (from <strong>1. Build Environment Setup</strong>).</li>
+</ol>
+<h3 id="step-2-enter-download-mode-boot">Step 2: Enter Download Mode (BOOT)</h3>
+<p>To put the ESP32 into download mode:</p>
+<ol>
+<li>Press and hold the <strong>RST</strong> button.</li>
+<li>While holding <strong>RST</strong>, press and hold the <strong>BOOT</strong> button.</li>
+<li>Release the <strong>RST</strong> button.</li>
+<li>Release the <strong>BOOT</strong> button.</li>
+</ol>
+<p>The serial monitor should display the message "<strong>Waiting for download</strong>", confirming the ESP32 is ready for firmware upload.</p>
+<h3 id="step-3-use-flashing-tool-eg-thonny-or-esptoolpy">Step 3: Use Flashing Tool (e.g., Thonny or esptool.py)</h3>
+<p>While the standard method uses <code>esptool.py</code>, the simplest way for MicroPython is often through an IDE interface (Thonny is shown here as an example):</p>
+<ol>
+<li>Open <strong>Thonny</strong>.</li>
+<li>Navigate to <strong>Tools</strong> &gt; <strong>Options</strong> &gt; <strong>Interpreter</strong>.</li>
+<li>Click "<strong>Install or update MicroPython (esptool)</strong>".</li>
+<li>Select the <strong>port number</strong> connected to the ISURLOG.</li>
+<li>Select the previously downloaded MicroPython binary and click "<strong>Install</strong>".</li>
+<li>Wait for the installation process to complete. The development environment provides detailed information about the operation.</li>
+<li>Once the process is complete, press the <strong>RST</strong> button or toggle the <strong>ON/OFF</strong> switch to restart the ISURLOG and boot into MicroPython.</li>
+</ol>
+<h2 id="33-uploading-application-code-layer-2">3.3 Uploading Application Code (Layer 2)</h2>
+<p>After flashing the <code>firmware.bin</code>, you must upload the application logic files from the <code>/app</code> folder to the device's filesystem.</p>
+<p>This process is simpler and <strong>does not</strong> require the BOOT/RESET sequence. Tools like <strong>Thonny</strong>, <strong>rshell</strong>, or standard MicroPython commands can be used to copy the contents of the <code>/app</code> folder (including <code>main.py</code>, configuration, and utility files) onto the live filesystem of the ISURLOG via the USB-UART converter.</p>
+<div class="admonition note">
+<p class="admonition-title">Tip</p>
+<p>Ensure the <strong>ISURLOG</strong> is running in its normal operating mode (ON/OFF switch is ON) when uploading the application code via Thonny's filesystem view.</p>
+</div>
 
 
 
@@ -1405,10 +1554,10 @@ This datalogger runs on an <strong>optimized MicroPython firmware</strong> for l
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

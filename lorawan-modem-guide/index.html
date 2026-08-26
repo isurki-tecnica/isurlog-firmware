@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/">
+        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/lorawan-modem-guide/">
       
       
+        <link rel="prev" href="../nbiot-modem-guide/">
       
-        <link rel="next" href="sensor-connections/">
+      
+        <link rel="next" href="../contribution-guide/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>ISURLOG Docs</title>
+        <title>6. Advanced LoRaWAN Modem Guide - ISURLOG Docs</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#isurlog-industrial-iot-datalogger-open-source" class="md-skip">
+        <a href="#6-advanced-lorawan-modem-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              6. Advanced LoRaWAN Modem Guide
             
           </span>
         </div>
@@ -228,7 +230,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -255,37 +257,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -301,48 +276,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#where-to-begin" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where to begin
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Resources
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -424,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sensor-connections/" class="md-nav__link">
+      <a href="../sensor-connections/" class="md-nav__link">
         
   
   
@@ -452,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="power-supply/" class="md-nav__link">
+      <a href="../power-supply/" class="md-nav__link">
         
   
   
@@ -480,7 +413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="power-budget/" class="md-nav__link">
+      <a href="../power-budget/" class="md-nav__link">
         
   
   
@@ -508,7 +441,7 @@
   
   
     <li class="md-nav__item">
-      <a href="communications/" class="md-nav__link">
+      <a href="../communications/" class="md-nav__link">
         
   
   
@@ -536,7 +469,7 @@
   
   
     <li class="md-nav__item">
-      <a href="installation-commissioning/" class="md-nav__link">
+      <a href="../installation-commissioning/" class="md-nav__link">
         
   
   
@@ -564,7 +497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="datalogger-operation/" class="md-nav__link">
+      <a href="../datalogger-operation/" class="md-nav__link">
         
   
   
@@ -661,7 +594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-platform/" class="md-nav__link">
+      <a href="../isurdash-platform/" class="md-nav__link">
         
   
   
@@ -689,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-access-login/" class="md-nav__link">
+      <a href="../isurdash-access-login/" class="md-nav__link">
         
   
   
@@ -717,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-dashboard/" class="md-nav__link">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
         
   
   
@@ -745,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-devices/" class="md-nav__link">
+      <a href="../isurdash-devices/" class="md-nav__link">
         
   
   
@@ -773,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-alarms/" class="md-nav__link">
+      <a href="../isurdash-alarms/" class="md-nav__link">
         
   
   
@@ -801,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-users/" class="md-nav__link">
+      <a href="../isurdash-users/" class="md-nav__link">
         
   
   
@@ -829,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-profiles/" class="md-nav__link">
+      <a href="../isurdash-profiles/" class="md-nav__link">
         
   
   
@@ -857,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-tags/" class="md-nav__link">
+      <a href="../isurdash-tags/" class="md-nav__link">
         
   
   
@@ -885,7 +818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-maintenance/" class="md-nav__link">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
         
   
   
@@ -921,7 +854,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference-parameters/" class="md-nav__link">
+      <a href="../reference-parameters/" class="md-nav__link">
         
   
   
@@ -953,8 +886,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -983,11 +918,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -1008,7 +943,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1026,7 +961,7 @@
   
   
     <li class="md-nav__item">
-      <a href="build-environment/" class="md-nav__link">
+      <a href="../build-environment/" class="md-nav__link">
         
   
   
@@ -1054,7 +989,7 @@
   
   
     <li class="md-nav__item">
-      <a href="architecture-overview/" class="md-nav__link">
+      <a href="../architecture-overview/" class="md-nav__link">
         
   
   
@@ -1082,7 +1017,7 @@
   
   
     <li class="md-nav__item">
-      <a href="module-library-reference/" class="md-nav__link">
+      <a href="../module-library-reference/" class="md-nav__link">
         
   
   
@@ -1110,7 +1045,7 @@
   
   
     <li class="md-nav__item">
-      <a href="flashing-application-upload/" class="md-nav__link">
+      <a href="../flashing-application-upload/" class="md-nav__link">
         
   
   
@@ -1138,7 +1073,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gpio-mapping/" class="md-nav__link">
+      <a href="../gpio-mapping/" class="md-nav__link">
         
   
   
@@ -1166,7 +1101,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nbiot-modem-guide/" class="md-nav__link">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
         
   
   
@@ -1191,10 +1126,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="lorawan-modem-guide/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Advanced LoRaWAN Modem Guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1210,6 +1172,187 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#61-firmware-architecture-rui3-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Firmware Architecture (RUI3 Framework)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-prerequisites-and-sdk-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Prerequisites and SDK Installation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Prerequisites and SDK Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-ides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported IDEs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rui3-arduino-api-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RUI3 Arduino API Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-uart-communication-and-at-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 UART Communication and AT Commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64-advanced-energy-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Advanced Energy Management:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65-flashing-hardware-requirements-and-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Flashing Hardware Requirements and Connection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.5 Flashing Hardware Requirements and Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-flashing-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Flashing Hardware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#66-updating-modem-firmware-from-official-binaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Updating Modem Firmware from Official Binaries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.6 Updating Modem Firmware from Official Binaries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-to-get-the-binary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to Get the Binary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Procedure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1222,7 +1365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contribution-guide/" class="md-nav__link">
+      <a href="../contribution-guide/" class="md-nav__link">
         
   
   
@@ -1277,10 +1420,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#where-to-begin" class="md-nav__link">
+  <a href="#61-firmware-architecture-rui3-framework" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Where to begin
+        6.1 Firmware Architecture (RUI3 Framework)
       
     </span>
   </a>
@@ -1288,13 +1431,152 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-resources" class="md-nav__link">
+  <a href="#62-prerequisites-and-sdk-installation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Resources
+        6.2 Prerequisites and SDK Installation
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="6.2 Prerequisites and SDK Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-ides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported IDEs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rui3-arduino-api-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RUI3 Arduino API Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-uart-communication-and-at-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 UART Communication and AT Commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64-advanced-energy-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Advanced Energy Management:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65-flashing-hardware-requirements-and-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Flashing Hardware Requirements and Connection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.5 Flashing Hardware Requirements and Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-flashing-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Flashing Hardware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#66-updating-modem-firmware-from-official-binaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Updating Modem Firmware from Official Binaries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.6 Updating Modem Firmware from Official Binaries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-to-get-the-binary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to Get the Binary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Procedure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1318,44 +1600,107 @@
   
 
 
-<h1 id="isurlog-industrial-iot-datalogger-open-source">ISURLOG: Industrial IoT Datalogger (Open Source)</h1>
+<h1 id="6-advanced-lorawan-modem-guide">6. Advanced LoRaWAN Modem Guide</h1>
+<p>This guide is intended for developers who need to modify, compile, or flash custom applications onto the <strong>RAK3172</strong> modem used by the ISURLOG, replacing the default AT command application.</p>
+<h2 id="61-firmware-architecture-rui3-framework">6.1 Firmware Architecture (RUI3 Framework)</h2>
+<p>When developing for the RAK3172, the software environment relies on the <strong>RUI3 (RAKwireless Unified Interface V3)</strong> platform. It is important to understand how the module can be utilized:</p>
+<ol>
+<li><strong>Default AT Command Firmware:</strong> The module comes pre-flashed with the standard RUI3 AT command firmware. In this ecosystem, the RAK3172 acts as a standard communication peripheral controlled completely by the ESP32 via serial interface queries. </li>
+<li><strong>Custom Application Firmware (Arduino API):</strong> RUI3 allows developers to compile and run standalone custom C++/Arduino applications directly inside the RAK3172’s internal STM32WLE55 microcontroller. This layer can bypass the external controller for specific tasks or fully customize how the radio stack behaves.</li>
+</ol>
+<hr />
+<h2 id="62-prerequisites-and-sdk-installation">6.2 Prerequisites and SDK Installation</h2>
+<p>To develop, modify, or compile custom application firmware for the RAK3172 using the RUI3 framework, you must configure a compatible development environment.</p>
+<h3 id="supported-ides">Supported IDEs</h3>
+<p>The RAK3172 RUI3 core natively supports development via the <strong>Arduino IDE</strong> or Visual Studio Code (with PlatformIO extension).
+* <strong>Setup and Installation:</strong> To install the necessary RAKwireless Board Support Package (BSP) in your development environment, follow the official instructions: <a href="https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/supported-ide">https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/supported-ide</a></p>
+<h3 id="rui3-arduino-api-reference">RUI3 Arduino API Reference</h3>
+<p>When compiling custom firmware to run natively on the module, developers can leverage the unified Arduino API provided by RAKwireless to manage LoRaWAN parameters, internal hardware, and peripherals: <a href="https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/arduino-api">https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/arduino-api</a></p>
 <div class="admonition note">
-<p class="admonition-title">Migration in progress</p>
-<p>Use and Hardware and Firmware Development (Modules A and B) have fully moved here. Data Integration &amp; APIs and Troubleshooting are still on the <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki">GitHub Wiki</a></strong> for now, and will move here too.</p>
+<p class="admonition-title">Note</p>
+<p>For the physical hardware needed to flash the modem, see <strong>6.5 Flashing Hardware Requirements and Connection</strong> below.</p>
 </div>
-<p>The ISURLOG datalogger is a highly versatile <strong>ESP32-based</strong> device that integrates multiple functionalities for data acquisition and logging in diverse environments. It is a complete and efficient solution for monitoring industrial signals (4-20mA, Modbus RS485, PT100) with advanced connectivity (NB-IoT/LoRaWAN, Wi-Fi, and Bluetooth).
-This datalogger runs on an <strong>optimized MicroPython firmware</strong> for low power consumption (20µA in sleep mode), making it ideal for battery-powered applications.</p>
-<p><img alt="image" height="780" src="images/home-pcb-photo.png" width="884" /></p>
-<h2 id="where-to-begin">Where to begin</h2>
+<hr />
+<h2 id="63-uart-communication-and-at-commands">6.3 UART Communication and AT Commands</h2>
+<p>The ISURLOG uses the RAK3172 module to establish LoRaWAN communication via a hardware UART port (<code>UART1</code>) using <strong>AT commands</strong>. The default serial configuration between the ESP32 and the RAK3172 is:</p>
+<ul>
+<li><strong>TX:</strong> GPIO2</li>
+<li><strong>RX:</strong> GPIO4</li>
+<li><strong>Baudrate:</strong> 115200 8N1</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Reference</p>
+<p>The complete and official RUI3 AT Command Manual for managing network joining (OTAA/ABP), keys (DevEUI, AppEUI, AppKey), and data transmission configurations can be found here: <a href="https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/at-command-manual/">https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/at-command-manual/</a></p>
+<p>If you're building a <strong>replacement</strong> application firmware for the modem, it must keep supporting the same AT command surface the ISURLOG's own driver (<code>modules/lorawan.py</code>) actually depends on — see the verified command list in <strong><a href="../module-library-reference/">2.1 Module &amp; Library Reference</a></strong> as a compatibility checklist.</p>
+</div>
+<hr />
+<h2 id="64-advanced-energy-management">6.4 Advanced Energy Management:</h2>
+<p>The RAK3172 is highly optimized for ultra-low power consumption. When the system is in an idle state between datalogging intervals, the ESP32 can transition the LoRaWAN module into its lowest consumption state via software commands:</p>
+<ul>
+<li><strong>Sleep Command:</strong> Sending the <code>AT+SLEEP</code> command puts the module into low-power sleep mode (dropping current consumption down to microamps).</li>
+<li><strong>Wake-Up Routine:</strong> The RAK3172 can be automatically awakened from sleep mode by detecting falling edges/activity on the UART RX line. Sending a dummy character sequence from the ESP32's TX line wakes up the module, making it instantly ready to receive subsequent operational AT commands.</li>
+</ul>
+<p>In addition to data communication via the UART port, the ESP32 and the RAK3172 module are connected through a dedicated GPIO line. This connection enables dynamic and efficient management of the host processor's low-power modes, optimizing the autonomy of the <strong>ISURLOG</strong>.</p>
+<p>The connection between the modules is as follows:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">🛠️ Use and Hardware</th>
-<th style="text-align: left;">💻 Firmware Development</th>
-<th style="text-align: left;">☁️ Data Integration &amp; APIs</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Pin ESP32</th>
+<th style="text-align: left;">Pin RAK3172</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Installation, sensor setup, and IsurDASH.</td>
-<td style="text-align: left;">Build environment, architecture, contributing.</td>
-<td style="text-align: left;">Historical/real-time data access, downlink API.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="sensor-connections/">2. Sensor Connections</a></td>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="build-environment/">1. Build Environment Setup</a></td>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/9-Data-Access-Overview">9. Data Access Overview ↗</a></td>
+<td style="text-align: left;"><strong>ESP_WAKE_UP</strong></td>
+<td style="text-align: left;">GPIO35 (Input)</td>
+<td style="text-align: left;">PA8 (Output)</td>
+<td style="text-align: left;">Digital input used to wake up the ESP32 when the LoRaWAN module receives a downlink packet from the gateway/server.</td>
 </tr>
 </tbody>
 </table>
-<p>Running into a problem in the field? See <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/Troubleshooting">Troubleshooting ↗</a> (still on the wiki). Want to estimate battery life? Try the interactive <a href="power-budget/">Power Budget calculator</a>.</p>
-<h2 id="quick-resources">Quick Resources</h2>
+<p>This functionality is particularly useful when the RAK3172 module operates in <strong>LoRaWAN Class B</strong> (synchronized beacons) or <strong>Class C</strong> (continuous listening) modes. The <code>ESP_WAKE_UP</code> signal enables the RAK3172 to immediately activate the ESP32 whenever an asynchronous <strong>downlink data packet</strong> is received from the network. Once awake, the ESP32 can communicate with the RAK3172 via UART to process the incoming data or commands. </p>
+<p>This "wake-on-demand" capability allows the ESP32 to remain in deep sleep indefinitely, significantly reducing the system's power consumption while maintaining near-zero latency for remote server configurations or downlinks.</p>
+<hr />
+<h2 id="65-flashing-hardware-requirements-and-connection">6.5 Flashing Hardware Requirements and Connection</h2>
+<p>The ISURLOG board does not include an integrated USB-to-UART converter for the RAK3172 to maintain a minimalist, cost-effective, and low-power hardware profile. </p>
+<h3 id="required-flashing-hardware">Required Flashing Hardware</h3>
 <ul>
-<li><strong>GitHub Repository:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware">isurki-tecnica/isurlog-firmware</a></li>
-<li><strong>Firmware Releases:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/releases">Releases page</a></li>
-<li><strong>IsurDASH Cloud Platform Login:</strong> <a href="https://isurdash.isurki.com/login">https://isurdash.isurki.com/login</a></li>
-<li><strong>Technical Support:</strong> (+34) 943-635437 or tecnica@isurki.com.</li>
+<li><strong>Converter:</strong> An external <strong>UART TTL to USB converter</strong>.</li>
+<li><strong>Connection:</strong> Jumper wires or a dedicated programming header compatible with the board's design.</li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">Important (Bootloader Mode)</p>
+<p>Before compiling and uploading a new sketch or firmware from the Arduino IDE, you must put the RAK3172 into bootloader mode by sending the command <code>AT+BOOT</code> over the serial interface.</p>
+</div>
+<h3 id="physical-connection">Physical Connection</h3>
+<p>To physically flash new firmware, update the RUI3 core, or upload an Arduino sketch onto the RAK3172, you must route the programming serial interface lines of the module to your PC using the external UART TTL to USB converter.</p>
+<p>The connection workflow requires matching the converter's <strong>TX</strong>, <strong>RX</strong> and <strong>GND</strong> to the corresponding programming pins of the RAK3172 on the PCB.</p>
+<p>The programming port/pins for the RAK3172 module on the ISURLOG PCB are located as shown below:</p>
+<p><img alt="ISURLOG PCB layout with the RAK3172 programming port highlighted" src="../images/6-rak3172-programming-port.jpg" width="750" /></p>
+<h2 id="66-updating-modem-firmware-from-official-binaries">6.6 Updating Modem Firmware from Official Binaries</h2>
+<p>Unlike the scenarios above (which assume you're compiling your own application firmware from source), you don't need the Arduino IDE or the RUI3 BSP at all if you just want to update the modem to an <strong>official ISURKI-provided build</strong> — it's an already-compiled binary.</p>
+<h3 id="where-to-get-the-binary">Where to Get the Binary</h3>
+<p>Each <a href="https://github.com/isurki-tecnica/isurlog-firmware/releases">ISURLOG firmware release</a> includes a <code>rak3172_bins.zip</code> asset (alongside the ESP32 and nRF9151 binaries) containing a single file:</p>
+<ul>
+<li><strong><code>System_Custom_ATCMD.ino.bin</code></strong></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Coming soon</p>
+<p>support for updating the RAK3172 directly from IsurDASH, the same way the <a href="../isurdash-maintenance/">7.8 Device Maintenance</a> flow already updates the <strong>ESP32</strong>. Until then, the recommended tool is the one below.</p>
+</div>
+<h3 id="update-tool">Update Tool</h3>
+<p>The current recommended way to update the RAK3172's firmware is the web-based tool at <strong><a href="https://firmwareupgrade.fencyboy.com/">firmwareupgrade.fencyboy.com</a></strong>.</p>
+<h3 id="update-procedure">Update Procedure</h3>
+<ol>
+<li>Connect the UART-to-USB converter to the ISURLOG's "<strong>RAK</strong>" port.</li>
+<li>Power on the ISURLOG in <strong>BOOT</strong> mode.</li>
+<li>Select the serial port in the tool and connect.</li>
+<li>Send the <code>AT+BOOT</code> command and confirm the module responds correctly.</li>
+<li>Select the <strong><code>System_Custom_ATCMD.ino.bin</code></strong> file and click <strong>"Upload firmware"</strong>.</li>
+</ol>
+<p><img alt="Updating the RAK3172 modem firmware via firmwareupgrade.fencyboy.com" src="../images/6-modem-firmware-update.gif" width="1000" /></p>
 
 
 
@@ -1405,10 +1750,10 @@ This datalogger runs on an <strong>optimized MicroPython firmware</strong> for l
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

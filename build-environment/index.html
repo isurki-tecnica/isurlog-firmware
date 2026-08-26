@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/">
+        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/build-environment/">
       
       
+        <link rel="prev" href="../reference-parameters/">
       
-        <link rel="next" href="sensor-connections/">
+      
+        <link rel="next" href="../architecture-overview/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>ISURLOG Docs</title>
+        <title>1. Build Environment Setup - ISURLOG Docs</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#isurlog-industrial-iot-datalogger-open-source" class="md-skip">
+        <a href="#1-build-environment-setup" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              1. Build Environment Setup
             
           </span>
         </div>
@@ -228,7 +230,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -255,37 +257,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -301,48 +276,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#where-to-begin" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where to begin
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Resources
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -424,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sensor-connections/" class="md-nav__link">
+      <a href="../sensor-connections/" class="md-nav__link">
         
   
   
@@ -452,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="power-supply/" class="md-nav__link">
+      <a href="../power-supply/" class="md-nav__link">
         
   
   
@@ -480,7 +413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="power-budget/" class="md-nav__link">
+      <a href="../power-budget/" class="md-nav__link">
         
   
   
@@ -508,7 +441,7 @@
   
   
     <li class="md-nav__item">
-      <a href="communications/" class="md-nav__link">
+      <a href="../communications/" class="md-nav__link">
         
   
   
@@ -536,7 +469,7 @@
   
   
     <li class="md-nav__item">
-      <a href="installation-commissioning/" class="md-nav__link">
+      <a href="../installation-commissioning/" class="md-nav__link">
         
   
   
@@ -564,7 +497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="datalogger-operation/" class="md-nav__link">
+      <a href="../datalogger-operation/" class="md-nav__link">
         
   
   
@@ -661,7 +594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-platform/" class="md-nav__link">
+      <a href="../isurdash-platform/" class="md-nav__link">
         
   
   
@@ -689,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-access-login/" class="md-nav__link">
+      <a href="../isurdash-access-login/" class="md-nav__link">
         
   
   
@@ -717,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-dashboard/" class="md-nav__link">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
         
   
   
@@ -745,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-devices/" class="md-nav__link">
+      <a href="../isurdash-devices/" class="md-nav__link">
         
   
   
@@ -773,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-alarms/" class="md-nav__link">
+      <a href="../isurdash-alarms/" class="md-nav__link">
         
   
   
@@ -801,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-users/" class="md-nav__link">
+      <a href="../isurdash-users/" class="md-nav__link">
         
   
   
@@ -829,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-profiles/" class="md-nav__link">
+      <a href="../isurdash-profiles/" class="md-nav__link">
         
   
   
@@ -857,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-tags/" class="md-nav__link">
+      <a href="../isurdash-tags/" class="md-nav__link">
         
   
   
@@ -885,7 +818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-maintenance/" class="md-nav__link">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
         
   
   
@@ -921,7 +854,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference-parameters/" class="md-nav__link">
+      <a href="../reference-parameters/" class="md-nav__link">
         
   
   
@@ -953,8 +886,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -983,11 +918,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -1008,7 +943,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1023,10 +958,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="build-environment/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Build Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1042,6 +1004,159 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-supported-development-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Supported Development Platforms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-recommended-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Recommended Environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-build-instructions-ubuntu-wsl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Build Instructions (Ubuntu / WSL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Build Instructions (Ubuntu / WSL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-install-system-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Install System Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-clone-and-install-esp-idf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Clone and Install ESP-IDF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-activate-esp-idf-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Activate ESP-IDF Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-clone-this-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Clone This Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-compile-the-firmware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Compile the Firmware
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-output-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Output Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 Output Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#firmware-binary-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Firmware Binary Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-code-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application Code (app/)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1054,7 +1169,7 @@
   
   
     <li class="md-nav__item">
-      <a href="architecture-overview/" class="md-nav__link">
+      <a href="../architecture-overview/" class="md-nav__link">
         
   
   
@@ -1082,7 +1197,7 @@
   
   
     <li class="md-nav__item">
-      <a href="module-library-reference/" class="md-nav__link">
+      <a href="../module-library-reference/" class="md-nav__link">
         
   
   
@@ -1110,7 +1225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="flashing-application-upload/" class="md-nav__link">
+      <a href="../flashing-application-upload/" class="md-nav__link">
         
   
   
@@ -1138,7 +1253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gpio-mapping/" class="md-nav__link">
+      <a href="../gpio-mapping/" class="md-nav__link">
         
   
   
@@ -1166,7 +1281,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nbiot-modem-guide/" class="md-nav__link">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
         
   
   
@@ -1194,7 +1309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="lorawan-modem-guide/" class="md-nav__link">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
         
   
   
@@ -1222,7 +1337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contribution-guide/" class="md-nav__link">
+      <a href="../contribution-guide/" class="md-nav__link">
         
   
   
@@ -1277,10 +1392,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#where-to-begin" class="md-nav__link">
+  <a href="#11-supported-development-platforms" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Where to begin
+        1.1 Supported Development Platforms
       
     </span>
   </a>
@@ -1288,10 +1403,121 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-resources" class="md-nav__link">
+  <a href="#12-recommended-environment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Resources
+        1.2 Recommended Environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-build-instructions-ubuntu-wsl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Build Instructions (Ubuntu / WSL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Build Instructions (Ubuntu / WSL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-install-system-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Install System Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-clone-and-install-esp-idf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Clone and Install ESP-IDF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-activate-esp-idf-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Activate ESP-IDF Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-clone-this-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Clone This Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-compile-the-firmware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Compile the Firmware
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-output-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Output Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 Output Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#firmware-binary-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Firmware Binary Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-code-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application Code (app/)
       
     </span>
   </a>
@@ -1318,44 +1544,100 @@
   
 
 
-<h1 id="isurlog-industrial-iot-datalogger-open-source">ISURLOG: Industrial IoT Datalogger (Open Source)</h1>
-<div class="admonition note">
-<p class="admonition-title">Migration in progress</p>
-<p>Use and Hardware and Firmware Development (Modules A and B) have fully moved here. Data Integration &amp; APIs and Troubleshooting are still on the <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki">GitHub Wiki</a></strong> for now, and will move here too.</p>
+<h1 id="1-build-environment-setup">1. Build Environment Setup</h1>
+<p>This guide details the necessary steps to set up a stable development environment for compiling the custom MicroPython firmware binary (<code>firmware.bin</code>) for the ISURLOG datalogger.</p>
+<p>The firmware is based on <strong>MicroPython v1.25.0</strong> and includes custom modifications for optimized data logging applications.</p>
+<div class="admonition warning">
+<p class="admonition-title">WARNING</p>
+<p>This project is derived from MicroPython v1.25.0 and includes custom modifications. While effort is made to maintain stability, it is subject to changes and and may differ from upstream MicroPython.</p>
 </div>
-<p>The ISURLOG datalogger is a highly versatile <strong>ESP32-based</strong> device that integrates multiple functionalities for data acquisition and logging in diverse environments. It is a complete and efficient solution for monitoring industrial signals (4-20mA, Modbus RS485, PT100) with advanced connectivity (NB-IoT/LoRaWAN, Wi-Fi, and Bluetooth).
-This datalogger runs on an <strong>optimized MicroPython firmware</strong> for low power consumption (20µA in sleep mode), making it ideal for battery-powered applications.</p>
-<p><img alt="image" height="780" src="images/home-pcb-photo.png" width="884" /></p>
-<h2 id="where-to-begin">Where to begin</h2>
+<h2 id="11-supported-development-platforms">1.1 Supported Development Platforms</h2>
+<p>The ISURLOG was designed to be compatible with various development platforms, including <strong>ESP-IDF</strong>, <strong>MicroPython</strong>, and <strong>Arduino IDE</strong>. However, it is important to note that <strong>ISURKI guarantees full compatibility and total support only with MicroPython</strong>.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">🛠️ Use and Hardware</th>
-<th style="text-align: left;">💻 Firmware Development</th>
-<th style="text-align: left;">☁️ Data Integration &amp; APIs</th>
+<th style="text-align: left;">Platform</th>
+<th style="text-align: left;">Compatibility Status</th>
+<th style="text-align: left;">Recommendation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Installation, sensor setup, and IsurDASH.</td>
-<td style="text-align: left;">Build environment, architecture, contributing.</td>
-<td style="text-align: left;">Historical/real-time data access, downlink API.</td>
+<td style="text-align: left;"><strong>MicroPython</strong></td>
+<td style="text-align: left;"><strong>Fully Guaranteed and Supported</strong></td>
+<td style="text-align: left;"><strong>Highly Recommended</strong> to maximize functionality.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="sensor-connections/">2. Sensor Connections</a></td>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="build-environment/">1. Build Environment Setup</a></td>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/9-Data-Access-Overview">9. Data Access Overview ↗</a></td>
+<td style="text-align: left;"><strong>ESP-IDF / Arduino IDE</strong></td>
+<td style="text-align: left;">Compatibility depends on specific implementation and future updates; <strong>full functionality is not guaranteed</strong>.</td>
+<td style="text-align: left;">Use is not discouraged, but ISURKI focuses on maintaining compatibility and offering continuous support only on MicroPython.</td>
 </tr>
 </tbody>
 </table>
-<p>Running into a problem in the field? See <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/Troubleshooting">Troubleshooting ↗</a> (still on the wiki). Want to estimate battery life? Try the interactive <a href="power-budget/">Power Budget calculator</a>.</p>
-<h2 id="quick-resources">Quick Resources</h2>
-<ul>
-<li><strong>GitHub Repository:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware">isurki-tecnica/isurlog-firmware</a></li>
-<li><strong>Firmware Releases:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/releases">Releases page</a></li>
-<li><strong>IsurDASH Cloud Platform Login:</strong> <a href="https://isurdash.isurki.com/login">https://isurdash.isurki.com/login</a></li>
-<li><strong>Technical Support:</strong> (+34) 943-635437 or tecnica@isurki.com.</li>
-</ul>
+<h2 id="12-recommended-environment">1.2 Recommended Environment</h2>
+<p>The recommended build environment is <strong>Ubuntu Linux</strong>.</p>
+<p>For Windows users, native compilation is complex and <strong>not recommended</strong>. Please use the <strong>Windows Subsystem for Linux (WSL)</strong> and follow the Ubuntu instructions below for a more stable and straightforward setup.</p>
+<h2 id="13-build-instructions-ubuntu-wsl">1.3 Build Instructions (Ubuntu / WSL)</h2>
+<h3 id="step-1-install-system-dependencies">Step 1: Install System Dependencies</h3>
+<p>Open your Ubuntu terminal and install all required packages:</p>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo apt-get install build-essential libffi-dev git pkg-config
+sudo apt install -y git wget curl flex bison gperf python3 python3-pip python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
+</code></pre>
+<h3 id="step-2-clone-and-install-esp-idf">Step 2: Clone and Install ESP-IDF</h3>
+<p>This firmware requires ESP-IDF v5.2.x. We recommend <code>v5.2.6</code> for optimal compatibility with the MicroPython base.</p>
+<pre><code class="language-bash"># Create a directory for ESP-IDF
+mkdir -p ~/esp
+cd ~/esp
+
+# Clone the correct version
+git clone -b v5.4.1 --recursive [https://github.com/espressif/esp-idf.git](https://github.com/espressif/esp-idf.git)
+
+# Install the toolchain
+cd esp-idf
+./install.sh esp32
+</code></pre>
+<h3 id="step-3-activate-esp-idf-environment">Step 3: Activate ESP-IDF Environment</h3>
+<p>You must "source" the export script in your terminal to set environment variables.</p>
+<pre><code class="language-bash"># Add the export command to your profile
+echo -e '\n. $HOME/esp/esp-idf/export.sh' &gt;&gt; ~/.profile
+
+# Source it for the current session
+source $HOME/esp/esp-idf/export.sh
+</code></pre>
+<h3 id="step-4-clone-this-repository">Step 4: Clone This Repository</h3>
+<p>Clone the firmware repository to your system:</p>
+<pre><code class="language-bash">cd ~
+git clone [https://github.com/isurki-tecnica/isurlog-firmware.git](https://github.com/isurki-tecnica/isurlog-firmware.git)
+
+# Navigate into the repo
+cd isurlog-firmware
+
+# Switch to our working branch (if not already on 'main')
+git checkout main
+
+</code></pre>
+<h3 id="step-5-compile-the-firmware">Step 5: Compile the Firmware</h3>
+<p>Finally, navigate to the <code>esp32</code> port directory within the cloned repository and run the build commands:</p>
+<pre><code class="language-bash"># Navigate to the ESP32 port
+cd ports/esp32
+
+# Clean any previous builds (optional, but recommended for fresh builds)
+make BOARD=ESP32_GENERIC BOARD_VARIANT=SPIRAM clean
+
+# Download MicroPython specific submodules
+make submodules
+
+# Start the build process
+make BOARD=ESP32_GENERIC BOARD_VARIANT=SPIRAM
+</code></pre>
+<h2 id="14-output-files">1.4 Output Files</h2>
+<h3 id="firmware-binary-location">Firmware Binary Location</h3>
+<p>The compiled firmware <code>.bin</code> file will be generated in the following directory:</p>
+<p><code>ports/esp32/build-ESP32_GENERIC-SPIRAM/firmware.bin</code></p>
+<h2 id="application-code-app">Application Code (<code>app/</code>)</h2>
+<p>This repository also contains the <code>app/</code> folder.</p>
+<p>IMPORTANT: The contents of this folder (<code>main.py</code>, <code>config/</code>, etc.) are NOT compiled into the firmware. These files represent the Python application logic and must be uploaded manually to the ESP32's filesystem (using tools like Thonny or rshell) after flashing the <code>firmware.bin</code>. This allows for flexible updates to the application logic without recompiling the entire firmware.</p>
 
 
 
@@ -1405,10 +1687,10 @@ This datalogger runs on an <strong>optimized MicroPython firmware</strong> for l
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

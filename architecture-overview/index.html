@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/">
+        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/architecture-overview/">
       
       
+        <link rel="prev" href="../build-environment/">
       
-        <link rel="next" href="sensor-connections/">
+      
+        <link rel="next" href="../module-library-reference/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>ISURLOG Docs</title>
+        <title>2. Architecture Overview - ISURLOG Docs</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#isurlog-industrial-iot-datalogger-open-source" class="md-skip">
+        <a href="#2-architecture-overview" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              2. Architecture Overview
             
           </span>
         </div>
@@ -228,7 +230,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -255,37 +257,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -301,48 +276,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#where-to-begin" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where to begin
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Resources
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -424,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sensor-connections/" class="md-nav__link">
+      <a href="../sensor-connections/" class="md-nav__link">
         
   
   
@@ -452,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="power-supply/" class="md-nav__link">
+      <a href="../power-supply/" class="md-nav__link">
         
   
   
@@ -480,7 +413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="power-budget/" class="md-nav__link">
+      <a href="../power-budget/" class="md-nav__link">
         
   
   
@@ -508,7 +441,7 @@
   
   
     <li class="md-nav__item">
-      <a href="communications/" class="md-nav__link">
+      <a href="../communications/" class="md-nav__link">
         
   
   
@@ -536,7 +469,7 @@
   
   
     <li class="md-nav__item">
-      <a href="installation-commissioning/" class="md-nav__link">
+      <a href="../installation-commissioning/" class="md-nav__link">
         
   
   
@@ -564,7 +497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="datalogger-operation/" class="md-nav__link">
+      <a href="../datalogger-operation/" class="md-nav__link">
         
   
   
@@ -661,7 +594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-platform/" class="md-nav__link">
+      <a href="../isurdash-platform/" class="md-nav__link">
         
   
   
@@ -689,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-access-login/" class="md-nav__link">
+      <a href="../isurdash-access-login/" class="md-nav__link">
         
   
   
@@ -717,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-dashboard/" class="md-nav__link">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
         
   
   
@@ -745,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-devices/" class="md-nav__link">
+      <a href="../isurdash-devices/" class="md-nav__link">
         
   
   
@@ -773,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-alarms/" class="md-nav__link">
+      <a href="../isurdash-alarms/" class="md-nav__link">
         
   
   
@@ -801,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-users/" class="md-nav__link">
+      <a href="../isurdash-users/" class="md-nav__link">
         
   
   
@@ -829,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-profiles/" class="md-nav__link">
+      <a href="../isurdash-profiles/" class="md-nav__link">
         
   
   
@@ -857,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-tags/" class="md-nav__link">
+      <a href="../isurdash-tags/" class="md-nav__link">
         
   
   
@@ -885,7 +818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-maintenance/" class="md-nav__link">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
         
   
   
@@ -921,7 +854,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference-parameters/" class="md-nav__link">
+      <a href="../reference-parameters/" class="md-nav__link">
         
   
   
@@ -953,8 +886,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -983,11 +918,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -1008,7 +943,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1026,7 +961,7 @@
   
   
     <li class="md-nav__item">
-      <a href="build-environment/" class="md-nav__link">
+      <a href="../build-environment/" class="md-nav__link">
         
   
   
@@ -1051,10 +986,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="architecture-overview/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Architecture Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1070,6 +1032,126 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#21-the-modular-software-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 The Modular Software Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 The Modular Software Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-lib-folder-base-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The /lib Folder (Base Libraries)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-modules-folder-high-level-wrappers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The /modules Folder (High-Level Wrappers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-the-mainpy-file-application-entry-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The main.py File (Application Entry Point)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-compatibility-and-adaptability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Compatibility and Adaptability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Compatibility and Adaptability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-via-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration via JSON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-modification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Modification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-looking-for-a-specific-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Looking for a specific module?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1082,7 +1164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="module-library-reference/" class="md-nav__link">
+      <a href="../module-library-reference/" class="md-nav__link">
         
   
   
@@ -1110,7 +1192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="flashing-application-upload/" class="md-nav__link">
+      <a href="../flashing-application-upload/" class="md-nav__link">
         
   
   
@@ -1138,7 +1220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gpio-mapping/" class="md-nav__link">
+      <a href="../gpio-mapping/" class="md-nav__link">
         
   
   
@@ -1166,7 +1248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nbiot-modem-guide/" class="md-nav__link">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
         
   
   
@@ -1194,7 +1276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="lorawan-modem-guide/" class="md-nav__link">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
         
   
   
@@ -1222,7 +1304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contribution-guide/" class="md-nav__link">
+      <a href="../contribution-guide/" class="md-nav__link">
         
   
   
@@ -1277,21 +1359,99 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#where-to-begin" class="md-nav__link">
+  <a href="#21-the-modular-software-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Where to begin
+        2.1 The Modular Software Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 The Modular Software Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-lib-folder-base-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The /lib Folder (Base Libraries)
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-resources" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2-the-modules-folder-high-level-wrappers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Resources
+        2. The /modules Folder (High-Level Wrappers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-the-mainpy-file-application-entry-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The main.py File (Application Entry Point)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-compatibility-and-adaptability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Compatibility and Adaptability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Compatibility and Adaptability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-via-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration via JSON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-modification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Modification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-looking-for-a-specific-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Looking for a specific module?
       
     </span>
   </a>
@@ -1318,44 +1478,42 @@
   
 
 
-<h1 id="isurlog-industrial-iot-datalogger-open-source">ISURLOG: Industrial IoT Datalogger (Open Source)</h1>
-<div class="admonition note">
-<p class="admonition-title">Migration in progress</p>
-<p>Use and Hardware and Firmware Development (Modules A and B) have fully moved here. Data Integration &amp; APIs and Troubleshooting are still on the <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki">GitHub Wiki</a></strong> for now, and will move here too.</p>
-</div>
-<p>The ISURLOG datalogger is a highly versatile <strong>ESP32-based</strong> device that integrates multiple functionalities for data acquisition and logging in diverse environments. It is a complete and efficient solution for monitoring industrial signals (4-20mA, Modbus RS485, PT100) with advanced connectivity (NB-IoT/LoRaWAN, Wi-Fi, and Bluetooth).
-This datalogger runs on an <strong>optimized MicroPython firmware</strong> for low power consumption (20µA in sleep mode), making it ideal for battery-powered applications.</p>
-<p><img alt="image" height="780" src="images/home-pcb-photo.png" width="884" /></p>
-<h2 id="where-to-begin">Where to begin</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">🛠️ Use and Hardware</th>
-<th style="text-align: left;">💻 Firmware Development</th>
-<th style="text-align: left;">☁️ Data Integration &amp; APIs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Installation, sensor setup, and IsurDASH.</td>
-<td style="text-align: left;">Build environment, architecture, contributing.</td>
-<td style="text-align: left;">Historical/real-time data access, downlink API.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="sensor-connections/">2. Sensor Connections</a></td>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="build-environment/">1. Build Environment Setup</a></td>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/9-Data-Access-Overview">9. Data Access Overview ↗</a></td>
-</tr>
-</tbody>
-</table>
-<p>Running into a problem in the field? See <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/Troubleshooting">Troubleshooting ↗</a> (still on the wiki). Want to estimate battery life? Try the interactive <a href="power-budget/">Power Budget calculator</a>.</p>
-<h2 id="quick-resources">Quick Resources</h2>
+<h1 id="2-architecture-overview">2. Architecture Overview</h1>
+<p>For application development and to maximize the use of the <strong>ISURLOG</strong> hardware capabilities, a reference software base developed in MicroPython is provided. This software is open source and available on the GitHub repository.</p>
+<p>The main objective of this software structure is to provide the necessary tools to interact with all integrated circuits (ICs) and peripherals of the <strong>ISURLOG</strong>, as well as offering a functional example template of a typical datalogger application.</p>
+<h2 id="21-the-modular-software-structure">2.1 The Modular Software Structure</h2>
+<p>The repository software presents a modular structure designed for flexible and easy use, based on the following key components:</p>
+<h3 id="1-the-lib-folder-base-libraries">1. The <code>/lib</code> Folder (Base Libraries)</h3>
 <ul>
-<li><strong>GitHub Repository:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware">isurki-tecnica/isurlog-firmware</a></li>
-<li><strong>Firmware Releases:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/releases">Releases page</a></li>
-<li><strong>IsurDASH Cloud Platform Login:</strong> <a href="https://isurdash.isurki.com/login">https://isurdash.isurki.com/login</a></li>
-<li><strong>Technical Support:</strong> (+34) 943-635437 or tecnica@isurki.com.</li>
+<li><strong>Low-Level Drivers:</strong> Contains MicroPython libraries to directly control the different ICs present on the <strong>ISURLOG</strong> board (sensors, communication modem, RTC, etc.).</li>
+<li><strong>Direct Hardware Management:</strong> These libraries handle direct communication with the hardware (e.g., via I2C, SPI, UART).</li>
+<li><strong>Third-Party Libraries:</strong> Can include third-party libraries developed specifically for the <strong>ISURLOG</strong> or adapted for it.</li>
 </ul>
+<h3 id="2-the-modules-folder-high-level-wrappers">2. The <code>/modules</code> Folder (High-Level Wrappers)</h3>
+<ul>
+<li><strong>Abstraction Layer:</strong> Acts as an abstraction layer over the libraries in the <code>/lib</code> folder.</li>
+<li><strong>Purpose:</strong> These modules (or 'wrappers') simplify the use of hardware functionalities, offering more intuitive interfaces and reducing the amount of necessary application code.</li>
+</ul>
+<h3 id="3-the-mainpy-file-application-entry-point">3. The <code>main.py</code> File (Application Entry Point)</h3>
+<p>This is the main script that runs on the ESP32. The provided <code>main.py</code> is pre-configured to implement a complete and functional datalogger application.</p>
+<p>A typical example of this entry point handles the following tasks:</p>
+<ul>
+<li>Initialize sensors and peripherals.</li>
+<li>Read connected sensor data.</li>
+<li>Format the data.</li>
+<li>Establish cloud connection using LoRaWAN or NB-IoT.</li>
+<li>Send data to a LoRaWAN server or an MQTT broker (in the case of NB-IoT).</li>
+<li>Receive new configurations.</li>
+<li>Handle power management.</li>
+</ul>
+<h2 id="22-compatibility-and-adaptability">2.2 Compatibility and Adaptability</h2>
+<p>The software has been designed with adaptability in mind:</p>
+<h3 id="configuration-via-json">Configuration via JSON</h3>
+<p>The easiest way to configure the datalogger is by setting the parameters in <code>dynamic_config.json</code>. This covers the majority of common use cases.</p>
+<h3 id="code-modification">Code Modification</h3>
+<p>For fully customized or highly specific operational logic that cannot be handled solely with JSON configuration, users always have the option to directly modify the <code>main.py</code> file or include their modules in the <code>/modules</code> folder. As the code is open source, users have total freedom to adapt the code to the exact requirements of each application.</p>
+<h2 id="23-looking-for-a-specific-module">2.3 Looking for a specific module?</h2>
+<p>For a per-file breakdown of every module in <code>/modules</code> and driver in <code>/lib</code> — purpose, public API, dependencies, and which config keys each one reads — see <strong><a href="../module-library-reference/">2.1 Module &amp; Library Reference</a></strong>.</p>
 
 
 
@@ -1405,10 +1563,10 @@ This datalogger runs on an <strong>optimized MicroPython firmware</strong> for l
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

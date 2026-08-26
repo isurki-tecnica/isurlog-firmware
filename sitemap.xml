@@ -5,11 +5,31 @@
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
+         <loc>https://isurki-tecnica.github.io/isurlog-firmware/architecture-overview/</loc>
+         <lastmod>2026-08-26</lastmod>
+    </url>
+    <url>
+         <loc>https://isurki-tecnica.github.io/isurlog-firmware/build-environment/</loc>
+         <lastmod>2026-08-26</lastmod>
+    </url>
+    <url>
          <loc>https://isurki-tecnica.github.io/isurlog-firmware/communications/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
+         <loc>https://isurki-tecnica.github.io/isurlog-firmware/contribution-guide/</loc>
+         <lastmod>2026-08-26</lastmod>
+    </url>
+    <url>
          <loc>https://isurki-tecnica.github.io/isurlog-firmware/datalogger-operation/</loc>
+         <lastmod>2026-08-26</lastmod>
+    </url>
+    <url>
+         <loc>https://isurki-tecnica.github.io/isurlog-firmware/flashing-application-upload/</loc>
+         <lastmod>2026-08-26</lastmod>
+    </url>
+    <url>
+         <loc>https://isurki-tecnica.github.io/isurlog-firmware/gpio-mapping/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
@@ -50,6 +70,18 @@
     </url>
     <url>
          <loc>https://isurki-tecnica.github.io/isurlog-firmware/isurdash-users/</loc>
+         <lastmod>2026-08-26</lastmod>
+    </url>
+    <url>
+         <loc>https://isurki-tecnica.github.io/isurlog-firmware/lorawan-modem-guide/</loc>
+         <lastmod>2026-08-26</lastmod>
+    </url>
+    <url>
+         <loc>https://isurki-tecnica.github.io/isurlog-firmware/module-library-reference/</loc>
+         <lastmod>2026-08-26</lastmod>
+    </url>
+    <url>
+         <loc>https://isurki-tecnica.github.io/isurlog-firmware/nbiot-modem-guide/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
