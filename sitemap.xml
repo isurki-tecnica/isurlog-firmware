@@ -1,127 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/</loc>
+         <loc>https://docs.isurlog.isurki.com/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/architecture-overview/</loc>
+         <loc>https://docs.isurlog.isurki.com/architecture-overview/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/build-environment/</loc>
+         <loc>https://docs.isurlog.isurki.com/build-environment/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/communications/</loc>
+         <loc>https://docs.isurlog.isurki.com/communications/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/consumption-graphs/</loc>
+         <loc>https://docs.isurlog.isurki.com/consumption-graphs/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/contribution-guide/</loc>
+         <loc>https://docs.isurlog.isurki.com/contribution-guide/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/data-access-overview/</loc>
+         <loc>https://docs.isurlog.isurki.com/data-access-overview/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/datalogger-operation/</loc>
+         <loc>https://docs.isurlog.isurki.com/datalogger-operation/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/flashing-application-upload/</loc>
+         <loc>https://docs.isurlog.isurki.com/flashing-application-upload/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/gpio-mapping/</loc>
+         <loc>https://docs.isurlog.isurki.com/gpio-mapping/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/historical-data-influxdb/</loc>
+         <loc>https://docs.isurlog.isurki.com/historical-data-influxdb/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/installation-commissioning/</loc>
+         <loc>https://docs.isurlog.isurki.com/installation-commissioning/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/isurdash-access-login/</loc>
+         <loc>https://docs.isurlog.isurki.com/isurdash-access-login/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/isurdash-alarms/</loc>
+         <loc>https://docs.isurlog.isurki.com/isurdash-alarms/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/isurdash-dashboard/</loc>
+         <loc>https://docs.isurlog.isurki.com/isurdash-dashboard/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/isurdash-devices/</loc>
+         <loc>https://docs.isurlog.isurki.com/isurdash-devices/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/isurdash-maintenance/</loc>
+         <loc>https://docs.isurlog.isurki.com/isurdash-maintenance/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/isurdash-platform/</loc>
+         <loc>https://docs.isurlog.isurki.com/isurdash-platform/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/isurdash-profiles/</loc>
+         <loc>https://docs.isurlog.isurki.com/isurdash-profiles/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/isurdash-tags/</loc>
+         <loc>https://docs.isurlog.isurki.com/isurdash-tags/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/isurdash-users/</loc>
+         <loc>https://docs.isurlog.isurki.com/isurdash-users/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/lorawan-modem-guide/</loc>
+         <loc>https://docs.isurlog.isurki.com/lorawan-modem-guide/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/module-library-reference/</loc>
+         <loc>https://docs.isurlog.isurki.com/module-library-reference/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/nbiot-modem-guide/</loc>
+         <loc>https://docs.isurlog.isurki.com/nbiot-modem-guide/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/power-budget/</loc>
+         <loc>https://docs.isurlog.isurki.com/power-budget/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/power-supply/</loc>
+         <loc>https://docs.isurlog.isurki.com/power-supply/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/realtime-data-mqtt/</loc>
+         <loc>https://docs.isurlog.isurki.com/realtime-data-mqtt/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/reference-parameters/</loc>
+         <loc>https://docs.isurlog.isurki.com/reference-parameters/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/remote-configuration-api/</loc>
+         <loc>https://docs.isurlog.isurki.com/remote-configuration-api/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/sensor-connections/</loc>
+         <loc>https://docs.isurlog.isurki.com/sensor-connections/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
     <url>
-         <loc>https://isurki-tecnica.github.io/isurlog-firmware/troubleshooting/</loc>
+         <loc>https://docs.isurlog.isurki.com/troubleshooting/</loc>
          <lastmod>2026-08-26</lastmod>
     </url>
 </urlset>
