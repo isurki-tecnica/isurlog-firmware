@@ -1,0 +1,2481 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Small trial of MkDocs + GitHub Pages for ISURLOG documentation">
+      
+      
+      
+        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/remote-configuration-api/">
+      
+      
+        <link rel="prev" href="../realtime-data-mqtt/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>12. Remote Configuration API (Downlink) - ISURLOG Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#12-remote-configuration-api-downlink" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ISURLOG Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              12. Remote Configuration API (Downlink)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ISURLOG Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use and Hardware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Use and Hardware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensor-connections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Sensor Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-supply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Power Supply Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-budget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Budget Calculator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../communications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Communications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation-commissioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Installation and Commissioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datalogger-operation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Datalogger Operation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. IsurDASH Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. IsurDASH Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-access-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.1. Access and Login
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.2. Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.3. Devices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-alarms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.4. Alarms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.5. Users
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.6. Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.7. Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7.8. Device Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Reference Configuration Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Firmware Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Build Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Architecture Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module-library-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1. Module & Library Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing-application-upload/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Flashing and Application Upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpio-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. GPIO Mapping (Hardware-Software)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Advanced NB-IoT Modem Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Advanced LoRaWAN Modem Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contribution-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Contribution Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Integration & APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Integration & APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-access-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Data Access Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../historical-data-influxdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Historical Data (InfluxDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../realtime-data-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Real-Time Data (MQTT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Remote Configuration API (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Remote Configuration API (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-parameter-reference-config_types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Parameter Reference (config_types)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-parameter-reference-config_types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Parameter Reference (config_types)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="12-remote-configuration-api-downlink">12. Remote Configuration API (Downlink)</h1>
+<p>This guide documents the structure and mapping of configuration commands that can be sent remotely to the <strong>ISURLOG</strong> device via Downlink messages (e.g., through LoRaWAN downlinks or specific NB-IoT commands). The commands utilize a binary structure, processed by the accompanying Python library, <code>IsurlogLPP.py</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is the full list of parameters the <strong>firmware</strong> supports over downlink — it doesn't necessarily match <strong><a href="../reference-parameters/">8. Reference Configuration Parameters</a></strong>. Page 8 documents only what <strong>IsurDASH currently lets you configure</strong> through its UI; the ISURLOG firmware can support more parameters than IsurDASH currently exposes. Where the <strong>IsurDASH Configurable</strong> column says <strong>Yes</strong>, it links to the corresponding section of page 8.</p>
+</div>
+<h2 id="configuration-parameter-reference-config_types">Configuration Parameter Reference (config_types)</h2>
+<p>This comprehensive table defines all available remote configuration functions, their unique type code, data size, and scaling factors for encoding values.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function Name</th>
+<th style="text-align: left;">Type (Hex)</th>
+<th style="text-align: left;">Size (Bytes)</th>
+<th style="text-align: left;">Multiplier</th>
+<th style="text-align: left;">Range (Min/Max)</th>
+<th style="text-align: left;">IsurDASH Configurable</th>
+<th style="text-align: left;">Description / Equivalent Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Global Parameters</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setLatencyTime</code></td>
+<td style="text-align: left;"><code>A0</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#latency-time-tiempo-de-latencia-min">Yes</a></td>
+<td style="text-align: left;">Sets the time (minutes) between reading cycles.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setRtcSync</code></td>
+<td style="text-align: left;"><code>A1</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#rtc-synchronization-sincronizacion-rtc">Yes</a></td>
+<td style="text-align: left;">Sets whether readings occur at fixed clock-synchronized intervals (1, e.g. 14:00, 14:05, 14:10 for a 5-min latency) or at intervals relative to power-on time instead (0).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setRegisterMode</code></td>
+<td style="text-align: left;"><code>A2</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#logging-mode-modo-de-registro">Yes</a></td>
+<td style="text-align: left;">Sets Logging Mode (0=Fixed, 1=Conditional).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setRegisterAccumulator</code></td>
+<td style="text-align: left;"><code>A3</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#record-accumulator-acumulador-de-registros">Yes</a></td>
+<td style="text-align: left;">Sets the number of records to accumulate before sending.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setMagnetWakeup</code></td>
+<td style="text-align: left;"><code>A4</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Enables/Disables the magnetic switch wake-up feature.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setDebugLED</code></td>
+<td style="text-align: left;"><code>A5</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Enables/Disables the STATUS LED on the PCB.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setMaxPayloadSize</code></td>
+<td style="text-align: left;"><code>8E</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#payload-size-tamano-del-payload-bytes">Yes</a></td>
+<td style="text-align: left;">Sets the payload size.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setBatteryInputSoC</code></td>
+<td style="text-align: left;"><code>8F</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Enables/Disables logging of battery State of Charge.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setBatteryInputCRate</code></td>
+<td style="text-align: left;"><code>90</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#83-battery-configuration-parameters">Yes</a></td>
+<td style="text-align: left;">Enables/Disables logging of the battery's charge/discharge rate.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setVDCVoltage</code></td>
+<td style="text-align: left;"><code>91</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-24</td>
+<td style="text-align: left;"><a href="../reference-parameters/#sensor-supply-voltage-tension-de-alimentacion-sensores-voltios">Yes</a></td>
+<td style="text-align: left;">Sets the sensor supply voltage.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setContinuousMode</code></td>
+<td style="text-align: left;"><code>83</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Enables/Disables Continuous Mode. When enabled, the ISURLOG keeps reading sensors without sleeping between readings — filling as many reading cycles as fit in the time available until the next transmission — instead of the fixed number of cycles set by <strong>Loop Cycles</strong>. Overrides <code>setLoopCycles</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setLoopCycles</code></td>
+<td style="text-align: left;"><code>84</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Sets the number of readings taken per record, averaged together (used for analog-type inputs — Analog, Modbus, PT100). Ignored when Continuous Mode is enabled.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Wireless Communications (BLE-only)</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setLoRaWANDevEUI</code></td>
+<td style="text-align: left;"><code>A6</code></td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#lorawan">Yes</a></td>
+<td style="text-align: left;">Sets the LoRaWAN Device EUI.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setLoRaWANAppEUI</code></td>
+<td style="text-align: left;"><code>A7</code></td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#lorawan">Yes</a></td>
+<td style="text-align: left;">Sets the LoRaWAN Application EUI.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setLoRaWANAppKey</code></td>
+<td style="text-align: left;"><code>A8</code></td>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#lorawan">Yes</a></td>
+<td style="text-align: left;">Sets the LoRaWAN Application Key.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAPN</code></td>
+<td style="text-align: left;"><code>93</code></td>
+<td style="text-align: left;">Variable</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#nb-iotlte-m">Yes</a></td>
+<td style="text-align: left;">Sets the NB-IoT/LTE-M APN.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setExternalSIM</code></td>
+<td style="text-align: left;"><code>94</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#nb-iotlte-m">Yes</a></td>
+<td style="text-align: left;">Toggles between the integrated eSIM and an external Nano-SIM.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setConPreference</code></td>
+<td style="text-align: left;"><code>95</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-2</td>
+<td style="text-align: left;"><a href="../reference-parameters/#nb-iotlte-m">Yes</a></td>
+<td style="text-align: left;">Sets the NB-IoT/LTE-M connection preference: <code>0</code> = Automatic (not fully supported by the firmware yet — currently falls back to NB-IoT), <code>1</code> = LTE-M, <code>2</code> = NB-IoT.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setMaxRetryCon</code></td>
+<td style="text-align: left;"><code>A9</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1-10</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Sets the maximum number of connection retry attempts.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setWiFiSSID</code></td>
+<td style="text-align: left;"><code>96</code></td>
+<td style="text-align: left;">Variable</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#wi-fi">Yes</a></td>
+<td style="text-align: left;">Sets the Wi-Fi network SSID.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setWiFiPsswd</code></td>
+<td style="text-align: left;"><code>97</code></td>
+<td style="text-align: left;">Variable</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#wi-fi">Yes</a></td>
+<td style="text-align: left;">Sets the Wi-Fi network password.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setLoRaWANClass</code></td>
+<td style="text-align: left;"><code>98</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-2</td>
+<td style="text-align: left;"><a href="../reference-parameters/#lorawan">Yes</a></td>
+<td style="text-align: left;">Sets the LoRaWAN device class (A/B/C).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setMQTTIP</code></td>
+<td style="text-align: left;"><code>99</code></td>
+<td style="text-align: left;">Variable</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#mqtt-nb-iotlte-m-and-wi-fi">Yes</a></td>
+<td style="text-align: left;">Sets the MQTT broker IP/hostname.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setMQTTPort</code></td>
+<td style="text-align: left;"><code>9A</code></td>
+<td style="text-align: left;">Variable</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#mqtt-nb-iotlte-m-and-wi-fi">Yes</a></td>
+<td style="text-align: left;">Sets the MQTT broker port.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setMQTTUser</code></td>
+<td style="text-align: left;"><code>9B</code></td>
+<td style="text-align: left;">Variable</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#mqtt-nb-iotlte-m-and-wi-fi">Yes</a></td>
+<td style="text-align: left;">Sets the MQTT username.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setMQTTPasswd</code></td>
+<td style="text-align: left;"><code>9C</code></td>
+<td style="text-align: left;">Variable</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#mqtt-nb-iotlte-m-and-wi-fi">Yes</a></td>
+<td style="text-align: left;">Sets the MQTT password.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setMQTTBaseTopic</code></td>
+<td style="text-align: left;"><code>9D</code></td>
+<td style="text-align: left;">Variable</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><a href="../reference-parameters/#mqtt-nb-iotlte-m-and-wi-fi">Yes</a></td>
+<td style="text-align: left;">Sets the MQTT base topic.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setSignalData</code></td>
+<td style="text-align: left;"><code>9E</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#mqtt-nb-iotlte-m-and-wi-fi">Yes</a></td>
+<td style="text-align: left;">Enables/Disables logging NB-IoT signal quality (RSRQ/RSRP).</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>In IsurDASH, the parameters in the <strong>Wireless Communications (BLE-only)</strong> section above can only be changed <strong>locally over Bluetooth</strong> (see <strong><a href="../reference-parameters/#82-wireless-communications-parameters">8.2 Wireless Communications Parameters</a></strong>) — this protects against a bad remote configuration leaving the ISURLOG unreachable. However, <strong>the firmware itself does not reject these same type codes if they arrive over a WiFi, LoRaWAN, or NB-IoT downlink</strong> — IsurDASH simply never sends them that way. If you are integrating downlink configuration into a third-party SCADA or backend, keep this in mind: nothing in the firmware stops you from sending these over the air, only IsurDASH's own UI restricts it.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function Name</th>
+<th style="text-align: left;">Type (Hex)</th>
+<th style="text-align: left;">Size (Bytes)</th>
+<th style="text-align: left;">Multiplier</th>
+<th style="text-align: left;">Range (Min/Max)</th>
+<th style="text-align: left;">IsurDASH Configurable</th>
+<th style="text-align: left;">Description / Equivalent Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Analog Input Configuration</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAnalogPreAcquisition</code></td>
+<td style="text-align: left;"><code>AA</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-65535</td>
+<td style="text-align: left;"><a href="../reference-parameters/#analog-sensor-4-20ma-inputs">Yes</a></td>
+<td style="text-align: left;">Sets pre-acquisition time (ms) for analog inputs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAnalogInputEnable</code></td>
+<td style="text-align: left;"><code>AB</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#analog-sensor-4-20ma-inputs">Yes</a></td>
+<td style="text-align: left;">Enables/Disables the Analog Input.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAnalogInputZero</code></td>
+<td style="text-align: left;"><code>AC</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#analog-sensor-4-20ma-inputs">Yes</a></td>
+<td style="text-align: left;">Sets the 4mA engineering value (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAnalogInputFullScale</code></td>
+<td style="text-align: left;"><code>AD</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#analog-sensor-4-20ma-inputs">Yes</a></td>
+<td style="text-align: left;">Sets the 20mA engineering value (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAnalogInputLow</code></td>
+<td style="text-align: left;"><code>AE</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#analog-sensor-4-20ma-inputs">Yes</a></td>
+<td style="text-align: left;">Sets the Low Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAnalogInputHigh</code></td>
+<td style="text-align: left;"><code>AF</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#analog-sensor-4-20ma-inputs">Yes</a></td>
+<td style="text-align: left;">Sets the High Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAnalogInputLowCond</code></td>
+<td style="text-align: left;"><code>B0</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#analog-sensor-4-20ma-inputs">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Low Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAnalogInputHighCond</code></td>
+<td style="text-align: left;"><code>B1</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#analog-sensor-4-20ma-inputs">Yes</a></td>
+<td style="text-align: left;">Enables/Disables High Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Digital Input Configuration</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setDigitalEnable</code></td>
+<td style="text-align: left;"><code>B2</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#digital-sensor">Yes</a></td>
+<td style="text-align: left;">Enables/Disables the Digital Input.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setDigitalCounter</code></td>
+<td style="text-align: left;"><code>B3</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#digital-sensor">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Digital Input Counter Mode.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setDigitalPulseWeight</code></td>
+<td style="text-align: left;"><code>B4</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#digital-sensor">Yes</a></td>
+<td style="text-align: left;">Sets the Pulse Value/Weight (e.g., 10 liters/pulse).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setDigitalWake</code></td>
+<td style="text-align: left;"><code>B5</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#digital-sensor">Yes</a></td>
+<td style="text-align: left;">Sets the number of pulses required to wake the device.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setDigitalLow</code></td>
+<td style="text-align: left;"><code>B6</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#digital-sensor">Yes</a></td>
+<td style="text-align: left;">Sets the Low Alarm threshold.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setDigitalHigh</code></td>
+<td style="text-align: left;"><code>B7</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#digital-sensor">Yes</a></td>
+<td style="text-align: left;">Sets the High Alarm threshold.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setDigitalLowCond</code></td>
+<td style="text-align: left;"><code>B8</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#digital-sensor">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Low Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setDigitalHighCond</code></td>
+<td style="text-align: left;"><code>B9</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#digital-sensor">Yes</a></td>
+<td style="text-align: left;">Enables/Disables High Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modbus Configuration (Base)</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusPreAcquisition</code></td>
+<td style="text-align: left;"><code>BA</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-65535</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets pre-acquisition time (ms) for Modbus inputs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputEnable</code></td>
+<td style="text-align: left;"><code>BB</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Enables/Disables the Modbus Input.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputSlaveAddress</code></td>
+<td style="text-align: left;"><code>BC</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the Modbus Slave Address.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputRegisterAddress</code></td>
+<td style="text-align: left;"><code>BD</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-65535</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the Register Address to read.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputFc</code></td>
+<td style="text-align: left;"><code>BE</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the Modbus Function Code (FC).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputNumberOfDecimals</code></td>
+<td style="text-align: left;"><code>BF</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the number of decimal places for scaling.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputIsFP</code></td>
+<td style="text-align: left;"><code>C0</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Floating Point (IEEE754) decoding.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputInvert</code></td>
+<td style="text-align: left;"><code>C1</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Inverse Offset Mode.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputOffset</code></td>
+<td style="text-align: left;"><code>C2</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the Modbus reading Offset (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputLow</code></td>
+<td style="text-align: left;"><code>C3</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the Low Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputHigh</code></td>
+<td style="text-align: left;"><code>C4</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the High Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputLowCond</code></td>
+<td style="text-align: left;"><code>C5</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Low Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputHighCond</code></td>
+<td style="text-align: left;"><code>C6</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Enables/Disables High Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modbus Configuration (Advanced)</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputBaudrate</code></td>
+<td style="text-align: left;"><code>FF</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the Modbus Baudrate.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputDataBits</code></td>
+<td style="text-align: left;"><code>80</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the Modbus Data Bits.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputStopBits</code></td>
+<td style="text-align: left;"><code>81</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the Modbus Stop Bits.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setModbusInputParity</code></td>
+<td style="text-align: left;"><code>82</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-255</td>
+<td style="text-align: left;"><a href="../reference-parameters/#modbus-inputs-rs485">Yes</a></td>
+<td style="text-align: left;">Sets the Modbus Parity.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PT100 Configuration</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setPT100Enable</code></td>
+<td style="text-align: left;"><code>C7</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#pt100-temperature-sensor">Yes</a></td>
+<td style="text-align: left;">Enables/Disables the PT100 Input.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setPT100Wires</code></td>
+<td style="text-align: left;"><code>C8</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2-4</td>
+<td style="text-align: left;"><a href="../reference-parameters/#pt100-temperature-sensor">Yes</a></td>
+<td style="text-align: left;">Sets the number of wires (2, 3, or 4).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setPT100Low</code></td>
+<td style="text-align: left;"><code>C9</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#pt100-temperature-sensor">Yes</a></td>
+<td style="text-align: left;">Sets the Low Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setPT100High</code></td>
+<td style="text-align: left;"><code>CA</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#pt100-temperature-sensor">Yes</a></td>
+<td style="text-align: left;">Sets the High Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setPT100LowCond</code></td>
+<td style="text-align: left;"><code>CB</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#pt100-temperature-sensor">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Low Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setPT100HighCond</code></td>
+<td style="text-align: left;"><code>CC</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#pt100-temperature-sensor">Yes</a></td>
+<td style="text-align: left;">Enables/Disables High Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Internal T/H Sensors (BME680/SHT30)</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setINTTHEnable</code></td>
+<td style="text-align: left;"><code>CD</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-temperature-and-humidity-sensor-sht30">Yes</a></td>
+<td style="text-align: left;">Enables/Disables the internal temperature and humidity sensor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setINTTHTemperatureLow</code></td>
+<td style="text-align: left;"><code>CE</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-temperature-and-humidity-sensor-sht30">Yes</a></td>
+<td style="text-align: left;">Sets the Low Temp Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setINTTHTemperatureHigh</code></td>
+<td style="text-align: left;"><code>CF</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-temperature-and-humidity-sensor-sht30">Yes</a></td>
+<td style="text-align: left;">Sets the High Temp Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setINTTHTemperatureLowCond</code></td>
+<td style="text-align: left;"><code>D0</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-temperature-and-humidity-sensor-sht30">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Low Temp Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setINTTHTemperatureHighCond</code></td>
+<td style="text-align: left;"><code>D1</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-temperature-and-humidity-sensor-sht30">Yes</a></td>
+<td style="text-align: left;">Enables/Disables High Temp Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setINTTHHumidityLow</code></td>
+<td style="text-align: left;"><code>D2</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-temperature-and-humidity-sensor-sht30">Yes</a></td>
+<td style="text-align: left;">Sets the Low Humidity Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setINTTHHumidityHigh</code></td>
+<td style="text-align: left;"><code>D3</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-temperature-and-humidity-sensor-sht30">Yes</a></td>
+<td style="text-align: left;">Sets the High Humidity Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setINTTHHumidityLowCond</code></td>
+<td style="text-align: left;"><code>D4</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-temperature-and-humidity-sensor-sht30">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Low Humidity Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setINTTHHumidityHighCond</code></td>
+<td style="text-align: left;"><code>D5</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-temperature-and-humidity-sensor-sht30">Yes</a></td>
+<td style="text-align: left;">Enables/Disables High Humidity Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>External T/H Sensors (BME280/680)</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setEXTTHEnable</code></td>
+<td style="text-align: left;"><code>85</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#external-temperature-and-humidity-sensor-bme280">Yes</a></td>
+<td style="text-align: left;">Enables/Disables the External T/H Sensor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setEXTTHTemperatureLow</code></td>
+<td style="text-align: left;"><code>86</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#external-temperature-and-humidity-sensor-bme280">Yes</a></td>
+<td style="text-align: left;">Sets the Low Temp Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setEXTTHTemperatureHigh</code></td>
+<td style="text-align: left;"><code>87</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#external-temperature-and-humidity-sensor-bme280">Yes</a></td>
+<td style="text-align: left;">Sets the High Temp Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setEXTTHTemperatureLowCond</code></td>
+<td style="text-align: left;"><code>88</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#external-temperature-and-humidity-sensor-bme280">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Low Temp Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setEXTTHTemperatureHighCond</code></td>
+<td style="text-align: left;"><code>89</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#external-temperature-and-humidity-sensor-bme280">Yes</a></td>
+<td style="text-align: left;">Enables/Disables High Temp Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setEXTTHHumidityLow</code></td>
+<td style="text-align: left;"><code>8A</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#external-temperature-and-humidity-sensor-bme280">Yes</a></td>
+<td style="text-align: left;">Sets the Low Humidity Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setEXTTHHumidityHigh</code></td>
+<td style="text-align: left;"><code>8B</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#external-temperature-and-humidity-sensor-bme280">Yes</a></td>
+<td style="text-align: left;">Sets the High Humidity Alarm threshold (scaled by 100).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setEXTTHHumidityLowCond</code></td>
+<td style="text-align: left;"><code>8C</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#external-temperature-and-humidity-sensor-bme280">Yes</a></td>
+<td style="text-align: left;">Enables/Disables Low Humidity Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setEXTTHHumidityHighCond</code></td>
+<td style="text-align: left;"><code>8D</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#external-temperature-and-humidity-sensor-bme280">Yes</a></td>
+<td style="text-align: left;">Enables/Disables High Humidity Alarm conditional transmission.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Internal Accelerometer (LIS2DH12)</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAccelEnable</code></td>
+<td style="text-align: left;"><code>00</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-accelerometer-lis2dh12">Yes</a></td>
+<td style="text-align: left;">Enables/Disables the internal accelerometer.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAccellowCond</code></td>
+<td style="text-align: left;"><code>01</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;">No (coming soon)</td>
+<td style="text-align: left;">Enables/Disables Low Alarm conditional transmission (per axis, via channel).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAccelhighCond</code></td>
+<td style="text-align: left;"><code>02</code></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: left;">No (coming soon)</td>
+<td style="text-align: left;">Enables/Disables High Alarm conditional transmission (per axis, via channel).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAccelLow</code></td>
+<td style="text-align: left;"><code>03</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-accelerometer-lis2dh12">Yes</a></td>
+<td style="text-align: left;">Sets the Low Alarm threshold, in g (per axis, via channel).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>setAccelHigh</code></td>
+<td style="text-align: left;"><code>04</code></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">-327.68 to 327.67</td>
+<td style="text-align: left;"><a href="../reference-parameters/#internal-accelerometer-lis2dh12">Yes</a></td>
+<td style="text-align: left;">Sets the High Alarm threshold, in g (per axis, via channel).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

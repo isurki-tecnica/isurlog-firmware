@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/build-environment/">
+        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/historical-data-influxdb/">
       
       
-        <link rel="prev" href="../reference-parameters/">
+        <link rel="prev" href="../data-access-overview/">
       
       
-        <link rel="next" href="../architecture-overview/">
+        <link rel="next" href="../realtime-data-mqtt/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>1. Build Environment Setup - ISURLOG Docs</title>
+        <title>10. Historical Data (InfluxDB) - ISURLOG Docs</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-build-environment-setup" class="md-skip">
+        <a href="#10-historical-data-via-influxdb-api-pull-method" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              1. Build Environment Setup
+              10. Historical Data (InfluxDB)
             
           </span>
         </div>
@@ -886,10 +886,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -918,11 +916,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -943,7 +941,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -958,37 +956,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    1. Build Environment Setup
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../build-environment/" class="md-nav__link">
         
   
   
@@ -1004,159 +975,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#11-supported-development-platforms" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.1 Supported Development Platforms
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#12-recommended-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.2 Recommended Environment
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#13-build-instructions-ubuntu-wsl" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.3 Build Instructions (Ubuntu / WSL)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1.3 Build Instructions (Ubuntu / WSL)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-install-system-dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Install System Dependencies
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-clone-and-install-esp-idf" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: Clone and Install ESP-IDF
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-activate-esp-idf-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Activate ESP-IDF Environment
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-4-clone-this-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Clone This Repository
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-5-compile-the-firmware" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Compile the Firmware
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#14-output-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.4 Output Files
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1.4 Output Files">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#firmware-binary-location" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Firmware Binary Location
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#application-code-app" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Application Code (app/)
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1369,8 +1187,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -1391,11 +1211,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
@@ -1416,7 +1236,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1459,10 +1279,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../historical-data-influxdb/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Historical Data (InfluxDB)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1478,6 +1325,98 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#101-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#102-client-libraries-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Client Libraries &amp; Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#103-connection-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Connection Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#104-data-schema-field-key-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Data Schema: Field Key Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#105-reference-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 Reference Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.5 Reference Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-instantly-no-credentials-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Instantly — No Credentials Needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1573,10 +1512,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#11-supported-development-platforms" class="md-nav__link">
+  <a href="#101-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1.1 Supported Development Platforms
+        10.1 Overview
       
     </span>
   </a>
@@ -1584,10 +1523,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#12-recommended-environment" class="md-nav__link">
+  <a href="#102-client-libraries-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1.2 Recommended Environment
+        10.2 Client Libraries &amp; Documentation
       
     </span>
   </a>
@@ -1595,66 +1534,44 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#13-build-instructions-ubuntu-wsl" class="md-nav__link">
+  <a href="#103-connection-parameters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1.3 Build Instructions (Ubuntu / WSL)
+        10.3 Connection Parameters
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1.3 Build Instructions (Ubuntu / WSL)">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#104-data-schema-field-key-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Data Schema: Field Key Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#105-reference-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 Reference Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.5 Reference Implementation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-1-install-system-dependencies" class="md-nav__link">
+  <a href="#try-it-instantly-no-credentials-needed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Install System Dependencies
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-clone-and-install-esp-idf" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: Clone and Install ESP-IDF
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-activate-esp-idf-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Activate ESP-IDF Environment
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-4-clone-this-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Clone This Repository
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-5-compile-the-firmware" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Compile the Firmware
+        Try It Instantly — No Credentials Needed
       
     </span>
   </a>
@@ -1663,45 +1580,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#14-output-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.4 Output Files
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1.4 Output Files">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#firmware-binary-location" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Firmware Binary Location
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#application-code-app" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Application Code (app/)
-      
-    </span>
-  </a>
   
 </li>
       
@@ -1725,100 +1603,179 @@
   
 
 
-<h1 id="1-build-environment-setup">1. Build Environment Setup</h1>
-<p>This guide details the necessary steps to set up a stable development environment for compiling the custom MicroPython firmware binary (<code>firmware.bin</code>) for the ISURLOG datalogger.</p>
-<p>The firmware is based on <strong>MicroPython v1.25.0</strong> and includes custom modifications for optimized data logging applications.</p>
-<div class="admonition warning">
-<p class="admonition-title">WARNING</p>
-<p>This project is derived from MicroPython v1.25.0 and includes custom modifications. While effort is made to maintain stability, it is subject to changes and and may differ from upstream MicroPython.</p>
+<h1 id="10-historical-data-via-influxdb-api-pull-method">10. Historical Data via InfluxDB API (Pull Method)</h1>
+<h2 id="101-overview">10.1 Overview</h2>
+<p>All historical data from Isurlog devices is stored in <strong>InfluxDB</strong>, a high-performance, open-source time-series database. It is specifically designed to handle large volumes of timestamped data, making it ideal for IoT and monitoring applications.</p>
+<p>Data accessed via this method is <strong>fully decoded</strong> and available in a human-readable format, ready for direct integration into SCADA systems, BI tools, or custom applications <strong>without the need for payload decoding</strong>.</p>
+<h2 id="102-client-libraries-documentation">10.2 Client Libraries &amp; Documentation</h2>
+<p>InfluxDB provides a wide range of officially supported client libraries for popular programming languages, including Python, JavaScript, Java, Go, and C#, which simplifies data interaction.</p>
+<ul>
+<li>The complete official documentation for the InfluxDB v2 API and these client libraries can be found at the following URL:<ul>
+<li><code>https://docs.influxdata.com/influxdb/v2/api-guide/client-libraries/</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="103-connection-parameters">10.3 Connection Parameters</h2>
+<p>The following parameters are required to establish a secure connection to the Isurlog InfluxDB instance:</p>
+<ul>
+<li><strong>Endpoint URL:</strong> <code>https://influxisurdash.isurki.com</code></li>
+<li><strong>Organization:</strong> <code>isurki</code></li>
+<li><strong>Bucket:</strong> A unique bucket name will be provided for each client (e.g., <code>Isurlog_ClientName</code>). This bucket contains data exclusively from that client's registered Isurlog devices.</li>
+<li><strong>API Token:</strong> A unique, private API token will be provided to each client for secure access. This token must be included in the authorization header of all API requests. Please contact our support team to receive your token.</li>
+<li><strong>Device Tag:</strong> Every point is tagged with <strong><code>isurlog_id</code></strong> (the device's ID, e.g. <code>c-123</code>) — use it to filter by device in your own Flux queries.</li>
+</ul>
+<h2 id="104-data-schema-field-key-reference">10.4 Data Schema: Field Key Reference</h2>
+<p>This section provides the mapping between the physical and virtual inputs of the Isurlog datalogger and the corresponding <code>_field</code> keys used in the InfluxDB database. The value associated with each field key represents the final <strong>processed and scaled measurement</strong> from the sensor, ready for use in engineering units.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For analog, digital, and Modbus inputs, the final value and its engineering unit (e.g., $m^{3}$, bar, pH) are determined by the scaling and configuration applied in the IsurDASH application. The value stored in the database is the final, scaled result.</p>
 </div>
-<h2 id="11-supported-development-platforms">1.1 Supported Development Platforms</h2>
-<p>The ISURLOG was designed to be compatible with various development platforms, including <strong>ESP-IDF</strong>, <strong>MicroPython</strong>, and <strong>Arduino IDE</strong>. However, it is important to note that <strong>ISURKI guarantees full compatibility and total support only with MicroPython</strong>.</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Platform</th>
-<th style="text-align: left;">Compatibility Status</th>
-<th style="text-align: left;">Recommendation</th>
+<th style="text-align: left;">Isurlog Input</th>
+<th style="text-align: left;">InfluxDB <code>_field</code> Key</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>MicroPython</strong></td>
-<td style="text-align: left;"><strong>Fully Guaranteed and Supported</strong></td>
-<td style="text-align: left;"><strong>Highly Recommended</strong> to maximize functionality.</td>
+<td style="text-align: left;"><strong>Analog Input 0</strong></td>
+<td style="text-align: left;"><code>AnalogInput0</code></td>
+<td style="text-align: left;">The measurement in engineering units as configured in IsurDASH.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>ESP-IDF / Arduino IDE</strong></td>
-<td style="text-align: left;">Compatibility depends on specific implementation and future updates; <strong>full functionality is not guaranteed</strong>.</td>
-<td style="text-align: left;">Use is not discouraged, but ISURKI focuses on maintaining compatibility and offering continuous support only on MicroPython.</td>
+<td style="text-align: left;"><strong>Analog Input 1</strong></td>
+<td style="text-align: left;"><code>AnalogInput1</code></td>
+<td style="text-align: left;">The measurement in engineering units as configured in IsurDASH.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Analog Input 2</strong></td>
+<td style="text-align: left;"><code>AnalogInput2</code></td>
+<td style="text-align: left;">The measurement in engineering units as configured in IsurDASH.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Analog Input 3</strong></td>
+<td style="text-align: left;"><code>AnalogInput3</code></td>
+<td style="text-align: left;">The measurement in engineering units as configured in IsurDASH.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Digital Input 0</strong></td>
+<td style="text-align: left;"><code>DigitalInput0</code></td>
+<td style="text-align: left;">Depends on IsurDASH configuration: a numeric value for pulse counting or a binary state (0 for open, 1 for closed).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modbus Virtual 0</strong></td>
+<td style="text-align: left;"><code>ModbusInput0</code></td>
+<td style="text-align: left;">The measurement in engineering units as configured in IsurDASH.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modbus Virtual 1</strong></td>
+<td style="text-align: left;"><code>ModbusInput1</code></td>
+<td style="text-align: left;">The measurement in engineering units as configured in IsurDASH.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modbus Virtual 2</strong></td>
+<td style="text-align: left;"><code>ModbusInput2</code></td>
+<td style="text-align: left;">The measurement in engineering units as configured in IsurDASH.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modbus Virtual 3</strong></td>
+<td style="text-align: left;"><code>ModbusInput3</code></td>
+<td style="text-align: left;">The measurement in engineering units as configured in IsurDASH.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PT100 Input</strong></td>
+<td style="text-align: left;"><code>TemperatureInput0</code></td>
+<td style="text-align: left;">Temperature measurement from the external PT100 sensor in degrees Celsius ($^\circ$C).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Internal Temperature</strong></td>
+<td style="text-align: left;"><code>TemperatureSensor0</code></td>
+<td style="text-align: left;">Temperature from the sensor embedded on the ISURLOG's own PCB, in degrees Celsius ($^\circ$C).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>External Temperature</strong></td>
+<td style="text-align: left;"><code>TemperatureSensor1</code></td>
+<td style="text-align: left;">Temperature from an external sensor connected via the <strong>QWIIC (I2C)</strong> port, in degrees Celsius ($^\circ$C). Only present if that sensor is connected.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Internal Humidity</strong></td>
+<td style="text-align: left;"><code>HumiditySensor0</code></td>
+<td style="text-align: left;">Relative humidity from the sensor embedded on the ISURLOG's own PCB (%).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>External Humidity</strong></td>
+<td style="text-align: left;"><code>HumiditySensor1</code></td>
+<td style="text-align: left;">Relative humidity from an external sensor connected via the <strong>QWIIC (I2C)</strong> port (%). Only present if that sensor is connected.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Accelerometer X-axis</strong></td>
+<td style="text-align: left;"><code>AccelerometerX0</code></td>
+<td style="text-align: left;">Acceleration on the X axis (g).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Accelerometer Y-axis</strong></td>
+<td style="text-align: left;"><code>AccelerometerY0</code></td>
+<td style="text-align: left;">Acceleration on the Y axis (g).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Accelerometer Z-axis</strong></td>
+<td style="text-align: left;"><code>AccelerometerZ0</code></td>
+<td style="text-align: left;">Acceleration on the Z axis (g).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Battery Voltage</strong></td>
+<td style="text-align: left;"><code>VoltageInput0</code></td>
+<td style="text-align: left;">The device's battery voltage in millivolts (mV).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Battery C-Rate</strong></td>
+<td style="text-align: left;"><code>CRateInput0</code></td>
+<td style="text-align: left;">The battery's charge/discharge rate, in %/h.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modem Signal Quality</strong></td>
+<td style="text-align: left;"><code>ModemData0</code></td>
+<td style="text-align: left;">RSRQ (Reference Signal Received Quality) reported by the modem, in <strong>dB</strong>. <strong>NB-IoT devices only</strong> — not available on LoRaWAN devices.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modem Signal Strength</strong></td>
+<td style="text-align: left;"><code>ModemData1</code></td>
+<td style="text-align: left;">RSRP (Reference Signal Received Power) reported by the modem, in <strong>dBm</strong>. <strong>NB-IoT devices only</strong> — not available on LoRaWAN devices.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="12-recommended-environment">1.2 Recommended Environment</h2>
-<p>The recommended build environment is <strong>Ubuntu Linux</strong>.</p>
-<p>For Windows users, native compilation is complex and <strong>not recommended</strong>. Please use the <strong>Windows Subsystem for Linux (WSL)</strong> and follow the Ubuntu instructions below for a more stable and straightforward setup.</p>
-<h2 id="13-build-instructions-ubuntu-wsl">1.3 Build Instructions (Ubuntu / WSL)</h2>
-<h3 id="step-1-install-system-dependencies">Step 1: Install System Dependencies</h3>
-<p>Open your Ubuntu terminal and install all required packages:</p>
-<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
-sudo apt-get install build-essential libffi-dev git pkg-config
-sudo apt install -y git wget curl flex bison gperf python3 python3-pip python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
+<h2 id="105-reference-implementation">10.5 Reference Implementation</h2>
+<p>A complete Python script demonstrating how to connect to the InfluxDB API, query historical values for a device, print them as a table, and chart the results is provided in the accompanying file: <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/isurlog_influx_demo.py">isurlog_influx_demo.py</a></strong>.</p>
+<h3 id="try-it-instantly-no-credentials-needed">Try It Instantly — No Credentials Needed</h3>
+<p>The script's connection parameters are pre-filled with a <strong>public, read-only demo</strong> so you can run it immediately, before contacting support for your own token:</p>
+<ul>
+<li><strong>Bucket:</strong> <code>Isurlog_DEMO</code></li>
+<li><strong>Device (<code>isurlog_id</code>):</strong> <code>c-866</code></li>
+<li><strong>Access:</strong> read-only, scoped to this bucket only — it cannot read any other client's data.</li>
+</ul>
+<p>This demo device reports: accelerometer (X/Y/Z), internal temperature and humidity, battery voltage, battery C-rate, NB-IoT signal quality (RSRQ/RSRP), and — via a Modbus soil probe (S-Soil MTEC-02B) wired to it — soil temperature, moisture (VWC), electrical conductivity (EC), and raw dielectric permittivity (Epsilon), so it exercises most of the field keys in the table above.</p>
+<p>To run it, from inside <code>data_integration/</code>, using a virtual environment (standard practice, and required on newer Debian/Ubuntu-based systems such as WSL, which block system-wide <code>pip install</code>):</p>
+<pre><code class="language-bash">python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python isurlog_influx_demo.py
 </code></pre>
-<h3 id="step-2-clone-and-install-esp-idf">Step 2: Clone and Install ESP-IDF</h3>
-<p>This firmware requires ESP-IDF v5.2.x. We recommend <code>v5.2.6</code> for optimal compatibility with the MicroPython base.</p>
-<pre><code class="language-bash"># Create a directory for ESP-IDF
-mkdir -p ~/esp
-cd ~/esp
-
-# Clone the correct version
-git clone -b v5.4.1 --recursive [https://github.com/espressif/esp-idf.git](https://github.com/espressif/esp-idf.git)
-
-# Install the toolchain
-cd esp-idf
-./install.sh esp32
+<p>When you're done:</p>
+<pre><code class="language-bash">deactivate
 </code></pre>
-<h3 id="step-3-activate-esp-idf-environment">Step 3: Activate ESP-IDF Environment</h3>
-<p>You must "source" the export script in your terminal to set environment variables.</p>
-<pre><code class="language-bash"># Add the export command to your profile
-echo -e '\n. $HOME/esp/esp-idf/export.sh' &gt;&gt; ~/.profile
-
-# Source it for the current session
-source $HOME/esp/esp-idf/export.sh
-</code></pre>
-<h3 id="step-4-clone-this-repository">Step 4: Clone This Repository</h3>
-<p>Clone the firmware repository to your system:</p>
-<pre><code class="language-bash">cd ~
-git clone [https://github.com/isurki-tecnica/isurlog-firmware.git](https://github.com/isurki-tecnica/isurlog-firmware.git)
-
-# Navigate into the repo
-cd isurlog-firmware
-
-# Switch to our working branch (if not already on 'main')
-git checkout main
-
-</code></pre>
-<h3 id="step-5-compile-the-firmware">Step 5: Compile the Firmware</h3>
-<p>Finally, navigate to the <code>esp32</code> port directory within the cloned repository and run the build commands:</p>
-<pre><code class="language-bash"># Navigate to the ESP32 port
-cd ports/esp32
-
-# Clean any previous builds (optional, but recommended for fresh builds)
-make BOARD=ESP32_GENERIC BOARD_VARIANT=SPIRAM clean
-
-# Download MicroPython specific submodules
-make submodules
-
-# Start the build process
-make BOARD=ESP32_GENERIC BOARD_VARIANT=SPIRAM
-</code></pre>
-<h2 id="14-output-files">1.4 Output Files</h2>
-<h3 id="firmware-binary-location">Firmware Binary Location</h3>
-<p>The compiled firmware <code>.bin</code> file will be generated in the following directory:</p>
-<p><code>ports/esp32/build-ESP32_GENERIC-SPIRAM/firmware.bin</code></p>
-<h2 id="application-code-app">Application Code (<code>app/</code>)</h2>
-<p>This repository also contains the <code>app/</code> folder.</p>
-<p>IMPORTANT: The contents of this folder (<code>main.py</code>, <code>config/</code>, etc.) are NOT compiled into the firmware. These files represent the Python application logic and must be uploaded manually to the ESP32's filesystem (using tools like Thonny or rshell) after flashing the <code>firmware.bin</code>. This allows for flexible updates to the application logic without recompiling the entire firmware.</p>
+<p>This prints a table of the last 7 days of readings and opens a <strong>single window with a dashboard</strong> (via <code>matplotlib</code>), instead of one pop-up per chart. The layout is two rows — the soil probe readings on top, larger, since they're the main point of this demo; the device's own housekeeping metrics below, smaller:</p>
+<p><img alt="image" src="../images/10-influx-dashboard.png" width="800" /></p>
+<ol>
+<li><strong>Soil — Irrigation</strong> <em>(large)</em> — moisture (<code>ModbusInput1</code>/VWC, left axis, %) vs. electrical conductivity (<code>ModbusInput2</code>/EC, right axis, µS/cm).</li>
+<li><strong>Soil — Diagnostics</strong> <em>(large)</em> — soil temperature (<code>ModbusInput0</code>, left axis, °C) vs. raw dielectric permittivity (<code>ModbusInput3</code>/Epsilon, right axis — dimensionless, it's a ratio of two permittivities so it has no unit).</li>
+<li><strong>Battery</strong> <em>(small)</em> — voltage (<code>VoltageInput0</code>, left axis) vs. C-rate (<code>CRateInput0</code>, right axis).</li>
+<li><strong>Internal Temperature &amp; Humidity</strong> <em>(small)</em> — <code>TemperatureSensor0</code> (left axis) vs. <code>HumiditySensor0</code> (right axis).</li>
+<li><strong>NB-IoT Network Quality</strong> <em>(small)</em> — RSRQ in dB (<code>ModemData0</code>, left axis) vs. RSRP in dBm (<code>ModemData1</code>, right axis).</li>
+</ol>
+<p>Each chart plots two fields with independent Y-axes (left/right), since they're normally on very different scales. The underlying <code>_plot_dual_axis()</code> helper can be reused to build additional charts for any other <code>_field</code> key from <strong>10.4 Data Schema</strong>. The uneven panel sizes are built with <code>matplotlib</code>'s <code>GridSpec</code> (rather than a uniform <code>plt.subplots()</code> grid) so the two large panels can each span what would otherwise be 1.5 columns of a plain 3-column layout.</p>
+<p>To query your <strong>own</strong> devices, replace <code>URL</code>, <code>TOKEN</code>, and <code>BUCKET</code> at the top of the script with the private credentials Isurki provides you (see <strong>10.3 Connection Parameters</strong>).</p>
 
 
 

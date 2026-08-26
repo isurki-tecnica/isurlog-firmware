@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/lorawan-modem-guide/">
+        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/realtime-data-mqtt/">
       
       
-        <link rel="prev" href="../nbiot-modem-guide/">
+        <link rel="prev" href="../historical-data-influxdb/">
       
       
-        <link rel="next" href="../contribution-guide/">
+        <link rel="next" href="../remote-configuration-api/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>6. Advanced LoRaWAN Modem Guide - ISURLOG Docs</title>
+        <title>11. Real-Time Data (MQTT) - ISURLOG Docs</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#6-advanced-lorawan-modem-guide" class="md-skip">
+        <a href="#11-real-time-data-via-mqtt-push-method" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              6. Advanced LoRaWAN Modem Guide
+              11. Real-Time Data (MQTT)
             
           </span>
         </div>
@@ -886,10 +886,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -918,11 +916,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -943,7 +941,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1126,37 +1124,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    6. Advanced LoRaWAN Modem Guide
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
         
   
   
@@ -1172,187 +1143,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#61-firmware-architecture-rui3-framework" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.1 Firmware Architecture (RUI3 Framework)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#62-prerequisites-and-sdk-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.2 Prerequisites and SDK Installation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.2 Prerequisites and SDK Installation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#supported-ides" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Supported IDEs
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rui3-arduino-api-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        RUI3 Arduino API Reference
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#63-uart-communication-and-at-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.3 UART Communication and AT Commands
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#64-advanced-energy-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.4 Advanced Energy Management:
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#65-flashing-hardware-requirements-and-connection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.5 Flashing Hardware Requirements and Connection
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.5 Flashing Hardware Requirements and Connection">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#required-flashing-hardware" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Required Flashing Hardware
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#physical-connection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Physical Connection
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#66-updating-modem-firmware-from-official-binaries" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.6 Updating Modem Firmware from Official Binaries
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.6 Updating Modem Firmware from Official Binaries">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#where-to-get-the-binary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where to Get the Binary
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#update-tool" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Update Tool
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#update-procedure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Update Procedure
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1397,8 +1187,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -1419,11 +1211,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
@@ -1444,7 +1236,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1515,10 +1307,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../realtime-data-mqtt/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Real-Time Data (MQTT)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1534,6 +1353,271 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#111-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.1 Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-connection-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Connection Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-topic-structure-and-message-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Topic Structure and Message Format
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.3 Topic Structure and Message Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1131-lorawan-devices-via-chirpstack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.1 LoRaWAN Devices (via ChirpStack)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.3.1 LoRaWAN Devices (via ChirpStack)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-of-payload-json-chirpstack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example of Payload JSON (ChirpStack)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1132-nb-iot-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.2 NB-IoT Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-payload-decoding-nb-iotcayenne-lpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 Payload Decoding (NB-IoT/Cayenne LPP)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.4 Payload Decoding (NB-IoT/Cayenne LPP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#payload-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Payload Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-type-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Type Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-example-decoding-a-data-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 Example: Decoding a Data Payload
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.5 Example: Decoding a Data Payload">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chunk-1-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chunk 1: Timestamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk-2-battery-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chunk 2: Battery Voltage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk-3-internal-temperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chunk 3: Internal Temperature
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk-4-internal-humidity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chunk 4: Internal Humidity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk-5-analog-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chunk 5: Analog Input
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#116-reference-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 Reference Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.6 Reference Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-instantly-no-credentials-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Instantly — No Credentials Needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#live-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1601,44 +1685,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#61-firmware-architecture-rui3-framework" class="md-nav__link">
+  <a href="#111-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.1 Firmware Architecture (RUI3 Framework)
+        11.1 Overview
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#62-prerequisites-and-sdk-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.2 Prerequisites and SDK Installation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.2 Prerequisites and SDK Installation">
+    <nav class="md-nav" aria-label="11.1 Overview">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#supported-ides" class="md-nav__link">
+  <a href="#data-format" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Supported IDEs
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rui3-arduino-api-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        RUI3 Arduino API Reference
+        Data Format
       
     </span>
   </a>
@@ -1651,10 +1713,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#63-uart-communication-and-at-commands" class="md-nav__link">
+  <a href="#112-connection-parameters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.3 UART Communication and AT Commands
+        11.2 Connection Parameters
       
     </span>
   </a>
@@ -1662,44 +1724,50 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#64-advanced-energy-management" class="md-nav__link">
+  <a href="#113-topic-structure-and-message-format" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.4 Advanced Energy Management:
+        11.3 Topic Structure and Message Format
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#65-flashing-hardware-requirements-and-connection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.5 Flashing Hardware Requirements and Connection
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.5 Flashing Hardware Requirements and Connection">
+    <nav class="md-nav" aria-label="11.3 Topic Structure and Message Format">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#required-flashing-hardware" class="md-nav__link">
+  <a href="#1131-lorawan-devices-via-chirpstack" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Required Flashing Hardware
+        11.3.1 LoRaWAN Devices (via ChirpStack)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.3.1 LoRaWAN Devices (via ChirpStack)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-of-payload-json-chirpstack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example of Payload JSON (ChirpStack)
       
     </span>
   </a>
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
           <li class="md-nav__item">
-  <a href="#physical-connection" class="md-nav__link">
+  <a href="#1132-nb-iot-devices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Physical Connection
+        11.3.2 NB-IoT Devices
       
     </span>
   </a>
@@ -1712,22 +1780,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#66-updating-modem-firmware-from-official-binaries" class="md-nav__link">
+  <a href="#114-payload-decoding-nb-iotcayenne-lpp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.6 Updating Modem Firmware from Official Binaries
+        11.4 Payload Decoding (NB-IoT/Cayenne LPP)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="6.6 Updating Modem Firmware from Official Binaries">
+    <nav class="md-nav" aria-label="11.4 Payload Decoding (NB-IoT/Cayenne LPP)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#where-to-get-the-binary" class="md-nav__link">
+  <a href="#payload-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Where to Get the Binary
+        Payload Structure
       
     </span>
   </a>
@@ -1735,10 +1803,38 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#update-tool" class="md-nav__link">
+  <a href="#data-type-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Update Tool
+        Data Type Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-example-decoding-a-data-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 Example: Decoding a Data Payload
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.5 Example: Decoding a Data Payload">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chunk-1-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chunk 1: Timestamp
       
     </span>
   </a>
@@ -1746,10 +1842,82 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#update-procedure" class="md-nav__link">
+  <a href="#chunk-2-battery-voltage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Update Procedure
+        Chunk 2: Battery Voltage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk-3-internal-temperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chunk 3: Internal Temperature
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk-4-internal-humidity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chunk 4: Internal Humidity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk-5-analog-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chunk 5: Analog Input
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#116-reference-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 Reference Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.6 Reference Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-instantly-no-credentials-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try It Instantly — No Credentials Needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#live-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live Dashboard
       
     </span>
   </a>
@@ -1781,107 +1949,250 @@
   
 
 
-<h1 id="6-advanced-lorawan-modem-guide">6. Advanced LoRaWAN Modem Guide</h1>
-<p>This guide is intended for developers who need to modify, compile, or flash custom applications onto the <strong>RAK3172</strong> modem used by the ISURLOG, replacing the default AT command application.</p>
-<h2 id="61-firmware-architecture-rui3-framework">6.1 Firmware Architecture (RUI3 Framework)</h2>
-<p>When developing for the RAK3172, the software environment relies on the <strong>RUI3 (RAKwireless Unified Interface V3)</strong> platform. It is important to understand how the module can be utilized:</p>
-<ol>
-<li><strong>Default AT Command Firmware:</strong> The module comes pre-flashed with the standard RUI3 AT command firmware. In this ecosystem, the RAK3172 acts as a standard communication peripheral controlled completely by the ESP32 via serial interface queries. </li>
-<li><strong>Custom Application Firmware (Arduino API):</strong> RUI3 allows developers to compile and run standalone custom C++/Arduino applications directly inside the RAK3172’s internal STM32WLE55 microcontroller. This layer can bypass the external controller for specific tasks or fully customize how the radio stack behaves.</li>
-</ol>
+<h1 id="11-real-time-data-via-mqtt-push-method">11. Real-Time Data via MQTT (Push Method)</h1>
+<h2 id="111-overview">11.1 Overview</h2>
+<p>This integration method is designed for applications that require <strong>immediate access to data</strong>, such as live monitoring dashboards, real-time alerting systems, or event-driven automation. The Isurlog platform pushes data to an MQTT broker the instant it is received from a device.</p>
+<h3 id="data-format">Data Format</h3>
+<p>Data is published as a <strong>raw binary payload</strong> (represented as a hexadecimal string) to maximize efficiency and minimize data consumption over cellular networks. Therefore, the client application <strong>must decode this payload</strong> to interpret the sensor values.</p>
 <hr />
-<h2 id="62-prerequisites-and-sdk-installation">6.2 Prerequisites and SDK Installation</h2>
-<p>To develop, modify, or compile custom application firmware for the RAK3172 using the RUI3 framework, you must configure a compatible development environment.</p>
-<h3 id="supported-ides">Supported IDEs</h3>
-<p>The RAK3172 RUI3 core natively supports development via the <strong>Arduino IDE</strong> or Visual Studio Code (with PlatformIO extension).
-* <strong>Setup and Installation:</strong> To install the necessary RAKwireless Board Support Package (BSP) in your development environment, follow the official instructions: <a href="https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/supported-ide">https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/supported-ide</a></p>
-<h3 id="rui3-arduino-api-reference">RUI3 Arduino API Reference</h3>
-<p>When compiling custom firmware to run natively on the module, developers can leverage the unified Arduino API provided by RAKwireless to manage LoRaWAN parameters, internal hardware, and peripherals: <a href="https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/arduino-api">https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/arduino-api</a></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For the physical hardware needed to flash the modem, see <strong>6.5 Flashing Hardware Requirements and Connection</strong> below.</p>
-</div>
-<hr />
-<h2 id="63-uart-communication-and-at-commands">6.3 UART Communication and AT Commands</h2>
-<p>The ISURLOG uses the RAK3172 module to establish LoRaWAN communication via a hardware UART port (<code>UART1</code>) using <strong>AT commands</strong>. The default serial configuration between the ESP32 and the RAK3172 is:</p>
+<h2 id="112-connection-parameters">11.2 Connection Parameters</h2>
+<p>To receive the real-time data stream, clients must connect to the Isurlog MQTT broker using the following secure parameters:</p>
 <ul>
-<li><strong>TX:</strong> GPIO2</li>
-<li><strong>RX:</strong> GPIO4</li>
-<li><strong>Baudrate:</strong> 115200 8N1</li>
+<li><strong>Broker URL:</strong> <code>mqttisurdash.isurki.com</code></li>
+<li><strong>Port (TLS):</strong> 8883 (Secure connection using TLS is mandatory)</li>
+<li><strong>MQTT Version:</strong> The broker supports MQTT v5.0 and v3.1.1 clients.</li>
+<li><strong>Username / Password:</strong> A unique username and password will be provided for secure access.</li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Reference</p>
-<p>The complete and official RUI3 AT Command Manual for managing network joining (OTAA/ABP), keys (DevEUI, AppEUI, AppKey), and data transmission configurations can be found here: <a href="https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/at-command-manual/">https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/at-command-manual/</a></p>
-<p>If you're building a <strong>replacement</strong> application firmware for the modem, it must keep supporting the same AT command surface the ISURLOG's own driver (<code>modules/lorawan.py</code>) actually depends on — see the verified command list in <strong><a href="../module-library-reference/">2.1 Module &amp; Library Reference</a></strong> as a compatibility checklist.</p>
-</div>
 <hr />
-<h2 id="64-advanced-energy-management">6.4 Advanced Energy Management:</h2>
-<p>The RAK3172 is highly optimized for ultra-low power consumption. When the system is in an idle state between datalogging intervals, the ESP32 can transition the LoRaWAN module into its lowest consumption state via software commands:</p>
+<h2 id="113-topic-structure-and-message-format">11.3 Topic Structure and Message Format</h2>
+<p>The topic structure and message format depend on the communication technology used by the device (LoRaWAN or NB-IoT).</p>
+<h3 id="1131-lorawan-devices-via-chirpstack">11.3.1 LoRaWAN Devices (via ChirpStack)</h3>
+<p>LoRaWAN data is processed via the ChirpStack Network Server.</p>
 <ul>
-<li><strong>Sleep Command:</strong> Sending the <code>AT+SLEEP</code> command puts the module into low-power sleep mode (dropping current consumption down to microamps).</li>
-<li><strong>Wake-Up Routine:</strong> The RAK3172 can be automatically awakened from sleep mode by detecting falling edges/activity on the UART RX line. Sending a dummy character sequence from the ESP32's TX line wakes up the module, making it instantly ready to receive subsequent operational AT commands.</li>
+<li><strong>Topic Structure:</strong> <code>application/{application-id}/device/{device_eui}/event/up</code></li>
+<li><strong>Message Format:</strong> <strong>JSON Object with Decoded Data</strong>. The ChirpStack Network Server automatically decodes the raw payload. Decoded sensor values are available directly within the <code>object</code> key of the JSON.</li>
+<li><strong>Metadata:</strong> The JSON also includes valuable network metadata such as RSSI, SNR, gateway location, and transmission parameters.</li>
 </ul>
-<p>In addition to data communication via the UART port, the ESP32 and the RAK3172 module are connected through a dedicated GPIO line. This connection enables dynamic and efficient management of the host processor's low-power modes, optimizing the autonomy of the <strong>ISURLOG</strong>.</p>
-<p>The connection between the modules is as follows:</p>
+<h4 id="example-of-payload-json-chirpstack">Example of Payload JSON (ChirpStack)</h4>
+<p>This example shows the key structure and content of the <code>object</code> field with the decoded readings:</p>
+<pre><code class="language-json">{
+  &quot;deviceInfo&quot;: {
+    &quot;applicationName&quot;: &quot;Isurlog&quot;,
+    &quot;deviceName&quot;: &quot;c-123&quot;,
+    &quot;devEui&quot;: &quot;xxxxxxxxxxxxx&quot;
+  },
+  &quot;fCnt&quot;: 61,
+  &quot;fPort&quot;: 2,
+  &quot;data&quot;: &quot;AHVoyD3dAHQP5wAAAABnAPcAaIcAAv+d&quot;,
+  &quot;object&quot;: {
+    &quot;AnalogInput_0&quot;: -0.99,
+    &quot;DigitalInput_0&quot;: 0.0,
+    &quot;HumiditySensor_0&quot;: 67.5,
+    &quot;TemperatureSensor_0&quot;: 24.7,
+    &quot;UnixTime_0&quot;: 1757953501.0,
+    &quot;VoltageInput_0&quot;: 4071.0
+  },
+  &quot;rxInfo&quot;: [
+    {
+      &quot;gatewayId&quot;: &quot;b827ebfffe70a454&quot;,
+      &quot;rssi&quot;: -51,
+      &quot;snr&quot;: 6.2
+    }
+  ],
+  &quot;txInfo&quot;: {
+    &quot;frequency&quot;: 867500000,
+    &quot;modulation&quot;: {
+      &quot;lora&quot;: {
+        &quot;spreadingFactor&quot;: 7
+      }
+    }
+  }
+}
+</code></pre>
+<h3 id="1132-nb-iot-devices">11.3.2 NB-IoT Devices</h3>
+<ul>
+<li><strong>Topic Structure:</strong> <code>isurlog/datos/{device_id}</code></li>
+<li><strong>Message Format:</strong> <strong>Raw Binary Payload</strong> (Hexadecimal String).</li>
+</ul>
+<hr />
+<h2 id="114-payload-decoding-nb-iotcayenne-lpp">11.4 Payload Decoding (NB-IoT/Cayenne LPP)</h2>
+<p>The Isurlog payload format is a variant of the <strong>Cayenne Low Power Payload (LPP)</strong>. This format is highly efficient and allows for multiple sensor readings to be sent in a single message.</p>
+<h3 id="payload-structure">Payload Structure</h3>
+<p>Each payload consists of one or more concatenated data chunks. Each chunk follows the structure:</p>
+<p><code>Channel (1 byte) | Data Type (1 byte) | Value (N bytes)</code></p>
+<ul>
+<li><strong>Channel:</strong> A user-defined identifier for the data source (0–255), typically corresponding to the physical input on the Isurlog.</li>
+<li><strong>Data Type:</strong> A 1-byte code that specifies the type of data being sent (e.g., temperature, voltage).</li>
+<li><strong>Value:</strong> The raw sensor reading, encoded over N bytes.</li>
+</ul>
+<p>All multi-byte values are encoded in <strong>Big-Endian</strong> byte order. The first data payload transmitted begins with a <strong>Unix Timestamp chunk (Type $0\times75$)</strong>.</p>
+<h3 id="data-type-reference">Data Type Reference</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">Pin ESP32</th>
-<th style="text-align: left;">Pin RAK3172</th>
-<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Sensor Name</th>
+<th style="text-align: left;">Channel</th>
+<th style="text-align: left;">Type (Hex)</th>
+<th style="text-align: left;">Data Format</th>
+<th style="text-align: left;">Value Calculation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>ESP_WAKE_UP</strong></td>
-<td style="text-align: left;">GPIO35 (Input)</td>
-<td style="text-align: left;">PA8 (Output)</td>
-<td style="text-align: left;">Digital input used to wake up the ESP32 when the LoRaWAN module receives a downlink packet from the gateway/server.</td>
+<td style="text-align: left;"><strong>Digital Input</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">$0\times00$</td>
+<td style="text-align: left;">1-byte Unsigned Integer</td>
+<td style="text-align: left;">Final Value = Integer</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Analog Input</strong></td>
+<td style="text-align: left;">0-3</td>
+<td style="text-align: left;">$0\times02$</td>
+<td style="text-align: left;">2-byte Signed Integer</td>
+<td style="text-align: left;">Final Value = Integer / 100.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modbus Input</strong></td>
+<td style="text-align: left;">0-3</td>
+<td style="text-align: left;">$0\times04$</td>
+<td style="text-align: left;">2-byte Signed Integer</td>
+<td style="text-align: left;">Final Value = Integer / 100.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PT100 Temperature</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">$0\times66$</td>
+<td style="text-align: left;">2-byte Signed Integer</td>
+<td style="text-align: left;">Final Value = Integer / 10.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Temperature Sensor</strong></td>
+<td style="text-align: left;">0 (internal) / 1 (external, QWIIC)</td>
+<td style="text-align: left;">$0\times67$</td>
+<td style="text-align: left;">2-byte Signed Integer</td>
+<td style="text-align: left;">Final Value = Integer / 10.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Humidity Sensor</strong></td>
+<td style="text-align: left;">0 (internal) / 1 (external, QWIIC)</td>
+<td style="text-align: left;">$0\times68$</td>
+<td style="text-align: left;">1-byte Unsigned Integer</td>
+<td style="text-align: left;">Final Value = Integer / 2.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Accelerometer</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">$0\times71$</td>
+<td style="text-align: left;">6 bytes = three 2-byte Signed Integers (X, Y, Z)</td>
+<td style="text-align: left;">Final Value (per axis) = Integer / 1000.0 (g)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Battery Voltage</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">$0\times74$</td>
+<td style="text-align: left;">2-byte Unsigned Integer</td>
+<td style="text-align: left;">Final Value = Integer (in mV)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Unix Timestamp</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">$0\times75$</td>
+<td style="text-align: left;">4-byte Unsigned Integer</td>
+<td style="text-align: left;">Final Value = Integer (seconds)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Battery C-Rate</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">$0\times77$</td>
+<td style="text-align: left;">1-byte Signed Integer</td>
+<td style="text-align: left;">Final Value = Integer / 10.0 (%/h)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modem Signal Quality</strong></td>
+<td style="text-align: left;">0 (RSRQ) / 1 (RSRP)</td>
+<td style="text-align: left;">$0\times78$</td>
+<td style="text-align: left;">1-byte Unsigned Integer</td>
+<td style="text-align: left;">Final Value = Integer (channel 0: dB · channel 1: dBm). <strong>NB-IoT devices only.</strong></td>
 </tr>
 </tbody>
 </table>
-<p>This functionality is particularly useful when the RAK3172 module operates in <strong>LoRaWAN Class B</strong> (synchronized beacons) or <strong>Class C</strong> (continuous listening) modes. The <code>ESP_WAKE_UP</code> signal enables the RAK3172 to immediately activate the ESP32 whenever an asynchronous <strong>downlink data packet</strong> is received from the network. Once awake, the ESP32 can communicate with the RAK3172 via UART to process the incoming data or commands. </p>
-<p>This "wake-on-demand" capability allows the ESP32 to remain in deep sleep indefinitely, significantly reducing the system's power consumption while maintaining near-zero latency for remote server configurations or downlinks.</p>
-<hr />
-<h2 id="65-flashing-hardware-requirements-and-connection">6.5 Flashing Hardware Requirements and Connection</h2>
-<p>The ISURLOG board does not include an integrated USB-to-UART converter for the RAK3172 to maintain a minimalist, cost-effective, and low-power hardware profile. </p>
-<h3 id="required-flashing-hardware">Required Flashing Hardware</h3>
-<ul>
-<li><strong>Converter:</strong> An external <strong>UART TTL to USB converter</strong>.</li>
-<li><strong>Connection:</strong> Jumper wires or a dedicated programming header compatible with the board's design.</li>
-</ul>
-<div class="admonition warning">
-<p class="admonition-title">Important (Bootloader Mode)</p>
-<p>Before compiling and uploading a new sketch or firmware from the Arduino IDE, you must put the RAK3172 into bootloader mode by sending the command <code>AT+BOOT</code> over the serial interface.</p>
-</div>
-<h3 id="physical-connection">Physical Connection</h3>
-<p>To physically flash new firmware, update the RUI3 core, or upload an Arduino sketch onto the RAK3172, you must route the programming serial interface lines of the module to your PC using the external UART TTL to USB converter.</p>
-<p>The connection workflow requires matching the converter's <strong>TX</strong>, <strong>RX</strong> and <strong>GND</strong> to the corresponding programming pins of the RAK3172 on the PCB.</p>
-<p>The programming port/pins for the RAK3172 module on the ISURLOG PCB are located as shown below:</p>
-<p><img alt="ISURLOG PCB layout with the RAK3172 programming port highlighted" src="../images/6-rak3172-programming-port.jpg" width="750" /></p>
-<h2 id="66-updating-modem-firmware-from-official-binaries">6.6 Updating Modem Firmware from Official Binaries</h2>
-<p>Unlike the scenarios above (which assume you're compiling your own application firmware from source), you don't need the Arduino IDE or the RUI3 BSP at all if you just want to update the modem to an <strong>official ISURKI-provided build</strong> — it's an already-compiled binary.</p>
-<h3 id="where-to-get-the-binary">Where to Get the Binary</h3>
-<p>Each <a href="https://github.com/isurki-tecnica/isurlog-firmware/releases">ISURLOG firmware release</a> includes a <code>rak3172_bins.zip</code> asset (alongside the ESP32 and nRF9151 binaries) containing a single file:</p>
-<ul>
-<li><strong><code>System_Custom_ATCMD.ino.bin</code></strong></li>
-</ul>
 <div class="admonition note">
-<p class="admonition-title">Coming soon</p>
-<p>support for updating the RAK3172 directly from IsurDASH, the same way the <a href="../isurdash-maintenance/">7.8 Device Maintenance</a> flow already updates the <strong>ESP32</strong>. Until then, the recommended tool is the one below.</p>
+<p class="admonition-title">Note on channel semantics</p>
+<p>for most sensor types, the channel identifies which physical input the reading came from (e.g. Analog Input 0-3). For <strong>Accelerometer</strong>, the same chunk packs all three axes together (there's no separate channel per axis). For <strong>Modem Signal Quality</strong>, the channel is repurposed to distinguish the <em>metric</em> (0 = RSRQ, 1 = RSRP) rather than a physical input.</p>
 </div>
-<h3 id="update-tool">Update Tool</h3>
-<p>The current recommended way to update the RAK3172's firmware is the web-based tool at <strong><a href="https://firmwareupgrade.fencyboy.com/">firmwareupgrade.fencyboy.com</a></strong>.</p>
-<h3 id="update-procedure">Update Procedure</h3>
+<h2 id="115-example-decoding-a-data-payload">11.5 Example: Decoding a Data Payload</h2>
+<p>Consider the following example payload received as a hexadecimal string:
+<code>007568C7D98100741024006701370068400002021D</code></p>
+<p>This payload contains a timestamp followed by four sensor readings. The client application must process the payload in concatenated chunks:</p>
+<h3 id="chunk-1-timestamp">Chunk 1: Timestamp</h3>
+<ul>
+<li><strong>Bytes:</strong> <code>007568C7D981</code></li>
+<li><strong>Type:</strong> <code>0x75</code> (Unix Timestamp)</li>
+<li><strong>Value:</strong> <code>0x68C7D981</code> (1757927809 decimal)</li>
+<li><strong>Result:</strong> The reference time for this data record is 1757927809 (corresponding to Sept 15, 2025 09:16:49 UTC).</li>
+</ul>
+<h3 id="chunk-2-battery-voltage">Chunk 2: Battery Voltage</h3>
+<ul>
+<li><strong>Bytes:</strong> <code>00741024</code></li>
+<li><strong>Type:</strong> <code>0x74</code> (Battery Voltage)</li>
+<li><strong>Value:</strong> <code>0x1024</code> (4132 decimal)</li>
+<li><strong>Result:</strong> 4132 mV</li>
+</ul>
+<h3 id="chunk-3-internal-temperature">Chunk 3: Internal Temperature</h3>
+<ul>
+<li><strong>Bytes:</strong> <code>00670137</code></li>
+<li><strong>Type:</strong> <code>0x67</code> (Internal Temperature Sensor)</li>
+<li><strong>Value:</strong> <code>0x0137</code> (311 decimal, signed)</li>
+<li><strong>Calculation:</strong> $311 / 10.0 = 31.1 ^\circ C$</li>
+</ul>
+<h3 id="chunk-4-internal-humidity">Chunk 4: Internal Humidity</h3>
+<ul>
+<li><strong>Bytes:</strong> <code>006840</code></li>
+<li><strong>Type:</strong> <code>0x68</code> (Internal Humidity Sensor)</li>
+<li><strong>Value:</strong> <code>0x40</code> (64 decimal)</li>
+<li><strong>Calculation:</strong> $64 / 2.0 = 32.0\%$</li>
+</ul>
+<h3 id="chunk-5-analog-input">Chunk 5: Analog Input</h3>
+<ul>
+<li><strong>Bytes:</strong> <code>0002021D</code></li>
+<li><strong>Type:</strong> <code>0x02</code> (Analog Input)</li>
+<li><strong>Value:</strong> <code>0x021D</code> (541 decimal, signed)</li>
+<li><strong>Calculation:</strong> $541 / 100.0 = 5.41$ (in engineering units)</li>
+</ul>
+<h2 id="116-reference-implementation">11.6 Reference Implementation</h2>
+<p>A complete Python script demonstrating the connection, subscription, payload decoding, and a <strong>live-updating dashboard</strong> is provided in the accompanying file: <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/isurlog_mqtt_demo.py">isurlog_mqtt_demo.py</a></strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Dependency Note</p>
+<p>The script requires the accompanying library file, <strong><code>IsurlogLPP.py</code></strong>, to handle the decoding and calculation of sensor values from the raw Cayenne LPP payload format. Both files must be present in the same directory for the example to run.</p>
+</div>
+<p>A device is only ever <strong>one</strong> connectivity type, so the script subscribes to a single topic based on a <code>DEVICE_TYPE</code> setting (<code>"nb-iot"</code> or <code>"lorawan"</code>, matching the same values used in the ISURLOG's own <code>static_config.json</code>) — not to both NB-IoT and LoRaWAN topics at once. For LoRaWAN, fill in your specific <code>APPLICATION_ID</code> and <code>DEVICE_EUI</code> rather than using a wildcard topic, which would otherwise subscribe to every device on every application your credentials can see.</p>
+<h3 id="try-it-instantly-no-credentials-needed">Try It Instantly — No Credentials Needed</h3>
+<p>The script's connection parameters are pre-filled with a <strong>public, read-only demo</strong> so you can run it immediately, before contacting support for your own credentials:</p>
+<ul>
+<li><strong>Device:</strong> <code>c-866</code>, an NB-IoT device (<code>DEVICE_TYPE = "nb-iot"</code>) — the same public demo device used in <a href="../historical-data-influxdb/#105-reference-implementation">10.5 Reference Implementation</a>, with a Modbus soil probe (S-Soil MTEC-02B) wired to it.</li>
+<li><strong>Topic:</strong> <code>isurlog/datos/c-866</code> — subscription is restricted to this device's own topic only, it cannot receive any other client's data.</li>
+</ul>
+<p>To run it, from inside <code>data_integration/</code>:</p>
+<pre><code class="language-bash">python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python isurlog_mqtt_demo.py
+</code></pre>
+<p>When you're done: <code>deactivate</code>.</p>
+<h3 id="live-dashboard">Live Dashboard</h3>
+<p>In addition to printing every decoded message as it arrives, the script opens the <strong>same dashboard layout</strong> as the InfluxDB reference implementation — two large panels on top for the soil probe (<strong>Soil — Irrigation</strong>: VWC/EC, <strong>Soil — Diagnostics</strong>: Temperature/Epsilon), three smaller ones below for the device's own housekeeping metrics (battery, internal temperature/humidity, NB-IoT signal quality) — except here it's fed <strong>live</strong> by the MQTT stream instead of a one-off historical query, with new points appearing as they're received (redrawn every 2 seconds).</p>
+<p><img alt="image" src="../images/11-mqtt-live-dashboard.png" width="800" /></p>
+<p>This works by:</p>
 <ol>
-<li>Connect the UART-to-USB converter to the ISURLOG's "<strong>RAK</strong>" port.</li>
-<li>Power on the ISURLOG in <strong>BOOT</strong> mode.</li>
-<li>Select the serial port in the tool and connect.</li>
-<li>Send the <code>AT+BOOT</code> command and confirm the module responds correctly.</li>
-<li>Select the <strong><code>System_Custom_ATCMD.ino.bin</code></strong> file and click <strong>"Upload firmware"</strong>.</li>
+<li>Keeping a small in-memory buffer (the last 200 points) per field.</li>
+<li>Appending to the right buffer inside the MQTT <code>on_message</code> callback as each payload is decoded.</li>
+<li>Running the MQTT client's network loop in a background thread (<code>client.loop_start()</code>), so the main thread is free to run matplotlib's own event loop (<code>plt.show()</code>) and periodically redraw from the buffers via <code>matplotlib.animation.FuncAnimation</code>.</li>
 </ol>
-<p><img alt="Updating the RAK3172 modem firmware via firmwareupgrade.fencyboy.com" src="../images/6-modem-firmware-update.gif" width="1000" /></p>
+<div class="admonition note">
+<p class="admonition-title">A pitfall worth knowing if you build your own live dual-axis chart</p>
+<p>the figure, subplots, and each panel's twin Y-axis (<code>ax.twinx()</code>) are created <strong>once</strong>, in <code>build_dashboard()</code>. Only the line data is updated afterwards, on every animation frame (<code>_update_line()</code>, via <code>line.set_data()</code> + <code>ax.relim()</code> + <code>ax.autoscale_view()</code>). Recreating the twin axes on every redraw (e.g. calling <code>ax.clear()</code> then <code>ax.twinx()</code> again in a loop) leaves the previous twin axes behind instead of replacing them — they silently stack on top of each other frame after frame, which is what causes overlapping scales and labels spilling outside the plot after the chart has been running for a while.</p>
+</div>
 
 
 
