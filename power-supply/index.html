@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/">
+        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/power-supply/">
       
       
+        <link rel="prev" href="../sensor-connections/">
       
-        <link rel="next" href="sensor-connections/">
+      
+        <link rel="next" href="../power-budget/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>ISURLOG Docs</title>
+        <title>3. Power Supply Methods - ISURLOG Docs</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#isurlog-industrial-iot-datalogger-open-source" class="md-skip">
+        <a href="#3-power-supply-methods" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              3. Power Supply Methods
             
           </span>
         </div>
@@ -228,7 +230,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -255,6 +257,133 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use and Hardware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Use and Hardware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensor-connections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Sensor Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -274,7 +403,7 @@
   <span class="md-ellipsis">
     
   
-    Home
+    3. Power Supply Methods
   
 
     
@@ -285,14 +414,14 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="." class="md-nav__link md-nav__link--active">
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
     
   
-    Home
+    3. Power Supply Methods
   
 
     
@@ -318,24 +447,135 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#where-to-begin" class="md-nav__link">
+  <a href="#31-power-supply-options" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Where to begin
+        3.1. Power Supply Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Power Supply Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311-internal-batteries-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.1. Internal Batteries Only
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-resources" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#312-external-power-only" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Resources
+        3.1.2. External Power Only
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#313-batteries-external-power-hybrid-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.3. Batteries + External Power (Hybrid Mode)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#314-non-rechargeable-batteries-li-socl2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.4. Non-Rechargeable Batteries (Li-SOCl2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-jumper-configuration-for-power-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Jumper Configuration for Power Modes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2. Jumper Configuration for Power Modes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#batteries-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batteries Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-power-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External Power Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batteries-external-power-hybrid-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batteries + External Power (Hybrid Mode)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-rechargeable-batteries-li-socl2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-Rechargeable Batteries (Li-SOCl2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-source-examples-for-mppc-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Source Examples for MPPC Input
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -346,103 +586,6 @@
     </li>
   
 
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Use and Hardware
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Use and Hardware
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="sensor-connections/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    2. Sensor Connections
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -452,35 +595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="power-supply/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    3. Power Supply Methods
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="power-budget/" class="md-nav__link">
+      <a href="../power-budget/" class="md-nav__link">
         
   
   
@@ -508,7 +623,7 @@
   
   
     <li class="md-nav__item">
-      <a href="communications/" class="md-nav__link">
+      <a href="../communications/" class="md-nav__link">
         
   
   
@@ -536,7 +651,7 @@
   
   
     <li class="md-nav__item">
-      <a href="installation-commissioning/" class="md-nav__link">
+      <a href="../installation-commissioning/" class="md-nav__link">
         
   
   
@@ -564,7 +679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="datalogger-operation/" class="md-nav__link">
+      <a href="../datalogger-operation/" class="md-nav__link">
         
   
   
@@ -661,7 +776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-platform/" class="md-nav__link">
+      <a href="../isurdash-platform/" class="md-nav__link">
         
   
   
@@ -689,7 +804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-access-login/" class="md-nav__link">
+      <a href="../isurdash-access-login/" class="md-nav__link">
         
   
   
@@ -717,7 +832,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-dashboard/" class="md-nav__link">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
         
   
   
@@ -745,7 +860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-devices/" class="md-nav__link">
+      <a href="../isurdash-devices/" class="md-nav__link">
         
   
   
@@ -773,7 +888,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-alarms/" class="md-nav__link">
+      <a href="../isurdash-alarms/" class="md-nav__link">
         
   
   
@@ -801,7 +916,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-users/" class="md-nav__link">
+      <a href="../isurdash-users/" class="md-nav__link">
         
   
   
@@ -829,7 +944,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-profiles/" class="md-nav__link">
+      <a href="../isurdash-profiles/" class="md-nav__link">
         
   
   
@@ -857,7 +972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-tags/" class="md-nav__link">
+      <a href="../isurdash-tags/" class="md-nav__link">
         
   
   
@@ -885,7 +1000,7 @@
   
   
     <li class="md-nav__item">
-      <a href="isurdash-maintenance/" class="md-nav__link">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
         
   
   
@@ -921,7 +1036,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference-parameters/" class="md-nav__link">
+      <a href="../reference-parameters/" class="md-nav__link">
         
   
   
@@ -976,24 +1091,135 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#where-to-begin" class="md-nav__link">
+  <a href="#31-power-supply-options" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Where to begin
+        3.1. Power Supply Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Power Supply Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311-internal-batteries-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.1. Internal Batteries Only
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-resources" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#312-external-power-only" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Resources
+        3.1.2. External Power Only
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#313-batteries-external-power-hybrid-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.3. Batteries + External Power (Hybrid Mode)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#314-non-rechargeable-batteries-li-socl2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1.4. Non-Rechargeable Batteries (Li-SOCl2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-jumper-configuration-for-power-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Jumper Configuration for Power Modes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2. Jumper Configuration for Power Modes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#batteries-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batteries Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-power-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External Power Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batteries-external-power-hybrid-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batteries + External Power (Hybrid Mode)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-rechargeable-batteries-li-socl2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-Rechargeable Batteries (Li-SOCl2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-source-examples-for-mppc-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Source Examples for MPPC Input
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1017,43 +1243,117 @@
   
 
 
-<h1 id="isurlog-industrial-iot-datalogger-open-source">ISURLOG: Industrial IoT Datalogger (Open Source)</h1>
+<h1 id="3-power-supply-methods">3. Power Supply Methods</h1>
+<p>The ISURLOG features different power supply options to adapt to the greatest number of possible situations.</p>
+<h2 id="31-power-supply-options">3.1. Power Supply Options</h2>
+<p>The ISURLOG features an integrated battery charger and power management circuitry, supporting three modes of operation.</p>
 <div class="admonition note">
-<p class="admonition-title">Migration in progress</p>
-<p>Use and Hardware (Module A) has fully moved here. Firmware Development, Data Integration &amp; APIs, and Troubleshooting are still on the <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki">GitHub Wiki</a></strong> for now, and will move here too.</p>
+<p class="admonition-title">Installation Note</p>
+<p>For the step-by-step procedure on how to install and remove the batteries, please refer to the <strong>5. Installation and Commissioning</strong> section.</p>
 </div>
-<p>The ISURLOG datalogger is a highly versatile <strong>ESP32-based</strong> device that integrates multiple functionalities for data acquisition and logging in diverse environments. It is a complete and efficient solution for monitoring industrial signals (4-20mA, Modbus RS485, PT100) with advanced connectivity (NB-IoT/LoRaWAN, Wi-Fi, and Bluetooth).
-This datalogger runs on an <strong>optimized MicroPython firmware</strong> for low power consumption (20µA in sleep mode), making it ideal for battery-powered applications.</p>
-<p><img alt="image" height="780" src="images/home-pcb-photo.png" width="884" /></p>
-<h2 id="where-to-begin">Where to begin</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">🛠️ Use and Hardware</th>
-<th style="text-align: left;">💻 Firmware Development</th>
-<th style="text-align: left;">☁️ Data Integration &amp; APIs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Installation, sensor setup, and IsurDASH.</td>
-<td style="text-align: left;">Build environment, architecture, contributing.</td>
-<td style="text-align: left;">Historical/real-time data access, downlink API.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="sensor-connections/">2. Sensor Connections</a></td>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/1-Build-Environment-Setup">1. Build Environment Setup ↗</a></td>
-<td style="text-align: left;"><strong>Start here:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/9-Data-Access-Overview">9. Data Access Overview ↗</a></td>
-</tr>
-</tbody>
-</table>
-<p>Running into a problem in the field? See <a href="https://github.com/isurki-tecnica/isurlog-firmware/wiki/Troubleshooting">Troubleshooting ↗</a> (still on the wiki). Want to estimate battery life? Try the interactive <a href="power-budget/">Power Budget calculator</a>.</p>
-<h2 id="quick-resources">Quick Resources</h2>
+<h3 id="311-internal-batteries-only">3.1.1. Internal Batteries Only</h3>
+<p>The device has five battery holders on its upper part to accommodate a maximum of five <strong>INR18650</strong> batteries, with a total capacity of <strong>17000 mAh</strong>. It is not necessary to use all five batteries, and you may install one or all.</p>
 <ul>
-<li><strong>GitHub Repository:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware">isurki-tecnica/isurlog-firmware</a></li>
-<li><strong>Firmware Releases:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/releases">Releases page</a></li>
-<li><strong>IsurDASH Cloud Platform Login:</strong> <a href="https://isurdash.isurki.com/login">https://isurdash.isurki.com/login</a></li>
-<li><strong>Technical Support:</strong> (+34) 943-635437 or tecnica@isurki.com.</li>
+<li><strong>Polarity Warning:</strong> The batteries must be placed respecting the polarities indicated on the PCB. <strong>Failure to respect the polarity could irreparably damage the PCB</strong>.</li>
+<li><strong>Safety Requirement:</strong> It is important that all batteries connected to an ISURLOG have the same level of charge (same voltage).</li>
+</ul>
+<p><img alt="image" src="../images/3-battery-holders.jpg" width="880" /></p>
+<h3 id="312-external-power-only">3.1.2. External Power Only</h3>
+<p>The device can be powered externally without batteries. The power source must provide a voltage between <strong>4V and 5V</strong>.</p>
+<ul>
+<li><strong>Connection Points:</strong><ol>
+<li><strong>USB-C Port:</strong> Located on the lower right side of the PCB. A conventional 5V mobile charger providing a <strong>minimum current of 1A</strong> can be used.</li>
+<li><strong>Pressure Terminals (PIN 5V MAX):</strong> The last two pressure terminals on the lower right.</li>
+</ol>
+</li>
+<li><strong>Caution:</strong> <strong>Do not use the USB-C port and the pressure terminals simultaneously as power sources</strong>.</li>
+</ul>
+<p><img alt="image" height="789" src="../images/3-external-power-connections.jpg" width="883" /></p>
+<h3 id="313-batteries-external-power-hybrid-mode">3.1.3. Batteries + External Power (Hybrid Mode)</h3>
+<p>The last option for powering the <strong>ISURLOG</strong> is to combine the batteries with external power. In this mode, the PCB uses external power while available, and switches to battery power when external power is interrupted. This mode is useful for running with batteries and a solar panel, or to continue functioning during external power outages. The batteries are kept charged by the integrated battery charger on the PCB. This charger charges the batteries at a maximum current of <strong>400mA</strong>.</p>
+<h3 id="314-non-rechargeable-batteries-li-socl2">3.1.4. Non-Rechargeable Batteries (Li-SOCl2)</h3>
+<div class="admonition note">
+<p class="admonition-title">Hardware Note</p>
+<p>This option is only available on <strong>ISURLOG v3.3 and later</strong> PCB revisions.</p>
+</div>
+<p>Starting with hardware revision v3.3, the ISURLOG adds a dedicated <strong>PH-2A connector</strong>, marked <strong>Li-SOCl2</strong> on the PCB, to power the device from non-rechargeable lithium thionyl chloride (Li-SOCl2) batteries. This is a good fit for long-duration, low-maintenance deployments where periodic recharging isn't practical.</p>
+<h2 id="32-jumper-configuration-for-power-modes">3.2. Jumper Configuration for Power Modes</h2>
+<p>Each of the power modes described in previous sections requires a specific jumper configuration on the <strong>ISURLOG</strong> PCB. <strong>It is completely necessary to configure these jumpers correctly to ensure a stable energy supply</strong>. The jumpers are located on the underside of the PCB.</p>
+<p><img alt="image" height="334" src="../images/3-power-jumpers-location.png" width="176" /></p>
+<h4 id="batteries-only">Batteries Only</h4>
+<p>For power only with batteries, the following configuration is needed:</p>
+<ul>
+<li><strong>Charger:</strong> deactivated</li>
+<li><strong>MPPC:</strong> The configuration of the MPPC jumpers is indifferent in this case, but the following configuration is recommended for the greatest energy efficiency:<ul>
+<li>5V deactivated</li>
+<li>1.5V deactivated</li>
+<li>0.3V deactivated</li>
+</ul>
+</li>
+<li><strong>I SENSE:</strong> ON Position</li>
+<li><strong>PWR IN:</strong> Indifferent</li>
+</ul>
+<h4 id="external-power-only">External Power Only</h4>
+<p>For exclusively external power, the following configuration is needed:</p>
+<ul>
+<li><strong>Charger:</strong> deactivated</li>
+<li><strong>MPPC:</strong><ul>
+<li>5V deactivated</li>
+<li>1.5V deactivated</li>
+<li>0.3V deactivated</li>
+</ul>
+</li>
+<li><strong>I SENSE:</strong> ON Position</li>
+<li><strong>PWR IN:</strong><ul>
+<li>For power via the USB port, it is necessary to remove all jumpers from the PWR IN jumper.</li>
+<li>For power via the PIN port, it is necessary to connect pin 1 with pin 3 of the PWR IN jumper.</li>
+</ul>
+</li>
+</ul>
+<h4 id="batteries-external-power-hybrid-mode">Batteries + External Power (Hybrid Mode)</h4>
+<p>For power with batteries + external power, the following configuration is needed:</p>
+<ul>
+<li><strong>Charger:</strong> ON position</li>
+<li><strong>MPPC:</strong> It is necessary to select <strong>only one</strong> of the three available input voltages.<ul>
+<li>5V: activated if the external power supply voltage is 5V, deactivated otherwise.</li>
+<li>1.5V: activated if the external power supply voltage is 1.5V, deactivated otherwise.</li>
+<li>0.3V: activated if the external power supply voltage is 0.3V, deactivated otherwise.</li>
+</ul>
+</li>
+<li><strong>I SENSE:</strong> ON Position</li>
+<li><strong>PWR IN:</strong><ul>
+<li>For external power via the USB port, it is necessary to unite pin 1 and pin 2 of the jumper PWR IN, which is the <strong>USB position</strong>.</li>
+<li>For external power via the PIN port, it is necessary to unite pin 2 and pin 3 of the jumper PWR IN, which is the <strong>PIN position</strong>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="non-rechargeable-batteries-li-socl2">Non-Rechargeable Batteries (Li-SOCl2)</h4>
+<div class="admonition note">
+<p class="admonition-title">Hardware Note</p>
+<p>The <strong>BYPASS</strong> jumper is only present on <strong>ISURLOG v3.3 and later</strong> PCB revisions.</p>
+</div>
+<p>For power exclusively from non-rechargeable Li-SOCl2 batteries via the PH-2A connector, the following configuration is needed:</p>
+<ul>
+<li><strong>Charger:</strong> deactivated</li>
+<li><strong>MPPC:</strong><ul>
+<li>5V deactivated</li>
+<li>1.5V deactivated</li>
+<li>0.3V deactivated</li>
+</ul>
+</li>
+<li><strong>I SENSE:</strong> ON Position</li>
+<li><strong>BYPASS:</strong> activated</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>The Charger and all three MPPC inputs must remain <strong>deactivated</strong> whenever Li-SOCl2 batteries are used — these non-rechargeable cells must never be connected to the charging circuit.</p>
+</div>
+<h4 id="power-source-examples-for-mppc-input">Power Source Examples for MPPC Input</h4>
+<p>The <strong>MPPC (Maximum Power Point Control)</strong> input setting, used in Hybrid Mode, allows the <strong>ISURLOG</strong> to efficiently charge batteries from various low-voltage sources:</p>
+<ul>
+<li><strong>5V Input:</strong> This external power supply can be a <strong>5V solar panel</strong> (equipped with a regulator, as many panels produce high voltage peaks even if the nominal voltage is 5V) or a standard <strong>5V charger</strong>.</li>
+<li><strong>1.5V Input:</strong> This input voltage is typically compatible with a <strong>micro solar panel</strong>.</li>
+<li><strong>0.3V Input:</strong> This ultra-low voltage is often used with a <strong>TEG (Thermoelectric Generator)</strong>, making the device suitable for energy harvesting applications.</li>
 </ul>
 
 
@@ -1104,10 +1404,10 @@ This datalogger runs on an <strong>optimized MicroPython firmware</strong> for l
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
