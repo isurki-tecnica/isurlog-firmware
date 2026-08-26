@@ -58,6 +58,11 @@ nav:
       - 5. Advanced NB-IoT Modem Guide: nbiot-modem-guide.md
       - 6. Advanced LoRaWAN Modem Guide: lorawan-modem-guide.md
       - 7. Contribution Guide: contribution-guide.md
+  - Data Integration & APIs:
+      - 9. Data Access Overview: data-access-overview.md
+      - 10. Historical Data (InfluxDB): historical-data-influxdb.md
+      - 11. Real-Time Data (MQTT): realtime-data-mqtt.md
+      - 12. Remote Configuration API (Downlink): remote-configuration-api.md
 
 markdown_extensions:
   - admonition

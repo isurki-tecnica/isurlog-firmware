@@ -86,7 +86,7 @@ The fields shown depend on which communication module is fitted — NB-IoT/LTE-M
 * **Username (Usuario):** MQTT authentication username.
 * **Password (Contraseña):** MQTT authentication password.
 * **Topic:** Base MQTT topic the device publishes to.
-* **Log Network Quality (Registrar calidad de red):** checkbox, **NB-IoT only, firmware 1.1.6 or later**. When enabled, the device appends the NB-IoT signal quality reading (RSRQ/RSRP) to the last payload of each transmission batch — see **[11.4 Data Type Reference](https://github.com/isurki-tecnica/isurlog-firmware/wiki/11-Real-Time-Data-MQTT#114-payload-decoding-nb-iotcayenne-lpp)**.
+* **Log Network Quality (Registrar calidad de red):** checkbox, **NB-IoT only, firmware 1.1.6 or later**. When enabled, the device appends the NB-IoT signal quality reading (RSRQ/RSRP) to the last payload of each transmission batch — see **[11.4 Data Type Reference](realtime-data-mqtt.md#114-payload-decoding-nb-iotcayenne-lpp)**.
 
 ### NB-IoT/LTE-M
 
