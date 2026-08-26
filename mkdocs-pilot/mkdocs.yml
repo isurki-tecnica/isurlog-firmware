@@ -1,0 +1,37 @@
+site_name: ISURLOG Docs (Pilot)
+site_description: Small trial of MkDocs + GitHub Pages for ISURLOG documentation
+repo_url: https://github.com/isurki-tecnica/isurlog-firmware
+repo_name: isurki-tecnica/isurlog-firmware
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - 2. Sensor Connections: sensor-connections.md
+  - Power Budget Calculator: power-budget.md
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
