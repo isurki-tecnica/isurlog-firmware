@@ -11,6 +11,9 @@
 *.ico binary
 *.png binary
 *.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
 *.dxf binary
 *.mpy binary
 *.der binary
