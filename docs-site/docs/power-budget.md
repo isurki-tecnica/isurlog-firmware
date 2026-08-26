@@ -5,6 +5,17 @@ Estimate battery life from a device's full duty cycle — wake, sensors, and rad
 !!! note "Example values"
     Radio timing (wake/prep/TX duration and current) is calibrated against real measurements for NB-IoT, LoRaWAN, and Wi-Fi. Sensor-specific defaults and battery usable-capacity derating are still engineering estimates — adjust them under each widget's "Advanced" section as real measurements (Power Profiler Kit, datasheets) become available.
 
+!!! warning "Not infallible"
+    Even with all these parameters, this is still a model, not a guarantee — real deployments see extra variability the calculator doesn't account for:
+
+    * **Temperature.** Cold weather reduces usable battery capacity and raises internal resistance — it worsens the passivation effect on Li-SOCl2 cells in particular.
+    * **Battery state of health.** Capacity fades with cycle count and calendar age (self-discharge tends to increase too), so a battery near end-of-life will underperform this estimate.
+    * **Coverage / signal strength.** Poor NB-IoT/LTE-M or LoRaWAN coverage means more retries, longer connection times, and sometimes higher transmit power than the modeled defaults.
+    * **Unscheduled transmissions.** Events like a vandalism/accelerometer alarm trigger extra wake-and-send cycles outside the regular schedule, which aren't part of this periodic model.
+    * **Manufacturing and component tolerances.** Real current draw varies chip to chip and unit to unit from datasheet nominal values.
+
+    Treat the result as a planning estimate, not a warranty figure.
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
