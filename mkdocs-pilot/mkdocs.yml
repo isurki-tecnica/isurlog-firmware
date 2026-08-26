@@ -63,6 +63,7 @@ nav:
       - 10. Historical Data (InfluxDB): historical-data-influxdb.md
       - 11. Real-Time Data (MQTT): realtime-data-mqtt.md
       - 12. Remote Configuration API (Downlink): remote-configuration-api.md
+  - Troubleshooting: troubleshooting.md
 
 markdown_extensions:
   - admonition
