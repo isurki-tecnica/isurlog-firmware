@@ -1,6 +1,8 @@
 # ISURLOG Docs — MkDocs migration
 
-MkDocs + Material site replacing the GitHub Wiki as the home for ISURLOG documentation. **Use and Hardware (Module A)** is fully migrated here, plus an interactive Power Budget calculator. **Firmware Development, Data Integration & APIs, and Troubleshooting** are still on the [GitHub Wiki](https://github.com/isurki-tecnica/isurlog-firmware/wiki) and will move here in later batches — the wiki stays live and accurate until each module has fully moved.
+MkDocs + Material site replacing the GitHub Wiki as the home for ISURLOG documentation. **All 4 modules are fully migrated** (Use and Hardware, Firmware Development, Data Integration & APIs, Troubleshooting) — 30 pages total, plus an interactive Power Budget calculator not possible on the Wiki (which sanitizes out `<script>`/`<iframe>`).
+
+The [GitHub Wiki](https://github.com/isurki-tecnica/isurlog-firmware/wiki) is no longer being updated as the primary source — decide whether to archive/redirect it once this site has been live for a while.
 
 ## Why this exists
 
