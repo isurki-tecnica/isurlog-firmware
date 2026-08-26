@@ -3,7 +3,7 @@
 Estimate battery life from a device's full duty cycle — wake, sensors, and radio — over NB-IoT/LTE-M, LoRaWAN, or Wi-Fi. Add the same sensors you'd configure in IsurDASH; 4-20mA and Modbus sensors are usually the biggest single draw, since they're powered from the 9-24V VDC rail, not the battery directly.
 
 !!! note "Example values"
-    Radio timing (wake/prep/TX duration and current) is calibrated against a real device log for NB-IoT. Sensor-specific defaults, LoRaWAN/Wi-Fi radio timing, and battery usable-capacity derating are still engineering estimates — adjust them under each widget's "Advanced" section as real measurements (Power Profiler Kit, datasheets) become available.
+    Radio timing (wake/prep/TX duration and current) is calibrated against real measurements for NB-IoT, LoRaWAN, and Wi-Fi. Sensor-specific defaults and battery usable-capacity derating are still engineering estimates — adjust them under each widget's "Advanced" section as real measurements (Power Profiler Kit, datasheets) become available.
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
