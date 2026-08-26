@@ -10,13 +10,11 @@
       
       
       
-        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/realtime-data-mqtt/">
+        <link rel="canonical" href="https://isurki-tecnica.github.io/isurlog-firmware/troubleshooting/">
       
       
-        <link rel="prev" href="../historical-data-influxdb/">
+        <link rel="prev" href="../remote-configuration-api/">
       
-      
-        <link rel="next" href="../remote-configuration-api/">
       
       
         
@@ -27,7 +25,7 @@
     
     
       
-        <title>11. Real-Time Data (MQTT) - ISURLOG Docs</title>
+        <title>Troubleshooting - ISURLOG Docs</title>
       
     
     
@@ -78,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#11-real-time-data-via-mqtt-push-method" class="md-skip">
+        <a href="#troubleshooting" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              11. Real-Time Data (MQTT)
+              Troubleshooting
             
           </span>
         </div>
@@ -1187,10 +1185,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -1211,11 +1207,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
@@ -1236,7 +1232,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1307,37 +1303,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    11. Real-Time Data (MQTT)
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../realtime-data-mqtt/" class="md-nav__link">
         
   
   
@@ -1353,271 +1322,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#111-overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11.1 Overview
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11.1 Overview">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#data-format" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data Format
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#112-connection-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11.2 Connection Parameters
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#113-topic-structure-and-message-format" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11.3 Topic Structure and Message Format
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11.3 Topic Structure and Message Format">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1131-lorawan-devices-via-chirpstack" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11.3.1 LoRaWAN Devices (via ChirpStack)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11.3.1 LoRaWAN Devices (via ChirpStack)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-of-payload-json-chirpstack" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example of Payload JSON (ChirpStack)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#1132-nb-iot-devices" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11.3.2 NB-IoT Devices
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#114-payload-decoding-nb-iotcayenne-lpp" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11.4 Payload Decoding (NB-IoT/Cayenne LPP)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11.4 Payload Decoding (NB-IoT/Cayenne LPP)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#payload-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Payload Structure
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#data-type-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data Type Reference
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#115-example-decoding-a-data-payload" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11.5 Example: Decoding a Data Payload
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11.5 Example: Decoding a Data Payload">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#chunk-1-timestamp" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chunk 1: Timestamp
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chunk-2-battery-voltage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chunk 2: Battery Voltage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chunk-3-internal-temperature" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chunk 3: Internal Temperature
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chunk-4-internal-humidity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chunk 4: Internal Humidity
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chunk-5-analog-input" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chunk 5: Analog Input
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#116-reference-implementation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11.6 Reference Implementation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11.6 Reference Implementation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-instantly-no-credentials-needed" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try It Instantly — No Credentials Needed
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#live-dashboard" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Live Dashboard
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1662,10 +1366,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1681,6 +1412,176 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#batteries-drain-much-faster-than-expected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batteries drain much faster than expected
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Batteries drain much faster than expected">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-outdated-firmware-esp32-andor-nb-iot-modem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Outdated firmware (ESP32 and/or NB-IoT modem)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-keeping-the-battery-charger-enabled-with-no-external-power-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Keeping the battery charger enabled with no external power source
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-lorawan-specific-device-class-and-adr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. LoRaWAN-specific: device class and ADR
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-data-gaps-in-received-data-fewer-records-than-expected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Missing data / gaps in received data / fewer records than expected
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-changes-dont-seem-to-apply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration changes don't seem to apply
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modbus-sensor-not-responding-timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modbus sensor not responding / timeout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Modbus sensor not responding / timeout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mismatched-slave-address-baudrate-or-parity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Mismatched slave address, baudrate, or parity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bad-bus-wiring-or-missing-termination-resistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Bad bus wiring or missing termination resistor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ble-doesnt-connect-from-the-app-isurdash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BLE doesn't connect from the app / IsurDASH
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BLE doesn&#39;t connect from the app / IsurDASH">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ble-isnt-advertising-yet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. BLE isn't advertising yet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bluetooth-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Bluetooth range
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1712,22 +1613,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#111-overview" class="md-nav__link">
+  <a href="#batteries-drain-much-faster-than-expected" class="md-nav__link">
     <span class="md-ellipsis">
       
-        11.1 Overview
+        Batteries drain much faster than expected
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="11.1 Overview">
+    <nav class="md-nav" aria-label="Batteries drain much faster than expected">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#data-format" class="md-nav__link">
+  <a href="#1-outdated-firmware-esp32-andor-nb-iot-modem" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data Format
+        1. Outdated firmware (ESP32 and/or NB-IoT modem)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-keeping-the-battery-charger-enabled-with-no-external-power-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Keeping the battery charger enabled with no external power source
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-lorawan-specific-device-class-and-adr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. LoRaWAN-specific: device class and ADR
       
     </span>
   </a>
@@ -1740,10 +1663,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#112-connection-parameters" class="md-nav__link">
+  <a href="#missing-data-gaps-in-received-data-fewer-records-than-expected" class="md-nav__link">
     <span class="md-ellipsis">
       
-        11.2 Connection Parameters
+        Missing data / gaps in received data / fewer records than expected
       
     </span>
   </a>
@@ -1751,50 +1674,44 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#113-topic-structure-and-message-format" class="md-nav__link">
+  <a href="#configuration-changes-dont-seem-to-apply" class="md-nav__link">
     <span class="md-ellipsis">
       
-        11.3 Topic Structure and Message Format
+        Configuration changes don't seem to apply
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="11.3 Topic Structure and Message Format">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1131-lorawan-devices-via-chirpstack" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modbus-sensor-not-responding-timeout" class="md-nav__link">
     <span class="md-ellipsis">
       
-        11.3.1 LoRaWAN Devices (via ChirpStack)
+        Modbus sensor not responding / timeout
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="11.3.1 LoRaWAN Devices (via ChirpStack)">
+    <nav class="md-nav" aria-label="Modbus sensor not responding / timeout">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-of-payload-json-chirpstack" class="md-nav__link">
+  <a href="#1-mismatched-slave-address-baudrate-or-parity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example of Payload JSON (ChirpStack)
+        1. Mismatched slave address, baudrate, or parity
       
     </span>
   </a>
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
-  <a href="#1132-nb-iot-devices" class="md-nav__link">
+  <a href="#2-bad-bus-wiring-or-missing-termination-resistor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        11.3.2 NB-IoT Devices
+        2. Bad bus wiring or missing termination resistor
       
     </span>
   </a>
@@ -1807,22 +1724,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#114-payload-decoding-nb-iotcayenne-lpp" class="md-nav__link">
+  <a href="#ble-doesnt-connect-from-the-app-isurdash" class="md-nav__link">
     <span class="md-ellipsis">
       
-        11.4 Payload Decoding (NB-IoT/Cayenne LPP)
+        BLE doesn't connect from the app / IsurDASH
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="11.4 Payload Decoding (NB-IoT/Cayenne LPP)">
+    <nav class="md-nav" aria-label="BLE doesn&#39;t connect from the app / IsurDASH">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#payload-structure" class="md-nav__link">
+  <a href="#1-ble-isnt-advertising-yet" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Payload Structure
+        1. BLE isn't advertising yet
       
     </span>
   </a>
@@ -1830,121 +1747,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#data-type-reference" class="md-nav__link">
+  <a href="#2-bluetooth-range" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data Type Reference
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#115-example-decoding-a-data-payload" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11.5 Example: Decoding a Data Payload
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11.5 Example: Decoding a Data Payload">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#chunk-1-timestamp" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chunk 1: Timestamp
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chunk-2-battery-voltage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chunk 2: Battery Voltage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chunk-3-internal-temperature" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chunk 3: Internal Temperature
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chunk-4-internal-humidity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chunk 4: Internal Humidity
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chunk-5-analog-input" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chunk 5: Analog Input
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#116-reference-implementation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11.6 Reference Implementation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="11.6 Reference Implementation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-instantly-no-credentials-needed" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try It Instantly — No Credentials Needed
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#live-dashboard" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Live Dashboard
+        2. Bluetooth range
       
     </span>
   </a>
@@ -1976,250 +1782,76 @@
   
 
 
-<h1 id="11-real-time-data-via-mqtt-push-method">11. Real-Time Data via MQTT (Push Method)</h1>
-<h2 id="111-overview">11.1 Overview</h2>
-<p>This integration method is designed for applications that require <strong>immediate access to data</strong>, such as live monitoring dashboards, real-time alerting systems, or event-driven automation. The Isurlog platform pushes data to an MQTT broker the instant it is received from a device.</p>
-<h3 id="data-format">Data Format</h3>
-<p>Data is published as a <strong>raw binary payload</strong> (represented as a hexadecimal string) to maximize efficiency and minimize data consumption over cellular networks. Therefore, the client application <strong>must decode this payload</strong> to interpret the sensor values.</p>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<p>Common problems reported by customers, why they happen, and how to fix them. This page grows over time as new issues come up — if you hit something that isn't listed here, contact support (see the <a href="../">Home</a> page) so it can be added.</p>
 <hr />
-<h2 id="112-connection-parameters">11.2 Connection Parameters</h2>
-<p>To receive the real-time data stream, clients must connect to the Isurlog MQTT broker using the following secure parameters:</p>
+<h2 id="batteries-drain-much-faster-than-expected">Batteries drain much faster than expected</h2>
+<p>This is the single most common issue reported, and it usually comes down to one or more of the following.</p>
+<h3 id="1-outdated-firmware-esp32-andor-nb-iot-modem">1. Outdated firmware (ESP32 and/or NB-IoT modem)</h3>
+<p>Older firmware versions were significantly less optimized for power consumption. On top of that, older <strong>nRF9151 modem firmware did not support RAI</strong> (Release Assistance Indication) — without it, even after the ISURLOG finished transmitting, the modem's cellular connection stayed in <strong>RRC Connected</strong> state for roughly 30 extra seconds before releasing, draining the battery the whole time for no benefit.</p>
+<p><strong>Solution:</strong> Update the firmware.</p>
 <ul>
-<li><strong>Broker URL:</strong> <code>mqttisurdash.isurki.com</code></li>
-<li><strong>Port (TLS):</strong> 8883 (Secure connection using TLS is mandatory)</li>
-<li><strong>MQTT Version:</strong> The broker supports MQTT v5.0 and v3.1.1 clients.</li>
-<li><strong>Username / Password:</strong> A unique username and password will be provided for secure access.</li>
+<li><strong>Recommended:</strong> update the ESP32 firmware directly from IsurDASH — see <strong><a href="../isurdash-maintenance/">7.8. Device Maintenance</a></strong>.</li>
+<li><strong>Manual alternative:</strong> flash it yourself — see <strong><a href="../flashing-application-upload/">3. Flashing and Application Upload</a></strong>.</li>
 </ul>
-<hr />
-<h2 id="113-topic-structure-and-message-format">11.3 Topic Structure and Message Format</h2>
-<p>The topic structure and message format depend on the communication technology used by the device (LoRaWAN or NB-IoT).</p>
-<h3 id="1131-lorawan-devices-via-chirpstack">11.3.1 LoRaWAN Devices (via ChirpStack)</h3>
-<p>LoRaWAN data is processed via the ChirpStack Network Server.</p>
+<p>Always use the <strong>"Latest"</strong> release from the <a href="https://github.com/isurki-tecnica/isurlog-firmware/releases">GitHub Releases page</a> — <strong>pre-release</strong> versions may contain bugs that can <em>increase</em> power consumption rather than reduce it.</p>
+<h3 id="2-keeping-the-battery-charger-enabled-with-no-external-power-source">2. Keeping the battery charger enabled with no external power source</h3>
+<p>The charger circuit itself draws a small amount of power just by being active. In installations running on <strong>batteries only</strong> (no solar panel, TEG, or 5V charger connected), leaving the charger jumper enabled wastes power for no benefit — it has nothing to charge from.</p>
+<p><strong>Solution:</strong> Configure the jumpers for maximum power saving — see <strong><a href="../power-supply/">3. Power Supply Methods</a></strong> for the correct jumper configuration for battery-only installations (Charger deactivated).</p>
+<h3 id="3-lorawan-specific-device-class-and-adr">3. LoRaWAN-specific: device class and ADR</h3>
+<p>For <strong>LoRaWAN</strong> ISURLOG units specifically, two additional factors commonly cause excessive consumption:</p>
 <ul>
-<li><strong>Topic Structure:</strong> <code>application/{application-id}/device/{device_eui}/event/up</code></li>
-<li><strong>Message Format:</strong> <strong>JSON Object with Decoded Data</strong>. The ChirpStack Network Server automatically decodes the raw payload. Decoded sensor values are available directly within the <code>object</code> key of the JSON.</li>
-<li><strong>Metadata:</strong> The JSON also includes valuable network metadata such as RSSI, SNR, gateway location, and transmission parameters.</li>
-</ul>
-<h4 id="example-of-payload-json-chirpstack">Example of Payload JSON (ChirpStack)</h4>
-<p>This example shows the key structure and content of the <code>object</code> field with the decoded readings:</p>
-<pre><code class="language-json">{
-  &quot;deviceInfo&quot;: {
-    &quot;applicationName&quot;: &quot;Isurlog&quot;,
-    &quot;deviceName&quot;: &quot;c-123&quot;,
-    &quot;devEui&quot;: &quot;xxxxxxxxxxxxx&quot;
-  },
-  &quot;fCnt&quot;: 61,
-  &quot;fPort&quot;: 2,
-  &quot;data&quot;: &quot;AHVoyD3dAHQP5wAAAABnAPcAaIcAAv+d&quot;,
-  &quot;object&quot;: {
-    &quot;AnalogInput_0&quot;: -0.99,
-    &quot;DigitalInput_0&quot;: 0.0,
-    &quot;HumiditySensor_0&quot;: 67.5,
-    &quot;TemperatureSensor_0&quot;: 24.7,
-    &quot;UnixTime_0&quot;: 1757953501.0,
-    &quot;VoltageInput_0&quot;: 4071.0
-  },
-  &quot;rxInfo&quot;: [
-    {
-      &quot;gatewayId&quot;: &quot;b827ebfffe70a454&quot;,
-      &quot;rssi&quot;: -51,
-      &quot;snr&quot;: 6.2
-    }
-  ],
-  &quot;txInfo&quot;: {
-    &quot;frequency&quot;: 867500000,
-    &quot;modulation&quot;: {
-      &quot;lora&quot;: {
-        &quot;spreadingFactor&quot;: 7
-      }
-    }
-  }
-}
-</code></pre>
-<h3 id="1132-nb-iot-devices">11.3.2 NB-IoT Devices</h3>
-<ul>
-<li><strong>Topic Structure:</strong> <code>isurlog/datos/{device_id}</code></li>
-<li><strong>Message Format:</strong> <strong>Raw Binary Payload</strong> (Hexadecimal String).</li>
+<li><strong>Wrong device class.</strong> Configuring <strong>Class B or Class C</strong> instead of <strong>Class A</strong> when the application doesn't actually need low-latency downlinks and the device is meant to run on batteries. Class B and C keep the radio listening far more often than Class A, which is by far the most power-efficient class.</li>
+<li><strong>ADR (Adaptive Data Rate) not enabled</strong> on the LoRaWAN network server. Without ADR, the device may keep transmitting at a higher power / lower data rate than its actual link conditions require, wasting energy on every uplink.</li>
 </ul>
 <hr />
-<h2 id="114-payload-decoding-nb-iotcayenne-lpp">11.4 Payload Decoding (NB-IoT/Cayenne LPP)</h2>
-<p>The Isurlog payload format is a variant of the <strong>Cayenne Low Power Payload (LPP)</strong>. This format is highly efficient and allows for multiple sensor readings to be sent in a single message.</p>
-<h3 id="payload-structure">Payload Structure</h3>
-<p>Each payload consists of one or more concatenated data chunks. Each chunk follows the structure:</p>
-<p><code>Channel (1 byte) | Data Type (1 byte) | Value (N bytes)</code></p>
-<ul>
-<li><strong>Channel:</strong> A user-defined identifier for the data source (0–255), typically corresponding to the physical input on the Isurlog.</li>
-<li><strong>Data Type:</strong> A 1-byte code that specifies the type of data being sent (e.g., temperature, voltage).</li>
-<li><strong>Value:</strong> The raw sensor reading, encoded over N bytes.</li>
-</ul>
-<p>All multi-byte values are encoded in <strong>Big-Endian</strong> byte order. The first data payload transmitted begins with a <strong>Unix Timestamp chunk (Type $0\times75$)</strong>.</p>
-<h3 id="data-type-reference">Data Type Reference</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Sensor Name</th>
-<th style="text-align: left;">Channel</th>
-<th style="text-align: left;">Type (Hex)</th>
-<th style="text-align: left;">Data Format</th>
-<th style="text-align: left;">Value Calculation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Digital Input</strong></td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times00$</td>
-<td style="text-align: left;">1-byte Unsigned Integer</td>
-<td style="text-align: left;">Final Value = Integer</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Analog Input</strong></td>
-<td style="text-align: left;">0-3</td>
-<td style="text-align: left;">$0\times02$</td>
-<td style="text-align: left;">2-byte Signed Integer</td>
-<td style="text-align: left;">Final Value = Integer / 100.0</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Modbus Input</strong></td>
-<td style="text-align: left;">0-3</td>
-<td style="text-align: left;">$0\times04$</td>
-<td style="text-align: left;">2-byte Signed Integer</td>
-<td style="text-align: left;">Final Value = Integer / 100.0</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>PT100 Temperature</strong></td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times66$</td>
-<td style="text-align: left;">2-byte Signed Integer</td>
-<td style="text-align: left;">Final Value = Integer / 10.0</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Temperature Sensor</strong></td>
-<td style="text-align: left;">0 (internal) / 1 (external, QWIIC)</td>
-<td style="text-align: left;">$0\times67$</td>
-<td style="text-align: left;">2-byte Signed Integer</td>
-<td style="text-align: left;">Final Value = Integer / 10.0</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Humidity Sensor</strong></td>
-<td style="text-align: left;">0 (internal) / 1 (external, QWIIC)</td>
-<td style="text-align: left;">$0\times68$</td>
-<td style="text-align: left;">1-byte Unsigned Integer</td>
-<td style="text-align: left;">Final Value = Integer / 2.0</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Accelerometer</strong></td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times71$</td>
-<td style="text-align: left;">6 bytes = three 2-byte Signed Integers (X, Y, Z)</td>
-<td style="text-align: left;">Final Value (per axis) = Integer / 1000.0 (g)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Battery Voltage</strong></td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times74$</td>
-<td style="text-align: left;">2-byte Unsigned Integer</td>
-<td style="text-align: left;">Final Value = Integer (in mV)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Unix Timestamp</strong></td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times75$</td>
-<td style="text-align: left;">4-byte Unsigned Integer</td>
-<td style="text-align: left;">Final Value = Integer (seconds)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Battery C-Rate</strong></td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times77$</td>
-<td style="text-align: left;">1-byte Signed Integer</td>
-<td style="text-align: left;">Final Value = Integer / 10.0 (%/h)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Modem Signal Quality</strong></td>
-<td style="text-align: left;">0 (RSRQ) / 1 (RSRP)</td>
-<td style="text-align: left;">$0\times78$</td>
-<td style="text-align: left;">1-byte Unsigned Integer</td>
-<td style="text-align: left;">Final Value = Integer (channel 0: dB · channel 1: dBm). <strong>NB-IoT devices only.</strong></td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="admonition-title">Note on channel semantics</p>
-<p>for most sensor types, the channel identifies which physical input the reading came from (e.g. Analog Input 0-3). For <strong>Accelerometer</strong>, the same chunk packs all three axes together (there's no separate channel per axis). For <strong>Modem Signal Quality</strong>, the channel is repurposed to distinguish the <em>metric</em> (0 = RSRQ, 1 = RSRP) rather than a physical input.</p>
+<h2 id="missing-data-gaps-in-received-data-fewer-records-than-expected">Missing data / gaps in received data / fewer records than expected</h2>
+<p>This is generally also caused by <strong>outdated firmware handling connectivity loss poorly</strong>. For example, when coverage is temporarily bad, or the ISURLOG has to reconnect to the network, older firmware versions don't correctly manage the records already stored in <strong>RTC RAM</strong> while this happens — and those pending records get lost instead of being sent once the connection is recovered.</p>
+<p><strong>Solution:</strong> Update the ESP32 firmware — same as above, <strong>recommended</strong> via IsurDASH (<strong><a href="../isurdash-maintenance/">7.8. Device Maintenance</a></strong>) or manually (<strong><a href="../flashing-application-upload/">3. Flashing and Application Upload</a></strong>), always using the <strong>"Latest"</strong> release rather than a pre-release.</p>
+<hr />
+<h2 id="configuration-changes-dont-seem-to-apply">Configuration changes don't seem to apply</h2>
+<p>When you edit a device's configuration in IsurDASH and click save, the changes are saved in <strong>IsurDASH's own database</strong> — but they are <strong>not sent to the ISURLOG yet</strong>. This is intentional: it lets you keep editing several configuration sections before triggering a single transmission to the device, instead of sending one downlink per field.</p>
+<p>While a device has unsaved changes, IsurDASH shows a warning banner:</p>
+<div class="admonition warning">
+<p class="admonition-title">IsurDASH banner</p>
+<p>⚠️ <strong>"Configuración no sincronizada con el dispositivo"</strong> <em>("Configuration not synchronized with the device")</em> — with two buttons, <strong>Ignorar</strong> <em>(Ignore)</em> and <strong>Sincronizar</strong> <em>(Synchronize)</em>.</p>
 </div>
-<h2 id="115-example-decoding-a-data-payload">11.5 Example: Decoding a Data Payload</h2>
-<p>Consider the following example payload received as a hexadecimal string:
-<code>007568C7D98100741024006701370068400002021D</code></p>
-<p>This payload contains a timestamp followed by four sensor readings. The client application must process the payload in concatenated chunks:</p>
-<h3 id="chunk-1-timestamp">Chunk 1: Timestamp</h3>
-<ul>
-<li><strong>Bytes:</strong> <code>007568C7D981</code></li>
-<li><strong>Type:</strong> <code>0x75</code> (Unix Timestamp)</li>
-<li><strong>Value:</strong> <code>0x68C7D981</code> (1757927809 decimal)</li>
-<li><strong>Result:</strong> The reference time for this data record is 1757927809 (corresponding to Sept 15, 2025 09:16:49 UTC).</li>
-</ul>
-<h3 id="chunk-2-battery-voltage">Chunk 2: Battery Voltage</h3>
-<ul>
-<li><strong>Bytes:</strong> <code>00741024</code></li>
-<li><strong>Type:</strong> <code>0x74</code> (Battery Voltage)</li>
-<li><strong>Value:</strong> <code>0x1024</code> (4132 decimal)</li>
-<li><strong>Result:</strong> 4132 mV</li>
-</ul>
-<h3 id="chunk-3-internal-temperature">Chunk 3: Internal Temperature</h3>
-<ul>
-<li><strong>Bytes:</strong> <code>00670137</code></li>
-<li><strong>Type:</strong> <code>0x67</code> (Internal Temperature Sensor)</li>
-<li><strong>Value:</strong> <code>0x0137</code> (311 decimal, signed)</li>
-<li><strong>Calculation:</strong> $311 / 10.0 = 31.1 ^\circ C$</li>
-</ul>
-<h3 id="chunk-4-internal-humidity">Chunk 4: Internal Humidity</h3>
-<ul>
-<li><strong>Bytes:</strong> <code>006840</code></li>
-<li><strong>Type:</strong> <code>0x68</code> (Internal Humidity Sensor)</li>
-<li><strong>Value:</strong> <code>0x40</code> (64 decimal)</li>
-<li><strong>Calculation:</strong> $64 / 2.0 = 32.0\%$</li>
-</ul>
-<h3 id="chunk-5-analog-input">Chunk 5: Analog Input</h3>
-<ul>
-<li><strong>Bytes:</strong> <code>0002021D</code></li>
-<li><strong>Type:</strong> <code>0x02</code> (Analog Input)</li>
-<li><strong>Value:</strong> <code>0x021D</code> (541 decimal, signed)</li>
-<li><strong>Calculation:</strong> $541 / 100.0 = 5.41$ (in engineering units)</li>
-</ul>
-<h2 id="116-reference-implementation">11.6 Reference Implementation</h2>
-<p>A complete Python script demonstrating the connection, subscription, payload decoding, and a <strong>live-updating dashboard</strong> is provided in the accompanying file: <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/isurlog_mqtt_demo.py">isurlog_mqtt_demo.py</a></strong>.</p>
-<div class="admonition note">
-<p class="admonition-title">Dependency Note</p>
-<p>The script requires the accompanying library file, <strong><code>IsurlogLPP.py</code></strong>, to handle the decoding and calculation of sensor values from the raw Cayenne LPP payload format. Both files must be present in the same directory for the example to run.</p>
-</div>
-<p>A device is only ever <strong>one</strong> connectivity type, so the script subscribes to a single topic based on a <code>DEVICE_TYPE</code> setting (<code>"nb-iot"</code> or <code>"lorawan"</code>, matching the same values used in the ISURLOG's own <code>static_config.json</code>) — not to both NB-IoT and LoRaWAN topics at once. For LoRaWAN, fill in your specific <code>APPLICATION_ID</code> and <code>DEVICE_EUI</code> rather than using a wildcard topic, which would otherwise subscribe to every device on every application your credentials can see.</p>
-<h3 id="try-it-instantly-no-credentials-needed">Try It Instantly — No Credentials Needed</h3>
-<p>The script's connection parameters are pre-filled with a <strong>public, read-only demo</strong> so you can run it immediately, before contacting support for your own credentials:</p>
-<ul>
-<li><strong>Device:</strong> <code>c-866</code>, an NB-IoT device (<code>DEVICE_TYPE = "nb-iot"</code>) — the same public demo device used in <a href="../historical-data-influxdb/#105-reference-implementation">10.5 Reference Implementation</a>, with a Modbus soil probe (S-Soil MTEC-02B) wired to it.</li>
-<li><strong>Topic:</strong> <code>isurlog/datos/c-866</code> — subscription is restricted to this device's own topic only, it cannot receive any other client's data.</li>
-</ul>
-<p>To run it, from inside <code>data_integration/</code>:</p>
-<pre><code class="language-bash">python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python isurlog_mqtt_demo.py
-</code></pre>
-<p>When you're done: <code>deactivate</code>.</p>
-<h3 id="live-dashboard">Live Dashboard</h3>
-<p>In addition to printing every decoded message as it arrives, the script opens the <strong>same dashboard layout</strong> as the InfluxDB reference implementation — two large panels on top for the soil probe (<strong>Soil — Irrigation</strong>: VWC/EC, <strong>Soil — Diagnostics</strong>: Temperature/Epsilon), three smaller ones below for the device's own housekeeping metrics (battery, internal temperature/humidity, NB-IoT signal quality) — except here it's fed <strong>live</strong> by the MQTT stream instead of a one-off historical query, with new points appearing as they're received (redrawn every 2 seconds).</p>
-<p><img alt="image" src="../images/11-mqtt-live-dashboard.png" width="800" /></p>
-<p>This works by:</p>
+<p>During this state, the Configuration widget on the device's dashboard reads <strong>"Sin enviar"</strong> <em>("Not sent")</em>.</p>
+<p>Clicking <strong>Sincronizar</strong> queues the configuration to be sent to the device — the widget then switches to <strong>"Sincronizado"</strong> <em>("Synchronized")</em>.</p>
+<p><strong>Important — "Sincronizado" does not mean the device is already running the new configuration.</strong> It only means the configuration has been sent from IsurDASH's side. For it to actually reach and take effect on the ISURLOG:</p>
 <ol>
-<li>Keeping a small in-memory buffer (the last 200 points) per field.</li>
-<li>Appending to the right buffer inside the MQTT <code>on_message</code> callback as each payload is decoded.</li>
-<li>Running the MQTT client's network loop in a background thread (<code>client.loop_start()</code>), so the main thread is free to run matplotlib's own event loop (<code>plt.show()</code>) and periodically redraw from the buffers via <code>matplotlib.animation.FuncAnimation</code>.</li>
+<li>The ISURLOG has to perform an <strong>uplink</strong> (a data transmission) — this applies the same way to NB-IoT, LoRaWAN, and Wi-Fi devices.<ul>
+<li><strong>Exception — NB-IoT with eDRX:</strong> on <strong>NB-IoT devices with eDRX enabled</strong>, the wait is much shorter. Instead of waiting for the next full transmission cycle, the configuration can reach the device within the configured <strong>eDRX timer</strong> — typically <strong>40.96 seconds</strong> on standard firmware versions.</li>
+</ul>
+</li>
+<li>Right after the uplink, the device receives the <strong>downlink</strong> carrying the new configuration, saves it, and goes back to sleep.</li>
+<li>Only on the <strong>next wake-up cycle</strong> does the device read that saved configuration and start actually operating with it.</li>
 </ol>
-<div class="admonition note">
-<p class="admonition-title">A pitfall worth knowing if you build your own live dual-axis chart</p>
-<p>the figure, subplots, and each panel's twin Y-axis (<code>ax.twinx()</code>) are created <strong>once</strong>, in <code>build_dashboard()</code>. Only the line data is updated afterwards, on every animation frame (<code>_update_line()</code>, via <code>line.set_data()</code> + <code>ax.relim()</code> + <code>ax.autoscale_view()</code>). Recreating the twin axes on every redraw (e.g. calling <code>ax.clear()</code> then <code>ax.twinx()</code> again in a loop) leaves the previous twin axes behind instead of replacing them — they silently stack on top of each other frame after frame, which is what causes overlapping scales and labels spilling outside the plot after the chart has been running for a while.</p>
-</div>
+<p>So there is an inherent delay of up to <strong>two full transmission cycles</strong> between clicking "Sincronizar" and the change actually taking effect in the field — worth keeping in mind, especially on devices configured with long latency times (see <strong><a href="../reference-parameters/">8. Reference Configuration Parameters</a></strong>).</p>
+<hr />
+<h2 id="modbus-sensor-not-responding-timeout">Modbus sensor not responding / timeout</h2>
+<p>When a Modbus RTU sensor on the RS485 bus doesn't respond, or the ISURLOG reports a timeout reading it, the cause is almost always one of the following.</p>
+<h3 id="1-mismatched-slave-address-baudrate-or-parity">1. Mismatched slave address, baudrate, or parity</h3>
+<p>The <strong>Slave Address</strong>, <strong>Baudrate</strong>, <strong>Parity</strong>, <strong>Data Bits</strong>, and <strong>Stop Bits</strong> configured in IsurDASH for that Modbus Input must exactly match the sensor's own configuration (usually set via DIP switches or the manufacturer's own config tool). Any mismatch results in no response at all, not a garbled one — Modbus RTU doesn't degrade gracefully.</p>
+<p><strong>Important — these communication parameters are bus-wide, not per-sensor.</strong> IsurDASH lets you set Baudrate/Parity/Data Bits/Stop Bits individually for each of the 4 virtual Modbus Inputs, but physically there is only <strong>one</strong> RS485 bus. All sensors connected to it are electrically listening to the exact same signal, so <strong>every sensor on the bus must actually be configured with the same values</strong>. Setting a different baudrate on Modbus Input 2 than on Modbus Input 0, for example, doesn't give each sensor its own speed — it just breaks communication for the sensor(s) that don't match what's actually configured on the bus.</p>
+<h3 id="2-bad-bus-wiring-or-missing-termination-resistor">2. Bad bus wiring or missing termination resistor</h3>
+<p>On larger Modbus networks — several sensors on the same bus, and/or long cable runs — good wiring practice matters a lot more than it seems, and most field issues come down to it.</p>
+<ul>
+<li><strong>Wire the bus as a single daisy chain, never in parallel/star.</strong> Modbus RTU over RS485 is a bus topology: connections must go ISURLOG → Sensor 1 → Sensor 2 → … → Sensor N, each sensor wired to the terminals of the <em>previous</em> one — not all sensors wired back independently to the ISURLOG's own terminals in a star pattern. A/B and GND all get chained through in the same way.</li>
+<li><strong>Terminate both physical ends of the bus with a 120 Ω resistor.</strong> The ISURLOG's own RS485 input already includes a <strong>built-in 120 Ω termination resistor</strong> (see <strong><a href="../sensor-connections/">2. Sensor Connections</a></strong>), covering the ISURLOG's end of the bus automatically. The other end — the <strong>last sensor in the chain</strong> — needs its own 120 Ω termination resistor added across A/B, either built into the sensor (some have a DIP switch or jumper for it) or added externally at that last connection point. Intermediate sensors in the middle of the chain must <strong>not</strong> be terminated.</li>
+<li>Missing termination doesn't always cause a hard failure — it often shows up as intermittent timeouts that get worse with more sensors, longer cable runs, or higher baudrates, which makes it easy to misdiagnose as a sensor or configuration problem instead of a wiring one.</li>
+</ul>
+<p><strong>Solution:</strong> Verify Slave Address, Baudrate, Parity, Data Bits, and Stop Bits are identical across every sensor on the bus and match what's configured in IsurDASH; wire sensors in a daisy chain rather than in parallel; and confirm a 120 Ω termination resistor is present only at the last sensor in the chain (the ISURLOG end is already terminated internally).</p>
+<hr />
+<h2 id="ble-doesnt-connect-from-the-app-isurdash">BLE doesn't connect from the app / IsurDASH</h2>
+<p>Unlike NB-IoT/LoRaWAN, which the ISURLOG uses on its own schedule, <strong>Bluetooth is off by default and has to be woken up deliberately</strong> — this is a deliberate power-saving choice, not a bug.</p>
+<h3 id="1-ble-isnt-advertising-yet">1. BLE isn't advertising yet</h3>
+<p>To save battery, the ISURLOG doesn't keep its Bluetooth radio on. It has to be activated with the magnet first, as described in <strong><a href="../sensor-connections/#28-internal-sensors-and-diagnostics">2.8. Internal Sensors and Diagnostics</a></strong>: holding the magnet near the Hall effect sensor for <strong>more than 5 seconds</strong> puts the device into <strong>Bluetooth Diagnostics Mode</strong>.</p>
+<p>Once active, the Bluetooth interface stays open for <strong>2 minutes</strong> waiting for a pairing attempt. If nothing connects within that window, it automatically shuts back off to save power — so the app/IsurDASH has to attempt the connection inside that same 2-minute window, not before activating it or long after. Once a successful pairing happens, that 2-minute timeout no longer applies for the rest of the session.</p>
+<p><strong>Solution:</strong> Activate Bluetooth with the magnet (&gt;5s) right before attempting to connect, and complete the connection within the following 2 minutes. If it times out, simply reactivate it with the magnet again.</p>
+<h3 id="2-bluetooth-range">2. Bluetooth range</h3>
+<p>The ISURLOG's ESP32 uses the antenna embedded directly on the PCB rather than an external one, so BLE range is inherently short — typically around <strong>5 meters</strong>, and less depending on enclosure material, obstacles, and the surrounding environment (metal enclosures/cabinets in particular can reduce it further).</p>
+<p><strong>Solution:</strong> Get within a few meters of the device, with as clear a line of sight as possible, before attempting to pair.</p>
 
 
 
