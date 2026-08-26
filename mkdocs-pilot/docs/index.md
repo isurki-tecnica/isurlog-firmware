@@ -1,7 +1,7 @@
 # ISURLOG: Industrial IoT Datalogger (Open Source)
 
-!!! warning "Pilot site — not the real documentation"
-    This is a small trial of MkDocs + GitHub Pages, with only 3 pages migrated to test the idea. The full, current documentation lives on the **[GitHub Wiki](https://github.com/isurki-tecnica/isurlog-firmware/wiki)**.
+!!! note "Migration in progress"
+    Use and Hardware (Module A) has fully moved here. Firmware Development, Data Integration & APIs, and Troubleshooting are still on the **[GitHub Wiki](https://github.com/isurki-tecnica/isurlog-firmware/wiki)** for now, and will move here too.
 
 The ISURLOG datalogger is a highly versatile **ESP32-based** device that integrates multiple functionalities for data acquisition and logging in diverse environments. It is a complete and efficient solution for monitoring industrial signals (4-20mA, Modbus RS485, PT100) with advanced connectivity (NB-IoT/LoRaWAN, Wi-Fi, and Bluetooth).
 This datalogger runs on an **optimized MicroPython firmware** for low power consumption (20µA in sleep mode), making it ideal for battery-powered applications.
@@ -10,8 +10,12 @@ This datalogger runs on an **optimized MicroPython firmware** for low power cons
 
 ## Where to begin
 
-* **I just received the ISURLOG:** installation, sensor setup, and IsurDASH — start at [2. Sensor Connections](sensor-connections.md).
-* **I want an estimate of battery life:** try the interactive [Power Budget calculator](power-budget.md).
+| 🛠️ Use and Hardware | 💻 Firmware Development | ☁️ Data Integration & APIs |
+| :--- | :--- | :--- |
+| Installation, sensor setup, and IsurDASH. | Build environment, architecture, contributing. | Historical/real-time data access, downlink API. |
+| **Start here:** [2. Sensor Connections](sensor-connections.md) | **Start here:** [1. Build Environment Setup ↗](https://github.com/isurki-tecnica/isurlog-firmware/wiki/1-Build-Environment-Setup) | **Start here:** [9. Data Access Overview ↗](https://github.com/isurki-tecnica/isurlog-firmware/wiki/9-Data-Access-Overview) |
+
+Running into a problem in the field? See [Troubleshooting ↗](https://github.com/isurki-tecnica/isurlog-firmware/wiki/Troubleshooting) (still on the wiki). Want to estimate battery life? Try the interactive [Power Budget calculator](power-budget.md).
 
 ## Quick Resources
 

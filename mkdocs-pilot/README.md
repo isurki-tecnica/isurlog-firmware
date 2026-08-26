@@ -1,6 +1,6 @@
-# ISURLOG Docs — MkDocs pilot
+# ISURLOG Docs — MkDocs migration
 
-A small, reduced trial of MkDocs + Material as an alternative home for the ISURLOG documentation, to test whether it's worth migrating away from the GitHub Wiki. Only 3 pages are migrated here (Home, 2. Sensor Connections, and a Power Budget calculator) — the real, current documentation is still the [GitHub Wiki](https://github.com/isurki-tecnica/isurlog-firmware/wiki), untouched by this experiment.
+MkDocs + Material site replacing the GitHub Wiki as the home for ISURLOG documentation. **Use and Hardware (Module A)** is fully migrated here, plus an interactive Power Budget calculator. **Firmware Development, Data Integration & APIs, and Troubleshooting** are still on the [GitHub Wiki](https://github.com/isurki-tecnica/isurlog-firmware/wiki) and will move here in later batches — the wiki stays live and accurate until each module has fully moved.
 
 ## Why this exists
 
@@ -17,6 +17,6 @@ mkdocs serve
 
 Then open <http://127.0.0.1:8000>.
 
-## Undoing this pilot
+## Reverting
 
-Nothing here affects the wiki or the rest of the repo. To remove it entirely: delete this `mkdocs-pilot/` folder, delete the `gh-pages` branch (if a deployment was made), and turn off GitHub Pages in the repo's Settings → Pages.
+Nothing here affects the wiki or the rest of the repo. To revert to the wiki-only setup: delete this `mkdocs-pilot/` folder, delete the `gh-pages` branch, and turn off GitHub Pages in the repo's Settings → Pages.

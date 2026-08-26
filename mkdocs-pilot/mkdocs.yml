@@ -1,4 +1,4 @@
-site_name: ISURLOG Docs (Pilot)
+site_name: ISURLOG Docs
 site_description: Small trial of MkDocs + GitHub Pages for ISURLOG documentation
 site_url: https://isurki-tecnica.github.io/isurlog-firmware/
 repo_url: https://github.com/isurki-tecnica/isurlog-firmware
@@ -24,12 +24,31 @@ theme:
   features:
     - navigation.instant
     - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - toc.follow
     - content.code.copy
 
 nav:
   - Home: index.md
-  - 2. Sensor Connections: sensor-connections.md
-  - Power Budget Calculator: power-budget.md
+  - Use and Hardware:
+      - 2. Sensor Connections: sensor-connections.md
+      - 3. Power Supply Methods: power-supply.md
+      - Power Budget Calculator: power-budget.md
+      - 4. Communications: communications.md
+      - 5. Installation and Commissioning: installation-commissioning.md
+      - 6. Datalogger Operation: datalogger-operation.md
+      - 7. IsurDASH Platform:
+          - Overview: isurdash-platform.md
+          - 7.1. Access and Login: isurdash-access-login.md
+          - 7.2. Dashboard: isurdash-dashboard.md
+          - 7.3. Devices: isurdash-devices.md
+          - 7.4. Alarms: isurdash-alarms.md
+          - 7.5. Users: isurdash-users.md
+          - 7.6. Profiles: isurdash-profiles.md
+          - 7.7. Tags: isurdash-tags.md
+          - 7.8. Device Maintenance: isurdash-maintenance.md
+      - 8. Reference Configuration Parameters: reference-parameters.md
 
 markdown_extensions:
   - admonition
