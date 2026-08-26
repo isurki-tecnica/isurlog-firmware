@@ -250,11 +250,15 @@ Estimate battery life from a device's full duty cycle — wake, sensors, and rad
         </div>
         <div class="stat-row"><span>Reads / day</span><span id="statReads">—</span></div>
         <div class="stat-row"><span>Transmissions / day</span><span id="statTx">—</span></div>
+        <div class="stat-row"><span>Sleep charge / day</span><span id="statSleepCharge">—</span></div>
+        <div class="stat-row"><span>Wake charge / day</span><span id="statWakeCharge">—</span></div>
         <div class="stat-row"><span>Sensors charge / day</span><span id="statSensorCharge">—</span></div>
         <div class="stat-row"><span>Modem prep charge / day</span><span id="statPrepCharge">—</span></div>
+        <div class="stat-row"><span>TX charge / day</span><span id="statTxCharge">—</span></div>
+        <div class="stat-row"><span>Tail charge / day</span><span id="statTailCharge">—</span></div>
         <div class="stat-row"><span>Self-discharge / day</span><span id="statSelfDischarge">—</span></div>
+        <div class="stat-row" style="border-top:1px solid var(--border-strong);font-weight:600;"><span>Charge used / day (sum)</span><span id="statCharge">—</span></div>
         <div class="stat-row"><span>Avg. current draw</span><span id="statAvg">—</span></div>
-        <div class="stat-row"><span>Charge used / day</span><span id="statCharge">—</span></div>
         <p class="note">Energy is computed per power domain: onboard sensors and radio/ESP32 draw is counted directly against the battery pack voltage; 4-20mA and Modbus sensors are powered from the boosted 9-24V VDC rail, so their contribution is converted to battery-equivalent mAh (V×I×t ÷ battery voltage ÷ converter efficiency). Self-discharge is modeled as a constant daily drain proportional to total capacity. Real-world life varies with temperature, coverage, and battery age.</p>
       </div>
     </div>
@@ -292,7 +296,7 @@ Estimate battery life from a device's full duty cycle — wake, sensors, and rad
   ["latency","acc","selfdis","sleep","eff","wakeI","wakeT","settle","prepI","prepT","txI","txT","tailT","atPenalty","liionCell","lisoclCell","liionUsable","lisoclUsable"].forEach(function(id){ el[id]=document.getElementById(id); });
   var atPenaltyOn = document.getElementById("atPenaltyOn");
 
-  function fmt(n, d){ d = d===undefined?0:d; return Number(n).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d}); }
+  function fmt(n, d){ d = d===undefined?0:d; return Number(n).toFixed(d); }
 
   function countByType(type){ return sensors.filter(function(s){ return s.type===type; }).length; }
 
@@ -572,11 +576,15 @@ Estimate battery life from a device's full duty cycle — wake, sensors, and rad
 
     document.getElementById("statReads").textContent = fmt(readsDay,1) + " /day";
     document.getElementById("statTx").textContent = fmt(txDay,2) + " /day";
-    document.getElementById("statSensorCharge").textContent = fmt(sensorsMAh_day,3) + " mAh";
-    document.getElementById("statPrepCharge").textContent = fmt(prepMAh_day,3) + " mAh";
-    document.getElementById("statSelfDischarge").textContent = fmt(selfDischargeMAh_day,3) + " mAh";
-    document.getElementById("statAvg").textContent = fmt(avgMA,3) + " mA";
-    document.getElementById("statCharge").textContent = fmt(totalMAh_day,3) + " mAh";
+    document.getElementById("statSleepCharge").textContent = fmt(sleepMAh_day,2) + " mAh";
+    document.getElementById("statWakeCharge").textContent = fmt(wakeMAh_day,2) + " mAh";
+    document.getElementById("statSensorCharge").textContent = fmt(sensorsMAh_day,2) + " mAh";
+    document.getElementById("statPrepCharge").textContent = fmt(prepMAh_day,2) + " mAh";
+    document.getElementById("statTxCharge").textContent = fmt(txMAh_day,2) + " mAh";
+    document.getElementById("statTailCharge").textContent = fmt(tailMAh_day,2) + " mAh";
+    document.getElementById("statSelfDischarge").textContent = fmt(selfDischargeMAh_day,2) + " mAh";
+    document.getElementById("statAvg").textContent = fmt(avgMA,2) + " mA";
+    document.getElementById("statCharge").textContent = fmt(totalMAh_day,2) + " mAh";
 
     var total = totalMAh_day;
     var bar = document.getElementById("bar");
