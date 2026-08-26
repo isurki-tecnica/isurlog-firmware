@@ -22,7 +22,7 @@ Open-source MicroPython firmware for the **ISURLOG**, ISURKI's industrial IoT da
 * **One firmware, multiple networks:** the cellular modem (Nordic nRF9151) and LoRaWAN (RAK3172, RUI3/AT) are both supported on the same PCB design — one gets soldered on at build time depending on the deployment — with Wi-Fi available where neither has coverage. The nRF9151 alone spans NB-IoT, LTE-M, DECT NR+, and satellite NTN — with NTN connectivity already implemented in firmware for true off-grid deployments. All networks enforce modern security (WPA2+, TLS, LoRaWAN OTAA).
 * **Remotely manageable, not just remotely readable:** configuration, sensor setup, firmware updates (OTA and wired), and even a live MicroPython REPL are all reachable from **[IsurDASH](https://isurdash.isurki.com)**, ISURKI's cloud platform — without a truck roll.
 * **Real MicroPython, not a black box:** this is a genuine fork of [MicroPython](https://micropython.org), with ISURKI's own drivers frozen into the firmware binary (`ports/esp32/modules/`) and the application logic (`app/main.py` + its two config files) deployed on top, either via IsurDASH's guided upload or manually — readable, debuggable, and hackable at every layer, not a proprietary firmware blob.
-* **Open data, no lock-in:** integrate directly with historical (InfluxDB) or real-time (MQTT) data access — see the reference implementations in the wiki, including a live public demo you can query with zero setup.
+* **Open data, no lock-in:** integrate directly with historical (InfluxDB) or real-time (MQTT) data access — see the reference implementations in the docs, including a live public demo you can query with zero setup.
 
 ---
 
@@ -39,6 +39,12 @@ Don't just take our word for it — try the real platform and pull real data you
 
 ---
 
+## Battery Life Calculator
+
+How long will an ISURLOG actually last on batteries? The **[interactive Power Budget Calculator](https://isurki-tecnica.github.io/isurlog-firmware/power-budget/)** models the full duty cycle — connectivity (NB-IoT/LTE-M, LoRaWAN, Wi-Fi), the sensors you'd configure in IsurDASH, and your battery setup (Li-Ion or Li-SOCl2) — for a real estimate instead of a rule of thumb.
+
+---
+
 ## Get ISURLOG
 
 ISURLOG is sold directly by ISURKI, configured for your specific connectivity (NB-IoT/LTE-M, LoRaWAN, or Wi-Fi) and sensor setup — [request a quote](mailto:tecnica@isurki.com?subject=ISURLOG%20-%20Quote%20Request&body=Hi%20ISURKI%20team%2C%0A%0AI'm%20interested%20in%20ISURLOG%20for%20the%20following%20use%20case%3A%0A%0A-%20Application%2Fenvironment%3A%20%0A-%20Approximate%20quantity%3A%20%0A-%20Preferred%20connectivity%20(NB-IoT%2FLTE-M%2C%20LoRaWAN%2C%20or%20Wi-Fi)%3A%20%0A-%20Country%2Fregion%3A%20%0A%0AThanks!) and we'll get back to you with pricing and availability. Volume discounts available.
@@ -47,14 +53,15 @@ ISURLOG is sold directly by ISURKI, configured for your specific connectivity (N
 
 ## Documentation
 
-Everything — hardware, firmware architecture, the IsurDASH platform, and data integration APIs — lives in the **[Project Wiki](https://github.com/isurki-tecnica/isurlog-firmware/wiki)**.
+Everything — hardware, firmware architecture, the IsurDASH platform, data integration APIs, and power consumption — lives in the **[ISURLOG Docs](https://isurki-tecnica.github.io/isurlog-firmware/)**.
 
 | I want to... | Start here |
 | :--- | :--- |
-| Install and operate an ISURLOG in the field | [2. Sensor Connections](https://github.com/isurki-tecnica/isurlog-firmware/wiki/2-Sensor-Connections), [5. Installation and Commissioning](https://github.com/isurki-tecnica/isurlog-firmware/wiki/5-Installation-and-Commissioning) |
-| Manage a fleet from IsurDASH | [7. IsurDASH Platform](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7-IsurDASH-Platform) |
-| Build, modify, or contribute to the firmware | [1. Build Environment Setup](https://github.com/isurki-tecnica/isurlog-firmware/wiki/1-Build-Environment-Setup), [2.1 Module & Library Reference](https://github.com/isurki-tecnica/isurlog-firmware/wiki/2.1-Module-and-Library-Reference), [7. Contribution Guide](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7-Contribution-Guide) |
-| Pull ISURLOG data into my own systems | [9. Data Access Overview](https://github.com/isurki-tecnica/isurlog-firmware/wiki/9-Data-Access-Overview) |
+| Install and operate an ISURLOG in the field | [2. Sensor Connections](https://isurki-tecnica.github.io/isurlog-firmware/sensor-connections/), [5. Installation and Commissioning](https://isurki-tecnica.github.io/isurlog-firmware/installation-commissioning/) |
+| Manage a fleet from IsurDASH | [7. IsurDASH Platform](https://isurki-tecnica.github.io/isurlog-firmware/isurdash-platform/) |
+| Build, modify, or contribute to the firmware | [1. Build Environment Setup](https://isurki-tecnica.github.io/isurlog-firmware/build-environment/), [2.1 Module & Library Reference](https://isurki-tecnica.github.io/isurlog-firmware/module-library-reference/), [7. Contribution Guide](https://isurki-tecnica.github.io/isurlog-firmware/contribution-guide/) |
+| Pull ISURLOG data into my own systems | [9. Data Access Overview](https://isurki-tecnica.github.io/isurlog-firmware/data-access-overview/) |
+| Estimate battery life or troubleshoot a field issue | [Power Budget Calculator](https://isurki-tecnica.github.io/isurlog-firmware/power-budget/), [Troubleshooting](https://isurki-tecnica.github.io/isurlog-firmware/troubleshooting/) |
 
 ---
 
@@ -64,13 +71,13 @@ Every release publishes ready-to-flash binaries — the ESP32 firmware, plus the
 
 ➡️ **[Releases](https://github.com/isurki-tecnica/isurlog-firmware/releases)**
 
-Prefer a guided, no-cable-required update? IsurDASH can push new ESP32 firmware to a deployed device directly — see **[7.8 Device Maintenance](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7.8-Device-Maintenance)**.
+Prefer a guided, no-cable-required update? IsurDASH can push new ESP32 firmware to a deployed device directly — see **[7.8 Device Maintenance](https://isurki-tecnica.github.io/isurlog-firmware/isurdash-maintenance/)**.
 
 ---
 
 ## Troubleshooting
 
-Running into an issue in the field — batteries draining faster than expected, gaps in the received data, a Modbus sensor that won't respond, or BLE that won't pair? Check the **[Troubleshooting](https://github.com/isurki-tecnica/isurlog-firmware/wiki/Troubleshooting)** wiki page before reaching out to support — it covers the most common causes and how to fix them, and grows as new issues come up.
+Running into an issue in the field — batteries draining faster than expected, gaps in the received data, a Modbus sensor that won't respond, or BLE that won't pair? Check the **[Troubleshooting](https://isurki-tecnica.github.io/isurlog-firmware/troubleshooting/)** page before reaching out to support — it covers the most common causes and how to fix them, and grows as new issues come up.
 
 ---
 
@@ -105,7 +112,7 @@ ISURLOG is an actively maintained product with real field deployments, not a pro
 
 ## Contributing
 
-Bug fixes, new sensor drivers, and documentation improvements are all welcome — see the **[Contribution Guide](https://github.com/isurki-tecnica/isurlog-firmware/wiki/7-Contribution-Guide)** for how this repository is organized (it's a full MicroPython fork — ISURKI's own code lives in `app/` and `ports/esp32/modules/`) and how to submit a pull request.
+Bug fixes, new sensor drivers, and documentation improvements are all welcome — see the **[Contribution Guide](https://isurki-tecnica.github.io/isurlog-firmware/contribution-guide/)** for how this repository is organized (it's a full MicroPython fork — ISURKI's own code lives in `app/` and `ports/esp32/modules/`) and how to submit a pull request.
 
 ---
 
