@@ -1,0 +1,665 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Small trial of MkDocs + GitHub Pages for ISURLOG documentation">
+      
+      
+      
+      
+        <link rel="prev" href="../sensor-connections/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Power Budget Calculator - ISURLOG Docs (Pilot)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#power-budget-battery-life-calculator" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ISURLOG Docs (Pilot)" class="md-header__button md-logo" aria-label="ISURLOG Docs (Pilot)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ISURLOG Docs (Pilot)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Power Budget Calculator
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ISURLOG Docs (Pilot)" class="md-nav__button md-logo" aria-label="ISURLOG Docs (Pilot)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ISURLOG Docs (Pilot)
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensor-connections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Sensor Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Budget Calculator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="power-budget-battery-life-calculator">Power Budget &amp; Battery Life Calculator</h1>
+<p>Estimate battery life from a device's duty cycle: how often it wakes, reads sensors, and transmits over NB-IoT/LTE-M, LoRaWAN, or Wi-Fi.</p>
+<div class="admonition note">
+<p class="admonition-title">Example values</p>
+<p>Current/duration values below are illustrative, not measured specs. They will be replaced with real figures from a Nordic Power Profiler Kit once available.</p>
+</div>
+<p><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"></p>
+<style>
+  .pb-wrap{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#f6f8f7;
+    --border:#d7dcda;
+    --text:#182322; --text-2:#4d5957; --text-3:#7c8886;
+    --accent:#b8721e; --accent-ink:#5c3810;
+    --nbiot:#2f5f8a; --nbiot-bg:#e2edf5;
+    --lora:#6a4a9e; --lora-bg:#ece5f6;
+    --wifi:#1f7a5c; --wifi-bg:#dff0e9;
+    --sleep:#c9cfce; --read:#8fb3c9; --tx:var(--accent); --tail:#d68a3f;
+    --radius:10px;
+    font-family:"IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    color:var(--text);
+  }
+  [data-md-color-scheme="slate"] .pb-wrap{
+    --bg:#121615; --surface:#1b201f; --surface-2:#212726;
+    --border:#333b39;
+    --text:#e8ece9; --text-2:#aab5b1; --text-3:#78827f;
+    --accent:#e5a355; --accent-ink:#ffe4bd;
+    --nbiot:#7fb2dc; --nbiot-bg:#1f2e3a;
+    --lora:#b39be0; --lora-bg:#2c2440;
+    --wifi:#6fcaa8; --wifi-bg:#193226;
+    --sleep:#3a423f; --read:#3f6580; --tail:#8a5a2a;
+  }
+  .pb-wrap *{box-sizing:border-box;}
+  .pb-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:1.25rem;align-items:start;margin:1.5rem 0;}
+  @media (max-width:760px){.pb-grid{grid-template-columns:1fr;}}
+  .pb-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;}
+  .pb-card + .pb-card{margin-top:1.25rem;}
+  .pb-card h2{font-size:.95rem;font-weight:600;margin:0 0 1rem;}
+  .pb-tabs{display:flex;gap:.4rem;margin-bottom:1.1rem;}
+  .pb-tab{flex:1;text-align:center;padding:.5rem .4rem;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-2);font-size:.82rem;font-weight:600;cursor:pointer;}
+  .pb-tab[data-active="true"][data-tech="nbiot"]{background:var(--nbiot-bg);color:var(--nbiot);border-color:var(--nbiot);}
+  .pb-tab[data-active="true"][data-tech="lora"]{background:var(--lora-bg);color:var(--lora);border-color:var(--lora);}
+  .pb-tab[data-active="true"][data-tech="wifi"]{background:var(--wifi-bg);color:var(--wifi);border-color:var(--wifi);}
+  .pb-field{margin-bottom:.85rem;}
+  .pb-field label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text-2);margin-bottom:.3rem;}
+  .pb-field label b{font-family:"IBM Plex Mono",monospace;color:var(--text);font-weight:600;}
+  .pb-field input[type="range"]{width:100%;accent-color:var(--accent);}
+  .pb-row2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+  .pb-divider{border:none;border-top:1px solid var(--border);margin:1rem 0;}
+  .pb-section-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);margin:0 0 .6rem;}
+  .pb-result{text-align:center;padding:1.4rem 1rem 1.1rem;}
+  .pb-result .num{font-family:"IBM Plex Mono",monospace;font-size:2.6rem;font-weight:600;line-height:1;color:var(--accent-ink);}
+  .pb-result .unit{font-size:1rem;color:var(--text-2);margin-left:.3rem;}
+  .pb-result .sub2{font-size:.8rem;color:var(--text-3);margin-top:.5rem;}
+  .pb-stat-row{display:flex;justify-content:space-between;padding:.45rem 0;border-top:1px solid var(--border);font-size:.82rem;}
+  .pb-stat-row span:first-child{color:var(--text-2);}
+  .pb-stat-row span:last-child{font-family:"IBM Plex Mono",monospace;font-weight:600;}
+  .pb-bar{display:flex;height:20px;border-radius:6px;overflow:hidden;margin:.75rem 0 .6rem;border:1px solid var(--border);}
+  .pb-bar div{height:100%;}
+  .pb-legend{display:flex;flex-wrap:wrap;gap:.6rem 1rem;font-size:.75rem;color:var(--text-2);}
+  .pb-legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:.4rem;vertical-align:1px;}
+  .pb-note{font-size:.76rem;color:var(--text-3);line-height:1.5;margin-top:1rem;}
+</style>
+
+<div class="pb-wrap">
+  <div class="pb-grid">
+    <div>
+      <div class="pb-card">
+        <h2>Connectivity</h2>
+        <div class="pb-tabs" id="pb-tabs">
+          <div class="pb-tab" data-tech="nbiot" data-active="true">NB-IoT / LTE-M</div>
+          <div class="pb-tab" data-tech="lora" data-active="false">LoRaWAN</div>
+          <div class="pb-tab" data-tech="wifi" data-active="false">Wi-Fi</div>
+        </div>
+
+        <p class="pb-section-label">Schedule</p>
+        <div class="pb-field">
+          <label>Latency time <b id="pb-out-latency">10 min</b></label>
+          <input type="range" id="pb-latency" min="1" max="120" value="10" step="1">
+        </div>
+        <div class="pb-field">
+          <label>Record accumulator <b id="pb-out-acc">6 reads/tx</b></label>
+          <input type="range" id="pb-acc" min="1" max="30" value="6" step="1">
+        </div>
+
+        <hr class="pb-divider">
+        <p class="pb-section-label">Duty-cycle currents (example)</p>
+        <div class="pb-field">
+          <label>Sleep current <b id="pb-out-sleep">20 µA</b></label>
+          <input type="range" id="pb-sleep" min="5" max="100" value="20" step="1">
+        </div>
+        <div class="pb-row2">
+          <div class="pb-field">
+            <label>Read current <b id="pb-out-readI">80 mA</b></label>
+            <input type="range" id="pb-readI" min="10" max="300" value="80" step="5">
+          </div>
+          <div class="pb-field">
+            <label>Read time <b id="pb-out-readT">2.5 s</b></label>
+            <input type="range" id="pb-readT" min="0.5" max="10" value="2.5" step="0.5">
+          </div>
+        </div>
+        <div class="pb-row2">
+          <div class="pb-field">
+            <label>TX current <b id="pb-out-txI">180 mA</b></label>
+            <input type="range" id="pb-txI" min="20" max="500" value="180" step="5">
+          </div>
+          <div class="pb-field">
+            <label>TX time <b id="pb-out-txT">4 s</b></label>
+            <input type="range" id="pb-txT" min="0.5" max="30" value="4" step="0.5">
+          </div>
+        </div>
+        <div class="pb-field" id="pb-tail-field">
+          <label>Radio tail after TX <b id="pb-out-tailT">0 s (RAI on)</b></label>
+          <input type="range" id="pb-tailT" min="0" max="35" value="0" step="1">
+        </div>
+
+        <hr class="pb-divider">
+        <p class="pb-section-label">Battery</p>
+        <div class="pb-field">
+          <label>Capacity <b id="pb-out-cap">17000 mAh</b> <span style="font-weight:400">(5× INR18650)</span></label>
+          <input type="range" id="pb-cap" min="2000" max="17000" value="17000" step="500">
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="pb-card pb-result">
+        <div><span class="num" id="pb-lifeNum">—</span><span class="unit" id="pb-lifeUnit">days</span></div>
+        <div class="sub2" id="pb-lifeAlt">— months · — years</div>
+      </div>
+      <div class="pb-card">
+        <h2>Daily energy breakdown</h2>
+        <div class="pb-bar" id="pb-bar"></div>
+        <div class="pb-legend">
+          <span><i style="background:var(--sleep)"></i>Sleep</span>
+          <span><i style="background:var(--read)"></i>Read</span>
+          <span><i style="background:var(--tx)"></i>TX</span>
+          <span><i style="background:var(--tail)"></i>Tail</span>
+        </div>
+        <div class="pb-stat-row"><span>Reads / day</span><span id="pb-statReads">—</span></div>
+        <div class="pb-stat-row"><span>Transmissions / day</span><span id="pb-statTx">—</span></div>
+        <div class="pb-stat-row"><span>Avg. current draw</span><span id="pb-statAvg">—</span></div>
+        <div class="pb-stat-row"><span>Charge used / day</span><span id="pb-statCharge">—</span></div>
+        <p class="pb-note">Formula: capacity ÷ (sleep_current × sleep_time + Σ active_current × active_time per cycle, per day). Real-world life varies with temperature, coverage, and battery age/self-discharge.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var presets = {
+    nbiot: {sleep:20, readI:80, readT:2.5, txI:180, txT:4, tailT:0, showTail:true},
+    lora:  {sleep:15, readI:80, readT:2.5, txI:120, txT:1.2, tailT:0, showTail:false},
+    wifi:  {sleep:20, readI:80, readT:2.5, txI:140, txT:2.5, tailT:0, showTail:false}
+  };
+  var el = {};
+  ["latency","acc","sleep","readI","readT","txI","txT","tailT","cap"].forEach(function(id){ el[id]=document.getElementById("pb-"+id); });
+
+  document.querySelectorAll(".pb-tab").forEach(function(t){
+    t.addEventListener("click", function(){
+      document.querySelectorAll(".pb-tab").forEach(function(x){ x.dataset.active = "false"; });
+      t.dataset.active = "true";
+      var p = presets[t.dataset.tech];
+      el.sleep.value = p.sleep; el.readI.value = p.readI; el.readT.value = p.readT;
+      el.txI.value = p.txI; el.txT.value = p.txT; el.tailT.value = p.tailT;
+      document.getElementById("pb-tail-field").style.display = p.showTail ? "block" : "none";
+      update();
+    });
+  });
+
+  function fmt(n, d){ d = d===undefined?0:d; return Number(n).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d}); }
+
+  function update(){
+    var latency = +el.latency.value, acc = +el.acc.value;
+    var sleepUA = +el.sleep.value, readI = +el.readI.value, readT = +el.readT.value;
+    var txI = +el.txI.value, txT = +el.txT.value, tailT = +el.tailT.value;
+    var cap = +el.cap.value;
+
+    document.getElementById("pb-out-latency").textContent = latency + " min";
+    document.getElementById("pb-out-acc").textContent = acc + " reads/tx";
+    document.getElementById("pb-out-sleep").textContent = sleepUA + " µA";
+    document.getElementById("pb-out-readI").textContent = readI + " mA";
+    document.getElementById("pb-out-readT").textContent = fmt(readT,1) + " s";
+    document.getElementById("pb-out-txI").textContent = txI + " mA";
+    document.getElementById("pb-out-txT").textContent = fmt(txT,1) + " s";
+    document.getElementById("pb-out-tailT").textContent = tailT + " s" + (tailT===0 ? " (RAI on)" : "");
+    document.getElementById("pb-out-cap").textContent = fmt(cap,0) + " mAh";
+
+    var readsDay = 1440 / latency;
+    var txDay = readsDay / acc;
+
+    var tReadS = readsDay * readT;
+    var tTxS = txDay * txT;
+    var tTailS = txDay * tailT;
+    var tSleepS = Math.max(0, 86400 - tReadS - tTxS - tTailS);
+
+    var chargeMAh = (sleepUA/1000) * (tSleepS/3600)
+                  + readI * (tReadS/3600)
+                  + txI * (tTxS/3600)
+                  + txI * (tTailS/3600);
+
+    var lifeDays = cap / chargeMAh;
+    var avgMA = chargeMAh / 24;
+
+    document.getElementById("pb-lifeNum").textContent = lifeDays >= 1000 ? fmt(lifeDays/365,1) : fmt(lifeDays,0);
+    document.getElementById("pb-lifeUnit").textContent = lifeDays >= 1000 ? " years" : " days";
+    document.getElementById("pb-lifeAlt").textContent = fmt(lifeDays/30.44,1) + " months · " + fmt(lifeDays/365.25,2) + " years";
+
+    document.getElementById("pb-statReads").textContent = fmt(readsDay,1) + " /day";
+    document.getElementById("pb-statTx").textContent = fmt(txDay,2) + " /day";
+    document.getElementById("pb-statAvg").textContent = fmt(avgMA,3) + " mA";
+    document.getElementById("pb-statCharge").textContent = fmt(chargeMAh,3) + " mAh";
+
+    var totalS = tSleepS + tReadS + tTxS + tTailS;
+    var bar = document.getElementById("pb-bar");
+    bar.innerHTML =
+      '<div style="width:'+(100*tSleepS/totalS)+'%;background:var(--sleep)"></div>' +
+      '<div style="width:'+(100*tReadS/totalS)+'%;background:var(--read)"></div>' +
+      '<div style="width:'+(100*tTxS/totalS)+'%;background:var(--tx)"></div>' +
+      '<div style="width:'+(100*tTailS/totalS)+'%;background:var(--tail)"></div>';
+  }
+
+  Object.keys(el).forEach(function(id){ el[id].addEventListener("input", update); });
+  update();
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
