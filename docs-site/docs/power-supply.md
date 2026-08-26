@@ -46,6 +46,9 @@ Each of the power modes described in previous sections requires a specific jumpe
 
 ![image](images/3-power-jumpers-location.png){width="176" height="334"}
 
+!!! note "What I SENSE does"
+    All battery current passes through the **I SENSE** jumper — as the name suggests, it's the point where current can be measured. In normal operation it must stay **closed** (ON position, shorted), as indicated below for every power mode. To measure the device's actual current draw, open the jumper and insert an ammeter in series across it — see [Consumption Graphs](consumption-graphs.md) for the full measurement procedure and real captures.
+
 #### Batteries Only
 
 For power only with batteries, the following configuration is needed:
