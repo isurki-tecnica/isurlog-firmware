@@ -6,7 +6,7 @@ The [GitHub Wiki](https://github.com/isurki-tecnica/isurlog-firmware/wiki) is no
 
 ## Why this exists
 
-The GitHub Wiki can't run JavaScript (it sanitizes `<script>`/`<iframe>` out of every page), so an interactive tool like the power budget calculator can't be embedded there directly. This pilot proves it can be embedded natively — same page, same site — in MkDocs.
+The GitHub Wiki can't run JavaScript (it sanitizes `<script>`/`<iframe>` out of every page), so an interactive tool like the power budget calculator can't be embedded there directly. MkDocs can — same page, same site.
 
 ## Preview locally
 
@@ -21,4 +21,4 @@ Then open <http://127.0.0.1:8000>.
 
 ## Reverting
 
-Nothing here affects the wiki or the rest of the repo. To revert to the wiki-only setup: delete this `mkdocs-pilot/` folder, delete the `gh-pages` branch, and turn off GitHub Pages in the repo's Settings → Pages.
+Nothing here affects the rest of the repo. To revert to the wiki-only setup: delete this `docs-site/` folder, delete the `gh-pages` branch, and turn off GitHub Pages in the repo's Settings → Pages.

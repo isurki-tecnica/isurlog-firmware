@@ -1,5 +1,5 @@
 site_name: ISURLOG Docs
-site_description: Small trial of MkDocs + GitHub Pages for ISURLOG documentation
+site_description: ISURLOG documentation — hardware, firmware, data integration, and troubleshooting
 site_url: https://isurki-tecnica.github.io/isurlog-firmware/
 repo_url: https://github.com/isurki-tecnica/isurlog-firmware
 repo_name: isurki-tecnica/isurlog-firmware
@@ -31,7 +31,7 @@ theme:
 
 nav:
   - Home: index.md
-  - Use and Hardware:
+  - 🛠️ Module A - Use and Hardware:
       - 2. Sensor Connections: sensor-connections.md
       - 3. Power Supply Methods: power-supply.md
       - Power Budget Calculator: power-budget.md
@@ -49,7 +49,7 @@ nav:
           - 7.7. Tags: isurdash-tags.md
           - 7.8. Device Maintenance: isurdash-maintenance.md
       - 8. Reference Configuration Parameters: reference-parameters.md
-  - Firmware Development:
+  - 💻 Module B - Firmware Development:
       - 1. Build Environment Setup: build-environment.md
       - 2. Architecture Overview: architecture-overview.md
       - 2.1. Module & Library Reference: module-library-reference.md
@@ -58,12 +58,13 @@ nav:
       - 5. Advanced NB-IoT Modem Guide: nbiot-modem-guide.md
       - 6. Advanced LoRaWAN Modem Guide: lorawan-modem-guide.md
       - 7. Contribution Guide: contribution-guide.md
-  - Data Integration & APIs:
+  - ☁️ Module C - Data Integration & APIs:
       - 9. Data Access Overview: data-access-overview.md
       - 10. Historical Data (InfluxDB): historical-data-influxdb.md
       - 11. Real-Time Data (MQTT): realtime-data-mqtt.md
       - 12. Remote Configuration API (Downlink): remote-configuration-api.md
-  - Troubleshooting: troubleshooting.md
+  - 🩺 Module D - Troubleshooting:
+      - Troubleshooting: troubleshooting.md
 
 markdown_extensions:
   - admonition
