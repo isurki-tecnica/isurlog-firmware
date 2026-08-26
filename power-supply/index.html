@@ -1944,6 +1944,10 @@
 <h2 id="32-jumper-configuration-for-power-modes">3.2. Jumper Configuration for Power Modes</h2>
 <p>Each of the power modes described in previous sections requires a specific jumper configuration on the <strong>ISURLOG</strong> PCB. <strong>It is completely necessary to configure these jumpers correctly to ensure a stable energy supply</strong>. The jumpers are located on the underside of the PCB.</p>
 <p><img alt="image" height="334" src="../images/3-power-jumpers-location.png" width="176" /></p>
+<div class="admonition note">
+<p class="admonition-title">What I SENSE does</p>
+<p>All battery current passes through the <strong>I SENSE</strong> jumper — as the name suggests, it's the point where current can be measured. In normal operation it must stay <strong>closed</strong> (ON position, shorted), as indicated below for every power mode. To measure the device's actual current draw, open the jumper and insert an ammeter in series across it — see <a href="../consumption-graphs/">Consumption Graphs</a> for the full measurement procedure and real captures.</p>
+</div>
 <h4 id="batteries-only">Batteries Only</h4>
 <p>For power only with batteries, the following configuration is needed:</p>
 <ul>

@@ -1410,6 +1410,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consumption Graphs
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1426,6 +1444,64 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-measurement-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Measurement Method
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-captures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Captures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Captures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deep-sleep-nb-iotlte-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Sleep — NB-IoT/LTE-M
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1578,6 +1654,53 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-measurement-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Measurement Method
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-captures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Captures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Captures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deep-sleep-nb-iotlte-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Sleep — NB-IoT/LTE-M
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1597,11 +1720,46 @@
 
 
 <h1 id="consumption-graphs">Consumption Graphs</h1>
+<p>Real current-vs-time captures showing what each part of the duty cycle actually costs — a companion to the <a href="../power-budget/">Power Budget &amp; Battery Life Calculator</a>, grounded in measurement instead of estimates. This page grows over time as new captures become available.</p>
+<h2 id="1-measurement-method">1. Measurement Method</h2>
+<p><strong>Equipment.</strong> ISURLOG's current draw spans a very wide range — roughly 20µA in deep sleep up to 0.5A+ during a transmit burst — so a regular multimeter can't track both ends of that swing accurately. A meter with <strong>autoranging</strong> is required. Captures on this page use the <strong>Nordic Power Profiler Kit II (PPK2)</strong>, with its <strong>Power Profiler</strong> app for nRF Connect for Desktop, but any autoranging current meter is valid — the choice is left to the reader.</p>
+<p><strong>Wiring — the I_SENSE jumper.</strong> All battery current passes through the <strong>I_SENSE</strong> jumper (see <a href="../power-supply/">3.2. Jumper Configuration for Power Modes</a>). In normal operation it stays <strong>closed</strong> (shorted). To measure consumption:</p>
+<ol>
+<li>Open/remove the I_SENSE jumper.</li>
+<li>Insert the meter in series: the <strong>inner pin</strong> (pin 1 below) is <strong>VIN</strong> (battery side) — connect it to the meter's VIN. The <strong>outer pin</strong> (pin 2) connects to the meter's VOUT.</li>
+<li>Tie the meter's <strong>GND</strong> to an ISURLOG GND — e.g. at the ESP32 or RAK3172 UART header pins.</li>
+</ol>
+<p><img alt="I_SENSE jumper — PPK2 wiring" src="../images/isense-ppk2-wiring.png" width="220" /></p>
+<p><strong>Conditions.</strong> Each capture below notes the firmware version, connectivity, and sensor configuration it was taken under — real numbers vary with these, so treat them as a reference point, not a spec sheet.</p>
+<hr />
+<h2 id="2-captures">2. Captures</h2>
+<h3 id="deep-sleep-nb-iotlte-m">Deep Sleep — NB-IoT/LTE-M</h3>
+<p><img alt="Deep sleep current — NB-IoT" src="../images/deep-sleep-nbiot.png" /></p>
+<p>Captured with the PPK2 in Ampere meter mode, 1,000 samples/second, over a 3-second window:</p>
+<ul>
+<li><strong>Average:</strong> 77.44 µA</li>
+<li><strong>Peak:</strong> 1.22 mA (periodic short spikes visible in the trace)</li>
+<li><strong>Window:</strong> 3.001 s · <strong>Charge:</strong> 232.39 µC</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">What this figure includes</p>
+<p>This is the <strong>full system</strong> at rest, not the ESP32 alone: ESP32 deep sleep <strong>plus</strong> the nRF9151 modem, powered on and already attached to the NB-IoT network — no reconnect/re-attach pending when the next scheduled transmission comes due. That's why it reads higher than a bare-ESP32 deep sleep figure; it's the more realistic number for a deployed unit.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">The periodic spikes</p>
+<p>The regular short spikes riding on top of the baseline come from the board's own power regulator: at very light load (like deep sleep), it switches to a pulsed low-power operating mode — firing brief current pulses to top up its output capacitor instead of switching continuously. The downstream draw itself stays smooth; the pulses are the regulator's own behavior, not the ESP32 or modem doing anything.</p>
+</div>
+<p><strong>Longer window — eDRX paging cycle:</strong></p>
+<p><img alt="Deep sleep current — NB-IoT, eDRX paging cycle over a 1-minute window" src="../images/deep-sleep-nbiot-edrx-cycle.png" /></p>
+<p>Zooming out to a 1-minute window reveals a second, larger periodic spike (30-38 mA) on top of the baseline — these are the modem's <strong>eDRX paging occasions</strong>, where it briefly wakes to listen for the network. The interval between two consecutive occasions is <strong>40.96 s on standard firmware</strong>, matching the <strong>40.92 s</strong> measured here.</p>
+<ul>
+<li><strong>Window average:</strong> 173.21 µA · <strong>Window max:</strong> 38.08 mA · <strong>Window charge:</strong> 10.39 mC (1 minute)</li>
+<li><strong>Between two paging occasions:</strong> 158.71 µA average · 40.92 s · 6.49 mC charge</li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">Coming soon</p>
-<p>Real current-vs-time traces captured with a Nordic Power Profiler Kit (PPK2), showing a full duty cycle — deep sleep, sensor reads, and radio transmission — for each connectivity option (NB-IoT/LTE-M, LoRaWAN, Wi-Fi).</p>
+<p>Deep Sleep — LoRaWAN, Deep Sleep — Wi-Fi, Wake + Sensor Read, and a transmission-cycle capture for each connectivity option.</p>
 </div>
-<p>In the meantime, see the <a href="../power-budget/">Power Budget &amp; Battery Life Calculator</a> for an estimate based on configurable duty-cycle parameters.</p>
 
 
 
