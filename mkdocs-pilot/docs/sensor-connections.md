@@ -85,7 +85,7 @@ The ISURLOG also breaks out its internal I2C bus through a standard **QWIIC** co
 
 ## 2.7. AUX-IO Connector
 
-The AUX-IO connector is a **1mm-pitch (P=1mm) connector** that breaks out extra signals from the ISURLOG's MCP23008 I/O expander — see 4.5 MCP23008 I/O Expander Pinout *(not part of this pilot — lives in the full wiki)*.
+The AUX-IO connector is a **1mm-pitch (P=1mm) connector** that breaks out extra signals from the ISURLOG's MCP23008 I/O expander — see [4.5 MCP23008 I/O Expander Pinout](gpio-mapping.md#45-mcp23008-io-expander-pinout).
 
 **Pin 1** is marked with a triangle on the PCB silkscreen; pins are numbered from there, starting at the bottom of the connector in the image below.
 

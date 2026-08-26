@@ -49,6 +49,15 @@ nav:
           - 7.7. Tags: isurdash-tags.md
           - 7.8. Device Maintenance: isurdash-maintenance.md
       - 8. Reference Configuration Parameters: reference-parameters.md
+  - Firmware Development:
+      - 1. Build Environment Setup: build-environment.md
+      - 2. Architecture Overview: architecture-overview.md
+      - 2.1. Module & Library Reference: module-library-reference.md
+      - 3. Flashing and Application Upload: flashing-application-upload.md
+      - 4. GPIO Mapping (Hardware-Software): gpio-mapping.md
+      - 5. Advanced NB-IoT Modem Guide: nbiot-modem-guide.md
+      - 6. Advanced LoRaWAN Modem Guide: lorawan-modem-guide.md
+      - 7. Contribution Guide: contribution-guide.md
 
 markdown_extensions:
   - admonition
