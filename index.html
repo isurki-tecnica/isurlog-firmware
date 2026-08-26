@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#isurlog-industrial-iot-datalogger-open-source" class="md-skip">
+        <a href="#isurlog-industrial-iot-datalogger-open-source-firmware" class="md-skip">
           Skip to content
         </a>
       
@@ -322,6 +322,39 @@
     <span class="md-ellipsis">
       
         Where to begin
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimate-battery-life" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimate battery life
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-it-in-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See it in action
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-isurlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get ISURLOG
       
     </span>
   </a>
@@ -1651,6 +1684,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#estimate-battery-life" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimate battery life
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-it-in-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See it in action
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-isurlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get ISURLOG
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quick-resources" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1681,10 +1747,17 @@
   
 
 
-<h1 id="isurlog-industrial-iot-datalogger-open-source">ISURLOG: Industrial IoT Datalogger (Open Source)</h1>
-<p>The ISURLOG datalogger is a highly versatile <strong>ESP32-based</strong> device that integrates multiple functionalities for data acquisition and logging in diverse environments. It is a complete and efficient solution for monitoring industrial signals (4-20mA, Modbus RS485, PT100) with advanced connectivity (NB-IoT/LoRaWAN, Wi-Fi, and Bluetooth).
-This datalogger runs on an <strong>optimized MicroPython firmware</strong> for low power consumption (20µA in sleep mode), making it ideal for battery-powered applications.</p>
-<p><img alt="image" height="780" src="images/home-pcb-photo.png" width="884" /></p>
+<h1 id="isurlog-industrial-iot-datalogger-open-source-firmware">ISURLOG: Industrial IoT Datalogger (Open Source Firmware)</h1>
+<p><img alt="ISURLOG — Industrial NB-IoT/LoRa Datalogger" src="images/gh-banner-isurlog.jpg" width="700" /></p>
+<p><strong>ISURLOG</strong> is an ESP32-based industrial datalogger built for field deployments where power is scarce and connectivity is never guaranteed. Real MicroPython firmware, real industrial signals, remotely managed from day one.</p>
+<ul>
+<li><strong>Industrial-grade sensing</strong> — 4-20 mA analog, Modbus RTU (RS485), PT100/PT1000, digital pulse counting, internal/external temperature &amp; humidity, and an on-board accelerometer for tamper/vandalism detection.</li>
+<li><strong>Built for batteries</strong> — as low as ~20 µA in deep sleep. An on-board energy-harvesting charger tops up from almost anything: a 0.3V TEG, a micro solar panel, a full 5V panel, or a plain USB charger.</li>
+<li><strong>One firmware, multiple networks</strong> — NB-IoT, LTE-M, DECT NR+, and satellite NTN via the nRF9151, or LoRaWAN, exclusively per unit, plus Wi-Fi and local BLE for setup.</li>
+<li><strong>Remotely manageable, not just remotely readable</strong> — configuration, sensor setup, OTA updates, and a live MicroPython REPL, all from <a href="https://isurdash.isurki.com">IsurDASH</a>, without a truck roll.</li>
+<li><strong>Real MicroPython, not a black box</strong> — a genuine fork of <a href="https://micropython.org">MicroPython</a>, readable and hackable at every layer.</li>
+</ul>
+<hr />
 <h2 id="where-to-begin">Where to begin</h2>
 <table>
 <thead>
@@ -1707,13 +1780,31 @@ This datalogger runs on an <strong>optimized MicroPython firmware</strong> for l
 </tr>
 </tbody>
 </table>
-<p>Running into a problem in the field? See <a href="troubleshooting/">Troubleshooting</a>. Want to estimate battery life? Try the interactive <a href="power-budget/">Power Budget calculator</a>.</p>
+<p>Running into a problem in the field? See <a href="troubleshooting/">Troubleshooting</a>.</p>
+<hr />
+<h2 id="estimate-battery-life">Estimate battery life</h2>
+<p>The interactive <strong><a href="power-budget/">Power Budget Calculator</a></strong> models a device's full duty cycle — connectivity, the sensors you'd configure in IsurDASH, and your battery setup (Li-Ion or Li-SOCl2) — for a real estimate instead of a rule of thumb.</p>
+<hr />
+<h2 id="see-it-in-action">See it in action</h2>
+<p>Don't just take our word for it — try the real platform and pull real data yourself, no signup required:</p>
+<ul>
+<li><strong>IsurDASH demo account</strong> — log in at <a href="https://isurdash.isurki.com/login">isurdash.isurki.com/login</a> and explore the dashboard, device list, alarms, and configuration screens for yourself:<ul>
+<li><strong>Email:</strong> <code>isurdash.demo@gmail.com</code></li>
+<li><strong>Password:</strong> <code>TEST123456</code></li>
+</ul>
+</li>
+<li><strong>Data integration examples</strong> — two ready-to-run Python scripts, pre-filled with public demo credentials, in the <a href="https://github.com/isurki-tecnica/isurlog-firmware/tree/main/data_integration"><code>data_integration/</code></a> folder of the firmware repo — pull historical data from InfluxDB, or subscribe to a live MQTT stream.</li>
+</ul>
+<hr />
+<h2 id="get-isurlog">Get ISURLOG</h2>
+<p>ISURLOG is sold directly by ISURKI, configured for your specific connectivity and sensor setup — <a href="mailto:tecnica@isurki.com?subject=ISURLOG%20-%20Quote%20Request&amp;body=Hi%20ISURKI%20team%2C%0A%0AI'm%20interested%20in%20ISURLOG%20for%20the%20following%20use%20case%3A%0A%0A-%20Application%2Fenvironment%3A%20%0A-%20Approximate%20quantity%3A%20%0A-%20Preferred%20connectivity%20(NB-IoT%2FLTE-M%2C%20LoRaWAN%2C%20or%20Wi-Fi)%3A%20%0A-%20Country%2Fregion%3A%20%0A%0AThanks!) and we'll get back to you with pricing and availabilit">request a quote</a>.</p>
+<hr />
 <h2 id="quick-resources">Quick Resources</h2>
 <ul>
 <li><strong>GitHub Repository:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware">isurki-tecnica/isurlog-firmware</a></li>
 <li><strong>Firmware Releases:</strong> <a href="https://github.com/isurki-tecnica/isurlog-firmware/releases">Releases page</a></li>
-<li><strong>IsurDASH Cloud Platform Login:</strong> <a href="https://isurdash.isurki.com/login">https://isurdash.isurki.com/login</a></li>
-<li><strong>Technical Support:</strong> (+34) 943-635437 or tecnica@isurki.com.</li>
+<li><strong>IsurDASH Cloud Platform Login:</strong> <a href="https://isurdash.isurki.com/login">isurdash.isurki.com/login</a></li>
+<li><strong>Technical Support:</strong> (+34) 943-635437 · tecnica@isurki.com</li>
 </ul>
 
 
