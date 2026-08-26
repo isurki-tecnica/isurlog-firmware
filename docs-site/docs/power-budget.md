@@ -5,7 +5,7 @@ Estimate battery life from a device's full duty cycle — wake, sensors, and rad
 !!! note "Example values"
     Radio timing (wake/prep/TX duration and current) is calibrated against real measurements for NB-IoT, LoRaWAN, and Wi-Fi. Sensor-specific defaults and battery usable-capacity derating are still engineering estimates — adjust them under each widget's "Advanced" section as real measurements (Power Profiler Kit, datasheets) become available.
 
-!!! warning "Not infallible"
+??? warning "Not infallible"
     Even with all these parameters, this is still a model, not a guarantee — real deployments see extra variability the calculator doesn't account for:
 
     * **Temperature.** Cold weather reduces usable battery capacity and raises internal resistance — it worsens the passivation effect on Li-SOCl2 cells in particular.
@@ -270,7 +270,7 @@ Estimate battery life from a device's full duty cycle — wake, sensors, and rad
         <div class="stat-row"><span>Self-discharge / day</span><span id="statSelfDischarge">—</span></div>
         <div class="stat-row" style="border-top:1px solid var(--border-strong);font-weight:600;"><span>Charge used / day (sum)</span><span id="statCharge">—</span></div>
         <div class="stat-row"><span>Avg. current draw</span><span id="statAvg">—</span></div>
-        <p class="note">Energy is computed per power domain: onboard sensors and radio/ESP32 draw is counted directly against the battery pack voltage; 4-20mA and Modbus sensors are powered from the boosted 9-24V VDC rail, so their contribution is converted to battery-equivalent mAh (V×I×t ÷ battery voltage ÷ converter efficiency). Self-discharge is modeled as a constant daily drain proportional to total capacity. Real-world life varies with temperature, coverage, and battery age.</p>
+        <p class="note">Energy is computed per power domain: onboard sensors and radio/ESP32 draw is counted directly against the battery pack voltage; 4-20mA and Modbus sensors are powered from the boosted 9-24V VDC rail, so their contribution is converted to battery-equivalent mAh (V×I×t ÷ battery voltage ÷ converter efficiency). Self-discharge is modeled as a constant daily drain proportional to total capacity.</p>
       </div>
     </div>
   </div>
