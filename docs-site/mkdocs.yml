@@ -34,7 +34,6 @@ nav:
   - 🛠️ Module A - Use and Hardware:
       - 2. Sensor Connections: sensor-connections.md
       - 3. Power Supply Methods: power-supply.md
-      - Power Budget Calculator: power-budget.md
       - 4. Communications: communications.md
       - 5. Installation and Commissioning: installation-commissioning.md
       - 6. Datalogger Operation: datalogger-operation.md
@@ -63,7 +62,10 @@ nav:
       - 10. Historical Data (InfluxDB): historical-data-influxdb.md
       - 11. Real-Time Data (MQTT): realtime-data-mqtt.md
       - 12. Remote Configuration API (Downlink): remote-configuration-api.md
-  - 🩺 Module D - Troubleshooting:
+  - ⚡ Module D - Power Consumption & Battery Life:
+      - Consumption Graphs: consumption-graphs.md
+      - Power Budget Calculator: power-budget.md
+  - 🩺 Module E - Troubleshooting:
       - Troubleshooting: troubleshooting.md
 
 markdown_extensions:
