@@ -6,7 +6,7 @@
 The ISURLOG datalogger is a highly versatile **ESP32-based** device that integrates multiple functionalities for data acquisition and logging in diverse environments. It is a complete and efficient solution for monitoring industrial signals (4-20mA, Modbus RS485, PT100) with advanced connectivity (NB-IoT/LoRaWAN, Wi-Fi, and Bluetooth).
 This datalogger runs on an **optimized MicroPython firmware** for low power consumption (20µA in sleep mode), making it ideal for battery-powered applications.
 
-<img width="884" height="780" alt="image" src="/images/home-pcb-photo.png" />
+![image](images/home-pcb-photo.png){width="884" height="780"}
 
 ## Where to begin
 

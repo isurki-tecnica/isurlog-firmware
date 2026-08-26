@@ -1,5 +1,6 @@
 site_name: ISURLOG Docs (Pilot)
 site_description: Small trial of MkDocs + GitHub Pages for ISURLOG documentation
+site_url: https://isurki-tecnica.github.io/isurlog-firmware/
 repo_url: https://github.com/isurki-tecnica/isurlog-firmware
 repo_name: isurki-tecnica/isurlog-firmware
 

@@ -13,7 +13,7 @@ Each analog input is protected by an automatic reset fuse.
 | **Passive Sensor** (External current loop) | Sensor (+) connects to **VDC**; Sensor (-) connects to the desired **AINx**. | ISURLOG's internal voltage regulator (VDC). |
 | **Active Sensor** (Internal current loop) | Sensor (+) connects to the desired **AINx**; Sensor (-) connects to **GND**. | External power source. |
 
-<img width="500" alt="image" src="/images/2-analog-input-wiring.png" />
+![image](images/2-analog-input-wiring.png){width="500"}
 
 ## 2.2. Digital Input (State and Pulse Counter)
 
@@ -21,7 +21,7 @@ The ISURLOG features a dry contact digital input that can be used either as a st
 
 The connection is made using the following pins: **VIN** and **DIN0**.
 
-<img width="300" alt="image" src="/images/2-digital-input-wiring.png" />
+![image](images/2-digital-input-wiring.png){width="300"}
 
 ### Digital Status Indicator (LED DIN)
 
@@ -30,7 +30,7 @@ The ISURLOG board includes a dedicated LED (**LED DIN**) that lights up continuo
 !!! warning "Power Optimization Warning"
     To save energy in battery-powered applications, this LED can be easily disabled by removing the corresponding jumper on the PCB.
 
-<img width="400" alt="image" src="/images/2-led-din-jumper.png" />
+![image](images/2-led-din-jumper.png){width="400"}
 
 ## 2.3. Modbus Input (RS485)
 
@@ -41,7 +41,7 @@ The connection uses the following pins:
 * **Communication:** **A** and **B** pins.
 * **Power:** Sensor power can be connected to the **5V** pin or the **VDC** pin (for the 6 to 24V range). Sensor negative should connect to **GND**.
 
-<img width="300" alt="image" src="/images/2-modbus-rs485-wiring.jpg" />
+![image](images/2-modbus-rs485-wiring.jpg){width="300"}
 
 ## 2.4. PT100 Temperature Sensor Input
 
@@ -60,8 +60,8 @@ Achieving an accurate reading requires **two steps** of configuration:
 | **3-Wire** | Join the **2/3 WIRE** and **3 WIRE** jumpers; leave the rest open. | Connect the two common wires (typically ≈2Ω) to **F+**. Connect the third wire (typically 100Ω) to **F-**. |
 | **4-Wire** | Join the **2/4 WIRE** jumper; leave the rest open. | Connect the pairs of common wires (typically ≈2Ω) together to **F+** and **F-**. |
 
-<img width="300" alt="image" src="/images/2-pt100-jumpers.png" />
-<img width="600" alt="image" src="/images/2-pt100-wiring.png" />
+![image](images/2-pt100-jumpers.png){width="300"}
+![image](images/2-pt100-wiring.png){width="600"}
 
 ## 2.5. Digital Output (Relay)
 
@@ -70,7 +70,7 @@ Next to the digital input, the same terminal block also breaks out a **solid-sta
 * **COM0:** Common contact.
 * **NO0:** Normally-open contact.
 
-<img width="300" alt="image" src="/images/2-digital-input-wiring.png" />
+![image](images/2-digital-input-wiring.png){width="300"}
 
 This is a **solid-state relay rated for 2A / 60V**, suitable for switching heavier external loads directly (e.g. pumps, valves, contactors, or other actuators) without needing an intermediate relay.
 
@@ -78,7 +78,7 @@ This is a **solid-state relay rated for 2A / 60V**, suitable for switching heavi
 
 The ISURLOG also breaks out its internal I2C bus through a standard **QWIIC** connector, to connect external QWIIC-compatible sensors and expansion boards. The pinout follows the standard QWIIC convention: **GND, 3V3, SDA, SCL**.
 
-<img width="300" alt="image" src="/images/2-qwiic-connector.png" />
+![image](images/2-qwiic-connector.png){width="300"}
 
 !!! note "Power Note"
     The **3V3** rail on this connector is the datalogger's own main 3.3V supply — it **cannot be switched off** by firmware. If your application needs low power consumption, make sure the connected QWIIC sensor has its own proper sleep mode, or account for its idle/standby current draw in your power budget.
@@ -101,7 +101,7 @@ The AUX-IO connector is a **1mm-pitch (P=1mm) connector** that breaks out extra 
 | **8** | GP5 | MCP23008 GP5 — general-purpose I/O. |
 | **9** | GND | Ground. |
 
-<img width="300" alt="image" src="/images/2-aux-io-pinout.png" />
+![image](images/2-aux-io-pinout.png){width="300"}
 
 ## 2.8. Internal Sensors and Diagnostics
 
@@ -122,9 +122,9 @@ The datalogger includes two key internal features for monitoring and field inter
 
 The magnetic sensor is positioned on the **lower left corner** of the PCB board, adjacent to the analog input connector and the first battery compartment (counting from the left).
 
-<img width="468" height="642" alt="image" src="/images/2-hall-sensor-location.png" />
+![image](images/2-hall-sensor-location.png){width="468" height="642"}
 
 !!! note "Note for IP67 Enclosure"
     For ISURLOG dataloggers equipped with the IP67 enclosure, it is **not necessary to open the casing** for activation. The sensor is designed to be operated from the exterior by approaching a magnet to the **lower part of the left side panel** of the enclosure.
 
-<img width="238" height="270" alt="image" src="/images/2-ip67-magnet-activation.jpg" />
+![image](images/2-ip67-magnet-activation.jpg){width="238" height="270"}
