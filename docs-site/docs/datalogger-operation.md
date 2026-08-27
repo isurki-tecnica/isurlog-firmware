@@ -6,9 +6,12 @@ The ISURLOG is an intelligent datalogger designed to operate autonomously for lo
 
 This mode allows field personnel to interact directly with the ISURLOG via a local connection.
 
+!!! note "Two magnet-triggered modes"
+    Holding the magnet near the sensor also triggers a second, shorter mode — **Immediate Read & Send** (~1 second) — that forces an on-demand reading and transmission cycle without entering Bluetooth. See [1.8 Internal Sensors and Diagnostics](sensor-connections.md#18-internal-sensors-and-diagnostics) for both modes side by side. This section covers the longer (**more than 5 seconds**) hold that activates Bluetooth Diagnostics Mode.
+
 ### 1. Activation
 
-By approaching and holding a magnet on the magnetic sensor zone (refer to **1. Sensor Connections** for details), the ISURLOG immediately wakes up and enters this special mode. The STATUS LED will begin to flash with a distinct pattern to indicate it is ready (refer to **5.3. Field Diagnostics (LED STATUS)**).
+By holding a magnet on the magnetic sensor zone for **more than 5 seconds** (refer to [1. Sensor Connections](sensor-connections.md#18-internal-sensors-and-diagnostics) for the exact location), the ISURLOG immediately wakes up and enters this special mode. The STATUS LED will begin to flash with a distinct pattern to indicate it is ready (refer to [5.3. Field Diagnostics (LED STATUS)](#53-field-diagnostics-led-status)).
 
 ### 2. Connection Wait
 
@@ -18,6 +21,7 @@ The ISURLOG will wait for a maximum of **2 minutes (120 seconds)** for a connect
 ### 3. Live Data Session
 
 Once a client connects, the datalogger enters a "live data" mode. In this state, the device:
+
 * Performs **continuous readings** of all enabled sensors.
 * **Sends this data in real-time** to the connected device (phone or tablet) via Bluetooth, allowing values to be viewed instantly.
 * During this time, the user can also **send new configurations** to the datalogger from the application.
