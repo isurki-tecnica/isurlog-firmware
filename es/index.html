@@ -381,6 +381,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#hoja-de-ruta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hoja de ruta
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#conseguir-un-isurlog" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1709,6 +1720,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#hoja-de-ruta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hoja de ruta
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#conseguir-un-isurlog" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1798,6 +1820,169 @@
 </li>
 <li><strong>Ejemplos de integración de datos</strong> — dos scripts de Python listos para ejecutar, ya rellenados con las credenciales demo públicas, en la carpeta <a href="https://github.com/isurki-tecnica/isurlog-firmware/tree/main/data_integration"><code>data_integration/</code></a> del repositorio de firmware — permiten extraer datos históricos de InfluxDB, o suscribirse a un flujo MQTT en vivo.</li>
 </ul>
+<hr />
+<h2 id="hoja-de-ruta">Hoja de ruta</h2>
+<p>ISURLOG es un producto en mantenimiento activo con despliegues reales en campo, no un prototipo — el desarrollo es continuo, y esta tabla se mantiene honesta sobre qué está ya probado en campo frente a qué es una incorporación más reciente, todavía en proceso de maduración.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Función</th>
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: left;">Estado</th>
+<th style="text-align: left;">Disponible Desde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Arquitectura de funciones asíncronas para ejecución de tareas en paralelo, reduciendo el tiempo que el datalogger permanece encendido</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">🧪 Experimental</td>
+<td style="text-align: left;">v2.0.1 (pre-release)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Soporte de baterías no recargables Li-SOCl2</td>
+<td style="text-align: left;">Hardware</td>
+<td style="text-align: left;">🧪 Experimental</td>
+<td style="text-align: left;">PCB v3.3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Búfer de transmisión ampliado mediante EEPROM I2C externa (24LC1025), eliminando la limitación actual de tamaño de la RAM del RTC</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">🧪 Experimental</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Alarma del acelerómetro → transmisión inmediata forzada</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">🔜 Planificado</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Modo de conexión automática NB-IoT/LTE-M</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">🔜 Planificado</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">DECT NR+ (compatible a nivel de chip vía nRF9151)</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">🔜 Planificado</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Módulo de expansión Modbus Isurnode</td>
+<td style="text-align: left;">Hardware + Firmware</td>
+<td style="text-align: left;">🔜 Planificado</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">TinyML — inferencia en el propio dispositivo para tareas ligeras como detección local de anomalías o mantenimiento predictivo, sin ida y vuelta a la nube</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">🔜 Planificado</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Actualización de firmware del RAK3172 directamente desde IsurDASH (actualmente requiere una herramienta web externa)</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">🔜 Planificado</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Archivos de caja imprimible en 3D, publicados en Printables</td>
+<td style="text-align: left;">Hardware</td>
+<td style="text-align: left;">💬 En debate</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Migración de ESP32 a ESP32-S3 o al recién anunciado ESP32-S31 (elección final aún sin decidir) — USB nativo y un núcleo RISC-V LP en lugar del actual coprocesador ULP FSM</td>
+<td style="text-align: left;">Hardware + Firmware</td>
+<td style="text-align: left;">💬 En debate</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table>
+<details>
+<summary>✅ Ya estable (11 funciones)</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Función</th>
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: left;">Estado</th>
+<th style="text-align: left;">Disponible Desde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Conectividad NB-IoT / LoRaWAN / BLE</td>
+<td style="text-align: left;">Hardware + Firmware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">v1.0.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Conectividad Wi-Fi y REPL remota por Wi-Fi</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">v1.0.5-beta</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sensores principales (Analógico, Digital, Modbus, PT100)</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">v1.0.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sensores de temperatura/humedad interno (SHT30) y externo (BME280)</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">v1.0.3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Integración con IsurDASH (configuración remota, actualizaciones OTA, REPL en vivo)</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">v1.0.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Acceso a datos históricos (InfluxDB) y en tiempo real (MQTT)</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">v1.0.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Registro de calidad de señal NB-IoT (RSRQ/RSRP)</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">FW v1.1.6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tensión de alimentación de sensores configurable (9-24V)</td>
+<td style="text-align: left;">Hardware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">PCB v3.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Alerta de vandalismo (acelerómetro + posición GPS)</td>
+<td style="text-align: left;">Hardware + Firmware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">PCB v3.0 · FW v1.1.6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tipo de batería y reporte del estado de carga</td>
+<td style="text-align: left;">Hardware + Firmware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">PCB v3.0 · FW v1.1.9</td>
+</tr>
+<tr>
+<td style="text-align: left;">Umbrales de alarma del acelerómetro interno (LIS2DH12)</td>
+<td style="text-align: left;">Firmware</td>
+<td style="text-align: left;">✅ Estable</td>
+<td style="text-align: left;">FW v1.1.6</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p><strong>¿Alguna sugerencia o idea?</strong> Abrir una <a href="https://github.com/isurki-tecnica/isurlog-firmware/issues/new">GitHub Issue</a> describiéndola — se aceptan tanto peticiones de nuevas funciones como ideas de integración de hardware, no solo reportes de errores. Ver <a href="contribution-guide/#74-using-the-issues-tracker">7.4 Using the Issues Tracker</a> para qué hace que una petición sea buena.</p>
 <hr />
 <h2 id="conseguir-un-isurlog">Conseguir un ISURLOG</h2>
 <p>ISURLOG se vende directamente desde ISURKI, configurado según la conectividad y los sensores de cada proyecto. Para precio y disponibilidad, <a href="mailto:tecnica@isurki.com?subject=ISURLOG%20-%20Solicitud%20de%20Presupuesto&amp;body=Hola%20equipo%20de%20ISURKI%2C%0A%0AEstoy%20interesado%2Fa%20en%20ISURLOG%20para%20el%20siguiente%20caso%20de%20uso%3A%0A%0A-%20Aplicaci%C3%B3n%2Fentorno%3A%20%0A-%20Cantidad%20aproximada%3A%20%0A-%20Conectividad%20preferida%20(NB-IoT%2FLTE-M%2C%20LoRaWAN%2C%20o%20Wi-Fi)%3A%20%0A-%20Pa%C3%ADs%2Fregi%C3%B3n%3A%20%0A%0AGracias!">solicitar presupuesto</a>.</p>
