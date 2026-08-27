@@ -2018,74 +2018,100 @@
 <hr />
 <h2 id="212-modules-detailed-reference">2.1.2 Modules — Detailed Reference</h2>
 <h3 id="core-boot">Core / Boot</h3>
-<p><strong><code>utils.py</code></strong>
-- Purpose: centralized logging (<code>log_debug</code>, <code>log_info</code>, <code>log_warning</code>, <code>log_error</code>) gated by <code>static_config.log_level</code>, plus <code>get_datetime_string()</code> / <code>save_data_to_file()</code>.
-- Depends on: nothing (base module — imported by nearly every other module).
-- Config: <code>static_config.log_level</code>, resolved from <code>config_manager</code> on first use (a deferred import — <code>config_manager.py</code> imports <code>utils</code> at module level, so importing back at <code>utils</code>' module level would be circular).</p>
-<p><strong><code>config_manager.py</code></strong>
-- Purpose: the canonical owner of <code>static_config.json</code> (immutable, hardware) and <code>dynamic_config.json</code> (runtime-mutable). Applies remote config updates via <code>CONFIG_MAP</code>, which maps ~90 remote command names (e.g. <code>setLatencyTime</code>) to nested JSON paths.
-- Public API: <code>ConfigManager.get_static(*keys, default=None)</code>, <code>get_dynamic(*keys, default=None)</code>, <code>apply_single_update(...)</code>, <code>apply_conf_update(decoded_data)</code>, <code>save_dynamic_config()</code>. Global singleton: <code>config_manager</code>.
-- Depends on: <code>utils</code>.</p>
-<p><strong><code>_auth.py</code></strong>
-- Purpose: PIN-gated REPL console lock. Runs automatically on import (not just definitions) — up to 3 attempts, resets the device on failure.
-- Public API: <code>run_authentication()</code>, <code>pad_data(...)</code>, <code>get_encrypted_pin_secret()</code>.
-- Depends on: <code>config_manager</code> (reads <code>static_config.pin</code>); uses builtin <code>cryptolib</code> (AES-ECB) directly.</p>
-<p><strong><code>version.py</code></strong>
-- Purpose: single <code>VERSION</code> constant, shown in the boot banner. Bump this on every release.</p>
+<p><strong><code>utils.py</code></strong></p>
+<ul>
+<li>Purpose: centralized logging (<code>log_debug</code>, <code>log_info</code>, <code>log_warning</code>, <code>log_error</code>) gated by <code>static_config.log_level</code>, plus <code>get_datetime_string()</code> / <code>save_data_to_file()</code>.</li>
+<li>Depends on: nothing (base module — imported by nearly every other module).</li>
+<li>Config: <code>static_config.log_level</code>, resolved from <code>config_manager</code> on first use (a deferred import — <code>config_manager.py</code> imports <code>utils</code> at module level, so importing back at <code>utils</code>' module level would be circular).</li>
+</ul>
+<p><strong><code>config_manager.py</code></strong></p>
+<ul>
+<li>Purpose: the canonical owner of <code>static_config.json</code> (immutable, hardware) and <code>dynamic_config.json</code> (runtime-mutable). Applies remote config updates via <code>CONFIG_MAP</code>, which maps ~90 remote command names (e.g. <code>setLatencyTime</code>) to nested JSON paths.</li>
+<li>Public API: <code>ConfigManager.get_static(*keys, default=None)</code>, <code>get_dynamic(*keys, default=None)</code>, <code>apply_single_update(...)</code>, <code>apply_conf_update(decoded_data)</code>, <code>save_dynamic_config()</code>. Global singleton: <code>config_manager</code>.</li>
+<li>Depends on: <code>utils</code>.</li>
+</ul>
+<p><strong><code>_auth.py</code></strong></p>
+<ul>
+<li>Purpose: PIN-gated REPL console lock. Runs automatically on import (not just definitions) — up to 3 attempts, resets the device on failure.</li>
+<li>Public API: <code>run_authentication()</code>, <code>pad_data(...)</code>, <code>get_encrypted_pin_secret()</code>.</li>
+<li>Depends on: <code>config_manager</code> (reads <code>static_config.pin</code>); uses builtin <code>cryptolib</code> (AES-ECB) directly.</li>
+</ul>
+<p><strong><code>version.py</code></strong></p>
+<ul>
+<li>Purpose: single <code>VERSION</code> constant, shown in the boot banner. Bump this on every release.</li>
+</ul>
 <h3 id="power-time">Power &amp; Time</h3>
-<p><strong><code>power_manager.py</code></strong>
-- Purpose: the system's power/time hub. Detects the RTC chip present (DS3231 or RV3028), syncs time from NB-IoT/Wi-Fi(NTP)/LoRaWAN/GPS, computes the next aligned wake-up, drives the 12V/5V rails and digital outputs, sets CPU frequency, configures wake sources, and triggers deep sleep. Global singleton: <code>pm</code>.
-- Public API (selection): <code>check_rtc_status()</code>, <code>set_rtc_time(time_str, mode)</code>, <code>seconds2wakeup()</code>, <code>control_5v(state)</code>, <code>control_vdc(state)</code>, <code>configure_wakeup_sources(...)</code>, <code>go_to_sleep()</code>.
-- Depends on: <code>lib/uds3231</code> or <code>lib/RV3028</code> (whichever is detected on I2C).
-- Config: <code>static_config.pinout.{i2c,rs485,control,magnet_pin}</code>, <code>dynamic_config.general.{rtc_sync,latency_time,magnet_wakeup}</code>, <code>dynamic_config.digital_config.{enable,counter}</code>.
-- Note: <code>downlink_manager.py</code>'s proportional-valve (EV) and OTA-failure sleeps use plain <code>time.sleep_ms()</code> / <code>await asyncio.sleep_ms()</code> directly rather than a method on <code>power_manager</code> — keep that in mind if you're looking for a "sleep" helper here, there isn't one.</p>
-<p><strong><code>rtc_memory.py</code></strong>
-- Purpose: state kept in ESP32 RTC memory (survives deep sleep, not power loss): accumulated cycle counter, alarm flag, manual valve (EV) states, last RTC-sync timestamp, and a buffer of encoded LPP payloads pending transmission.
-- Public API: <code>get_alarm_flag</code>/<code>set_alarm_flag</code>, <code>get_last_rtc_sync</code>/<code>set_last_rtc_sync</code>, <code>rtc_resync_due(...)</code>, <code>get_ev_state</code>/<code>set_ev_state</code>, <code>store_payload(...)</code>, <code>get_payloads()</code>, <code>should_transmit()</code>.
-- Depends on: <code>config_manager</code> (reads <code>general.register_acumulator</code>).
-- Note: hand-rolled binary layout with fixed byte offsets; respects the ~2048-byte hardware limit of <code>rtc.memory()</code>, trimming <code>n_cycles</code> automatically if config exceeds it.</p>
+<p><strong><code>power_manager.py</code></strong></p>
+<ul>
+<li>Purpose: the system's power/time hub. Detects the RTC chip present (DS3231 or RV3028), syncs time from NB-IoT/Wi-Fi(NTP)/LoRaWAN/GPS, computes the next aligned wake-up, drives the 12V/5V rails and digital outputs, sets CPU frequency, configures wake sources, and triggers deep sleep. Global singleton: <code>pm</code>.</li>
+<li>Public API (selection): <code>check_rtc_status()</code>, <code>set_rtc_time(time_str, mode)</code>, <code>seconds2wakeup()</code>, <code>control_5v(state)</code>, <code>control_vdc(state)</code>, <code>configure_wakeup_sources(...)</code>, <code>go_to_sleep()</code>.</li>
+<li>Depends on: <code>lib/uds3231</code> or <code>lib/RV3028</code> (whichever is detected on I2C).</li>
+<li>Config: <code>static_config.pinout.{i2c,rs485,control,magnet_pin}</code>, <code>dynamic_config.general.{rtc_sync,latency_time,magnet_wakeup}</code>, <code>dynamic_config.digital_config.{enable,counter}</code>.</li>
+<li>Note: <code>downlink_manager.py</code>'s proportional-valve (EV) and OTA-failure sleeps use plain <code>time.sleep_ms()</code> / <code>await asyncio.sleep_ms()</code> directly rather than a method on <code>power_manager</code> — keep that in mind if you're looking for a "sleep" helper here, there isn't one.</li>
+</ul>
+<p><strong><code>rtc_memory.py</code></strong></p>
+<ul>
+<li>Purpose: state kept in ESP32 RTC memory (survives deep sleep, not power loss): accumulated cycle counter, alarm flag, manual valve (EV) states, last RTC-sync timestamp, and a buffer of encoded LPP payloads pending transmission.</li>
+<li>Public API: <code>get_alarm_flag</code>/<code>set_alarm_flag</code>, <code>get_last_rtc_sync</code>/<code>set_last_rtc_sync</code>, <code>rtc_resync_due(...)</code>, <code>get_ev_state</code>/<code>set_ev_state</code>, <code>store_payload(...)</code>, <code>get_payloads()</code>, <code>should_transmit()</code>.</li>
+<li>Depends on: <code>config_manager</code> (reads <code>general.register_acumulator</code>).</li>
+<li>Note: hand-rolled binary layout with fixed byte offsets; respects the ~2048-byte hardware limit of <code>rtc.memory()</code>, trimming <code>n_cycles</code> automatically if config exceeds it.</li>
+</ul>
 <h3 id="connectivity">Connectivity</h3>
-<p><strong><code>wifi.py</code></strong>
-- Purpose: Wi-Fi STA connection with a security gate — refuses to associate below WPA2-PSK (explicit CRA/Cyber Resilience Act compliance comment in the code).
-- Public API: <code>is_connected()</code>, <code>do_connect(ssid, password, timeout_seconds=15)</code> <em>(async)</em>, <code>do_disconnect()</code> <em>(async)</em>.
-- Depends on: builtin <code>network</code> only. SSID/password are passed in by <code>main.py</code> from <code>dynamic_config.communications.wifi</code>.</p>
-<p><strong><code>nb_iot.py</code></strong> <em>(largest module, ~57 KB)</em>
-- Purpose: driver for the Nordic nRF9160-family NB-IoT/LTE-M modem (Nordic SLM AT%/AT#X command set): network registration (with operator selection/blacklist), MQTT client over the modem, HTTP client for OTA downloads, GPS/NTN, sleep/wake management.
-- Public API (all <code>async</code> unless noted): <code>connect(connection_preference, edrx=True, apn=None, ntn=False)</code>, <code>wake_up()</code>, <code>sleep()</code>, <code>hard_reset()</code>, <code>mqtt_configure/connect/publish/subscribe</code>, <code>get_mqtt_messages()</code> <em>(sync)</em>, <code>send_udp_data(...)</code>, <code>download_file(...)</code> (chunked HTTP range requests for OTA), <code>get_gps_coords(...)</code>, <code>connect_ntn(...)</code>, <code>get_signal_data()</code>.
-- Depends on: no <code>lib/</code> drivers — talks AT directly over UART.
-- Config: <code>dynamic_config.communications.cellular_iot.{external_sim,preference,apn,ntn,signal_data}</code>, <code>static_config.pinout.control.en_nbiot_pin</code>, <code>static_config.pinout.nb-iot.{tx_pin,rx_pin}</code>.
-- <strong>AT command groups used</strong> (grep-verified against source):
-  - <em>Network:</em> <code>AT+CFUN=</code>, <code>AT#XGPIOCFG</code>/<code>AT#XGPIO</code> (SIM select), <code>AT%XSYSTEMMODE=</code>, <code>AT%XBANDLOCK=</code>, <code>AT+CGDCONT=</code>, <code>AT%XMONITOR</code>, <code>AT%RAI</code>, <code>AT%PERIODICSEARCHCONF=</code>, <code>AT+CEDRXS=</code>, <code>AT%XPTW=</code>, <code>AT+COPS=</code> (scan/manual/auto), <code>AT+CPSMS=</code>, <code>AT+CEDRXRDP</code>, <code>AT+CESQ</code>, <code>AT+CGPADDR=</code>.
-  - <em>Clock:</em> <code>AT+CCLK?</code>.
-  - <em>Sleep/reset:</em> <code>AT#XSLEEP=</code>, <code>AT#XRESET</code> (soft); <code>hard_reset()</code> instead cuts modem power physically via <code>en_nbiot_pin</code> for 5s.
-  - <em>GPS:</em> <code>AT#XGPS=1,0,0,0</code> / <code>AT#XGPS=0</code>.
-  - <em>MQTT over modem:</em> <code>AT#XMQTTCFG=</code>, <code>AT#XMQTTCON=</code>, <code>AT#XMQTTPUB=</code>, <code>AT#XMQTTSUB=</code> (inbound messages arrive as <code>#XMQTTMSG:</code> URCs).
-  - <em>UDP socket:</em> <code>AT#XSOCKET=</code>, <code>AT#XSENDTO=</code>.
-  - <em>HTTP (OTA):</em> <code>AT#XHTTPCCON=</code>, <code>AT#XHTTPCREQ="GET",...,"Range: bytes=X-Y"</code> (chunked download; response via <code>#XHTTPCRSP:</code> URC).
-- Note: comments like <code>"USER BASE v17"</code>, <code>"CHANGE"</code>, <code>"NEW"</code> around the OTA download path suggest this is the most actively iterated/least stable part of the module currently — worth extra care/testing before shipping changes here.</p>
-<p><strong><code>lorawan.py</code></strong>
-- Purpose: driver for a RAK3172-class LoRaWAN modem (standard RUI3 AT set): join, uplink send, downlink receive (including Class C via polling), network time sync.
-- Public API (all <code>async</code> unless noted): <code>connect(lorawan_class="A", attempts=1)</code>, <code>join_network()</code>, <code>send_uplink(port, data)</code>, <code>get_downlink_messages()</code>, <code>request_time()</code>, <code>get_network_time()</code>, <code>sleep()</code>, <code>check_network_connection()</code>.
-- Depends on: no <code>lib/</code> drivers — talks AT directly over UART. Reuses the <strong>same physical UART pins</strong> as <code>nb_iot.py</code> (<code>static_config.pinout.nb-iot.{tx_pin,rx_pin}</code>) — confirms WiFi/NB-IoT/LoRaWAN modem variants are mutually exclusive at the hardware level, selected by <code>static_config</code>'s modem field.
-- Config: <code>dynamic_config.communications.lorawan.{dev_eui,app_key,app_eui,class,network_mode,join_mode,band}</code>.
-- <strong>AT command groups used</strong>: <code>AT+NWM=</code> (network mode), <code>AT+NJM=</code> (join mode ABP/OTAA), <code>AT+CLASS=</code>, <code>AT+BAND=</code>, <code>AT+CFM=</code> (confirmed uplinks), <code>AT+DEVEUI=</code>/<code>AT+APPEUI=</code>/<code>AT+APPKEY=</code>, <code>AT+JOIN=1:0:&lt;interval&gt;:&lt;attempts&gt;</code> (waits for <code>+EVT:JOINED</code>), <code>AT+TIMEREQ=1</code> + <code>AT+LTIME=?</code> (network time), <code>AT+SEND=&lt;port&gt;:&lt;data&gt;</code> (waits <code>+EVT:SEND_CONFIRMED_OK</code> or <code>+EVT:TX_DONE</code>), <code>AT+LPM=1</code>/<code>AT+SLEEP</code> (low power), <code>ATZ</code> (reset), <code>AT+NJS=?</code> (join status), <code>ATC+GETDL</code> (custom: poll buffered Class C downlinks), and passive <code>+EVT:RX...</code> URCs parsed for real-time downlinks.</p>
-<p><strong><code>umqttsimple.py</code></strong>
-- Purpose: lightweight MQTT 3.1.1 client over TCP/TLS socket, used only for the Wi-Fi transport.
-- Origin: based on Paul Sokolovsky's classic <code>micropython-lib</code> MQTT client (2013–2016), modified by ISURKI/Steminds — <code>check_msg()</code> was rewritten to return a list of all pending messages instead of a single callback. QoS 2 is not implemented. Technically lives in <code>modules/</code> but is functionally a third-party library — arguably belongs closer to <code>lib/</code>.</p>
-<p><strong><code>ble_manager.py</code></strong>
-- Purpose: BLE GATT server for local configuration/monitoring, activated by the magnet-wakeup mode. One notify characteristic (data) and one write characteristic (commands).
-- Public API: <code>BLEManager(device_name=..., command_callback=...)</code>, <code>update_data_payload(payload)</code>, <code>stop()</code>.
-- Depends on: <code>lib/aioble</code> (Service/Characteristic/advertise/security).
-- Config: <code>static_config.pin</code> (same 6-digit PIN as <code>_auth.py</code>, used for fixed BLE pairing).
-- Note: implements LE Secure pairing/bonding with MITM protection and a fixed PIN (DISPLAY_ONLY IO capability); rejects commands on unencrypted characteristics.</p>
-<p><strong><code>downlink_manager.py</code></strong>
-- Purpose: unifies downlink handling across the three transports (Wi-Fi, NB-IoT, LoRaWAN): manual SD/EV commands, remote config application (LPP-decoded), and OTA kick-off (NB-IoT only).
-- Public API: <code>process_wifi_downlinks(...)</code>, <code>process_nbiot_downlinks(...)</code>, <code>process_lorawan_downlinks(...)</code> (all <code>async</code>), <code>apply_config(hex_text)</code>, <code>is_manual_command(text)</code>.
-- Depends on: <code>lib/IsurlogLPP</code>, <code>lib/ota.rollback</code>; deferred imports of <code>modbus_sensor</code>, <code>update_manager</code>, <code>remote_repl</code>.
-- Note: contains the full OTA flow — download, SHA-256 checksum verification, base64 decode, partition write, and <code>rollback.cancel_force()</code> on failure.</p>
-<p><strong><code>remote_repl.py</code></strong>
-- Purpose: remote Python REPL over MQTT (Wi-Fi or NB-IoT) for field debugging — receives Python code as an MQTT message, <code>eval</code>/<code>exec</code>s it, returns captured stdout on another topic.
-- ⚠️ <strong>Security note</strong>: this executes arbitrary code with no authentication beyond whatever the MQTT broker/channel provides. It's a powerful admin backdoor — worth confirming the MQTT channel is properly secured (TLS + broker ACLs) wherever this is enabled in the field.</p>
+<p><strong><code>wifi.py</code></strong></p>
+<ul>
+<li>Purpose: Wi-Fi STA connection with a security gate — refuses to associate below WPA2-PSK (explicit CRA/Cyber Resilience Act compliance comment in the code).</li>
+<li>Public API: <code>is_connected()</code>, <code>do_connect(ssid, password, timeout_seconds=15)</code> <em>(async)</em>, <code>do_disconnect()</code> <em>(async)</em>.</li>
+<li>Depends on: builtin <code>network</code> only. SSID/password are passed in by <code>main.py</code> from <code>dynamic_config.communications.wifi</code>.</li>
+</ul>
+<p><strong><code>nb_iot.py</code></strong> <em>(largest module, ~57 KB)</em></p>
+<ul>
+<li>Purpose: driver for the Nordic nRF9160-family NB-IoT/LTE-M modem (Nordic SLM AT%/AT#X command set): network registration (with operator selection/blacklist), MQTT client over the modem, HTTP client for OTA downloads, GPS/NTN, sleep/wake management.</li>
+<li>Public API (all <code>async</code> unless noted): <code>connect(connection_preference, edrx=True, apn=None, ntn=False)</code>, <code>wake_up()</code>, <code>sleep()</code>, <code>hard_reset()</code>, <code>mqtt_configure/connect/publish/subscribe</code>, <code>get_mqtt_messages()</code> <em>(sync)</em>, <code>send_udp_data(...)</code>, <code>download_file(...)</code> (chunked HTTP range requests for OTA), <code>get_gps_coords(...)</code>, <code>connect_ntn(...)</code>, <code>get_signal_data()</code>.</li>
+<li>Depends on: no <code>lib/</code> drivers — talks AT directly over UART.</li>
+<li>Config: <code>dynamic_config.communications.cellular_iot.{external_sim,preference,apn,ntn,signal_data}</code>, <code>static_config.pinout.control.en_nbiot_pin</code>, <code>static_config.pinout.nb-iot.{tx_pin,rx_pin}</code>.</li>
+<li><strong>AT command groups used</strong> (grep-verified against source):</li>
+<li><em>Network:</em> <code>AT+CFUN=</code>, <code>AT#XGPIOCFG</code>/<code>AT#XGPIO</code> (SIM select), <code>AT%XSYSTEMMODE=</code>, <code>AT%XBANDLOCK=</code>, <code>AT+CGDCONT=</code>, <code>AT%XMONITOR</code>, <code>AT%RAI</code>, <code>AT%PERIODICSEARCHCONF=</code>, <code>AT+CEDRXS=</code>, <code>AT%XPTW=</code>, <code>AT+COPS=</code> (scan/manual/auto), <code>AT+CPSMS=</code>, <code>AT+CEDRXRDP</code>, <code>AT+CESQ</code>, <code>AT+CGPADDR=</code>.</li>
+<li><em>Clock:</em> <code>AT+CCLK?</code>.</li>
+<li><em>Sleep/reset:</em> <code>AT#XSLEEP=</code>, <code>AT#XRESET</code> (soft); <code>hard_reset()</code> instead cuts modem power physically via <code>en_nbiot_pin</code> for 5s.</li>
+<li><em>GPS:</em> <code>AT#XGPS=1,0,0,0</code> / <code>AT#XGPS=0</code>.</li>
+<li><em>MQTT over modem:</em> <code>AT#XMQTTCFG=</code>, <code>AT#XMQTTCON=</code>, <code>AT#XMQTTPUB=</code>, <code>AT#XMQTTSUB=</code> (inbound messages arrive as <code>#XMQTTMSG:</code> URCs).</li>
+<li><em>UDP socket:</em> <code>AT#XSOCKET=</code>, <code>AT#XSENDTO=</code>.</li>
+<li><em>HTTP (OTA):</em> <code>AT#XHTTPCCON=</code>, <code>AT#XHTTPCREQ="GET",...,"Range: bytes=X-Y"</code> (chunked download; response via <code>#XHTTPCRSP:</code> URC).</li>
+<li>Note: comments like <code>"USER BASE v17"</code>, <code>"CHANGE"</code>, <code>"NEW"</code> around the OTA download path suggest this is the most actively iterated/least stable part of the module currently — worth extra care/testing before shipping changes here.</li>
+</ul>
+<p><strong><code>lorawan.py</code></strong></p>
+<ul>
+<li>Purpose: driver for a RAK3172-class LoRaWAN modem (standard RUI3 AT set): join, uplink send, downlink receive (including Class C via polling), network time sync.</li>
+<li>Public API (all <code>async</code> unless noted): <code>connect(lorawan_class="A", attempts=1)</code>, <code>join_network()</code>, <code>send_uplink(port, data)</code>, <code>get_downlink_messages()</code>, <code>request_time()</code>, <code>get_network_time()</code>, <code>sleep()</code>, <code>check_network_connection()</code>.</li>
+<li>Depends on: no <code>lib/</code> drivers — talks AT directly over UART. Reuses the <strong>same physical UART pins</strong> as <code>nb_iot.py</code> (<code>static_config.pinout.nb-iot.{tx_pin,rx_pin}</code>) — confirms WiFi/NB-IoT/LoRaWAN modem variants are mutually exclusive at the hardware level, selected by <code>static_config</code>'s modem field.</li>
+<li>Config: <code>dynamic_config.communications.lorawan.{dev_eui,app_key,app_eui,class,network_mode,join_mode,band}</code>.</li>
+<li><strong>AT command groups used</strong>: <code>AT+NWM=</code> (network mode), <code>AT+NJM=</code> (join mode ABP/OTAA), <code>AT+CLASS=</code>, <code>AT+BAND=</code>, <code>AT+CFM=</code> (confirmed uplinks), <code>AT+DEVEUI=</code>/<code>AT+APPEUI=</code>/<code>AT+APPKEY=</code>, <code>AT+JOIN=1:0:&lt;interval&gt;:&lt;attempts&gt;</code> (waits for <code>+EVT:JOINED</code>), <code>AT+TIMEREQ=1</code> + <code>AT+LTIME=?</code> (network time), <code>AT+SEND=&lt;port&gt;:&lt;data&gt;</code> (waits <code>+EVT:SEND_CONFIRMED_OK</code> or <code>+EVT:TX_DONE</code>), <code>AT+LPM=1</code>/<code>AT+SLEEP</code> (low power), <code>ATZ</code> (reset), <code>AT+NJS=?</code> (join status), <code>ATC+GETDL</code> (custom: poll buffered Class C downlinks), and passive <code>+EVT:RX...</code> URCs parsed for real-time downlinks.</li>
+</ul>
+<p><strong><code>umqttsimple.py</code></strong></p>
+<ul>
+<li>Purpose: lightweight MQTT 3.1.1 client over TCP/TLS socket, used only for the Wi-Fi transport.</li>
+<li>Origin: based on Paul Sokolovsky's classic <code>micropython-lib</code> MQTT client (2013–2016), modified by ISURKI/Steminds — <code>check_msg()</code> was rewritten to return a list of all pending messages instead of a single callback. QoS 2 is not implemented. Technically lives in <code>modules/</code> but is functionally a third-party library — arguably belongs closer to <code>lib/</code>.</li>
+</ul>
+<p><strong><code>ble_manager.py</code></strong></p>
+<ul>
+<li>Purpose: BLE GATT server for local configuration/monitoring, activated by the magnet-wakeup mode. One notify characteristic (data) and one write characteristic (commands).</li>
+<li>Public API: <code>BLEManager(device_name=..., command_callback=...)</code>, <code>update_data_payload(payload)</code>, <code>stop()</code>.</li>
+<li>Depends on: <code>lib/aioble</code> (Service/Characteristic/advertise/security).</li>
+<li>Config: <code>static_config.pin</code> (same 6-digit PIN as <code>_auth.py</code>, used for fixed BLE pairing).</li>
+<li>Note: implements LE Secure pairing/bonding with MITM protection and a fixed PIN (DISPLAY_ONLY IO capability); rejects commands on unencrypted characteristics.</li>
+</ul>
+<p><strong><code>downlink_manager.py</code></strong></p>
+<ul>
+<li>Purpose: unifies downlink handling across the three transports (Wi-Fi, NB-IoT, LoRaWAN): manual SD/EV commands, remote config application (LPP-decoded), and OTA kick-off (NB-IoT only).</li>
+<li>Public API: <code>process_wifi_downlinks(...)</code>, <code>process_nbiot_downlinks(...)</code>, <code>process_lorawan_downlinks(...)</code> (all <code>async</code>), <code>apply_config(hex_text)</code>, <code>is_manual_command(text)</code>.</li>
+<li>Depends on: <code>lib/IsurlogLPP</code>, <code>lib/ota.rollback</code>; deferred imports of <code>modbus_sensor</code>, <code>update_manager</code>, <code>remote_repl</code>.</li>
+<li>Note: contains the full OTA flow — download, SHA-256 checksum verification, base64 decode, partition write, and <code>rollback.cancel_force()</code> on failure.</li>
+</ul>
+<p><strong><code>remote_repl.py</code></strong></p>
+<ul>
+<li>Purpose: remote Python REPL over MQTT (Wi-Fi or NB-IoT) for field debugging — receives Python code as an MQTT message, <code>eval</code>/<code>exec</code>s it, returns captured stdout on another topic.</li>
+<li>⚠️ <strong>Security note</strong>: this executes arbitrary code with no authentication beyond whatever the MQTT broker/channel provides. It's a powerful admin backdoor — worth confirming the MQTT channel is properly secured (TLS + broker ACLs) wherever this is enabled in the field.</li>
+</ul>
 <h3 id="sensors">Sensors</h3>
 <p><strong><code>analog_sensor.py</code></strong> — ADS1115-based 4-20mA/0-10V wrapper; <code>read_analog(channel)</code>, <code>convert_value(value, zero, full_scale)</code>. Depends on <code>lib/ADS1115</code>. Config: <code>static_config.pinout.i2c.*</code>, <code>static_config.ads1115_addr</code>; per-channel <code>zero</code>/<code>full_scale</code> come from <code>dynamic_config.analog_config.inputs[]</code>.</p>
 <p><strong><code>digital_sensor.py</code></strong> — ULP-based low-power pulse counter with software debounce (only GPIO 36/39, RTC-capable pins). Depends on <code>lib/esp32_ulp</code>. Reads its wake-up edge count from <code>dynamic_config.digital_config.inputs[]</code> — a list with one entry per channel — by finding the entry where <code>channel == 0</code> and reading its <code>wake</code> key.</p>

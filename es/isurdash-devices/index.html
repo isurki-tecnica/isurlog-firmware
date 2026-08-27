@@ -2111,16 +2111,20 @@
 <p>Lists the sensors/outputs connected via an Isurnode expansion unit, when one is paired with this ISURLOG.</p>
 <h2 id="635-local-bluetooth-connection">6.3.5. Local Bluetooth Connection</h2>
 <p>In addition to standard NB-IoT or LoRaWAN communication, the ISURLOG features a local <strong>Bluetooth Low Energy (BLE)</strong> connection mode. This functionality is extremely useful for tasks such as installation, maintenance, or sensor calibration, as it allows for continuous, real-time interaction with the device.</p>
-<p>When a Bluetooth connection is established:
-* The graphs on the Visualization tab are updated every few seconds.
-* Changes made in the Configuration tab are applied instantly.
-* <strong>Important:</strong> Data transmitted in this mode is for real-time visualization only and is <strong>not recorded</strong> in the IsurDASH platform history.</p>
+<p>When a Bluetooth connection is established:</p>
+<ul>
+<li>The graphs on the Visualization tab are updated every few seconds.</li>
+<li>Changes made in the Configuration tab are applied instantly.</li>
+<li><strong>Important:</strong> Data transmitted in this mode is for real-time visualization only and is <strong>not recorded</strong> in the IsurDASH platform history.</li>
+</ul>
 <p>The process to establish a local Bluetooth connection requires coordinated action between the platform and the physical device:</p>
 <h3 id="step-1-activate-bluetooth-mode-on-the-isurlog">Step 1: Activate Bluetooth Mode on the ISURLOG</h3>
-<p>For the ISURLOG to be visible and connectable, the user must activate it manually with a magnet:
-1.  The user must locate the magnetic sensor zone on the device's casing (refer to <strong>1. Sensor Connections: Hall Effect Switch</strong> for the exact location).
-2.  A magnet must be held over that area continuously for at least <strong>5 seconds</strong>.
-3.  The ISURLOG will activate Bluetooth and enter pairing mode. The user can confirm that the mode has been correctly activated by observing the specific pattern of the <strong>STATUS LED</strong> (refer to <strong>5. Datalogger Operation: Field Diagnostics</strong>).</p>
+<p>For the ISURLOG to be visible and connectable, the user must activate it manually with a magnet:</p>
+<ol>
+<li>The user must locate the magnetic sensor zone on the device's casing (refer to <a href="../sensor-connections/#18-internal-sensors-and-diagnostics">1. Sensor Connections</a> for the exact location).</li>
+<li>A magnet must be held over that area continuously for at least <strong>5 seconds</strong>.</li>
+<li>The ISURLOG will activate Bluetooth and enter pairing mode. The user can confirm that the mode has been correctly activated by observing the specific pattern of the <strong>STATUS LED</strong> (refer to <a href="../datalogger-operation/#53-field-diagnostics-led-status">5. Datalogger Operation: Field Diagnostics</a>).</li>
+</ol>
 <h3 id="step-2-initiate-the-connection-in-isurdash">Step 2: Initiate the Connection in IsurDASH</h3>
 <ol>
 <li>From the "<strong>Visualización</strong>" page of the desired device, the user must click the "<strong>Conectar BLE</strong>" button, located in the upper right corner.</li>
