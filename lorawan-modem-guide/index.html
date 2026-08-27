@@ -2045,6 +2045,7 @@
 <p>The connection workflow requires matching the converter's <strong>TX</strong>, <strong>RX</strong> and <strong>GND</strong> to the corresponding programming pins of the RAK3172 on the PCB.</p>
 <p>The programming port/pins for the RAK3172 module on the ISURLOG PCB are located as shown below:</p>
 <p><img alt="ISURLOG PCB layout with the RAK3172 programming port highlighted" src="../images/6-rak3172-programming-port.jpg" width="750" /></p>
+<p><em>The programming port, for the RAK3172 modem.</em></p>
 <h2 id="66-updating-modem-firmware-from-official-binaries">6.6 Updating Modem Firmware from Official Binaries</h2>
 <p>Unlike the scenarios above (which assume you're compiling your own application firmware from source), you don't need the Arduino IDE or the RUI3 BSP at all if you just want to update the modem to an <strong>official ISURKI-provided build</strong> — it's an already-compiled binary.</p>
 <h3 id="where-to-get-the-binary">Where to Get the Binary</h3>
@@ -2054,7 +2055,7 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Coming soon</p>
-<p>support for updating the RAK3172 directly from IsurDASH, the same way the <a href="../isurdash-maintenance/">7.8 Device Maintenance</a> flow already updates the <strong>ESP32</strong>. Until then, the recommended tool is the one below.</p>
+<p>support for updating the RAK3172 directly from IsurDASH, the same way the <a href="../isurdash-maintenance/">6.8 Device Maintenance</a> flow already updates the <strong>ESP32</strong>. Until then, the recommended tool is the one below.</p>
 </div>
 <h3 id="update-tool">Update Tool</h3>
 <p>The current recommended way to update the RAK3172's firmware is the web-based tool at <strong><a href="https://firmwareupgrade.fencyboy.com/">firmwareupgrade.fencyboy.com</a></strong>.</p>
@@ -2067,6 +2068,7 @@
 <li>Select the <strong><code>System_Custom_ATCMD.ino.bin</code></strong> file and click <strong>"Upload firmware"</strong>.</li>
 </ol>
 <p><img alt="Updating the RAK3172 modem firmware via firmwareupgrade.fencyboy.com" src="../images/6-modem-firmware-update.gif" width="1000" /></p>
+<p><em>Updating the RAK3172 modem firmware via the web-based tool.</em></p>
 
 
 

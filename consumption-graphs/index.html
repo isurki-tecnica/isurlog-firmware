@@ -1733,11 +1733,13 @@
 <li>Tie the meter's <strong>GND</strong> to an ISURLOG GND — e.g. at the ESP32 or RAK3172 UART header pins.</li>
 </ol>
 <p><img alt="I_SENSE jumper — PPK2 wiring" src="../images/isense-ppk2-wiring.png" width="220" /></p>
+<p><em>Wiring the PPK2 in series across the I_SENSE jumper.</em></p>
 <p><strong>Conditions.</strong> Each capture below notes the firmware version, connectivity, and sensor configuration it was taken under — real numbers vary with these, so treat them as a reference point, not a spec sheet.</p>
 <hr />
 <h2 id="12-captures">1.2 Captures</h2>
 <h3 id="deep-sleep-nb-iotlte-m">Deep Sleep — NB-IoT/LTE-M</h3>
 <p><img alt="Deep sleep current — NB-IoT" src="../images/deep-sleep-nbiot.png" /></p>
+<p><em>Deep sleep current draw, NB-IoT, 3-second window.</em></p>
 <p>Captured with the PPK2 in Ampere meter mode, 1,000 samples/second, over a 3-second window:</p>
 <ul>
 <li><strong>Average:</strong> 77.44 µA</li>
@@ -1754,6 +1756,7 @@
 </div>
 <p><strong>Longer window — eDRX paging cycle:</strong></p>
 <p><img alt="Deep sleep current — NB-IoT, eDRX paging cycle over a 1-minute window" src="../images/deep-sleep-nbiot-edrx-cycle.png" /></p>
+<p><em>The same deep sleep state, zoomed out to a 1-minute window — eDRX paging spikes visible.</em></p>
 <p>Zooming out to a 1-minute window reveals a second, larger periodic spike (30-38 mA) on top of the baseline — these are the modem's <strong>eDRX paging occasions</strong>, where it briefly wakes to listen for the network. The interval between two consecutive occasions is <strong>40.96 s on standard firmware</strong>, matching the <strong>40.92 s</strong> measured here.</p>
 <ul>
 <li><strong>Window average:</strong> 173.21 µA · <strong>Window max:</strong> 38.08 mA · <strong>Window charge:</strong> 10.39 mC (1 minute)</li>

@@ -2053,6 +2053,7 @@
 <p>The programming sequence involves connecting the <strong>J-Link</strong> programmer to your PC via USB. You then connect the programmer to the <strong>JTAG port</strong> on the ISURLOG PCB using the Tag-Connect cable.</p>
 <p>The JTAG port on the ISURLOG PCB (which is the programming port for the nRF9160 modem) is located as shown below:</p>
 <p><img alt="ISURLOG PCB layout with the JTAG programming port highlighted" src="../images/5-jtag-port-location.jpg" width="502" /></p>
+<p><em>The JTAG programming port, for the nRF9151 modem.</em></p>
 <h2 id="57-updating-modem-firmware-from-official-binaries">5.7 Updating Modem Firmware from Official Binaries</h2>
 <p>Unlike the scenarios above (which assume you're compiling your own application firmware from source), you don't need the nRF Connect SDK at all if you just want to update the modem to an <strong>official ISURKI-provided build</strong> — only <strong>nRF Connect for Desktop</strong> is required, since these are already-compiled binaries.</p>
 <h3 id="where-to-get-the-binaries">Where to Get the Binaries</h3>
@@ -2088,6 +2089,7 @@
 <li>The order doesn't matter — you can flash <code>merged.hex</code> or the modem firmware zip first.</li>
 </ol>
 <p><img alt="nRF Connect Programmer: flashing merged.hex followed by the modem firmware" src="../images/5-modem-firmware-update.gif" width="1000" /></p>
+<p><em>Flashing merged.hex followed by the modem firmware, in the Programmer app.</em></p>
 
 
 

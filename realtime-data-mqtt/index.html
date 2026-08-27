@@ -2367,7 +2367,8 @@ python isurlog_mqtt_demo.py
 <p>When you're done: <code>deactivate</code>.</p>
 <h3 id="live-dashboard">Live Dashboard</h3>
 <p>In addition to printing every decoded message as it arrives, the script opens the <strong>same dashboard layout</strong> as the InfluxDB reference implementation — two large panels on top for the soil probe (<strong>Soil — Irrigation</strong>: VWC/EC, <strong>Soil — Diagnostics</strong>: Temperature/Epsilon), three smaller ones below for the device's own housekeeping metrics (battery, internal temperature/humidity, NB-IoT signal quality) — except here it's fed <strong>live</strong> by the MQTT stream instead of a one-off historical query, with new points appearing as they're received (redrawn every 2 seconds).</p>
-<p><img alt="image" src="../images/11-mqtt-live-dashboard.png" width="800" /></p>
+<p><img alt="Live MQTT dashboard with soil probe panels and device housekeeping metrics" src="../images/11-mqtt-live-dashboard.png" width="800" /></p>
+<p><em>The live dashboard, fed by the MQTT stream and redrawn every 2 seconds.</em></p>
 <p>This works by:</p>
 <ol>
 <li>Keeping a small in-memory buffer (the last 200 points) per field.</li>

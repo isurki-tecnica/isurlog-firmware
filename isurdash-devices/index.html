@@ -2041,6 +2041,7 @@
 <p>By selecting the "<strong>Isurlogs</strong>" menu, a table listing all the dataloggers in the fleet is presented, with a search box to filter by ID or name. This view shows: ID, Name, Type (NB-IoT/LoRa), Status (Online/Offline), Battery, and Last transmission.</p>
 <p>To access a specific <strong>ISURLOG</strong>, the user must click on the corresponding row in the table.</p>
 <p><img alt="IsurDASH Isurlogs list" src="../images/7-devices-list.png" width="1000" /></p>
+<p><em>The Isurlogs list.</em></p>
 <h2 id="632-adding-a-new-device">6.3.2. Adding a New Device</h2>
 <p>To register a new <strong>ISURLOG</strong> datalogger on the platform, the user must follow these steps:</p>
 <ol>
@@ -2052,6 +2053,7 @@
 </li>
 </ol>
 <p><img alt="IsurDASH Añadir Nuevo Dispositivo dialog" src="../images/7-devices-add.png" width="1000" /></p>
+<p><em>The Añadir Nuevo Dispositivo dialog.</em></p>
 <h2 id="633-device-visualization-and-status">6.3.3. Device Visualization and Status</h2>
 <p>Upon selecting a device, the user accesses its dedicated page, with the device's name and ID as the page title and quick-access buttons for <strong>Conectar BLE</strong> (see <a href="#635-local-bluetooth-connection">6.3.5</a>) and <strong>REPL</strong> (opens a MicroPython console over <strong>Remoto</strong> or <strong>Serial port (USB)</strong> — see <a href="../isurdash-maintenance/">6.8. Device Maintenance</a> for details; note this is never available over Bluetooth). The page has three tabs: <strong>Visualización</strong>, <strong>Configuración</strong> (see <a href="#634-configuration-tab">6.3.4</a>), and <strong>Registros</strong>.</p>
 <h3 id="status-panel-quick-overview">Status Panel (Quick Overview)</h3>
@@ -2071,6 +2073,7 @@
 <li>A <strong>Datos SIM</strong> card showing data consumed against the SIM's plan (e.g. "0.53 / 500 MB") and the current coverage quality — cellular coverage for NB-IoT/LTE-M devices, or coverage with the gateway for LoRa devices.</li>
 </ul>
 <p><img alt="IsurDASH device status, sensors, map and SIM data" src="../images/7-device-visualizacion.png" width="1000" /></p>
+<p><em>Device status, latest sensor readings, location, and SIM data.</em></p>
 <p>Below that, an interactive chart area lets you analyze the evolution of sensor data and battery over time, with four views: <strong>Gráfico principal</strong> (time series per sensor), <strong>Bubble chart</strong>, <strong>HeatMap de alarmas</strong>, and <strong>Tabla resumen</strong>.</p>
 <h3 id="registros-alarms-and-events">Registros (Alarms and Events)</h3>
 <p>The <strong>Registros</strong> tab has two sub-sections:</p>
@@ -2079,6 +2082,7 @@
 <li><strong>Eventos:</strong> an activity log for the device itself — configuration changes, sensors added/removed, REPL connections, manual battery changes, etc. — with a <strong>"Registrar evento manual"</strong> button to log something by hand (e.g. a battery replacement during a field visit).</li>
 </ul>
 <p><img alt="IsurDASH device Registros: Alarmas tab" src="../images/7-device-registros-alarmas.png" width="1000" /></p>
+<p><em>The Registros tab — Alarmas sub-section.</em></p>
 <h2 id="634-configuration-tab">6.3.4. Configuration Tab</h2>
 <p>The <strong>Configuración</strong> tab is organized as a left-hand sub-menu with five categories: <strong>Configuración general</strong>, <strong>Comunicaciones inalámbricas</strong>, <strong>Sensores</strong>, <strong>Variables virtuales</strong>, and <strong>Sensores Isurnode</strong>.</p>
 <h3 id="configuracion-general">Configuración general</h3>
@@ -2088,6 +2092,7 @@
 <li><strong>"Despertar Isurlog" Button:</strong> sends a command to wake the datalogger from its low-power mode and force an immediate reading and transmission cycle. Only available for <strong>ISURLOG</strong> versions with <strong>NB-IoT</strong> technology, thanks to eDRX (extended Discontinuous Reception).</li>
 </ul>
 <p><img alt="IsurDASH Configuración general" src="../images/7-device-config-general.png" width="1000" /></p>
+<p><em>The Configuración general screen.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Reference</p>
 <p>For the meaning and impact of every individual parameter, see <a href="../reference-parameters/">7. Reference Configuration Parameters</a> — this page intentionally doesn't screenshot every field; that reference is kept up to date instead.</p>
@@ -2123,11 +2128,14 @@
 <li>Once found, the browser's own Bluetooth pairing prompt appears (e.g. "Isurlog-c-1178"); the user must click "<strong>Emparejar</strong>" to establish the connection.</li>
 </ol>
 <p><img alt="Browser pop-up window for Bluetooth pairing" src="../images/7-bluetooth-pairing.jpg" width="500" /></p>
+<p><em>The browser's own Bluetooth pairing prompt.</em></p>
 <h3 id="step-3-real-time-session-and-disconnection">Step 3: Real-Time Session and Disconnection</h3>
 <p>Once connected, the <strong>Estado</strong> indicator switches to "<strong>Bluetooth</strong>".</p>
 <p><img alt="IsurDASH device page while connected over Bluetooth" src="../images/7-bluetooth-realtime-top.png" width="1000" /></p>
+<p><em>Connected over Bluetooth — the Estado indicator switches to "Bluetooth".</em></p>
 <p>Below, the chart area (now labeled <strong>"Bluetooth Mode"</strong>) plots the connected sensors updating every few seconds, with each sensor's high/low alarm thresholds drawn as reference lines. The user can make changes in the Configuration tab and see their effect immediately.</p>
 <p><img alt="IsurDASH real-time chart in Bluetooth Mode" src="../images/7-bluetooth-realtime-bottom.png" width="1000" /></p>
+<p><em>Real-time sensor chart in Bluetooth Mode, updating every few seconds.</em></p>
 <p>To end the session, the user must click the "<strong>Desconectar BLE</strong>" button, which appears in the same place as the connect button. Upon disconnection, the ISURLOG turns off its Bluetooth radio and returns to its programmed normal operating cycle.</p>
 
 

@@ -1951,7 +1951,8 @@ python isurlog_influx_demo.py
 <pre><code class="language-bash">deactivate
 </code></pre>
 <p>This prints a table of the last 7 days of readings and opens a <strong>single window with a dashboard</strong> (via <code>matplotlib</code>), instead of one pop-up per chart. The layout is two rows — the soil probe readings on top, larger, since they're the main point of this demo; the device's own housekeeping metrics below, smaller:</p>
-<p><img alt="image" src="../../images/10-influx-dashboard.png" width="800" /></p>
+<p><img alt="Reference implementation dashboard: soil probe readings and device housekeeping metrics" src="../../images/10-influx-dashboard.png" width="800" /></p>
+<p><em>The reference script's dashboard — soil probe readings on top, device housekeeping metrics below.</em></p>
 <ol>
 <li><strong>Soil — Irrigation</strong> <em>(large)</em> — moisture (<code>ModbusInput1</code>/VWC, left axis, %) vs. electrical conductivity (<code>ModbusInput2</code>/EC, right axis, µS/cm).</li>
 <li><strong>Soil — Diagnostics</strong> <em>(large)</em> — soil temperature (<code>ModbusInput0</code>, left axis, °C) vs. raw dielectric permittivity (<code>ModbusInput3</code>/Epsilon, right axis — dimensionless, it's a ratio of two permittivities so it has no unit).</li>
