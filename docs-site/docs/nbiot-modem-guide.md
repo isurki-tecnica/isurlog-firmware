@@ -82,6 +82,8 @@ The JTAG port on the ISURLOG PCB (which is the programming port for the nRF9160 
 
 ![ISURLOG PCB layout with the JTAG programming port highlighted](images/5-jtag-port-location.jpg){ width="502" }
 
+*The JTAG programming port, for the nRF9151 modem.*
+
 ## 5.7 Updating Modem Firmware from Official Binaries
 
 Unlike the scenarios above (which assume you're compiling your own application firmware from source), you don't need the nRF Connect SDK at all if you just want to update the modem to an **official ISURKI-provided build** — only **nRF Connect for Desktop** is required, since these are already-compiled binaries.
@@ -119,3 +121,5 @@ Updating either (or both) is how you pick up bug fixes or improvements to the mo
 6.  The order doesn't matter — you can flash `merged.hex` or the modem firmware zip first.
 
 ![nRF Connect Programmer: flashing merged.hex followed by the modem firmware](images/5-modem-firmware-update.gif){ width="1000" }
+
+*Flashing merged.hex followed by the modem firmware, in the Programmer app.*

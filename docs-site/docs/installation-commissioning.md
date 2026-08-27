@@ -18,21 +18,25 @@ The ISURLOG is powered by lithium batteries. Manipulation, installation, and dis
 
 ## 4.2. Physical Mounting
 
-The ISURLOG's IP67 enclosure offers two methods for wall fixation.
+The ISURLOG's IP66 enclosure offers two methods for wall fixation.
 
 ### Standard Mounting
 
 This method uses the four mounting holes provided inside the enclosure.
 
 * **Procedure:** The front cover must be opened to access the anchor points.
-* **Hole Distance (Center-to-Center):** 90 mm (width) x 110 mm (height).
+* **Hole Distance (Center-to-Center):** 125 mm x 125 mm (square pattern — width and height are the same).
 
-### External Mounting Accessory (Optional)
+### External Mounting Accessories (Optional)
 
-An optional ASA support accessory simplifies installation, allowing mounting without opening the device, thus maintaining the IP67 seal integrity.
+Two accessories allow mounting and dismounting the ISURLOG without ever opening the IP66 enclosure, for simpler installation and maintenance:
 
-* **Hole Distance (Center-to-Center):** 136 mm (width) x 96 mm (height).
-* **3D Model Link:** You can download the 3D print file for this accessory here: **[nVent Hoffman Easy Mount Bars](https://www.printables.com/model/1481289-nvent-hoffman-easy-mount-bars-install-without-open)**
+1. **DIN rail mount** — attaches the ISURLOG to a DIN rail. Two variants are available:
+    * Direct mounting onto a **standard DIN rail**.
+    * Mounting onto a separate **3D-printed plastic piece**, which is fixed to the wall first, and the ISURLOG then clips onto it.
+2. **Pole mount** — attaches the ISURLOG to a post or pole.
+
+* **3D Model Link:** 🚧 Coming soon.
 
 ## 4.3. Battery Removal and Insertion
 
@@ -64,7 +68,9 @@ Before switching on, it is crucial to verify that the communication antenna (LoR
 
 Locate the **ON/OFF** switch on the PCB.
 
-![image](images/5-onoff-switch-location.png){width="400"}
+![The ON/OFF switch location on the ISURLOG PCB](images/5-onoff-switch-location.png){width="400"}
+
+*The ON/OFF switch.*
 
 ### Step 3: Power On
 

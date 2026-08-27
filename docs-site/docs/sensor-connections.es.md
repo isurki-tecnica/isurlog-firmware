@@ -13,7 +13,9 @@ Cada entrada analógica está protegida por un fusible autorrearmable.
 | **Sensor Pasivo** (bucle de corriente externo) | El (+) del sensor se conecta a **VDC**; el (-) del sensor se conecta a la **AINx** deseada. | Regulador de tensión interno del ISURLOG (VDC). |
 | **Sensor Activo** (bucle de corriente interno) | El (+) del sensor se conecta a la **AINx** deseada; el (-) del sensor se conecta a **GND**. | Fuente de alimentación externa. |
 
-![image](images/2-analog-input-wiring.png){width="500"}
+![Cableado de sensores analógicos pasivos y activos en las entradas AIN0-AIN3](images/2-analog-input-wiring.png){width="500"}
+
+*Cableado para sensores pasivos (alimentados por el ISURLOG) frente a activos (alimentación externa).*
 
 ## 1.2. Entrada Digital (Estado y Contador de Pulsos)
 
@@ -21,7 +23,9 @@ El ISURLOG cuenta con una entrada digital de contacto seco, utilizable tanto com
 
 La conexión se realiza mediante los pines **VIN** y **DIN0**.
 
-![image](images/2-digital-input-wiring.png){width="300"}
+![Cableado de la entrada digital mediante los pines VIN y DIN0](images/2-digital-input-wiring.png){width="300"}
+
+*Cableado de la entrada digital — pines VIN y DIN0.*
 
 ### Indicador de Estado Digital (LED DIN)
 
@@ -30,7 +34,9 @@ La placa del ISURLOG incluye un LED dedicado (**LED DIN**) que permanece encendi
 !!! warning "Advertencia de Optimización de Energía"
     Para ahorrar energía en aplicaciones alimentadas por batería, este LED puede desactivarse fácilmente retirando el jumper correspondiente en la PCB.
 
-![image](images/2-led-din-jumper.png){width="400"}
+![Ubicación del jumper LED DIN en la cara inferior de la PCB](images/2-led-din-jumper.png){width="400"}
+
+*El jumper LED DIN — retirarlo desactiva el LED de estado y ahorra energía.*
 
 ## 1.3. Entrada Modbus (RS485)
 
@@ -41,7 +47,9 @@ La conexión utiliza los siguientes pines:
 * **Comunicación:** pines **A** y **B**.
 * **Alimentación:** la alimentación del sensor puede conectarse al pin **5V** o al pin **VDC** (para el rango de 6 a 24V). El negativo del sensor debe conectarse a **GND**.
 
-![image](images/2-modbus-rs485-wiring.jpg){width="300"}
+![Cableado Modbus RS485 mediante los pines A y B](images/2-modbus-rs485-wiring.jpg){width="300"}
+
+*Cableado Modbus RTU (RS485) — pines A y B.*
 
 ## 1.4. Entrada para Sensor de Temperatura PT100
 
@@ -60,8 +68,13 @@ Obtener una lectura precisa requiere **dos pasos** de configuración:
 | **3 Hilos** | Unir los jumpers **2/3 WIRE** y **3 WIRE**; dejar el resto abiertos. | Conectar los dos hilos comunes (típicamente ≈2Ω) a **F+**. Conectar el tercer hilo (típicamente 100Ω) a **F-**. |
 | **4 Hilos** | Unir el jumper **2/4 WIRE**; dejar el resto abiertos. | Conectar cada par de hilos comunes (típicamente ≈2Ω) juntos a **F+** y **F-**. |
 
-![image](images/2-pt100-jumpers.png){width="300"}
-![image](images/2-pt100-wiring.png){width="600"}
+![Configuración de jumpers PT100 para sondas de 2, 3 y 4 hilos](images/2-pt100-jumpers.png){width="300"}
+
+*Configuración de jumpers para sondas PT100 de 2, 3 y 4 hilos.*
+
+![Cableado PT100 a los terminales F+ y F-](images/2-pt100-wiring.png){width="600"}
+
+*Cableado PT100 a los terminales F+/F-.*
 
 ## 1.5. Salida Digital (Relé)
 
@@ -70,7 +83,9 @@ Junto a la entrada digital, el mismo bloque de terminales también expone una **
 * **COM0:** contacto común.
 * **NO0:** contacto normalmente abierto.
 
-![image](images/2-digital-input-wiring.png){width="300"}
+![Cableado de la salida de relé mediante los pines COM0 y NO0](images/2-digital-input-wiring.png){width="300"}
+
+*Cableado de salida de relé — pines COM0 y NO0, en el mismo bloque de terminales que la entrada digital.*
 
 Se trata de un **relé de estado sólido con capacidad de 2A / 60V**, adecuado para conmutar directamente cargas externas de mayor potencia (p. ej. bombas, válvulas, contactores u otros actuadores) sin necesidad de un relé intermedio.
 
@@ -78,7 +93,9 @@ Se trata de un **relé de estado sólido con capacidad de 2A / 60V**, adecuado p
 
 El ISURLOG también expone su bus I2C interno a través de un conector **QWIIC** estándar, para conectar sensores externos y placas de expansión compatibles con QWIIC. La distribución de pines sigue la convención estándar QWIIC: **GND, 3V3, SDA, SCL**.
 
-![image](images/2-qwiic-connector.png){width="300"}
+![Distribución de pines del conector QWIIC: GND, 3V3, SDA, SCL](images/2-qwiic-connector.png){width="300"}
+
+*El conector QWIIC — GND, 3V3, SDA, SCL.*
 
 !!! note "Nota sobre Alimentación"
     El riel **3V3** de este conector es la alimentación principal de 3.3V del propio datalogger — **no puede desactivarse** por firmware. Si la aplicación requiere bajo consumo, es necesario que el sensor QWIIC conectado disponga de su propio modo de bajo consumo, o contabilizar su consumo en reposo dentro del presupuesto energético.
@@ -101,7 +118,9 @@ El **pin 1** está marcado con un triángulo en la serigrafía de la PCB; los pi
 | **8** | GP5 | MCP23008 GP5 — E/S de propósito general. |
 | **9** | GND | Tierra. |
 
-![image](images/2-aux-io-pinout.png){width="300"}
+![Conector AUX-IO con el pin 1 marcado por un triángulo](images/2-aux-io-pinout.png){width="300"}
+
+*El conector AUX-IO — pin 1 marcado con un triángulo en la serigrafía.*
 
 ## 1.8. Sensores Internos y Diagnóstico
 
@@ -122,9 +141,13 @@ El datalogger incluye dos funciones internas clave para monitorización e intera
 
 El sensor magnético está ubicado en la **esquina inferior izquierda** de la placa PCB, junto al conector de entradas analógicas y el primer compartimento de baterías (contando desde la izquierda).
 
-![image](images/2-hall-sensor-location.png){width="468" height="642"}
+![Ubicación del sensor de efecto Hall, esquina inferior izquierda de la PCB](images/2-hall-sensor-location.png){width="468" height="642"}
 
-!!! note "Nota para Carcasa IP67"
-    En los dataloggers ISURLOG equipados con carcasa IP67, **no es necesario abrir la carcasa** para la activación. El sensor está diseñado para accionarse desde el exterior, acercando un imán a la **parte inferior del panel lateral izquierdo** de la carcasa.
+*El sensor de efecto Hall, esquina inferior izquierda de la PCB.*
 
-![image](images/2-ip67-magnet-activation.jpg){width="238" height="270"}
+!!! note "Nota para Carcasa IP66"
+    En los dataloggers ISURLOG equipados con carcasa IP66, **no es necesario abrir la carcasa** para la activación. El sensor está diseñado para accionarse desde el exterior, acercando un imán a la **parte inferior del panel lateral izquierdo** de la carcasa.
+
+![Activación del modo Bluetooth con un imán desde el exterior de una carcasa IP66](images/2-ip67-magnet-activation.jpg){width="238" height="270"}
+
+*Activación del sensor Hall desde el exterior de una carcasa IP66.*

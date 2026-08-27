@@ -4,6 +4,12 @@ site_url: https://docs.isurlog.isurki.com/
 repo_url: https://github.com/isurki-tecnica/isurlog-firmware
 repo_name: isurki-tecnica/isurlog-firmware
 
+# The blog lives in docs/blog/ but is built separately (see mkdocs-blog.yml)
+# and only merged into site/blog/ by deploy.sh. Excluded here so a plain
+# `mkdocs build`/`mkdocs gh-deploy` on this config never publishes it.
+exclude_docs: |
+  blog/**
+
 theme:
   name: material
   palette:
@@ -42,6 +48,7 @@ plugins:
 
 nav:
   - Home: index.md
+  # 📝 Blog: blog/index.md — re-add once the blog is ready to go live (see deploy.sh)
   - 🛠️ Module A - Use and Hardware:
       - 1. Sensor Connections: sensor-connections.md
       - 2. Power Supply Methods: power-supply.md

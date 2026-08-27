@@ -1,0 +1,45 @@
+site_name: ISURLOG Docs
+site_url: https://docs.isurlog.isurki.com/blog/
+docs_dir: docs/blog
+site_dir: blog-site
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tracking
+    - toc.follow
+    - content.code.copy
+
+plugins:
+  - search
+  - blog:
+      blog_dir: .
+      blog_toc: true
+      post_date_format: long
+      categories: true
+      archive: true
+      pagination_per_page: 10
+      authors_file: ".authors.yml"
+      draft_on_serve: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - tables
+  - attr_list
+  - md_in_html

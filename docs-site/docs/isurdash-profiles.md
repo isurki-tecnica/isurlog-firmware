@@ -24,6 +24,8 @@ Upon accessing the "**Profiles**" menu, a list of all configuration templates th
 
 ![IsurDASH Profiles list](images/7-profiles-list.png){width="1000"}
 
+*The Profiles list.*
+
 ## 6.6.2. Create a New Profile
 
 To create a new configuration template, the user (with the **Ingeniero** role) must follow these steps:
@@ -47,3 +49,5 @@ By clicking on a profile already created in the list, the user accesses its deta
 2.  **"Aplicar perfil a varios dispositivos":** selects one or more **ISURLOGs** from the fleet to massively apply this complete configuration template.
 
 ![IsurDASH Profile management screen](images/7-profile-manage.png){width="1000"}
+
+*Configuring a profile and applying it to multiple devices.*

@@ -12,6 +12,8 @@ The "**Mantenimiento de dispositivos**" menu lists every ISURLOG (ID, name, curr
 
 ![IsurDASH Mantenimiento de dispositivos](images/7-maintenance-list.png){width="1000"}
 
+*The Mantenimiento de dispositivos list, with per-device maintenance actions.*
+
 !!! warning
     Several of these actions (factory reset, revoke access, end of life) are destructive and not easily reversible — use with care.
 
@@ -28,6 +30,8 @@ After picking a method, you choose which firmware version to install. The list o
 * Always prefer the release marked **Latest** unless you have a specific reason not to.
 
 ![IsurDASH firmware update flow: choosing Remoto or Serial port (USB), then a firmware version](images/7-maintenance-firmware-update.gif){width="1000"}
+
+*The firmware update flow — choose a method, then a version.*
 
 !!! note "Building your own firmware?"
     This flow only installs official releases published on GitHub. If you're a firmware developer working from a locally-built `firmware.bin` that isn't (yet) a published release, use the manual flashing procedure instead — see **3. Flashing and Application Upload**.
@@ -53,3 +57,5 @@ A few practical details:
 * The session can be **exported as a `.txt` file** for later reference.
 
 ![IsurDASH MicroPython REPL session](images/7-maintenance-repl-session.gif){width="1000"}
+
+*A live MicroPython REPL session.*

@@ -85,7 +85,9 @@ deactivate
 
 This prints a table of the last 7 days of readings and opens a **single window with a dashboard** (via `matplotlib`), instead of one pop-up per chart. The layout is two rows — the soil probe readings on top, larger, since they're the main point of this demo; the device's own housekeeping metrics below, smaller:
 
-![image](images/10-influx-dashboard.png){width="800"}
+![Reference implementation dashboard: soil probe readings and device housekeeping metrics](images/10-influx-dashboard.png){width="800"}
+
+*The reference script's dashboard — soil probe readings on top, device housekeeping metrics below.*
 
 1. **Soil — Irrigation** *(large)* — moisture (`ModbusInput1`/VWC, left axis, %) vs. electrical conductivity (`ModbusInput2`/EC, right axis, µS/cm).
 2. **Soil — Diagnostics** *(large)* — soil temperature (`ModbusInput0`, left axis, °C) vs. raw dielectric permittivity (`ModbusInput3`/Epsilon, right axis — dimensionless, it's a ratio of two permittivities so it has no unit).

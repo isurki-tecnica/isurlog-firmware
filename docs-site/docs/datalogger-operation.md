@@ -65,7 +65,9 @@ This indicator is located in the upper right corner of the PCB, right next to th
 
 In ISURLOG models with a transparent cover, the LED is visible from the outside; however, in versions with an opaque cover, the lid must be opened to observe it. Due to its ultra-low consumption design to maximize battery life, the intensity of the LED is moderate, which may make it difficult to visualize under direct sunlight.
 
-![image](images/6-status-led-location.png){width="400"}
+![The STATUS LED location, upper right corner of the PCB next to the RESET button](images/6-status-led-location.png){width="400"}
+
+*The STATUS LED, next to the RESET button.*
 
 
 ### LED Patterns and their Meanings

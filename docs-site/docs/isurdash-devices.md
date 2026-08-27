@@ -12,6 +12,8 @@ To access a specific **ISURLOG**, the user must click on the corresponding row i
 
 ![IsurDASH Isurlogs list](images/7-devices-list.png){width="1000"}
 
+*The Isurlogs list.*
+
 ## 6.3.2. Adding a New Device
 
 To register a new **ISURLOG** datalogger on the platform, the user must follow these steps:
@@ -22,6 +24,8 @@ To register a new **ISURLOG** datalogger on the platform, the user must follow t
     * **Código de seguridad:** A unique validation code to ensure that only the equipment owner can register it. This code is no longer printed on the PCB — it's found **inside the datalogger's enclosure**, next to the serial number, as a **QR code** to scan.
 
 ![IsurDASH Añadir Nuevo Dispositivo dialog](images/7-devices-add.png){width="1000"}
+
+*The Añadir Nuevo Dispositivo dialog.*
 
 ## 6.3.3. Device Visualization and Status
 
@@ -47,6 +51,8 @@ Just below the status panel:
 
 ![IsurDASH device status, sensors, map and SIM data](images/7-device-visualizacion.png){width="1000"}
 
+*Device status, latest sensor readings, location, and SIM data.*
+
 Below that, an interactive chart area lets you analyze the evolution of sensor data and battery over time, with four views: **Gráfico principal** (time series per sensor), **Bubble chart**, **HeatMap de alarmas**, and **Tabla resumen**.
 
 ### Registros (Alarms and Events)
@@ -57,6 +63,8 @@ The **Registros** tab has two sub-sections:
 * **Eventos:** an activity log for the device itself — configuration changes, sensors added/removed, REPL connections, manual battery changes, etc. — with a **"Registrar evento manual"** button to log something by hand (e.g. a battery replacement during a field visit).
 
 ![IsurDASH device Registros: Alarmas tab](images/7-device-registros-alarmas.png){width="1000"}
+
+*The Registros tab — Alarmas sub-section.*
 
 ## 6.3.4. Configuration Tab
 
@@ -70,6 +78,8 @@ Shows the ISURLOG's general parameters: name, modem type, hardware/firmware vers
 * **"Despertar Isurlog" Button:** sends a command to wake the datalogger from its low-power mode and force an immediate reading and transmission cycle. Only available for **ISURLOG** versions with **NB-IoT** technology, thanks to eDRX (extended Discontinuous Reception).
 
 ![IsurDASH Configuración general](images/7-device-config-general.png){width="1000"}
+
+*The Configuración general screen.*
 
 !!! note "Reference"
     For the meaning and impact of every individual parameter, see [7. Reference Configuration Parameters](reference-parameters.md) — this page intentionally doesn't screenshot every field; that reference is kept up to date instead.
@@ -119,14 +129,20 @@ For the ISURLOG to be visible and connectable, the user must activate it manuall
 
 ![Browser pop-up window for Bluetooth pairing](images/7-bluetooth-pairing.jpg){width="500"}
 
+*The browser's own Bluetooth pairing prompt.*
+
 ### Step 3: Real-Time Session and Disconnection
 
 Once connected, the **Estado** indicator switches to "**Bluetooth**".
 
 ![IsurDASH device page while connected over Bluetooth](images/7-bluetooth-realtime-top.png){width="1000"}
 
+*Connected over Bluetooth — the Estado indicator switches to "Bluetooth".*
+
 Below, the chart area (now labeled **"Bluetooth Mode"**) plots the connected sensors updating every few seconds, with each sensor's high/low alarm thresholds drawn as reference lines. The user can make changes in the Configuration tab and see their effect immediately.
 
 ![IsurDASH real-time chart in Bluetooth Mode](images/7-bluetooth-realtime-bottom.png){width="1000"}
+
+*Real-time sensor chart in Bluetooth Mode, updating every few seconds.*
 
 To end the session, the user must click the "**Desconectar BLE**" button, which appears in the same place as the connect button. Upon disconnection, the ISURLOG turns off its Bluetooth radio and returns to its programmed normal operating cycle.

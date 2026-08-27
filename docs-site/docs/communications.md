@@ -17,7 +17,9 @@ It is **imperative** that the antenna is always connected before powering on the
 * It must have an **impedance of 50 Ohms** and a low VSWR to ensure maximum efficiency.
 * The ISURLOG board is equipped with a **U.FL type antenna connector**.
 
-![image](images/4-lorawan-antenna-connector.jpg){width="400"}
+![The U.FL antenna connector for the LoRaWAN module](images/4-lorawan-antenna-connector.jpg){width="400"}
+
+*The U.FL antenna connector, LoRaWAN module.*
 
 ## 3.2. NB-IoT (Narrowband IoT)
 
@@ -36,7 +38,9 @@ It is **imperative** to connect an LTE antenna to avoid damaging the radio frequ
 * The connector for the LTE antenna provided on the ISURLOG is of the **U.FL type**.
 * Thanks to its advanced RF front-end architecture, this same connector and antenna also serve **GPS** reception — a single antenna is enough for both, no separate GPS antenna or connector is needed.
 
-![image](images/4-nbiot-antenna-connector.png){width="600"}
+![The U.FL antenna connector for the NB-IoT module, shared with GPS](images/4-nbiot-antenna-connector.png){width="600"}
+
+*The U.FL antenna connector, NB-IoT module — shared with GPS, no separate antenna needed.*
 
 ### SIM Management Flexibility
 

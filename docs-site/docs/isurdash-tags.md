@@ -18,6 +18,8 @@ The "**Tags**" menu presents a table with all the tags that have been created wi
 
 ![IsurDASH Tags list](images/7-tags-list.png){width="1000"}
 
+*The Tags list.*
+
 ## 6.7.2. Create a New Tag
 
 To create a new tag that can be assigned to devices, the user must follow these steps:
@@ -33,3 +35,5 @@ Once a tag is created, the next step is to assign it to the corresponding device
 2.  **"Aplicar Tag a varios dispositivos":** opens an interface that allows selecting **one or more ISURLOGs** from the fleet to apply that tag to.
 
 ![IsurDASH Tag management screen](images/7-tag-manage.png){width="1000"}
+
+*Assigning a tag to one or more devices.*

@@ -16,7 +16,9 @@ The device has five battery holders on its upper part to accommodate a maximum o
 * **Polarity Warning:** The batteries must be placed respecting the polarities indicated on the PCB. **Failure to respect the polarity could irreparably damage the PCB**.
 * **Safety Requirement:** It is important that all batteries connected to an ISURLOG have the same level of charge (same voltage).
 
-![image](images/3-battery-holders.jpg){width="880"}
+![The five INR18650 battery holders on the ISURLOG PCB](images/3-battery-holders.jpg){width="880"}
+
+*The five INR18650 battery holders — respect the polarity marked on the PCB.*
 
 ### 2.1.2. External Power Only
 
@@ -27,7 +29,9 @@ The device can be powered externally without batteries. The power source must pr
     2.  **Pressure Terminals (PIN 5V MAX):** The last two pressure terminals on the lower right.
 * **Caution:** **Do not use the USB-C port and the pressure terminals simultaneously as power sources**.
 
-![image](images/3-external-power-connections.jpg){width="883" height="789"}
+![The USB-C port and PWR IN pressure terminals for external power](images/3-external-power-connections.jpg){width="883" height="789"}
+
+*External power connections — USB-C port and PIN pressure terminals.*
 
 ### 2.1.3. Batteries + External Power (Hybrid Mode)
 
@@ -44,7 +48,9 @@ Starting with hardware revision v3.3, the ISURLOG adds a dedicated **PH-2A conne
 
 Each of the power modes described in previous sections requires a specific jumper configuration on the **ISURLOG** PCB. **It is completely necessary to configure these jumpers correctly to ensure a stable energy supply**. The jumpers are located on the underside of the PCB.
 
-![image](images/3-power-jumpers-location.png){width="176" height="334"}
+![Power jumpers on the underside of the ISURLOG PCB](images/3-power-jumpers-location.png){width="176" height="334"}
+
+*The power jumpers, underside of the PCB.*
 
 !!! note "What I SENSE does"
     All battery current passes through the **I SENSE** jumper — as the name suggests, it's the point where current can be measured. In normal operation it must stay **closed** (ON position, shorted), as indicated below for every power mode. To measure the device's actual current draw, open the jumper and insert an ammeter in series across it — see [Consumption Graphs](consumption-graphs.md) for the full measurement procedure and real captures.
@@ -127,4 +133,6 @@ For installations where losing the time is critical, or for custom firmware buil
 * **Connector:** 2-pin, **P=1.25mm** pitch, labeled **CR2032** on the PCB.
 * **Polarity:** the positive pin is marked with an asterisk (*).
 
-![image](images/2-rtc-cr2032-connector.jpg){width="300"}
+![CR2032 connector location, positive pin marked with an asterisk](images/2-rtc-cr2032-connector.jpg){width="300"}
+
+*The CR2032 connector — the asterisk marks the positive pin.*

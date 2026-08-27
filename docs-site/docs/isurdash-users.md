@@ -19,6 +19,8 @@ The table provides the following information:
 
 ![IsurDASH Users list](images/7-users-list.png){width="1000"}
 
+*The Users list.*
+
 ## 6.5.2. User Roles and Permissions
 
 IsurDASH defines two client-facing roles with different access levels:
@@ -62,3 +64,5 @@ The great advantage of this system is that this assignment can be done **immedia
 This way, when the new user logs in for the first time, they will already find the corresponding **ISURLOG** devices in their panel, ready to be monitored.
 
 ![IsurDASH interface for assigning devices to a user](images/7-users-assign-devices.png){width="1000"}
+
+*Pre-assigning ISURLOGs to a newly created user.*

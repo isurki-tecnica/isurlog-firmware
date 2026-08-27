@@ -14,6 +14,8 @@ Real current-vs-time captures showing what each part of the duty cycle actually 
 
 ![I_SENSE jumper — PPK2 wiring](images/isense-ppk2-wiring.png){width="220"}
 
+*Wiring the PPK2 in series across the I_SENSE jumper.*
+
 **Conditions.** Each capture below notes the firmware version, connectivity, and sensor configuration it was taken under — real numbers vary with these, so treat them as a reference point, not a spec sheet.
 
 ---
@@ -23,6 +25,8 @@ Real current-vs-time captures showing what each part of the duty cycle actually 
 ### Deep Sleep — NB-IoT/LTE-M
 
 ![Deep sleep current — NB-IoT](images/deep-sleep-nbiot.png)
+
+*Deep sleep current draw, NB-IoT, 3-second window.*
 
 Captured with the PPK2 in Ampere meter mode, 1,000 samples/second, over a 3-second window:
 
@@ -39,6 +43,8 @@ Captured with the PPK2 in Ampere meter mode, 1,000 samples/second, over a 3-seco
 **Longer window — eDRX paging cycle:**
 
 ![Deep sleep current — NB-IoT, eDRX paging cycle over a 1-minute window](images/deep-sleep-nbiot-edrx-cycle.png)
+
+*The same deep sleep state, zoomed out to a 1-minute window — eDRX paging spikes visible.*
 
 Zooming out to a 1-minute window reveals a second, larger periodic spike (30-38 mA) on top of the baseline — these are the modem's **eDRX paging occasions**, where it briefly wakes to listen for the network. The interval between two consecutive occasions is **40.96 s on standard firmware**, matching the **40.92 s** measured here.
 

@@ -18,6 +18,8 @@ Next to the map, a panel with three tabs gives quick access to what needs attent
 
 ![IsurDASH Dashboard fleet map and alarms panel](images/7-dashboard-map-alarms.png){width="1000"}
 
+*The fleet map and alarms panel.*
+
 ## Fleet Summary and Charts
 
 Below the map, three tabs give access to different information: **Resumen**, **Novedades**, and **Soporte**.
@@ -35,5 +37,7 @@ Below the numeric summary, two charts are shown:
 * **Distribución de batería:** a donut chart breaking down the fleet by battery health (Buena / Baja / Crítica / Sin datos).
 
 ![IsurDASH Dashboard Resumen tab: fleet numbers and charts](images/7-dashboard-resumen.png){width="1000"}
+
+*The Resumen tab — fleet numbers and charts.*
 
 The **Novedades** tab lists what's new in IsurDASH, release by release.

@@ -16,5 +16,7 @@ Access to the IsurDASH platform is done through a standard web browser. The sign
 
 ![IsurDASH login screen](images/7-login.png){width="700"}
 
+*The IsurDASH login screen.*
+
 !!! note "Note"
     the "**Forgot password?**" option is not shown on the initial login form — it only appears after an incorrect password attempt. From there it can be used to recover access. For any other access issues, contact the Isurki support team.

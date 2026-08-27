@@ -13,7 +13,9 @@ Each analog input is protected by an automatic reset fuse.
 | **Passive Sensor** (External current loop) | Sensor (+) connects to **VDC**; Sensor (-) connects to the desired **AINx**. | ISURLOG's internal voltage regulator (VDC). |
 | **Active Sensor** (Internal current loop) | Sensor (+) connects to the desired **AINx**; Sensor (-) connects to **GND**. | External power source. |
 
-![image](images/2-analog-input-wiring.png){width="500"}
+![Passive and active analog sensor wiring for the AIN0-AIN3 inputs](images/2-analog-input-wiring.png){width="500"}
+
+*Wiring for passive (ISURLOG-powered) vs. active (externally powered) analog sensors.*
 
 ## 1.2. Digital Input (State and Pulse Counter)
 
@@ -21,7 +23,9 @@ The ISURLOG features a dry contact digital input that can be used either as a st
 
 The connection is made using the following pins: **VIN** and **DIN0**.
 
-![image](images/2-digital-input-wiring.png){width="300"}
+![Digital input wiring using the VIN and DIN0 pins](images/2-digital-input-wiring.png){width="300"}
+
+*Digital input wiring — VIN and DIN0 pins.*
 
 ### Digital Status Indicator (LED DIN)
 
@@ -30,7 +34,9 @@ The ISURLOG board includes a dedicated LED (**LED DIN**) that lights up continuo
 !!! warning "Power Optimization Warning"
     To save energy in battery-powered applications, this LED can be easily disabled by removing the corresponding jumper on the PCB.
 
-![image](images/2-led-din-jumper.png){width="400"}
+![LED DIN jumper location on the underside of the PCB](images/2-led-din-jumper.png){width="400"}
+
+*The LED DIN jumper — remove it to disable the status LED and save power.*
 
 ## 1.3. Modbus Input (RS485)
 
@@ -41,7 +47,9 @@ The connection uses the following pins:
 * **Communication:** **A** and **B** pins.
 * **Power:** Sensor power can be connected to the **5V** pin or the **VDC** pin (for the 6 to 24V range). Sensor negative should connect to **GND**.
 
-![image](images/2-modbus-rs485-wiring.jpg){width="300"}
+![Modbus RS485 wiring using the A and B pins](images/2-modbus-rs485-wiring.jpg){width="300"}
+
+*Modbus RTU (RS485) wiring — A and B pins.*
 
 ## 1.4. PT100 Temperature Sensor Input
 
@@ -60,8 +68,13 @@ Achieving an accurate reading requires **two steps** of configuration:
 | **3-Wire** | Join the **2/3 WIRE** and **3 WIRE** jumpers; leave the rest open. | Connect the two common wires (typically ≈2Ω) to **F+**. Connect the third wire (typically 100Ω) to **F-**. |
 | **4-Wire** | Join the **2/4 WIRE** jumper; leave the rest open. | Connect the pairs of common wires (typically ≈2Ω) together to **F+** and **F-**. |
 
-![image](images/2-pt100-jumpers.png){width="300"}
-![image](images/2-pt100-wiring.png){width="600"}
+![PT100 jumper configuration for 2, 3, and 4-wire probes](images/2-pt100-jumpers.png){width="300"}
+
+*Jumper configuration for 2, 3, and 4-wire PT100 probes.*
+
+![PT100 wiring to the F+ and F- terminals](images/2-pt100-wiring.png){width="600"}
+
+*PT100 wiring to the F+/F- terminals.*
 
 ## 1.5. Digital Output (Relay)
 
@@ -70,7 +83,9 @@ Next to the digital input, the same terminal block also breaks out a **solid-sta
 * **COM0:** Common contact.
 * **NO0:** Normally-open contact.
 
-![image](images/2-digital-input-wiring.png){width="300"}
+![Relay output wiring using the COM0 and NO0 pins](images/2-digital-input-wiring.png){width="300"}
+
+*Relay output wiring — COM0 and NO0 pins, on the same terminal block as the digital input.*
 
 This is a **solid-state relay rated for 2A / 60V**, suitable for switching heavier external loads directly (e.g. pumps, valves, contactors, or other actuators) without needing an intermediate relay.
 
@@ -78,7 +93,9 @@ This is a **solid-state relay rated for 2A / 60V**, suitable for switching heavi
 
 The ISURLOG also breaks out its internal I2C bus through a standard **QWIIC** connector, to connect external QWIIC-compatible sensors and expansion boards. The pinout follows the standard QWIIC convention: **GND, 3V3, SDA, SCL**.
 
-![image](images/2-qwiic-connector.png){width="300"}
+![QWIIC connector pinout: GND, 3V3, SDA, SCL](images/2-qwiic-connector.png){width="300"}
+
+*The QWIIC connector — GND, 3V3, SDA, SCL.*
 
 !!! note "Power Note"
     The **3V3** rail on this connector is the datalogger's own main 3.3V supply — it **cannot be switched off** by firmware. If your application needs low power consumption, make sure the connected QWIIC sensor has its own proper sleep mode, or account for its idle/standby current draw in your power budget.
@@ -101,7 +118,9 @@ The AUX-IO connector is a **1mm-pitch (P=1mm) connector** that breaks out extra 
 | **8** | GP5 | MCP23008 GP5 — general-purpose I/O. |
 | **9** | GND | Ground. |
 
-![image](images/2-aux-io-pinout.png){width="300"}
+![AUX-IO connector with pin 1 marked by a triangle](images/2-aux-io-pinout.png){width="300"}
+
+*The AUX-IO connector — pin 1 marked with a triangle on the silkscreen.*
 
 ## 1.8. Internal Sensors and Diagnostics
 
@@ -122,9 +141,13 @@ The datalogger includes two key internal features for monitoring and field inter
 
 The magnetic sensor is positioned on the **lower left corner** of the PCB board, adjacent to the analog input connector and the first battery compartment (counting from the left).
 
-![image](images/2-hall-sensor-location.png){width="468" height="642"}
+![Hall effect sensor location, lower left corner of the PCB](images/2-hall-sensor-location.png){width="468" height="642"}
 
-!!! note "Note for IP67 Enclosure"
-    For ISURLOG dataloggers equipped with the IP67 enclosure, it is **not necessary to open the casing** for activation. The sensor is designed to be operated from the exterior by approaching a magnet to the **lower part of the left side panel** of the enclosure.
+*The Hall effect sensor, lower left corner of the PCB.*
 
-![image](images/2-ip67-magnet-activation.jpg){width="238" height="270"}
+!!! note "Note for IP66 Enclosure"
+    For ISURLOG dataloggers equipped with the IP66 enclosure, it is **not necessary to open the casing** for activation. The sensor is designed to be operated from the exterior by approaching a magnet to the **lower part of the left side panel** of the enclosure.
+
+![Activating Bluetooth mode with a magnet from outside an IP66 enclosure](images/2-ip67-magnet-activation.jpg){width="238" height="270"}
+
+*Activating the Hall sensor from outside an IP66 enclosure.*

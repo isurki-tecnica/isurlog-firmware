@@ -15,6 +15,8 @@ An analytics view of alarms across the whole fleet:
 
 ![IsurDASH Alarmas Resumen tab](images/7-alarms-resumen.png){width="1000"}
 
+*The Resumen tab — fleet-wide alarm analytics.*
+
 ## Listado De Alarmas
 
 A searchable, filterable table listing each alarm event individually:
@@ -31,3 +33,5 @@ A searchable, filterable table listing each alarm event individually:
 A search box (by Isurlog, name, or description), a type filter (**Todos los tipos** / **Valor fuera de rango** / **Batería baja**), and a read-status filter (**Todas** / **Sin Leer** / **Leídas**) let you narrow down the list. Columns are sortable.
 
 ![IsurDASH Listado De Alarmas tab](images/7-alarms-listado.png){width="1000"}
+
+*The Listado De Alarmas tab — the full, filterable alarm history.*

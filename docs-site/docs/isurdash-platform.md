@@ -12,6 +12,8 @@ A toolbar is present at the top of **every** page in IsurDASH — not just the D
 
 ![IsurDASH top toolbar](images/7-top-toolbar.png){width="1000"}
 
+*The top toolbar, present on every IsurDASH page.*
+
 * **Filtros de tiempo:** restrict the data shown to a time window — quick presets (e.g. last 1 hour, last 2 hours) or a custom date range.
 * **Filtros de Tags:** restrict the data shown to devices carrying specific [Tags](isurdash-tags.md).
 * **Light/dark mode switch:** toggles the theme; saved per user.

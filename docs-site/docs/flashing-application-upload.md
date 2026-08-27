@@ -16,7 +16,9 @@ Identify the necessary buttons and the serial programming port (UART) on the **I
 * **Buttons:** RESET and BOOT.
 * **Programming Port:** The UART port, labeled "**ESP**".
 
-![image](images/3fw-flashing-esp-uart-port.jpg){ width="740" }
+![RESET and BOOT buttons and the ESP UART programming port on the ISURLOG PCB](images/3fw-flashing-esp-uart-port.jpg){ width="740" }
+
+*The RESET/BOOT buttons and the ESP UART programming port.*
 
 ## 3.2 Flashing the Firmware Core (firmware.bin)
 

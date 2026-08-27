@@ -81,6 +81,8 @@ The programming port/pins for the RAK3172 module on the ISURLOG PCB are located 
 
 ![ISURLOG PCB layout with the RAK3172 programming port highlighted](images/6-rak3172-programming-port.jpg){: width="750" }
 
+*The programming port, for the RAK3172 modem.*
+
 ## 6.6 Updating Modem Firmware from Official Binaries
 
 Unlike the scenarios above (which assume you're compiling your own application firmware from source), you don't need the Arduino IDE or the RUI3 BSP at all if you just want to update the modem to an **official ISURKI-provided build** — it's an already-compiled binary.
@@ -92,7 +94,7 @@ Each [ISURLOG firmware release](https://github.com/isurki-tecnica/isurlog-firmwa
 * **`System_Custom_ATCMD.ino.bin`**
 
 !!! note "Coming soon"
-    support for updating the RAK3172 directly from IsurDASH, the same way the [7.8 Device Maintenance](isurdash-maintenance.md) flow already updates the **ESP32**. Until then, the recommended tool is the one below.
+    support for updating the RAK3172 directly from IsurDASH, the same way the [6.8 Device Maintenance](isurdash-maintenance.md) flow already updates the **ESP32**. Until then, the recommended tool is the one below.
 
 ### Update Tool
 
@@ -107,3 +109,5 @@ The current recommended way to update the RAK3172's firmware is the web-based to
 5.  Select the **`System_Custom_ATCMD.ino.bin`** file and click **"Upload firmware"**.
 
 ![Updating the RAK3172 modem firmware via firmwareupgrade.fencyboy.com](images/6-modem-firmware-update.gif){: width="1000" }
+
+*Updating the RAK3172 modem firmware via the web-based tool.*

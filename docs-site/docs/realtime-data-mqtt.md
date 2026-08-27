@@ -188,7 +188,9 @@ When you're done: `deactivate`.
 
 In addition to printing every decoded message as it arrives, the script opens the **same dashboard layout** as the InfluxDB reference implementation — two large panels on top for the soil probe (**Soil — Irrigation**: VWC/EC, **Soil — Diagnostics**: Temperature/Epsilon), three smaller ones below for the device's own housekeeping metrics (battery, internal temperature/humidity, NB-IoT signal quality) — except here it's fed **live** by the MQTT stream instead of a one-off historical query, with new points appearing as they're received (redrawn every 2 seconds).
 
-![image](images/11-mqtt-live-dashboard.png){width="800"}
+![Live MQTT dashboard with soil probe panels and device housekeeping metrics](images/11-mqtt-live-dashboard.png){width="800"}
+
+*The live dashboard, fed by the MQTT stream and redrawn every 2 seconds.*
 
 This works by:
 
