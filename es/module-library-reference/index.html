@@ -1,0 +1,2281 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="ISURLOG documentation — hardware, firmware, data integration, and troubleshooting">
+      
+      
+      
+        <link rel="canonical" href="https://docs.isurlog.isurki.com/es/module-library-reference/">
+      
+      
+        <link rel="prev" href="../architecture-overview/">
+      
+      
+        <link rel="next" href="../flashing-application-upload/">
+      
+      
+        
+          <link rel="alternate" href="../../module-library-reference/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>2.1. Module & Library Reference - ISURLOG Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#21-module-library-reference-api-guide" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../" title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ISURLOG Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2.1. Module & Library Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../module-library-reference/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ISURLOG Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🛠️ Module A - Use and Hardware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🛠️ Module A - Use and Hardware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensor-connections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Sensor Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-supply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Power Supply Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../communications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Communications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation-commissioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Installation and Commissioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datalogger-operation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Datalogger Operation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. IsurDASH Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. IsurDASH Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-access-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1. Access and Login
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2. Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.3. Devices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-alarms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.4. Alarms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Users
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.6. Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.7. Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.8. Device Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Reference Configuration Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💻 Module B - Firmware Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💻 Module B - Firmware Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Build Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Architecture Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1. Module & Library Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1. Module & Library Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#211-quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#212-modules-detailed-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.2 Modules — Detailed Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.2 Modules — Detailed Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core / Boot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power &amp; Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connectivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-ota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage &amp; OTA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peripherals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Peripherals
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#213-library-reference-lib" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.3 Library Reference (lib/)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#214-module-dependency-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.4 Module Dependency Map
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing-application-upload/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Flashing and Application Upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpio-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. GPIO Mapping (Hardware-Software)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Advanced NB-IoT Modem Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Advanced LoRaWAN Modem Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contribution-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Contribution Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ☁️ Module C - Data Integration & APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ☁️ Module C - Data Integration & APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-access-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Data Access Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../historical-data-influxdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Historical Data (InfluxDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../realtime-data-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Real-Time Data (MQTT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote-configuration-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Remote Configuration API (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚡ Module D - Power Consumption & Battery Life
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ⚡ Module D - Power Consumption & Battery Life
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consumption-graphs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Consumption Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-budget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Power Budget Calculator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🩺 Module E - Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🩺 Module E - Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#211-quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#212-modules-detailed-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.2 Modules — Detailed Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.2 Modules — Detailed Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core / Boot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power &amp; Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connectivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-ota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage &amp; OTA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peripherals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Peripherals
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#213-library-reference-lib" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.3 Library Reference (lib/)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#214-module-dependency-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.4 Module Dependency Map
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="21-module-library-reference-api-guide">2.1 Module &amp; Library Reference (API Guide)</h1>
+<div class="admonition note">
+<p class="admonition-title">Scope</p>
+<p>this page documents the <strong>production</strong> code tree — <code>app/main.py</code>, <code>ports/esp32/modules/modules/</code> (high-level wrappers) and <code>ports/esp32/modules/lib/</code> (low-level drivers) — as tracked on this repository's <code>main</code> branch. If you work from the internal development sandbox, some experimental modules (async variants, alternate storage drivers, etc.) may not be listed here yet because they haven't been promoted to this repository. See <strong>[8. Development Workflow (Sandbox → Production)]</strong> <em>(coming soon)</em> for how that promotion works.</p>
+</div>
+<p>This page complements <strong><a href="../architecture-overview/">2. Architecture Overview</a></strong>: that page explains the <code>/lib</code> vs <code>/modules</code> split conceptually, this one is the per-file reference — what each module does, what it depends on, and what configuration it reads.</p>
+<hr />
+<h2 id="211-quick-reference">2.1.1 Quick Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Module (<code>modules/</code>)</th>
+<th>Purpose</th>
+<th>Sync/Async</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>utils.py</code></td>
+<td>Logging (<code>log_debug</code>/<code>log_info</code>/...) and small helpers. Imported by almost everything.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>config_manager.py</code></td>
+<td>Loads <code>static_config.json</code> / <code>dynamic_config.json</code>, applies remote (downlink) config updates.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>_auth.py</code></td>
+<td>PIN-protected REPL console lock (AES).</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>version.py</code></td>
+<td>Firmware version constant.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>power_manager.py</code></td>
+<td>RTC (DS3231/RV3028), wake-up scheduling, voltage rails, deep sleep.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>rtc_memory.py</code></td>
+<td>Deep-sleep-persistent state (cycle counter, valve states, payload buffer).</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>wifi.py</code></td>
+<td>Wi-Fi STA connection, enforces WPA2+.</td>
+<td>async</td>
+</tr>
+<tr>
+<td><code>nb_iot.py</code></td>
+<td>Nordic nRF9160 modem driver: network registration, MQTT-over-modem, HTTP (OTA), GPS/NTN.</td>
+<td>async</td>
+</tr>
+<tr>
+<td><code>lorawan.py</code></td>
+<td>RAK3172 (RUI3 AT) LoRaWAN modem driver: join, uplink, downlink, Class C polling.</td>
+<td>async</td>
+</tr>
+<tr>
+<td><code>umqttsimple.py</code></td>
+<td>Lightweight MQTT client (Wi-Fi transport only).</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>ble_manager.py</code></td>
+<td>BLE GATT server for local config/monitoring (magnet-triggered).</td>
+<td>async</td>
+</tr>
+<tr>
+<td><code>downlink_manager.py</code></td>
+<td>Unifies downlink handling across Wi-Fi/NB-IoT/LoRaWAN; triggers OTA and remote config.</td>
+<td>async</td>
+</tr>
+<tr>
+<td><code>remote_repl.py</code></td>
+<td>Remote Python REPL over MQTT (debugging backdoor — see notes).</td>
+<td>mixed</td>
+</tr>
+<tr>
+<td><code>analog_sensor.py</code></td>
+<td>ADS1115 4-20mA analog input wrapper.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>digital_sensor.py</code></td>
+<td>ULP-based low-power pulse counter.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>bme_sensor.py</code></td>
+<td>Auto-detecting BMP280/BME280/BME680 wrapper (temp/hum/press/gas + IAQ).</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>sht30_sensor.py</code></td>
+<td>SHT30 temp/humidity wrapper.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>max31865_sensor.py</code></td>
+<td>PT100/PT1000 (via MAX31865) wrapper.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>modbus_sensor.py</code></td>
+<td>Modbus RTU master wrapper over RS485.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>accel_manager.py</code></td>
+<td>LIS2DH12 + MCP23008 anti-theft/tamper detection.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>battery_monitor.py</code></td>
+<td>ESP32 ADC battery voltage fallback (no MAX17048).</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>internal_storage.py</code></td>
+<td>FIFO payload backup on internal flash.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>update_manager.py</code></td>
+<td>OTA support: checksum, base64 decode, safe <code>main.py</code> replacement.</td>
+<td>sync</td>
+</tr>
+<tr>
+<td><code>led_manager.py</code></td>
+<td>ULP-driven status LED blink pattern.</td>
+<td>sync</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="212-modules-detailed-reference">2.1.2 Modules — Detailed Reference</h2>
+<h3 id="core-boot">Core / Boot</h3>
+<p><strong><code>utils.py</code></strong>
+- Purpose: centralized logging (<code>log_debug</code>, <code>log_info</code>, <code>log_warning</code>, <code>log_error</code>) gated by <code>static_config.log_level</code>, plus <code>get_datetime_string()</code> / <code>save_data_to_file()</code>.
+- Depends on: nothing (base module — imported by nearly every other module).
+- Config: <code>static_config.log_level</code>, resolved from <code>config_manager</code> on first use (a deferred import — <code>config_manager.py</code> imports <code>utils</code> at module level, so importing back at <code>utils</code>' module level would be circular).</p>
+<p><strong><code>config_manager.py</code></strong>
+- Purpose: the canonical owner of <code>static_config.json</code> (immutable, hardware) and <code>dynamic_config.json</code> (runtime-mutable). Applies remote config updates via <code>CONFIG_MAP</code>, which maps ~90 remote command names (e.g. <code>setLatencyTime</code>) to nested JSON paths.
+- Public API: <code>ConfigManager.get_static(*keys, default=None)</code>, <code>get_dynamic(*keys, default=None)</code>, <code>apply_single_update(...)</code>, <code>apply_conf_update(decoded_data)</code>, <code>save_dynamic_config()</code>. Global singleton: <code>config_manager</code>.
+- Depends on: <code>utils</code>.</p>
+<p><strong><code>_auth.py</code></strong>
+- Purpose: PIN-gated REPL console lock. Runs automatically on import (not just definitions) — up to 3 attempts, resets the device on failure.
+- Public API: <code>run_authentication()</code>, <code>pad_data(...)</code>, <code>get_encrypted_pin_secret()</code>.
+- Depends on: <code>config_manager</code> (reads <code>static_config.pin</code>); uses builtin <code>cryptolib</code> (AES-ECB) directly.</p>
+<p><strong><code>version.py</code></strong>
+- Purpose: single <code>VERSION</code> constant, shown in the boot banner. Bump this on every release.</p>
+<h3 id="power-time">Power &amp; Time</h3>
+<p><strong><code>power_manager.py</code></strong>
+- Purpose: the system's power/time hub. Detects the RTC chip present (DS3231 or RV3028), syncs time from NB-IoT/Wi-Fi(NTP)/LoRaWAN/GPS, computes the next aligned wake-up, drives the 12V/5V rails and digital outputs, sets CPU frequency, configures wake sources, and triggers deep sleep. Global singleton: <code>pm</code>.
+- Public API (selection): <code>check_rtc_status()</code>, <code>set_rtc_time(time_str, mode)</code>, <code>seconds2wakeup()</code>, <code>control_5v(state)</code>, <code>control_vdc(state)</code>, <code>configure_wakeup_sources(...)</code>, <code>go_to_sleep()</code>.
+- Depends on: <code>lib/uds3231</code> or <code>lib/RV3028</code> (whichever is detected on I2C).
+- Config: <code>static_config.pinout.{i2c,rs485,control,magnet_pin}</code>, <code>dynamic_config.general.{rtc_sync,latency_time,magnet_wakeup}</code>, <code>dynamic_config.digital_config.{enable,counter}</code>.
+- Note: <code>downlink_manager.py</code>'s proportional-valve (EV) and OTA-failure sleeps use plain <code>time.sleep_ms()</code> / <code>await asyncio.sleep_ms()</code> directly rather than a method on <code>power_manager</code> — keep that in mind if you're looking for a "sleep" helper here, there isn't one.</p>
+<p><strong><code>rtc_memory.py</code></strong>
+- Purpose: state kept in ESP32 RTC memory (survives deep sleep, not power loss): accumulated cycle counter, alarm flag, manual valve (EV) states, last RTC-sync timestamp, and a buffer of encoded LPP payloads pending transmission.
+- Public API: <code>get_alarm_flag</code>/<code>set_alarm_flag</code>, <code>get_last_rtc_sync</code>/<code>set_last_rtc_sync</code>, <code>rtc_resync_due(...)</code>, <code>get_ev_state</code>/<code>set_ev_state</code>, <code>store_payload(...)</code>, <code>get_payloads()</code>, <code>should_transmit()</code>.
+- Depends on: <code>config_manager</code> (reads <code>general.register_acumulator</code>).
+- Note: hand-rolled binary layout with fixed byte offsets; respects the ~2048-byte hardware limit of <code>rtc.memory()</code>, trimming <code>n_cycles</code> automatically if config exceeds it.</p>
+<h3 id="connectivity">Connectivity</h3>
+<p><strong><code>wifi.py</code></strong>
+- Purpose: Wi-Fi STA connection with a security gate — refuses to associate below WPA2-PSK (explicit CRA/Cyber Resilience Act compliance comment in the code).
+- Public API: <code>is_connected()</code>, <code>do_connect(ssid, password, timeout_seconds=15)</code> <em>(async)</em>, <code>do_disconnect()</code> <em>(async)</em>.
+- Depends on: builtin <code>network</code> only. SSID/password are passed in by <code>main.py</code> from <code>dynamic_config.communications.wifi</code>.</p>
+<p><strong><code>nb_iot.py</code></strong> <em>(largest module, ~57 KB)</em>
+- Purpose: driver for the Nordic nRF9160-family NB-IoT/LTE-M modem (Nordic SLM AT%/AT#X command set): network registration (with operator selection/blacklist), MQTT client over the modem, HTTP client for OTA downloads, GPS/NTN, sleep/wake management.
+- Public API (all <code>async</code> unless noted): <code>connect(connection_preference, edrx=True, apn=None, ntn=False)</code>, <code>wake_up()</code>, <code>sleep()</code>, <code>hard_reset()</code>, <code>mqtt_configure/connect/publish/subscribe</code>, <code>get_mqtt_messages()</code> <em>(sync)</em>, <code>send_udp_data(...)</code>, <code>download_file(...)</code> (chunked HTTP range requests for OTA), <code>get_gps_coords(...)</code>, <code>connect_ntn(...)</code>, <code>get_signal_data()</code>.
+- Depends on: no <code>lib/</code> drivers — talks AT directly over UART.
+- Config: <code>dynamic_config.communications.cellular_iot.{external_sim,preference,apn,ntn,signal_data}</code>, <code>static_config.pinout.control.en_nbiot_pin</code>, <code>static_config.pinout.nb-iot.{tx_pin,rx_pin}</code>.
+- <strong>AT command groups used</strong> (grep-verified against source):
+  - <em>Network:</em> <code>AT+CFUN=</code>, <code>AT#XGPIOCFG</code>/<code>AT#XGPIO</code> (SIM select), <code>AT%XSYSTEMMODE=</code>, <code>AT%XBANDLOCK=</code>, <code>AT+CGDCONT=</code>, <code>AT%XMONITOR</code>, <code>AT%RAI</code>, <code>AT%PERIODICSEARCHCONF=</code>, <code>AT+CEDRXS=</code>, <code>AT%XPTW=</code>, <code>AT+COPS=</code> (scan/manual/auto), <code>AT+CPSMS=</code>, <code>AT+CEDRXRDP</code>, <code>AT+CESQ</code>, <code>AT+CGPADDR=</code>.
+  - <em>Clock:</em> <code>AT+CCLK?</code>.
+  - <em>Sleep/reset:</em> <code>AT#XSLEEP=</code>, <code>AT#XRESET</code> (soft); <code>hard_reset()</code> instead cuts modem power physically via <code>en_nbiot_pin</code> for 5s.
+  - <em>GPS:</em> <code>AT#XGPS=1,0,0,0</code> / <code>AT#XGPS=0</code>.
+  - <em>MQTT over modem:</em> <code>AT#XMQTTCFG=</code>, <code>AT#XMQTTCON=</code>, <code>AT#XMQTTPUB=</code>, <code>AT#XMQTTSUB=</code> (inbound messages arrive as <code>#XMQTTMSG:</code> URCs).
+  - <em>UDP socket:</em> <code>AT#XSOCKET=</code>, <code>AT#XSENDTO=</code>.
+  - <em>HTTP (OTA):</em> <code>AT#XHTTPCCON=</code>, <code>AT#XHTTPCREQ="GET",...,"Range: bytes=X-Y"</code> (chunked download; response via <code>#XHTTPCRSP:</code> URC).
+- Note: comments like <code>"USER BASE v17"</code>, <code>"CHANGE"</code>, <code>"NEW"</code> around the OTA download path suggest this is the most actively iterated/least stable part of the module currently — worth extra care/testing before shipping changes here.</p>
+<p><strong><code>lorawan.py</code></strong>
+- Purpose: driver for a RAK3172-class LoRaWAN modem (standard RUI3 AT set): join, uplink send, downlink receive (including Class C via polling), network time sync.
+- Public API (all <code>async</code> unless noted): <code>connect(lorawan_class="A", attempts=1)</code>, <code>join_network()</code>, <code>send_uplink(port, data)</code>, <code>get_downlink_messages()</code>, <code>request_time()</code>, <code>get_network_time()</code>, <code>sleep()</code>, <code>check_network_connection()</code>.
+- Depends on: no <code>lib/</code> drivers — talks AT directly over UART. Reuses the <strong>same physical UART pins</strong> as <code>nb_iot.py</code> (<code>static_config.pinout.nb-iot.{tx_pin,rx_pin}</code>) — confirms WiFi/NB-IoT/LoRaWAN modem variants are mutually exclusive at the hardware level, selected by <code>static_config</code>'s modem field.
+- Config: <code>dynamic_config.communications.lorawan.{dev_eui,app_key,app_eui,class,network_mode,join_mode,band}</code>.
+- <strong>AT command groups used</strong>: <code>AT+NWM=</code> (network mode), <code>AT+NJM=</code> (join mode ABP/OTAA), <code>AT+CLASS=</code>, <code>AT+BAND=</code>, <code>AT+CFM=</code> (confirmed uplinks), <code>AT+DEVEUI=</code>/<code>AT+APPEUI=</code>/<code>AT+APPKEY=</code>, <code>AT+JOIN=1:0:&lt;interval&gt;:&lt;attempts&gt;</code> (waits for <code>+EVT:JOINED</code>), <code>AT+TIMEREQ=1</code> + <code>AT+LTIME=?</code> (network time), <code>AT+SEND=&lt;port&gt;:&lt;data&gt;</code> (waits <code>+EVT:SEND_CONFIRMED_OK</code> or <code>+EVT:TX_DONE</code>), <code>AT+LPM=1</code>/<code>AT+SLEEP</code> (low power), <code>ATZ</code> (reset), <code>AT+NJS=?</code> (join status), <code>ATC+GETDL</code> (custom: poll buffered Class C downlinks), and passive <code>+EVT:RX...</code> URCs parsed for real-time downlinks.</p>
+<p><strong><code>umqttsimple.py</code></strong>
+- Purpose: lightweight MQTT 3.1.1 client over TCP/TLS socket, used only for the Wi-Fi transport.
+- Origin: based on Paul Sokolovsky's classic <code>micropython-lib</code> MQTT client (2013–2016), modified by ISURKI/Steminds — <code>check_msg()</code> was rewritten to return a list of all pending messages instead of a single callback. QoS 2 is not implemented. Technically lives in <code>modules/</code> but is functionally a third-party library — arguably belongs closer to <code>lib/</code>.</p>
+<p><strong><code>ble_manager.py</code></strong>
+- Purpose: BLE GATT server for local configuration/monitoring, activated by the magnet-wakeup mode. One notify characteristic (data) and one write characteristic (commands).
+- Public API: <code>BLEManager(device_name=..., command_callback=...)</code>, <code>update_data_payload(payload)</code>, <code>stop()</code>.
+- Depends on: <code>lib/aioble</code> (Service/Characteristic/advertise/security).
+- Config: <code>static_config.pin</code> (same 6-digit PIN as <code>_auth.py</code>, used for fixed BLE pairing).
+- Note: implements LE Secure pairing/bonding with MITM protection and a fixed PIN (DISPLAY_ONLY IO capability); rejects commands on unencrypted characteristics.</p>
+<p><strong><code>downlink_manager.py</code></strong>
+- Purpose: unifies downlink handling across the three transports (Wi-Fi, NB-IoT, LoRaWAN): manual SD/EV commands, remote config application (LPP-decoded), and OTA kick-off (NB-IoT only).
+- Public API: <code>process_wifi_downlinks(...)</code>, <code>process_nbiot_downlinks(...)</code>, <code>process_lorawan_downlinks(...)</code> (all <code>async</code>), <code>apply_config(hex_text)</code>, <code>is_manual_command(text)</code>.
+- Depends on: <code>lib/IsurlogLPP</code>, <code>lib/ota.rollback</code>; deferred imports of <code>modbus_sensor</code>, <code>update_manager</code>, <code>remote_repl</code>.
+- Note: contains the full OTA flow — download, SHA-256 checksum verification, base64 decode, partition write, and <code>rollback.cancel_force()</code> on failure.</p>
+<p><strong><code>remote_repl.py</code></strong>
+- Purpose: remote Python REPL over MQTT (Wi-Fi or NB-IoT) for field debugging — receives Python code as an MQTT message, <code>eval</code>/<code>exec</code>s it, returns captured stdout on another topic.
+- ⚠️ <strong>Security note</strong>: this executes arbitrary code with no authentication beyond whatever the MQTT broker/channel provides. It's a powerful admin backdoor — worth confirming the MQTT channel is properly secured (TLS + broker ACLs) wherever this is enabled in the field.</p>
+<h3 id="sensors">Sensors</h3>
+<p><strong><code>analog_sensor.py</code></strong> — ADS1115-based 4-20mA/0-10V wrapper; <code>read_analog(channel)</code>, <code>convert_value(value, zero, full_scale)</code>. Depends on <code>lib/ADS1115</code>. Config: <code>static_config.pinout.i2c.*</code>, <code>static_config.ads1115_addr</code>; per-channel <code>zero</code>/<code>full_scale</code> come from <code>dynamic_config.analog_config.inputs[]</code>.</p>
+<p><strong><code>digital_sensor.py</code></strong> — ULP-based low-power pulse counter with software debounce (only GPIO 36/39, RTC-capable pins). Depends on <code>lib/esp32_ulp</code>. Reads its wake-up edge count from <code>dynamic_config.digital_config.inputs[]</code> — a list with one entry per channel — by finding the entry where <code>channel == 0</code> and reading its <code>wake</code> key.</p>
+<p><strong><code>bme_sensor.py</code></strong> — auto-detects BMP280/BME280/BME680 via I2C <code>CHIP_ID</code>; optional IAQ (air quality) calculation with gas-sensor burn-in. Depends on <code>lib/pimoroni_bme680</code>, <code>lib/bme280_float</code>. Note: <code>_burn_in()</code> blocks for up to 300s if <code>IAQ=True</code> — <code>main.py</code> currently instantiates it with <code>IAQ=False</code>.</p>
+<p><strong><code>sht30_sensor.py</code></strong> — SHT30 temp/humidity wrapper. Depends on <code>lib/SHT30</code>.</p>
+<p><strong><code>max31865_sensor.py</code></strong> — PT100/PT1000 wrapper over SPI. Depends on <code>lib/adafruit_max31865</code>. Reads <code>wires</code> from <code>dynamic_config.pt100_config.wires</code> (default 4 if absent).</p>
+<p><strong><code>modbus_sensor.py</code></strong> — Modbus RTU master over RS485 (holding/input registers, coils, discrete inputs, register writes, 2-register-to-float conversion). Depends on <code>lib/umodbus</code>. Heavily used by <code>main.py</code>, <code>downlink_manager.py</code>, and isurnode integrations.</p>
+<p><strong><code>accel_manager.py</code></strong> — anti-theft: LIS2DH12 accelerometer + MCP23008 I/O expander to detect movement/tamper and wake from deep sleep. Depends on <code>lib/mcp23008</code>, <code>lib/LIS2DH12</code>. Note: <code>_verify_theft()</code> blocks for up to 10s polling — fine as called today, but not asyncio-friendly if reused elsewhere.</p>
+<p><strong><code>battery_monitor.py</code></strong> — ESP32-internal ADC battery voltage reading (fallback when no MAX17048 fuel gauge is present). No config, no <code>lib/</code> dependency.</p>
+<h3 id="storage-ota">Storage &amp; OTA</h3>
+<p><strong><code>internal_storage.py</code></strong> — FIFO payload backup on internal flash (used when <code>general.internal_register</code> is enabled); auto-trims oldest lines when free space or line count thresholds are hit. Note: <code>delete_oldest_lines()</code> rewrites the whole file each time — O(n) per cleanup, worth watching flash wear if the log grows large.</p>
+<p><strong><code>update_manager.py</code></strong> — OTA support utilities: SHA-256 checksum verification, chunked base64 decode, and safe <code>main.py</code> replacement (backup + rename, with rollback attempt on failure).</p>
+<h3 id="peripherals">Peripherals</h3>
+<p><strong><code>led_manager.py</code></strong> — ULP-driven status LED blink pattern (configurable pulses/bursts/timing), so the CPU doesn't have to stay awake for it. Depends on <code>lib/esp32_ulp</code>. Shares the ULP coprocessor with <code>digital_sensor.py</code>'s pulse counter — <code>is_enabled()</code> acts as a mutex between the two (they can't run simultaneously).</p>
+<hr />
+<h2 id="213-library-reference-lib">2.1.3 Library Reference (<code>lib/</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>File / package</th>
+<th>What it is</th>
+<th>Origin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>adafruit_max31865.py</code></td>
+<td>MAX31865 RTD amplifier driver (SPI)</td>
+<td>Third-party — Adafruit, MIT</td>
+</tr>
+<tr>
+<td><code>ADS1115.py</code></td>
+<td>ADS1115 16-bit ADC driver (I2C)</td>
+<td>Third-party — W. Ewald, MIT</td>
+</tr>
+<tr>
+<td><code>aioble/</code></td>
+<td>Async BLE (GATT, pairing, L2CAP)</td>
+<td>Third-party — official micropython-lib, MIT</td>
+</tr>
+<tr>
+<td><code>bme280_float.py</code></td>
+<td>BME280 driver (I2C)</td>
+<td>Third-party — Adafruit-derived, MIT/BSD-style</td>
+</tr>
+<tr>
+<td><code>esp32_ulp/</code></td>
+<td>ULP coprocessor assembler/linker</td>
+<td>Third-party — micropython-esp32-ulp, MIT</td>
+</tr>
+<tr>
+<td><code>IsurlogLPP.py</code></td>
+<td>ISURKI's own "Isurlog LPP" payload codec (Cayenne-LPP-like, custom sensor + config types)</td>
+<td><strong>ISURKI own</strong>, GPL-3.0-or-later. Central interoperability piece with <code>config_manager.py</code>'s <code>CONFIG_MAP</code>.</td>
+</tr>
+<tr>
+<td><code>LIS2DH12.py</code></td>
+<td>LIS2DH12 accelerometer driver (I2C)</td>
+<td>Third-party — Quectel, Apache 2.0</td>
+</tr>
+<tr>
+<td><code>max1704x.py</code></td>
+<td>MAX17048/17044 LiPo fuel-gauge driver (I2C)</td>
+<td>Third-party (A. Peeters), adapted</td>
+</tr>
+<tr>
+<td><code>mcp23008.py</code></td>
+<td>MCP23008 I/O expander driver (I2C)</td>
+<td>Third-party — M. Causer, MIT</td>
+</tr>
+<tr>
+<td><code>mcp4017.py</code></td>
+<td>MCP4017 digital potentiometer driver (I2C), sets the VDC boost regulator output</td>
+<td><strong>ISURKI own</strong>, GPL-3.0-or-later</td>
+</tr>
+<tr>
+<td><code>ota/</code></td>
+<td>ESP32 partition OTA framework (block writer, rollback, status)</td>
+<td>Third-party — G. Moloney, MIT</td>
+</tr>
+<tr>
+<td><code>pimoroni_bme680.py</code></td>
+<td>BME680 driver (I2C)</td>
+<td>Third-party — Pimoroni, MIT</td>
+</tr>
+<tr>
+<td><code>RV3028.py</code></td>
+<td>RV3028 low-power RTC driver (I2C)</td>
+<td>Third-party — Core Electronics/Makerverse</td>
+</tr>
+<tr>
+<td><code>SHT30.py</code></td>
+<td>SHT30 temp/humidity driver (I2C)</td>
+<td>Third-party — R. Sánchez, Apache 2.0</td>
+</tr>
+<tr>
+<td><code>uds3231.py</code></td>
+<td>DS3231 RTC driver (I2C)</td>
+<td>Third-party — Adafruit-derived, adapted by ISURKI, MIT</td>
+</tr>
+<tr>
+<td><code>umodbus/</code></td>
+<td>Full Modbus RTU/TCP master+slave stack (v2.3.7)</td>
+<td>Third-party — Pycom, GPL v3 + Pycom License v1.0</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="214-module-dependency-map">2.1.4 Module Dependency Map</h2>
+<pre><code>main.py
+ ├─ power_manager ──── lib/uds3231 | lib/RV3028
+ ├─ rtc_memory
+ ├─ led_manager ─────── lib/esp32_ulp
+ ├─ accel_manager ───── lib/mcp23008, lib/LIS2DH12
+ ├─ downlink_manager ── lib/IsurlogLPP, lib/ota.rollback
+ │                       ├─ modbus_sensor ── lib/umodbus
+ │                       ├─ update_manager
+ │                       └─ remote_repl
+ ├─ config_manager ──── utils
+ ├─ lib/mcp4017, lib/IsurlogLPP, lib/ota.rollback   (direct, top-level)
+ └─ (deferred, config/hardware-dependent)
+     ├─ wifi ─────────── umqttsimple
+     ├─ nb_iot
+     ├─ lorawan
+     ├─ ble_manager ──── lib/aioble
+     ├─ battery_monitor
+     ├─ sht30_sensor ─── lib/SHT30
+     ├─ bme_sensor ────── lib/pimoroni_bme680, lib/bme280_float
+     ├─ max31865_sensor ─ lib/adafruit_max31865
+     ├─ analog_sensor ─── lib/ADS1115
+     ├─ digital_sensor ── lib/esp32_ulp
+     └─ internal_storage
+
+utils.py is imported by nearly every module above (omitted from the tree for readability).
+</code></pre>
+<p><code>main.py</code> doesn't import every module unconditionally — sensors and connectivity modules are imported lazily, gated by <code>static_config</code>/<code>dynamic_config</code> (which modem, which sensors are enabled, whether a magnet-wakeup or OTA/REPL downlink was received). This keeps RAM usage down at boot, which matters on MicroPython.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
