@@ -1970,16 +1970,22 @@
 <p>The ISURLOG is an intelligent datalogger designed to operate autonomously for long periods in ultra-low power mode. Its core functionality revolves around the <strong>Normal Logging Cycle</strong> and a manual <strong>Bluetooth Diagnostics Mode</strong>.</p>
 <h2 id="51-bluetooth-diagnostics-mode-magnet-activated">5.1. Bluetooth Diagnostics Mode (Magnet Activated)</h2>
 <p>This mode allows field personnel to interact directly with the ISURLOG via a local connection.</p>
+<div class="admonition note">
+<p class="admonition-title">Two magnet-triggered modes</p>
+<p>Holding the magnet near the sensor also triggers a second, shorter mode — <strong>Immediate Read &amp; Send</strong> (~1 second) — that forces an on-demand reading and transmission cycle without entering Bluetooth. See <a href="../sensor-connections/#18-internal-sensors-and-diagnostics">1.8 Internal Sensors and Diagnostics</a> for both modes side by side. This section covers the longer (<strong>more than 5 seconds</strong>) hold that activates Bluetooth Diagnostics Mode.</p>
+</div>
 <h3 id="1-activation">1. Activation</h3>
-<p>By approaching and holding a magnet on the magnetic sensor zone (refer to <strong>1. Sensor Connections</strong> for details), the ISURLOG immediately wakes up and enters this special mode. The STATUS LED will begin to flash with a distinct pattern to indicate it is ready (refer to <strong>5.3. Field Diagnostics (LED STATUS)</strong>).</p>
+<p>By holding a magnet on the magnetic sensor zone for <strong>more than 5 seconds</strong> (refer to <a href="../sensor-connections/#18-internal-sensors-and-diagnostics">1. Sensor Connections</a> for the exact location), the ISURLOG immediately wakes up and enters this special mode. The STATUS LED will begin to flash with a distinct pattern to indicate it is ready (refer to <a href="#53-field-diagnostics-led-status">5.3. Field Diagnostics (LED STATUS)</a>).</p>
 <h3 id="2-connection-wait">2. Connection Wait</h3>
 <p>The datalogger activates its Bluetooth and enters pairing mode, waiting for a mobile phone or tablet to connect via the IsurDASH application or web interface.
 The ISURLOG will wait for a maximum of <strong>2 minutes (120 seconds)</strong> for a connection. If no client connects within this time, it will cancel the Bluetooth mode and continue with its normal logging cycle.</p>
 <h3 id="3-live-data-session">3. Live Data Session</h3>
-<p>Once a client connects, the datalogger enters a "live data" mode. In this state, the device:
-* Performs <strong>continuous readings</strong> of all enabled sensors.
-* <strong>Sends this data in real-time</strong> to the connected device (phone or tablet) via Bluetooth, allowing values to be viewed instantly.
-* During this time, the user can also <strong>send new configurations</strong> to the datalogger from the application.</p>
+<p>Once a client connects, the datalogger enters a "live data" mode. In this state, the device:</p>
+<ul>
+<li>Performs <strong>continuous readings</strong> of all enabled sensors.</li>
+<li><strong>Sends this data in real-time</strong> to the connected device (phone or tablet) via Bluetooth, allowing values to be viewed instantly.</li>
+<li>During this time, the user can also <strong>send new configurations</strong> to the datalogger from the application.</li>
+</ul>
 <h3 id="4-termination">4. Termination</h3>
 <p>The Bluetooth session ends when the user disconnects from the application. At that moment, the ISURLOG exits Bluetooth mode and resumes its programmed normal logging cycle.</p>
 <h2 id="52-normal-logging-cycle-automatic-operation">5.2. Normal Logging Cycle (Automatic Operation)</h2>
