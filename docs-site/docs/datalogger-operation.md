@@ -1,14 +1,14 @@
-# 6. Datalogger Operation
+# 5. Datalogger Operation
 
 The ISURLOG is an intelligent datalogger designed to operate autonomously for long periods in ultra-low power mode. Its core functionality revolves around the **Normal Logging Cycle** and a manual **Bluetooth Diagnostics Mode**.
 
-## 6.1. Bluetooth Diagnostics Mode (Magnet Activated)
+## 5.1. Bluetooth Diagnostics Mode (Magnet Activated)
 
 This mode allows field personnel to interact directly with the ISURLOG via a local connection.
 
 ### 1. Activation
 
-By approaching and holding a magnet on the magnetic sensor zone (refer to **2. Sensor Connections** for details), the ISURLOG immediately wakes up and enters this special mode. The STATUS LED will begin to flash with a distinct pattern to indicate it is ready (refer to **6.3. Field Diagnostics (LED STATUS)**).
+By approaching and holding a magnet on the magnetic sensor zone (refer to **1. Sensor Connections** for details), the ISURLOG immediately wakes up and enters this special mode. The STATUS LED will begin to flash with a distinct pattern to indicate it is ready (refer to **5.3. Field Diagnostics (LED STATUS)**).
 
 ### 2. Connection Wait
 
@@ -26,7 +26,7 @@ Once a client connects, the datalogger enters a "live data" mode. In this state,
 
 The Bluetooth session ends when the user disconnects from the application. At that moment, the ISURLOG exits Bluetooth mode and resumes its programmed normal logging cycle.
 
-## 6.2. Normal Logging Cycle (Automatic Operation)
+## 5.2. Normal Logging Cycle (Automatic Operation)
 
 This is the standard, autonomous functioning mode of the ISURLOG.
 
@@ -57,7 +57,7 @@ In this mode, a critical alarm will **always** force a connection and an immedia
 
 After completing its task (whether only storing, or storing and transmitting), the **ISURLOG** turns off all non-essential components and enters an ultra-low-power deep sleep mode. It will remain in this state until the internal timer indicates it is time to wake up for the next cycle, or until it is manually activated by the magnet.
 
-## 6.3. Field Diagnostics (LED STATUS)
+## 5.3. Field Diagnostics (LED STATUS)
 
 The ISURLOG is equipped with an ultra-low-consumption green LED, identified on the PCB as "**STATUS**", which serves as a visual indicator to communicate the device's current status and activity.
 

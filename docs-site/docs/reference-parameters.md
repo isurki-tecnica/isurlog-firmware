@@ -1,8 +1,8 @@
-# Reference Configuration Parameters
+# 7. Reference Configuration Parameters
 
 This section details the meaning of each parameter that can be configured on an **ISURLOG** through the IsurDASH platform.
 
-## 8.1. General Parameters
+## 7.1. General Parameters
 
 These parameters affect the global behavior of the datalogger.
 
@@ -70,12 +70,12 @@ These parameters affect the global behavior of the datalogger.
 * **Description:** Enables sending vandalism alarms. The device uses its internal accelerometer to detect movement, and the NB-IoT (NRF9151) modem to obtain GPS coordinates. Every time movement is detected, it sends the current coordinates through the notification channels configured by the user.
 * **Consumption Note:** Because the LIS2DH12 accelerometer must stay in active (low-power) mode for this feature to work, it adds a small extra current draw. This remains compatible with battery-powered operation, but is worth taking into account when sizing battery life.
 
-## 8.2. Wireless Communications Parameters
+## 7.2. Wireless Communications Parameters
 
 These parameters configure the wireless method the **ISURLOG** uses to communicate with the platform (MQTT broker, NB-IoT/LTE-M cellular settings, LoRaWAN credentials, or Wi-Fi credentials, depending on the modem fitted).
 
 !!! note "Important"
-    Unlike the other parameters on this page, wireless communication parameters are **not editable remotely via downlink** — since a bad value could cut off connectivity entirely, they can only be edited **locally over Bluetooth** (see **[6.1 Bluetooth Diagnostics Mode](datalogger-operation.md#61-bluetooth-diagnostics-mode-magnet-activated)**). Available from **firmware 1.0.8 or later**.
+    Unlike the other parameters on this page, wireless communication parameters are **not editable remotely via downlink** — since a bad value could cut off connectivity entirely, they can only be edited **locally over Bluetooth** (see **[5.1 Bluetooth Diagnostics Mode](datalogger-operation.md#51-bluetooth-diagnostics-mode-magnet-activated)**). Available from **firmware 1.0.8 or later**.
 
 The fields shown depend on which communication module is fitted — NB-IoT/LTE-M, LoRaWAN, or Wi-Fi.
 
@@ -86,12 +86,12 @@ The fields shown depend on which communication module is fitted — NB-IoT/LTE-M
 * **Username (Usuario):** MQTT authentication username.
 * **Password (Contraseña):** MQTT authentication password.
 * **Topic:** Base MQTT topic the device publishes to.
-* **Log Network Quality (Registrar calidad de red):** checkbox, **NB-IoT only, firmware 1.1.6 or later**. When enabled, the device appends the NB-IoT signal quality reading (RSRQ/RSRP) to the last payload of each transmission batch — see **[11.4 Data Type Reference](realtime-data-mqtt.md#114-payload-decoding-nb-iotcayenne-lpp)**.
+* **Log Network Quality (Registrar calidad de red):** checkbox, **NB-IoT only, firmware 1.1.6 or later**. When enabled, the device appends the NB-IoT signal quality reading (RSRQ/RSRP) to the last payload of each transmission batch — see **[3.4 Data Type Reference](realtime-data-mqtt.md#34-payload-decoding-nb-iotcayenne-lpp)**.
 
 ### NB-IoT/LTE-M
 
 * **APN:** Access Point Name for the cellular data connection.
-* **External SIM (SIM externa):** checkbox. Toggles between the integrated eSIM and an external Nano-SIM — see **[4.2 SIM Management Flexibility](communications.md#sim-management-flexibility)**.
+* **External SIM (SIM externa):** checkbox. Toggles between the integrated eSIM and an external Nano-SIM — see **[3.2 SIM Management Flexibility](communications.md#sim-management-flexibility)**.
 * **Connection Preference (Preferencia de conexión):** dropdown — **Automatic**, **LTE-M**, or **NB-IoT**. Selects which cellular technology the modem should connect with.
     * **Note:** **Automatic** is not fully supported by the firmware yet — selecting it currently makes the device fall back to NB-IoT.
 
@@ -109,19 +109,19 @@ The fields shown depend on which communication module is fitted — NB-IoT/LTE-M
 * **Wifi Pass:** Wi-Fi network password.
 * Plus the same **MQTT** parameters described above.
 
-## 8.3. Battery Configuration Parameters
+## 7.3. Battery Configuration Parameters
 
 !!! note "Hardware/Firmware Note"
     Only available on **ISURLOG v3.0 and later**, with firmware **1.1.9 or later**.
 
 These parameters configure how the **ISURLOG's** battery is reported and monitored.
 
-* **Battery Type (Tipo de batería):** dropdown — **Rechargeable (Li-Ion)** or **Non-rechargeable (Li-SOCl2)** — see **[3.1.4 Non-Rechargeable Batteries (Li-SOCl2)](power-supply.md#314-non-rechargeable-batteries-li-socl2)** for the corresponding hardware setup.
+* **Battery Type (Tipo de batería):** dropdown — **Rechargeable (Li-Ion)** or **Non-rechargeable (Li-SOCl2)** — see **[2.1.4 Non-Rechargeable Batteries (Li-SOCl2)](power-supply.md#214-non-rechargeable-batteries-li-socl2)** for the corresponding hardware setup.
     * **Important:** This parameter does **not** affect the ISURLOG's own firmware behavior. It is used exclusively by **IsurDASH** to correctly convert the reported battery voltage into a percentage and apply the right low-battery thresholds for the selected battery chemistry.
 * **Log Battery Variation (Registrar variación de batería):** checkbox. Enables logging of the battery's charge/discharge rate (**C-Rate**).
 * **Activate Low Battery Alarms (Activar alarmas de batería baja):** checkbox. Enables or disables low-battery alarm notifications.
 
-## 8.4. Sensor Parameters
+## 7.4. Sensor Parameters
 
 These parameters are configured when adding or editing a specific sensor from the "Sensor List" in the configuration tab of the device.
 
@@ -130,7 +130,7 @@ These parameters are configured when adding or editing a specific sensor from th
 This section allows configuring any of the **four analog inputs** of the **ISURLOG** to read sensors with a 4-20mA current output, whether they are active (externally powered) or passive (powered by the **ISURLOG**).
 
 !!! note
-    For the physical connection scheme of the sensors to the terminals, refer to the **2. Sensor Connections** section.
+    For the physical connection scheme of the sensors to the terminals, refer to the **1. Sensor Connections** section.
 
 #### Analog Input Parameters
 
@@ -166,7 +166,7 @@ This section allows configuring any of the **four analog inputs** of the **ISURL
 This section details the configuration of the digital input on the **ISURLOG**. The input can operate as a state detector (open/closed) or as a pulse counter.
 
 !!! note
-    For the physical connection scheme of the sensor to the terminals, the user should consult the **2. Sensor Connections** section.
+    For the physical connection scheme of the sensor to the terminals, the user should consult the **1. Sensor Connections** section.
 
 #### Digital Sensor Parameters
 
@@ -202,7 +202,7 @@ This section details the configuration of the digital input on the **ISURLOG**. 
 This section allows configuring readings from external devices that utilize the Modbus RTU protocol via the **ISURLOG's** RS485 interface.
 
 !!! note
-    For the physical wiring scheme of the sensors to the RS485 bus, the user should consult the **2. Sensor Connections** section.
+    For the physical wiring scheme of the sensors to the RS485 bus, the user should consult the **1. Sensor Connections** section.
 
 #### Modbus Parameters
 
@@ -258,7 +258,7 @@ This section allows configuring readings from external devices that utilize the 
 This section details the parameters for configuring the input for PT100 temperature probes.
 
 !!! note
-    For the physical connection scheme and the probe's hardware configuration, the user should consult the **2. Sensor Connections** section (specifically the PT100 subsection).
+    For the physical connection scheme and the probe's hardware configuration, the user should consult the **1. Sensor Connections** section (specifically the PT100 subsection).
 
 #### PT100 Parameters
 

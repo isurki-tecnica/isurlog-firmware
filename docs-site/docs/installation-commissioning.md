@@ -1,8 +1,8 @@
-# 5. Installation and Commissioning
+# 4. Installation and Commissioning
 
 This section covers the physical installation, safety warnings, and the final power-up sequence for the ISURLOG datalogger.
 
-## 5.1. Safety Warnings (Lithium Batteries)
+## 4.1. Safety Warnings (Lithium Batteries)
 
 The ISURLOG is powered by lithium batteries. Manipulation, installation, and disposal must adhere to current European standards (Directive 2006/66/CE, Regulation (EU) 2019/1020).
 
@@ -16,7 +16,7 @@ The ISURLOG is powered by lithium batteries. Manipulation, installation, and dis
 * **Storage:** If the product will not be used for a prolonged period, remove the batteries.
 * **Disposal:** Do not dispose of batteries with household waste. Deposit them at authorized selective collection points (ISURKI is a member of ERP, certificate n° 4598).
 
-## 5.2. Physical Mounting
+## 4.2. Physical Mounting
 
 The ISURLOG's IP67 enclosure offers two methods for wall fixation.
 
@@ -34,7 +34,7 @@ An optional ASA support accessory simplifies installation, allowing mounting wit
 * **Hole Distance (Center-to-Center):** 136 mm (width) x 96 mm (height).
 * **3D Model Link:** You can download the 3D print file for this accessory here: **[nVent Hoffman Easy Mount Bars](https://www.printables.com/model/1481289-nvent-hoffman-easy-mount-bars-install-without-open)**
 
-## 5.3. Battery Removal and Insertion
+## 4.3. Battery Removal and Insertion
 
 For safety and to prevent damage to the batteries or the datalogger, follow these instructions:
 
@@ -52,9 +52,9 @@ For safety and to prevent damage to the batteries or the datalogger, follow thes
 3.  **Push:** Push the battery towards the positive pole.
 4.  **Insert Negative Pole:** Finally, insert the negative pole.
 
-## 5.4. Power-Up Sequence
+## 4.4. Power-Up Sequence
 
-Once the power system (batteries or external source) is correctly configured (refer to **[3. Power Supply Methods](power-supply.md)**) and external sensors are connected, the device is ready for initial activation.
+Once the power system (batteries or external source) is correctly configured (refer to **[2. Power Supply Methods](power-supply.md)**) and external sensors are connected, the device is ready for initial activation.
 
 ### Step 1: Verify Antenna Connection
 
@@ -72,6 +72,6 @@ Move the switch from the initial **OFF** position (left) to the **ON** position 
 
 ### Step 4: Initial Activation Confirmation
 
-A few seconds after activation, the device's **STATUS LED** will begin to flash, indicating that the startup sequence has begun. Refer to [6. Datalogger Operation](datalogger-operation.md) for interpreting the LED patterns.
+A few seconds after activation, the device's **STATUS LED** will begin to flash, indicating that the startup sequence has begun. Refer to [5. Datalogger Operation](datalogger-operation.md) for interpreting the LED patterns.
 
 ---

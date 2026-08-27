@@ -1,10 +1,10 @@
-*Part of [7. IsurDASH Platform](isurdash-platform.md).*
+*Part of [6. IsurDASH Platform](isurdash-platform.md).*
 
-# 7.3. Devices
+# 6.3. Devices
 
 This section serves as the control center for all ISURLOGs registered in the account. It allows users to obtain both a general overview of the fleet and to access detailed information and configuration settings for each device individually.
 
-## 7.3.1. Device List
+## 6.3.1. Device List
 
 By selecting the "**Isurlogs**" menu, a table listing all the dataloggers in the fleet is presented, with a search box to filter by ID or name. This view shows: ID, Name, Type (NB-IoT/LoRa), Status (Online/Offline), Battery, and Last transmission.
 
@@ -12,7 +12,7 @@ To access a specific **ISURLOG**, the user must click on the corresponding row i
 
 ![IsurDASH Isurlogs list](images/7-devices-list.png){width="1000"}
 
-## 7.3.2. Adding a New Device
+## 6.3.2. Adding a New Device
 
 To register a new **ISURLOG** datalogger on the platform, the user must follow these steps:
 
@@ -23,9 +23,9 @@ To register a new **ISURLOG** datalogger on the platform, the user must follow t
 
 ![IsurDASH Añadir Nuevo Dispositivo dialog](images/7-devices-add.png){width="1000"}
 
-## 7.3.3. Device Visualization and Status
+## 6.3.3. Device Visualization and Status
 
-Upon selecting a device, the user accesses its dedicated page, with the device's name and ID as the page title and quick-access buttons for **Conectar BLE** (see [7.3.5](#735-local-bluetooth-connection)) and **REPL** (opens a MicroPython console over **Remoto** or **Serial port (USB)** — see [7.8. Device Maintenance](isurdash-maintenance.md) for details; note this is never available over Bluetooth). The page has three tabs: **Visualización**, **Configuración** (see [7.3.4](#734-configuration-tab)), and **Registros**.
+Upon selecting a device, the user accesses its dedicated page, with the device's name and ID as the page title and quick-access buttons for **Conectar BLE** (see [6.3.5](#635-local-bluetooth-connection)) and **REPL** (opens a MicroPython console over **Remoto** or **Serial port (USB)** — see [6.8. Device Maintenance](isurdash-maintenance.md) for details; note this is never available over Bluetooth). The page has three tabs: **Visualización**, **Configuración** (see [6.3.4](#634-configuration-tab)), and **Registros**.
 
 ### Status Panel (Quick Overview)
 
@@ -58,7 +58,7 @@ The **Registros** tab has two sub-sections:
 
 ![IsurDASH device Registros: Alarmas tab](images/7-device-registros-alarmas.png){width="1000"}
 
-## 7.3.4. Configuration Tab
+## 6.3.4. Configuration Tab
 
 The **Configuración** tab is organized as a left-hand sub-menu with five categories: **Configuración general**, **Comunicaciones inalámbricas**, **Sensores**, **Variables virtuales**, and **Sensores Isurnode**.
 
@@ -72,14 +72,14 @@ Shows the ISURLOG's general parameters: name, modem type, hardware/firmware vers
 ![IsurDASH Configuración general](images/7-device-config-general.png){width="1000"}
 
 !!! note "Reference"
-    For the meaning and impact of every individual parameter, see [8. Reference Configuration Parameters](reference-parameters.md) — this page intentionally doesn't screenshot every field; that reference is kept up to date instead.
+    For the meaning and impact of every individual parameter, see [7. Reference Configuration Parameters](reference-parameters.md) — this page intentionally doesn't screenshot every field; that reference is kept up to date instead.
 
 ### Comunicaciones inalámbricas
 
 Shows the connectivity parameters for this ISURLOG: MQTT broker (server, port, user, password, topic), and modem-specific settings — APN and SIM preference for NB-IoT/LTE-M devices, or the equivalent LoRaWAN parameters for LoRa devices.
 
 !!! warning "Important"
-    this section can only be edited **locally, over the Bluetooth connection** (see [7.3.5](#735-local-bluetooth-connection)) — it cannot be changed remotely, unlike the rest of the configuration.
+    this section can only be edited **locally, over the Bluetooth connection** (see [6.3.5](#635-local-bluetooth-connection)) — it cannot be changed remotely, unlike the rest of the configuration.
 
 ### Sensores
 
@@ -93,7 +93,7 @@ The platform allows users to create **virtual variables** in addition to the lis
 
 Lists the sensors/outputs connected via an Isurnode expansion unit, when one is paired with this ISURLOG.
 
-## 7.3.5. Local Bluetooth Connection
+## 6.3.5. Local Bluetooth Connection
 
 In addition to standard NB-IoT or LoRaWAN communication, the ISURLOG features a local **Bluetooth Low Energy (BLE)** connection mode. This functionality is extremely useful for tasks such as installation, maintenance, or sensor calibration, as it allows for continuous, real-time interaction with the device.
 
@@ -107,9 +107,9 @@ The process to establish a local Bluetooth connection requires coordinated actio
 ### Step 1: Activate Bluetooth Mode on the ISURLOG
 
 For the ISURLOG to be visible and connectable, the user must activate it manually with a magnet:
-1.  The user must locate the magnetic sensor zone on the device's casing (refer to **2. Sensor Connections: Hall Effect Switch** for the exact location).
+1.  The user must locate the magnetic sensor zone on the device's casing (refer to **1. Sensor Connections: Hall Effect Switch** for the exact location).
 2.  A magnet must be held over that area continuously for at least **5 seconds**.
-3.  The ISURLOG will activate Bluetooth and enter pairing mode. The user can confirm that the mode has been correctly activated by observing the specific pattern of the **STATUS LED** (refer to **6. Datalogger Operation: Field Diagnostics**).
+3.  The ISURLOG will activate Bluetooth and enter pairing mode. The user can confirm that the mode has been correctly activated by observing the specific pattern of the **STATUS LED** (refer to **5. Datalogger Operation: Field Diagnostics**).
 
 ### Step 2: Initiate the Connection in IsurDASH
 

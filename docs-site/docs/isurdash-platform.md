@@ -1,4 +1,4 @@
-# 7. IsurDASH Platform
+# 6. IsurDASH Platform
 
 IsurDASH is the centralized web platform from which the entire fleet of **ISURLOG** dataloggers is managed. It is designed to offer an intuitive and powerful interface that allows users to not only view collected data but also configure and control the devices remotely.
 
@@ -16,18 +16,18 @@ A toolbar is present at the top of **every** page in IsurDASH — not just the D
 * **Filtros de Tags:** restrict the data shown to devices carrying specific [Tags](isurdash-tags.md).
 * **Light/dark mode switch:** toggles the theme; saved per user.
 * **Notification bell:** all notifications (alarms, low battery, etc.) across the fleet.
-* **User button:** shows your username; opens a menu to edit your profile, configure notifications, manage access keys, and log out. *(Covered in detail in section 7.9, coming soon.)*
+* **User button:** shows your username; opens a menu to edit your profile, configure notifications, manage access keys, and log out. *(Covered in detail in section 6.9, coming soon.)*
 
-The two filters apply **globally**: once set, they affect what you see across [7.2. Dashboard](isurdash-dashboard.md) (the map only shows Isurlogs matching the selected tags, alarm counts adjust to the selected time window), [7.3. Devices](isurdash-devices.md) (Isurlogs list), [7.4. Alarms](isurdash-alarms.md), and Registro de eventos — every page reflects the same active filters until you change them.
+The two filters apply **globally**: once set, they affect what you see across [6.2. Dashboard](isurdash-dashboard.md) (the map only shows Isurlogs matching the selected tags, alarm counts adjust to the selected time window), [6.3. Devices](isurdash-devices.md) (Isurlogs list), [6.4. Alarms](isurdash-alarms.md), and Registro de eventos — every page reflects the same active filters until you change them.
 
 ## Contents
 
-* **[7.1. First Steps: Access and Login](isurdash-access-login.md)** — creating your account and logging in.
-* **[7.2. Main Control Panel (Dashboard)](isurdash-dashboard.md)** — the fleet map, alarms panel, and summary charts.
-* **[7.3. Devices](isurdash-devices.md)** — the Isurlogs list, adding a device, per-device visualization and configuration, and local Bluetooth connection.
-* **[7.4. Alarms](isurdash-alarms.md)** — fleet-wide alarm analytics and the full alarm history.
-* **[7.5. Users](isurdash-users.md)** — user roles, creating users, and assigning devices.
-* **[7.6. Profiles](isurdash-profiles.md)** — configuration templates you can apply to multiple devices at once.
-* **[7.7. Tags](isurdash-tags.md)** — organizing and filtering the fleet with custom labels.
-* **[7.8. Device Maintenance](isurdash-maintenance.md)** — firmware updates, remote REPL, factory reset, and other maintenance actions.
-* **7.9. Account Settings** 🚧 — editing your profile, notification preferences, and access keys from the user menu. *(Coming soon.)*
+* **[6.1. First Steps: Access and Login](isurdash-access-login.md)** — creating your account and logging in.
+* **[6.2. Main Control Panel (Dashboard)](isurdash-dashboard.md)** — the fleet map, alarms panel, and summary charts.
+* **[6.3. Devices](isurdash-devices.md)** — the Isurlogs list, adding a device, per-device visualization and configuration, and local Bluetooth connection.
+* **[6.4. Alarms](isurdash-alarms.md)** — fleet-wide alarm analytics and the full alarm history.
+* **[6.5. Users](isurdash-users.md)** — user roles, creating users, and assigning devices.
+* **[6.6. Profiles](isurdash-profiles.md)** — configuration templates you can apply to multiple devices at once.
+* **[6.7. Tags](isurdash-tags.md)** — organizing and filtering the fleet with custom labels.
+* **[6.8. Device Maintenance](isurdash-maintenance.md)** — firmware updates, remote REPL, factory reset, and other maintenance actions.
+* **6.9. Account Settings** 🚧 — editing your profile, notification preferences, and access keys from the user menu. *(Coming soon.)*

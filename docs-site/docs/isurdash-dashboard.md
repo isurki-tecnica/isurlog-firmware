@@ -1,6 +1,6 @@
-*Part of [7. IsurDASH Platform](isurdash-platform.md).*
+*Part of [6. IsurDASH Platform](isurdash-platform.md).*
 
-# 7.2. Main Control Panel (Dashboard)
+# 6.2. Main Control Panel (Dashboard)
 
 The Dashboard is the main screen to which the user is directed after logging in. Its objective is to provide a quick, overall view of the complete status of the **ISURLOG** device fleet.
 

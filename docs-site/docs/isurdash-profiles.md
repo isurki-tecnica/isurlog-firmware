@@ -1,6 +1,6 @@
-*Part of [7. IsurDASH Platform](isurdash-platform.md).*
+*Part of [6. IsurDASH Platform](isurdash-platform.md).*
 
-# 7.6. Profiles
+# 6.6. Profiles
 
 To facilitate the management and configuration of multiple **ISURLOG** dataloggers, the IsurDASH platform incorporates a powerful **Profiles** functionality.
 
@@ -11,7 +11,7 @@ Furthermore, a profile can be used as a base configuration. It is possible to ap
 !!! note "Note on firmware compatibility"
     IsurDASH shows the configurable parameters for the **latest** ISURLOG firmware version. When a profile is applied to a specific datalogger, some of those parameters may not be supported by that device's actual firmware version — in that case, the unsupported parameter is simply **discarded** for that device, while the rest of the profile is applied normally.
 
-## 7.6.1. Profile List
+## 6.6.1. Profile List
 
 Upon accessing the "**Profiles**" menu, a list of all configuration templates that have been created is presented. The table displays the following information:
 
@@ -24,7 +24,7 @@ Upon accessing the "**Profiles**" menu, a list of all configuration templates th
 
 ![IsurDASH Profiles list](images/7-profiles-list.png){width="1000"}
 
-## 7.6.2. Create a New Profile
+## 6.6.2. Create a New Profile
 
 To create a new configuration template, the user (with the **Ingeniero** role) must follow these steps:
 
@@ -39,7 +39,7 @@ To create a new configuration template, the user (with the **Ingeniero** role) m
 
 Upon saving, a base profile will be created which, initially, contains **no sensor configuration**.
 
-## 7.6.3. Manage and Apply a Profile
+## 6.6.3. Manage and Apply a Profile
 
 By clicking on a profile already created in the list, the user accesses its detailed management screen — organized the same way as a device's Configuration tab, with **Configuración general** and **Sensores** in a left-hand sub-menu. From here, two main actions can be performed:
 

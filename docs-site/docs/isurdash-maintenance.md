@@ -1,6 +1,6 @@
-*Part of [7. IsurDASH Platform](isurdash-platform.md).*
+*Part of [6. IsurDASH Platform](isurdash-platform.md).*
 
-# 7.8. Device Maintenance
+# 6.8. Device Maintenance
 
 The "**Mantenimiento de dispositivos**" menu lists every ISURLOG (ID, name, current firmware version) alongside a row of maintenance actions for each device:
 
@@ -34,9 +34,9 @@ After picking a method, you choose which firmware version to install. The list o
 
 ## MicroPython REPL
 
-Clicking **MicroPython REPL** connects you to the device's live MicroPython console (see `remote_repl.py` in the firmware) to run commands, inspect state, or debug. It's the same **REPL** button available on a device's own page (see [7.3.3](isurdash-devices.md#733-device-visualization-and-status)) — this section describes what it does.
+Clicking **MicroPython REPL** connects you to the device's live MicroPython console (see `remote_repl.py` in the firmware) to run commands, inspect state, or debug. It's the same **REPL** button available on a device's own page (see [6.3.3](isurdash-devices.md#633-device-visualization-and-status)) — this section describes what it does.
 
-As with firmware updates, there are two connection methods — **the REPL is never available over Bluetooth**; the Bluetooth connection (see [7.3.5](isurdash-devices.md#735-local-bluetooth-connection)) is only for real-time sensor visualization and local configuration, not for the REPL:
+As with firmware updates, there are two connection methods — **the REPL is never available over Bluetooth**; the Bluetooth connection (see [6.3.5](isurdash-devices.md#635-local-bluetooth-connection)) is only for real-time sensor visualization and local configuration, not for the REPL:
 
 * **Remoto:** available on **any** ISURLOG version, but only for devices with an **NB-IoT or Wi-Fi** modem — LoRa devices don't support remote REPL.
 * **Serial port (USB):** available for **all** devices regardless of modem, over a wired connection.

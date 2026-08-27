@@ -1,12 +1,12 @@
-*Part of [7. IsurDASH Platform](isurdash-platform.md).*
+*Part of [6. IsurDASH Platform](isurdash-platform.md).*
 
-# 7.7. Tags
+# 6.7. Tags
 
 Tags (or Labels) are customizable markers designed to organize, group, and filter the **ISURLOG** datalogger fleet more efficiently. They are especially useful when managing a large number of devices.
 
 A user can create tags based on any criteria, such as geographic location (e.g., "North Zone"), installation type (e.g., "Tide Gauges"), the project they belong to, or the final client. Once assigned, these tags allow users to quickly locate and view specific groups of devices in the different sections of the platform.
 
-## 7.7.1. Tag List
+## 6.7.1. Tag List
 
 The "**Tags**" menu presents a table with all the tags that have been created within the user group. The list displays the following columns:
 
@@ -18,14 +18,14 @@ The "**Tags**" menu presents a table with all the tags that have been created wi
 
 ![IsurDASH Tags list](images/7-tags-list.png){width="1000"}
 
-## 7.7.2. Create a New Tag
+## 6.7.2. Create a New Tag
 
 To create a new tag that can be assigned to devices, the user must follow these steps:
 
 1.  **Initiate Creation:** Click on the blue button with the add symbol (**+**), located in the upper right corner.
 2.  **Fill Out Form:** Fill out the form by entering the **Tag Name** and selecting the **User Group** it will belong to.
 
-## 7.7.3. Assign Tags to Devices
+## 6.7.3. Assign Tags to Devices
 
 Once a tag is created, the next step is to assign it to the corresponding devices:
 

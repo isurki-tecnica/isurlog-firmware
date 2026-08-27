@@ -1,4 +1,4 @@
-# Troubleshooting
+# 1. Troubleshooting
 
 Common problems reported by customers, why they happen, and how to fix them. This page grows over time as new issues come up — if you hit something that isn't listed here, contact support (see the [Home](index.md) page) so it can be added.
 
@@ -14,7 +14,7 @@ Older firmware versions were significantly less optimized for power consumption.
 
 **Solution:** Update the firmware.
 
-* **Recommended:** update the ESP32 firmware directly from IsurDASH — see **[7.8. Device Maintenance](isurdash-maintenance.md)**.
+* **Recommended:** update the ESP32 firmware directly from IsurDASH — see **[6.8. Device Maintenance](isurdash-maintenance.md)**.
 * **Manual alternative:** flash it yourself — see **[3. Flashing and Application Upload](flashing-application-upload.md)**.
 
 Always use the **"Latest"** release from the [GitHub Releases page](https://github.com/isurki-tecnica/isurlog-firmware/releases) — **pre-release** versions may contain bugs that can *increase* power consumption rather than reduce it.
@@ -23,7 +23,7 @@ Always use the **"Latest"** release from the [GitHub Releases page](https://gith
 
 The charger circuit itself draws a small amount of power just by being active. In installations running on **batteries only** (no solar panel, TEG, or 5V charger connected), leaving the charger jumper enabled wastes power for no benefit — it has nothing to charge from.
 
-**Solution:** Configure the jumpers for maximum power saving — see **[3. Power Supply Methods](power-supply.md)** for the correct jumper configuration for battery-only installations (Charger deactivated).
+**Solution:** Configure the jumpers for maximum power saving — see **[2. Power Supply Methods](power-supply.md)** for the correct jumper configuration for battery-only installations (Charger deactivated).
 
 ### 3. LoRaWAN-specific: device class and ADR
 
@@ -38,7 +38,7 @@ For **LoRaWAN** ISURLOG units specifically, two additional factors commonly caus
 
 This is generally also caused by **outdated firmware handling connectivity loss poorly**. For example, when coverage is temporarily bad, or the ISURLOG has to reconnect to the network, older firmware versions don't correctly manage the records already stored in **RTC RAM** while this happens — and those pending records get lost instead of being sent once the connection is recovered.
 
-**Solution:** Update the ESP32 firmware — same as above, **recommended** via IsurDASH (**[7.8. Device Maintenance](isurdash-maintenance.md)**) or manually (**[3. Flashing and Application Upload](flashing-application-upload.md)**), always using the **"Latest"** release rather than a pre-release.
+**Solution:** Update the ESP32 firmware — same as above, **recommended** via IsurDASH (**[6.8. Device Maintenance](isurdash-maintenance.md)**) or manually (**[3. Flashing and Application Upload](flashing-application-upload.md)**), always using the **"Latest"** release rather than a pre-release.
 
 ---
 
@@ -62,7 +62,7 @@ Clicking **Sincronizar** queues the configuration to be sent to the device — t
 2. Right after the uplink, the device receives the **downlink** carrying the new configuration, saves it, and goes back to sleep.
 3. Only on the **next wake-up cycle** does the device read that saved configuration and start actually operating with it.
 
-So there is an inherent delay of up to **two full transmission cycles** between clicking "Sincronizar" and the change actually taking effect in the field — worth keeping in mind, especially on devices configured with long latency times (see **[8. Reference Configuration Parameters](reference-parameters.md)**).
+So there is an inherent delay of up to **two full transmission cycles** between clicking "Sincronizar" and the change actually taking effect in the field — worth keeping in mind, especially on devices configured with long latency times (see **[7. Reference Configuration Parameters](reference-parameters.md)**).
 
 ---
 
@@ -81,7 +81,7 @@ The **Slave Address**, **Baudrate**, **Parity**, **Data Bits**, and **Stop Bits*
 On larger Modbus networks — several sensors on the same bus, and/or long cable runs — good wiring practice matters a lot more than it seems, and most field issues come down to it.
 
 * **Wire the bus as a single daisy chain, never in parallel/star.** Modbus RTU over RS485 is a bus topology: connections must go ISURLOG → Sensor 1 → Sensor 2 → … → Sensor N, each sensor wired to the terminals of the *previous* one — not all sensors wired back independently to the ISURLOG's own terminals in a star pattern. A/B and GND all get chained through in the same way.
-* **Terminate both physical ends of the bus with a 120 Ω resistor.** The ISURLOG's own RS485 input already includes a **built-in 120 Ω termination resistor** (see **[2. Sensor Connections](sensor-connections.md)**), covering the ISURLOG's end of the bus automatically. The other end — the **last sensor in the chain** — needs its own 120 Ω termination resistor added across A/B, either built into the sensor (some have a DIP switch or jumper for it) or added externally at that last connection point. Intermediate sensors in the middle of the chain must **not** be terminated.
+* **Terminate both physical ends of the bus with a 120 Ω resistor.** The ISURLOG's own RS485 input already includes a **built-in 120 Ω termination resistor** (see **[1. Sensor Connections](sensor-connections.md)**), covering the ISURLOG's end of the bus automatically. The other end — the **last sensor in the chain** — needs its own 120 Ω termination resistor added across A/B, either built into the sensor (some have a DIP switch or jumper for it) or added externally at that last connection point. Intermediate sensors in the middle of the chain must **not** be terminated.
 * Missing termination doesn't always cause a hard failure — it often shows up as intermittent timeouts that get worse with more sensors, longer cable runs, or higher baudrates, which makes it easy to misdiagnose as a sensor or configuration problem instead of a wiring one.
 
 **Solution:** Verify Slave Address, Baudrate, Parity, Data Bits, and Stop Bits are identical across every sensor on the bus and match what's configured in IsurDASH; wire sensors in a daisy chain rather than in parallel; and confirm a 120 Ω termination resistor is present only at the last sensor in the chain (the ISURLOG end is already terminated internally).
@@ -94,7 +94,7 @@ Unlike NB-IoT/LoRaWAN, which the ISURLOG uses on its own schedule, **Bluetooth i
 
 ### 1. BLE isn't advertising yet
 
-To save battery, the ISURLOG doesn't keep its Bluetooth radio on. It has to be activated with the magnet first, as described in **[2.8. Internal Sensors and Diagnostics](sensor-connections.md#28-internal-sensors-and-diagnostics)**: holding the magnet near the Hall effect sensor for **more than 5 seconds** puts the device into **Bluetooth Diagnostics Mode**.
+To save battery, the ISURLOG doesn't keep its Bluetooth radio on. It has to be activated with the magnet first, as described in **[1.8. Internal Sensors and Diagnostics](sensor-connections.md#18-internal-sensors-and-diagnostics)**: holding the magnet near the Hall effect sensor for **more than 5 seconds** puts the device into **Bluetooth Diagnostics Mode**.
 
 Once active, the Bluetooth interface stays open for **2 minutes** waiting for a pairing attempt. If nothing connects within that window, it automatically shuts back off to save power — so the app/IsurDASH has to attempt the connection inside that same 2-minute window, not before activating it or long after. Once a successful pairing happens, that 2-minute timeout no longer applies for the rest of the session.
 

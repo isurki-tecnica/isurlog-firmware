@@ -1,12 +1,12 @@
-# Consumption Graphs
+# 1. Consumption Graphs
 
 Real current-vs-time captures showing what each part of the duty cycle actually costs — a companion to the [Power Budget & Battery Life Calculator](power-budget.md), grounded in measurement instead of estimates. This page grows over time as new captures become available.
 
-## 1. Measurement Method
+## 1.1 Measurement Method
 
 **Equipment.** ISURLOG's current draw spans a very wide range — roughly 20µA in deep sleep up to 0.5A+ during a transmit burst — so a regular multimeter can't track both ends of that swing accurately. A meter with **autoranging** is required. Captures on this page use the **Nordic Power Profiler Kit II (PPK2)**, with its **Power Profiler** app for nRF Connect for Desktop, but any autoranging current meter is valid — the choice is left to the reader.
 
-**Wiring — the I_SENSE jumper.** All battery current passes through the **I_SENSE** jumper (see [3.2. Jumper Configuration for Power Modes](power-supply.md)). In normal operation it stays **closed** (shorted). To measure consumption:
+**Wiring — the I_SENSE jumper.** All battery current passes through the **I_SENSE** jumper (see [2.2. Jumper Configuration for Power Modes](power-supply.md)). In normal operation it stays **closed** (shorted). To measure consumption:
 
 1. Open/remove the I_SENSE jumper.
 2. Insert the meter in series: the **inner pin** (pin 1 below) is **VIN** (battery side) — connect it to the meter's VIN. The **outer pin** (pin 2) connects to the meter's VOUT.
@@ -18,7 +18,7 @@ Real current-vs-time captures showing what each part of the duty cycle actually 
 
 ---
 
-## 2. Captures
+## 1.2 Captures
 
 ### Deep Sleep — NB-IoT/LTE-M
 

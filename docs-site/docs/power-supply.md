@@ -1,15 +1,15 @@
-# 3. Power Supply Methods
+# 2. Power Supply Methods
 
 The ISURLOG features different power supply options to adapt to the greatest number of possible situations.
 
-## 3.1. Power Supply Options
+## 2.1. Power Supply Options
 
 The ISURLOG features an integrated battery charger and power management circuitry, supporting three modes of operation.
 
 !!! note "Installation Note"
-    For the step-by-step procedure on how to install and remove the batteries, please refer to the **5. Installation and Commissioning** section.
+    For the step-by-step procedure on how to install and remove the batteries, please refer to the **4. Installation and Commissioning** section.
 
-### 3.1.1. Internal Batteries Only
+### 2.1.1. Internal Batteries Only
 
 The device has five battery holders on its upper part to accommodate a maximum of five **INR18650** batteries, with a total capacity of **17000 mAh**. It is not necessary to use all five batteries, and you may install one or all.
 
@@ -18,7 +18,7 @@ The device has five battery holders on its upper part to accommodate a maximum o
 
 ![image](images/3-battery-holders.jpg){width="880"}
 
-### 3.1.2. External Power Only
+### 2.1.2. External Power Only
 
 The device can be powered externally without batteries. The power source must provide a voltage between **4V and 5V**.
 
@@ -29,18 +29,18 @@ The device can be powered externally without batteries. The power source must pr
 
 ![image](images/3-external-power-connections.jpg){width="883" height="789"}
 
-### 3.1.3. Batteries + External Power (Hybrid Mode)
+### 2.1.3. Batteries + External Power (Hybrid Mode)
 
 The last option for powering the **ISURLOG** is to combine the batteries with external power. In this mode, the PCB uses external power while available, and switches to battery power when external power is interrupted. This mode is useful for running with batteries and a solar panel, or to continue functioning during external power outages. The batteries are kept charged by the integrated battery charger on the PCB. This charger charges the batteries at a maximum current of **400mA**.
 
-### 3.1.4. Non-Rechargeable Batteries (Li-SOCl2)
+### 2.1.4. Non-Rechargeable Batteries (Li-SOCl2)
 
 !!! note "Hardware Note"
     This option is only available on **ISURLOG v3.3 and later** PCB revisions.
 
 Starting with hardware revision v3.3, the ISURLOG adds a dedicated **PH-2A connector**, marked **Li-SOCl2** on the PCB, to power the device from non-rechargeable lithium thionyl chloride (Li-SOCl2) batteries. This is a good fit for long-duration, low-maintenance deployments where periodic recharging isn't practical.
 
-## 3.2. Jumper Configuration for Power Modes
+## 2.2. Jumper Configuration for Power Modes
 
 Each of the power modes described in previous sections requires a specific jumper configuration on the **ISURLOG** PCB. **It is completely necessary to configure these jumpers correctly to ensure a stable energy supply**. The jumpers are located on the underside of the PCB.
 
@@ -114,3 +114,17 @@ The **MPPC (Maximum Power Point Control)** input setting, used in Hybrid Mode, a
 * **5V Input:** This external power supply can be a **5V solar panel** (equipped with a regulator, as many panels produce high voltage peaks even if the nominal voltage is 5V) or a standard **5V charger**.
 * **1.5V Input:** This input voltage is typically compatible with a **micro solar panel**.
 * **0.3V Input:** This ultra-low voltage is often used with a **TEG (Thermoelectric Generator)**, making the device suitable for energy harvesting applications.
+
+## 2.3. RTC Backup Battery (CR2032)
+
+The **ISURLOG** includes an ultra-low-power real-time clock (RTC) that keeps track of the current time. Under normal operation, this RTC is powered from the same **3V3** rail as the rest of the board — so when the datalogger loses power entirely, or is turned off with the **POWER** button, the RTC also loses power and the current time is lost.
+
+!!! note "This usually isn't a problem"
+    The standard firmware includes automatic time-loss detection and resynchronization, on every connectivity variant (NB-IoT, LoRaWAN, or Wi-Fi): a lost RTC time is detected and corrected automatically the next time the device connects.
+
+For installations where losing the time is critical, or for custom firmware builds that don't implement this resynchronization — or that operate purely as a local storage datalogger, without transmission — a **CR2032** coin-cell battery can be connected to keep the RTC powered independently of the main supply.
+
+* **Connector:** 2-pin, **P=1.25mm** pitch, labeled **CR2032** on the PCB.
+* **Polarity:** the positive pin is marked with an asterisk (*).
+
+![image](images/2-rtc-cr2032-connector.jpg){width="300"}

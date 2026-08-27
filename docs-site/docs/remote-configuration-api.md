@@ -1,9 +1,9 @@
-# 12. Remote Configuration API (Downlink)
+# 4. Remote Configuration API (Downlink)
 
 This guide documents the structure and mapping of configuration commands that can be sent remotely to the **ISURLOG** device via Downlink messages (e.g., through LoRaWAN downlinks or specific NB-IoT commands). The commands utilize a binary structure, processed by the accompanying Python library, `IsurlogLPP.py`.
 
 !!! note "Note"
-    This is the full list of parameters the **firmware** supports over downlink — it doesn't necessarily match **[8. Reference Configuration Parameters](reference-parameters.md)**. Page 8 documents only what **IsurDASH currently lets you configure** through its UI; the ISURLOG firmware can support more parameters than IsurDASH currently exposes. Where the **IsurDASH Configurable** column says **Yes**, it links to the corresponding section of page 8.
+    This is the full list of parameters the **firmware** supports over downlink — it doesn't necessarily match **[7. Reference Configuration Parameters](reference-parameters.md)**. Page 7 documents only what **IsurDASH currently lets you configure** through its UI; the ISURLOG firmware can support more parameters than IsurDASH currently exposes. Where the **IsurDASH Configurable** column says **Yes**, it links to the corresponding section of page 7.
 
 ## Configuration Parameter Reference (config_types)
 
@@ -20,7 +20,7 @@ This comprehensive table defines all available remote configuration functions, t
 | `setDebugLED` | `A5` | 1 | 1 | 0-1 | No | Enables/Disables the STATUS LED on the PCB. |
 | `setMaxPayloadSize` | `8E` | 1 | 1 | 0-255 | [Yes](reference-parameters.md#payload-size-tamano-del-payload-bytes) | Sets the payload size. |
 | `setBatteryInputSoC` | `8F` | 1 | 1 | 0-1 | No | Enables/Disables logging of battery State of Charge. |
-| `setBatteryInputCRate` | `90` | 1 | 1 | 0-1 | [Yes](reference-parameters.md#83-battery-configuration-parameters) | Enables/Disables logging of the battery's charge/discharge rate. |
+| `setBatteryInputCRate` | `90` | 1 | 1 | 0-1 | [Yes](reference-parameters.md#73-battery-configuration-parameters) | Enables/Disables logging of the battery's charge/discharge rate. |
 | `setVDCVoltage` | `91` | 1 | 1 | 0-24 | [Yes](reference-parameters.md#sensor-supply-voltage-tension-de-alimentacion-sensores-voltios) | Sets the sensor supply voltage. |
 | `setContinuousMode` | `83` | 1 | 1 | 0-1 | No | Enables/Disables Continuous Mode. When enabled, the ISURLOG keeps reading sensors without sleeping between readings — filling as many reading cycles as fit in the time available until the next transmission — instead of the fixed number of cycles set by **Loop Cycles**. Overrides `setLoopCycles`. |
 | `setLoopCycles` | `84` | 1 | 1 | 0-255 | No | Sets the number of readings taken per record, averaged together (used for analog-type inputs — Analog, Modbus, PT100). Ignored when Continuous Mode is enabled. |
@@ -43,7 +43,7 @@ This comprehensive table defines all available remote configuration functions, t
 | `setSignalData` | `9E` | 1 | 1 | 0-1 | [Yes](reference-parameters.md#mqtt-nb-iotlte-m-and-wi-fi) | Enables/Disables logging NB-IoT signal quality (RSRQ/RSRP). |
 
 !!! warning "Important"
-    In IsurDASH, the parameters in the **Wireless Communications (BLE-only)** section above can only be changed **locally over Bluetooth** (see **[8.2 Wireless Communications Parameters](reference-parameters.md#82-wireless-communications-parameters)**) — this protects against a bad remote configuration leaving the ISURLOG unreachable. However, **the firmware itself does not reject these same type codes if they arrive over a WiFi, LoRaWAN, or NB-IoT downlink** — IsurDASH simply never sends them that way. If you are integrating downlink configuration into a third-party SCADA or backend, keep this in mind: nothing in the firmware stops you from sending these over the air, only IsurDASH's own UI restricts it.
+    In IsurDASH, the parameters in the **Wireless Communications (BLE-only)** section above can only be changed **locally over Bluetooth** (see **[7.2 Wireless Communications Parameters](reference-parameters.md#72-wireless-communications-parameters)**) — this protects against a bad remote configuration leaving the ISURLOG unreachable. However, **the firmware itself does not reject these same type codes if they arrive over a WiFi, LoRaWAN, or NB-IoT downlink** — IsurDASH simply never sends them that way. If you are integrating downlink configuration into a third-party SCADA or backend, keep this in mind: nothing in the firmware stops you from sending these over the air, only IsurDASH's own UI restricts it.
 
 | Function Name | Type (Hex) | Size (Bytes) | Multiplier | Range (Min/Max) | IsurDASH Configurable | Description / Equivalent Parameter |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |

@@ -17,7 +17,7 @@
 | 🛠️ Use and Hardware | 💻 Firmware Development | ☁️ Data Integration & APIs |
 | :--- | :--- | :--- |
 | Installation, sensor setup, and IsurDASH. | Build environment, architecture, contributing. | Historical/real-time data access, downlink API. |
-| **Start here:** [2. Sensor Connections](sensor-connections.md) | **Start here:** [1. Build Environment Setup](build-environment.md) | **Start here:** [9. Data Access Overview](data-access-overview.md) |
+| **Start here:** [1. Sensor Connections](sensor-connections.md) | **Start here:** [1. Build Environment Setup](build-environment.md) | **Start here:** [1. Data Access Overview](data-access-overview.md) |
 
 Running into a problem in the field? See [Troubleshooting](troubleshooting.md).
 

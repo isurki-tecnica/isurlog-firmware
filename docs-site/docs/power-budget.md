@@ -1,4 +1,4 @@
-# Power Budget & Battery Life Calculator
+# 2. Power Budget & Battery Life Calculator
 
 Estimate battery life from a device's full duty cycle — wake, sensors, and radio — over NB-IoT/LTE-M, LoRaWAN, or Wi-Fi. Add the same sensors you'd configure in IsurDASH; 4-20mA and Modbus sensors are usually the biggest single draw, since they're powered from the 9-24V VDC rail, not the battery directly.
 

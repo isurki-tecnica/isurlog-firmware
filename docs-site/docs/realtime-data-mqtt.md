@@ -1,6 +1,6 @@
-# 11. Real-Time Data via MQTT (Push Method)
+# 3. Real-Time Data via MQTT (Push Method)
 
-## 11.1 Overview
+## 3.1 Overview
 
 This integration method is designed for applications that require **immediate access to data**, such as live monitoring dashboards, real-time alerting systems, or event-driven automation. The Isurlog platform pushes data to an MQTT broker the instant it is received from a device.
 
@@ -10,7 +10,7 @@ Data is published as a **raw binary payload** (represented as a hexadecimal stri
 
 ---
 
-## 11.2 Connection Parameters
+## 3.2 Connection Parameters
 
 To receive the real-time data stream, clients must connect to the Isurlog MQTT broker using the following secure parameters:
 
@@ -21,11 +21,11 @@ To receive the real-time data stream, clients must connect to the Isurlog MQTT b
 
 ---
 
-## 11.3 Topic Structure and Message Format
+## 3.3 Topic Structure and Message Format
 
 The topic structure and message format depend on the communication technology used by the device (LoRaWAN or NB-IoT).
 
-### 11.3.1 LoRaWAN Devices (via ChirpStack)
+### 3.3.1 LoRaWAN Devices (via ChirpStack)
 
 LoRaWAN data is processed via the ChirpStack Network Server.
 
@@ -73,14 +73,14 @@ This example shows the key structure and content of the `object` field with the 
 }
 ```
 
-### 11.3.2 NB-IoT Devices
+### 3.3.2 NB-IoT Devices
 
 * **Topic Structure:** `isurlog/datos/{device_id}`
 * **Message Format:** **Raw Binary Payload** (Hexadecimal String).
 
 ---
 
-## 11.4 Payload Decoding (NB-IoT/Cayenne LPP)
+## 3.4 Payload Decoding (NB-IoT/Cayenne LPP)
 
 The Isurlog payload format is a variant of the **Cayenne Low Power Payload (LPP)**. This format is highly efficient and allows for multiple sensor readings to be sent in a single message.
 
@@ -115,7 +115,7 @@ All multi-byte values are encoded in **Big-Endian** byte order. The first data p
 !!! note "Note on channel semantics"
     for most sensor types, the channel identifies which physical input the reading came from (e.g. Analog Input 0-3). For **Accelerometer**, the same chunk packs all three axes together (there's no separate channel per axis). For **Modem Signal Quality**, the channel is repurposed to distinguish the *metric* (0 = RSRQ, 1 = RSRP) rather than a physical input.
 
-## 11.5 Example: Decoding a Data Payload
+## 3.5 Example: Decoding a Data Payload
 
 Consider the following example payload received as a hexadecimal string:
 `007568C7D98100741024006701370068400002021D`
@@ -157,7 +157,7 @@ This payload contains a timestamp followed by four sensor readings. The client a
 * **Value:** `0x021D` (541 decimal, signed)
 * **Calculation:** $541 / 100.0 = 5.41$ (in engineering units)
 
-## 11.6 Reference Implementation
+## 3.6 Reference Implementation
 
 A complete Python script demonstrating the connection, subscription, payload decoding, and a **live-updating dashboard** is provided in the accompanying file: **[isurlog_mqtt_demo.py](https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/isurlog_mqtt_demo.py)**.
 
@@ -170,7 +170,7 @@ A device is only ever **one** connectivity type, so the script subscribes to a s
 
 The script's connection parameters are pre-filled with a **public, read-only demo** so you can run it immediately, before contacting support for your own credentials:
 
-* **Device:** `c-866`, an NB-IoT device (`DEVICE_TYPE = "nb-iot"`) — the same public demo device used in [10.5 Reference Implementation](historical-data-influxdb.md#105-reference-implementation), with a Modbus soil probe (S-Soil MTEC-02B) wired to it.
+* **Device:** `c-866`, an NB-IoT device (`DEVICE_TYPE = "nb-iot"`) — the same public demo device used in [2.5 Reference Implementation](historical-data-influxdb.md#25-reference-implementation), with a Modbus soil probe (S-Soil MTEC-02B) wired to it.
 * **Topic:** `isurlog/datos/c-866` — subscription is restricted to this device's own topic only, it cannot receive any other client's data.
 
 To run it, from inside `data_integration/`:

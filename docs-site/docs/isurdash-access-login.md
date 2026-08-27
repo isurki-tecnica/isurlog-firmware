@@ -1,6 +1,6 @@
-*Part of [7. IsurDASH Platform](isurdash-platform.md).*
+*Part of [6. IsurDASH Platform](isurdash-platform.md).*
 
-# 7.1. First Steps: Access and Login
+# 6.1. First Steps: Access and Login
 
 Access to the IsurDASH platform is done through a standard web browser. The sign-up process is initiated via an email invitation to guarantee account security.
 

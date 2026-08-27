@@ -1,19 +1,19 @@
-# 10. Historical Data via InfluxDB API (Pull Method)
+# 2. Historical Data via InfluxDB API (Pull Method)
 
-## 10.1 Overview
+## 2.1 Overview
 
 All historical data from Isurlog devices is stored in **InfluxDB**, a high-performance, open-source time-series database. It is specifically designed to handle large volumes of timestamped data, making it ideal for IoT and monitoring applications.
 
 Data accessed via this method is **fully decoded** and available in a human-readable format, ready for direct integration into SCADA systems, BI tools, or custom applications **without the need for payload decoding**.
 
-## 10.2 Client Libraries & Documentation
+## 2.2 Client Libraries & Documentation
 
 InfluxDB provides a wide range of officially supported client libraries for popular programming languages, including Python, JavaScript, Java, Go, and C#, which simplifies data interaction.
 
 * The complete official documentation for the InfluxDB v2 API and these client libraries can be found at the following URL:
     * `https://docs.influxdata.com/influxdb/v2/api-guide/client-libraries/`
 
-## 10.3 Connection Parameters
+## 2.3 Connection Parameters
 
 The following parameters are required to establish a secure connection to the Isurlog InfluxDB instance:
 
@@ -23,7 +23,7 @@ The following parameters are required to establish a secure connection to the Is
 * **API Token:** A unique, private API token will be provided to each client for secure access. This token must be included in the authorization header of all API requests. Please contact our support team to receive your token.
 * **Device Tag:** Every point is tagged with **`isurlog_id`** (the device's ID, e.g. `c-123`) — use it to filter by device in your own Flux queries.
 
-## 10.4 Data Schema: Field Key Reference
+## 2.4 Data Schema: Field Key Reference
 
 This section provides the mapping between the physical and virtual inputs of the Isurlog datalogger and the corresponding `_field` keys used in the InfluxDB database. The value associated with each field key represents the final **processed and scaled measurement** from the sensor, ready for use in engineering units.
 
@@ -54,7 +54,7 @@ This section provides the mapping between the physical and virtual inputs of the
 | **Modem Signal Quality** | `ModemData0` | RSRQ (Reference Signal Received Quality) reported by the modem, in **dB**. **NB-IoT devices only** — not available on LoRaWAN devices. |
 | **Modem Signal Strength** | `ModemData1` | RSRP (Reference Signal Received Power) reported by the modem, in **dBm**. **NB-IoT devices only** — not available on LoRaWAN devices. |
 
-## 10.5 Reference Implementation
+## 2.5 Reference Implementation
 
 A complete Python script demonstrating how to connect to the InfluxDB API, query historical values for a device, print them as a table, and chart the results is provided in the accompanying file: **[isurlog_influx_demo.py](https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/isurlog_influx_demo.py)**.
 
@@ -95,4 +95,4 @@ This prints a table of the last 7 days of readings and opens a **single window w
 
 Each chart plots two fields with independent Y-axes (left/right), since they're normally on very different scales. The underlying `_plot_dual_axis()` helper can be reused to build additional charts for any other `_field` key from **10.4 Data Schema**. The uneven panel sizes are built with `matplotlib`'s `GridSpec` (rather than a uniform `plt.subplots()` grid) so the two large panels can each span what would otherwise be 1.5 columns of a plain 3-column layout.
 
-To query your **own** devices, replace `URL`, `TOKEN`, and `BUCKET` at the top of the script with the private credentials Isurki provides you (see **10.3 Connection Parameters**).
+To query your **own** devices, replace `URL`, `TOKEN`, and `BUCKET` at the top of the script with the private credentials Isurki provides you (see **2.3 Connection Parameters**).

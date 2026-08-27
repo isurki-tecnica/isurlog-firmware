@@ -1,8 +1,8 @@
-# 2. Sensor Connections
+# 1. Sensor Connections
 
 The ISURLOG device features multiple specialized inputs to integrate seamlessly with various industrial and environmental sensors.
 
-## 2.1. Analog Inputs (4-20mA)
+## 1.1. Analog Inputs (4-20mA)
 
 The ISURLOG is equipped with four protected analog inputs (AIN0 to AIN3). It is compatible with both actively (externally) and passively (ISURLOG-supplied) powered sensors.
 
@@ -15,7 +15,7 @@ Each analog input is protected by an automatic reset fuse.
 
 ![image](images/2-analog-input-wiring.png){width="500"}
 
-## 2.2. Digital Input (State and Pulse Counter)
+## 1.2. Digital Input (State and Pulse Counter)
 
 The ISURLOG features a dry contact digital input that can be used either as a status reader (open/closed) or as a pulse counter for devices like flow meters or water meters.
 
@@ -32,7 +32,7 @@ The ISURLOG board includes a dedicated LED (**LED DIN**) that lights up continuo
 
 ![image](images/2-led-din-jumper.png){width="400"}
 
-## 2.3. Modbus Input (RS485)
+## 1.3. Modbus Input (RS485)
 
 The RS485 interface allows communication with up to 32 external sensors using the Modbus protocol. The input includes a built-in **120 Ohm termination resistor**.
 
@@ -43,7 +43,7 @@ The connection uses the following pins:
 
 ![image](images/2-modbus-rs485-wiring.jpg){width="300"}
 
-## 2.4. PT100 Temperature Sensor Input
+## 1.4. PT100 Temperature Sensor Input
 
 The ISURLOG supports PT100 temperature probes configured for 2, 3, or 4 wires.
 
@@ -63,7 +63,7 @@ Achieving an accurate reading requires **two steps** of configuration:
 ![image](images/2-pt100-jumpers.png){width="300"}
 ![image](images/2-pt100-wiring.png){width="600"}
 
-## 2.5. Digital Output (Relay)
+## 1.5. Digital Output (Relay)
 
 Next to the digital input, the same terminal block also breaks out a **solid-state relay output**, using the following pins:
 
@@ -74,7 +74,7 @@ Next to the digital input, the same terminal block also breaks out a **solid-sta
 
 This is a **solid-state relay rated for 2A / 60V**, suitable for switching heavier external loads directly (e.g. pumps, valves, contactors, or other actuators) without needing an intermediate relay.
 
-## 2.6. QWIIC I2C Port
+## 1.6. QWIIC I2C Port
 
 The ISURLOG also breaks out its internal I2C bus through a standard **QWIIC** connector, to connect external QWIIC-compatible sensors and expansion boards. The pinout follows the standard QWIIC convention: **GND, 3V3, SDA, SCL**.
 
@@ -83,7 +83,7 @@ The ISURLOG also breaks out its internal I2C bus through a standard **QWIIC** co
 !!! note "Power Note"
     The **3V3** rail on this connector is the datalogger's own main 3.3V supply — it **cannot be switched off** by firmware. If your application needs low power consumption, make sure the connected QWIIC sensor has its own proper sleep mode, or account for its idle/standby current draw in your power budget.
 
-## 2.7. AUX-IO Connector
+## 1.7. AUX-IO Connector
 
 The AUX-IO connector is a **1mm-pitch (P=1mm) connector** that breaks out extra signals from the ISURLOG's MCP23008 I/O expander — see [4.5 MCP23008 I/O Expander Pinout](gpio-mapping.md#45-mcp23008-io-expander-pinout).
 
@@ -103,7 +103,7 @@ The AUX-IO connector is a **1mm-pitch (P=1mm) connector** that breaks out extra 
 
 ![image](images/2-aux-io-pinout.png){width="300"}
 
-## 2.8. Internal Sensors and Diagnostics
+## 1.8. Internal Sensors and Diagnostics
 
 The datalogger includes two key internal features for monitoring and field interaction:
 
