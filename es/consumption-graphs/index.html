@@ -1502,6 +1502,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#deep-sleep-lorawan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Sleep — LoRaWAN
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1697,6 +1708,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#deep-sleep-lorawan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Sleep — LoRaWAN
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1735,6 +1757,10 @@
 <p><img alt="I_SENSE jumper — PPK2 wiring" src="../../images/isense-ppk2-wiring.png" width="220" /></p>
 <p><em>Wiring the PPK2 in series across the I_SENSE jumper.</em></p>
 <p><strong>Conditions.</strong> Each capture below notes the firmware version, connectivity, and sensor configuration it was taken under — real numbers vary with these, so treat them as a reference point, not a spec sheet.</p>
+<div class="admonition note">
+<p class="admonition-title">General</p>
+<p>Right after power is disconnected and reconnected, the board can draw around <strong>23 µA above the specified minimums</strong> for the first few minutes. This is caused by the <strong>MAX17048 fuel gauge</strong> still running its initialization calculations and calibration — not a fault, and not representative of steady-state consumption. Captures on this page are taken well past this initial window.</p>
+</div>
 <hr />
 <h2 id="12-captures">1.2 Captures</h2>
 <h3 id="deep-sleep-nb-iotlte-m">Deep Sleep — NB-IoT/LTE-M</h3>
@@ -1762,9 +1788,26 @@
 <li><strong>Window average:</strong> 173.21 µA · <strong>Window max:</strong> 38.08 mA · <strong>Window charge:</strong> 10.39 mC (1 minute)</li>
 <li><strong>Between two paging occasions:</strong> 158.71 µA average · 40.92 s · 6.49 mC charge</li>
 </ul>
+<h3 id="deep-sleep-lorawan">Deep Sleep — LoRaWAN</h3>
+<p><img alt="Deep sleep current — LoRaWAN" src="../../images/deep-sleep-lorawan.png" /></p>
+<p><em>Deep sleep current draw, LoRaWAN, 10-second window.</em></p>
+<p>Captured with the PPK2 in Ampere meter mode, 1,000 samples/second, over a 10-second window:</p>
+<ul>
+<li><strong>Average:</strong> 42.98 µA</li>
+<li><strong>Peak:</strong> 1.04 mA (periodic short spikes visible in the trace)</li>
+<li><strong>Window:</strong> 10.00 s · <strong>Charge:</strong> 429.83 µC</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">What this figure includes</p>
+<p>This is the <strong>full system</strong> at rest, not the ESP32 alone: ESP32 deep sleep <strong>plus</strong> the RAK3172 modem, powered on and already joined to the LoRaWAN network, in its own low-power sleep mode. Lower than the NB-IoT figure above — expected, since LoRaWAN's idle power draw is inherently lower than a cellular modem's.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">The periodic spikes</p>
+<p>Same cause as the NB-IoT capture above: the board's own power regulator switching into a pulsed low-power operating mode at very light load, firing brief current pulses to top up its output capacitor. Not the ESP32 or modem doing anything.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Coming soon</p>
-<p>Deep Sleep — LoRaWAN, Deep Sleep — Wi-Fi, Wake + Sensor Read, and a transmission-cycle capture for each connectivity option.</p>
+<p>Deep Sleep — Wi-Fi, Wake + Sensor Read, and a transmission-cycle capture for each connectivity option.</p>
 </div>
 
 
