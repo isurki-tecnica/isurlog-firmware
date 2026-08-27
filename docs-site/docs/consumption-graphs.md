@@ -18,6 +18,9 @@ Real current-vs-time captures showing what each part of the duty cycle actually 
 
 **Conditions.** Each capture below notes the firmware version, connectivity, and sensor configuration it was taken under — real numbers vary with these, so treat them as a reference point, not a spec sheet.
 
+!!! note "General"
+    Right after power is disconnected and reconnected, the board can draw around **23 µA above the specified minimums** for the first few minutes. This is caused by the **MAX17048 fuel gauge** still running its initialization calculations and calibration — not a fault, and not representative of steady-state consumption. Captures on this page are taken well past this initial window.
+
 ---
 
 ## 1.2 Captures
@@ -51,5 +54,23 @@ Zooming out to a 1-minute window reveals a second, larger periodic spike (30-38 
 * **Window average:** 173.21 µA · **Window max:** 38.08 mA · **Window charge:** 10.39 mC (1 minute)
 * **Between two paging occasions:** 158.71 µA average · 40.92 s · 6.49 mC charge
 
+### Deep Sleep — LoRaWAN
+
+![Deep sleep current — LoRaWAN](images/deep-sleep-lorawan.png)
+
+*Deep sleep current draw, LoRaWAN, 10-second window.*
+
+Captured with the PPK2 in Ampere meter mode, 1,000 samples/second, over a 10-second window:
+
+* **Average:** 42.98 µA
+* **Peak:** 1.04 mA (periodic short spikes visible in the trace)
+* **Window:** 10.00 s · **Charge:** 429.83 µC
+
+!!! note "What this figure includes"
+    This is the **full system** at rest, not the ESP32 alone: ESP32 deep sleep **plus** the RAK3172 modem, powered on and already joined to the LoRaWAN network, in its own low-power sleep mode. Lower than the NB-IoT figure above — expected, since LoRaWAN's idle power draw is inherently lower than a cellular modem's.
+
+!!! note "The periodic spikes"
+    Same cause as the NB-IoT capture above: the board's own power regulator switching into a pulsed low-power operating mode at very light load, firing brief current pulses to top up its output capacitor. Not the ESP32 or modem doing anything.
+
 !!! note "Coming soon"
-    Deep Sleep — LoRaWAN, Deep Sleep — Wi-Fi, Wake + Sensor Read, and a transmission-cycle capture for each connectivity option.
+    Deep Sleep — Wi-Fi, Wake + Sensor Read, and a transmission-cycle capture for each connectivity option.
