@@ -17,6 +17,7 @@ To develop, modify, or compile custom application firmware for the RAK3172 using
 
 ### Supported IDEs
 The RAK3172 RUI3 core natively supports development via the **Arduino IDE** or Visual Studio Code (with PlatformIO extension).
+
 * **Setup and Installation:** To install the necessary RAKwireless Board Support Package (BSP) in your development environment, follow the official instructions: [https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/supported-ide](https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/supported-ide)
 
 ### RUI3 Arduino API Reference

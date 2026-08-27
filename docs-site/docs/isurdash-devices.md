@@ -108,6 +108,7 @@ Lists the sensors/outputs connected via an Isurnode expansion unit, when one is 
 In addition to standard NB-IoT or LoRaWAN communication, the ISURLOG features a local **Bluetooth Low Energy (BLE)** connection mode. This functionality is extremely useful for tasks such as installation, maintenance, or sensor calibration, as it allows for continuous, real-time interaction with the device.
 
 When a Bluetooth connection is established:
+
 * The graphs on the Visualization tab are updated every few seconds.
 * Changes made in the Configuration tab are applied instantly.
 * **Important:** Data transmitted in this mode is for real-time visualization only and is **not recorded** in the IsurDASH platform history.
@@ -117,9 +118,10 @@ The process to establish a local Bluetooth connection requires coordinated actio
 ### Step 1: Activate Bluetooth Mode on the ISURLOG
 
 For the ISURLOG to be visible and connectable, the user must activate it manually with a magnet:
-1.  The user must locate the magnetic sensor zone on the device's casing (refer to **1. Sensor Connections: Hall Effect Switch** for the exact location).
+
+1.  The user must locate the magnetic sensor zone on the device's casing (refer to [1. Sensor Connections](sensor-connections.md#18-internal-sensors-and-diagnostics) for the exact location).
 2.  A magnet must be held over that area continuously for at least **5 seconds**.
-3.  The ISURLOG will activate Bluetooth and enter pairing mode. The user can confirm that the mode has been correctly activated by observing the specific pattern of the **STATUS LED** (refer to **5. Datalogger Operation: Field Diagnostics**).
+3.  The ISURLOG will activate Bluetooth and enter pairing mode. The user can confirm that the mode has been correctly activated by observing the specific pattern of the **STATUS LED** (refer to [5. Datalogger Operation: Field Diagnostics](datalogger-operation.md#53-field-diagnostics-led-status)).
 
 ### Step 2: Initiate the Connection in IsurDASH
 

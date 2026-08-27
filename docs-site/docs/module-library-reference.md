@@ -43,26 +43,31 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 ### Core / Boot
 
 **`utils.py`**
+
 - Purpose: centralized logging (`log_debug`, `log_info`, `log_warning`, `log_error`) gated by `static_config.log_level`, plus `get_datetime_string()` / `save_data_to_file()`.
 - Depends on: nothing (base module — imported by nearly every other module).
 - Config: `static_config.log_level`, resolved from `config_manager` on first use (a deferred import — `config_manager.py` imports `utils` at module level, so importing back at `utils`' module level would be circular).
 
 **`config_manager.py`**
+
 - Purpose: the canonical owner of `static_config.json` (immutable, hardware) and `dynamic_config.json` (runtime-mutable). Applies remote config updates via `CONFIG_MAP`, which maps ~90 remote command names (e.g. `setLatencyTime`) to nested JSON paths.
 - Public API: `ConfigManager.get_static(*keys, default=None)`, `get_dynamic(*keys, default=None)`, `apply_single_update(...)`, `apply_conf_update(decoded_data)`, `save_dynamic_config()`. Global singleton: `config_manager`.
 - Depends on: `utils`.
 
 **`_auth.py`**
+
 - Purpose: PIN-gated REPL console lock. Runs automatically on import (not just definitions) — up to 3 attempts, resets the device on failure.
 - Public API: `run_authentication()`, `pad_data(...)`, `get_encrypted_pin_secret()`.
 - Depends on: `config_manager` (reads `static_config.pin`); uses builtin `cryptolib` (AES-ECB) directly.
 
 **`version.py`**
+
 - Purpose: single `VERSION` constant, shown in the boot banner. Bump this on every release.
 
 ### Power & Time
 
 **`power_manager.py`**
+
 - Purpose: the system's power/time hub. Detects the RTC chip present (DS3231 or RV3028), syncs time from NB-IoT/Wi-Fi(NTP)/LoRaWAN/GPS, computes the next aligned wake-up, drives the 12V/5V rails and digital outputs, sets CPU frequency, configures wake sources, and triggers deep sleep. Global singleton: `pm`.
 - Public API (selection): `check_rtc_status()`, `set_rtc_time(time_str, mode)`, `seconds2wakeup()`, `control_5v(state)`, `control_vdc(state)`, `configure_wakeup_sources(...)`, `go_to_sleep()`.
 - Depends on: `lib/uds3231` or `lib/RV3028` (whichever is detected on I2C).
@@ -70,6 +75,7 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 - Note: `downlink_manager.py`'s proportional-valve (EV) and OTA-failure sleeps use plain `time.sleep_ms()` / `await asyncio.sleep_ms()` directly rather than a method on `power_manager` — keep that in mind if you're looking for a "sleep" helper here, there isn't one.
 
 **`rtc_memory.py`**
+
 - Purpose: state kept in ESP32 RTC memory (survives deep sleep, not power loss): accumulated cycle counter, alarm flag, manual valve (EV) states, last RTC-sync timestamp, and a buffer of encoded LPP payloads pending transmission.
 - Public API: `get_alarm_flag`/`set_alarm_flag`, `get_last_rtc_sync`/`set_last_rtc_sync`, `rtc_resync_due(...)`, `get_ev_state`/`set_ev_state`, `store_payload(...)`, `get_payloads()`, `should_transmit()`.
 - Depends on: `config_manager` (reads `general.register_acumulator`).
@@ -78,11 +84,13 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 ### Connectivity
 
 **`wifi.py`**
+
 - Purpose: Wi-Fi STA connection with a security gate — refuses to associate below WPA2-PSK (explicit CRA/Cyber Resilience Act compliance comment in the code).
 - Public API: `is_connected()`, `do_connect(ssid, password, timeout_seconds=15)` *(async)*, `do_disconnect()` *(async)*.
 - Depends on: builtin `network` only. SSID/password are passed in by `main.py` from `dynamic_config.communications.wifi`.
 
 **`nb_iot.py`** *(largest module, ~57 KB)*
+
 - Purpose: driver for the Nordic nRF9160-family NB-IoT/LTE-M modem (Nordic SLM AT%/AT#X command set): network registration (with operator selection/blacklist), MQTT client over the modem, HTTP client for OTA downloads, GPS/NTN, sleep/wake management.
 - Public API (all `async` unless noted): `connect(connection_preference, edrx=True, apn=None, ntn=False)`, `wake_up()`, `sleep()`, `hard_reset()`, `mqtt_configure/connect/publish/subscribe`, `get_mqtt_messages()` *(sync)*, `send_udp_data(...)`, `download_file(...)` (chunked HTTP range requests for OTA), `get_gps_coords(...)`, `connect_ntn(...)`, `get_signal_data()`.
 - Depends on: no `lib/` drivers — talks AT directly over UART.
@@ -98,6 +106,7 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 - Note: comments like `"USER BASE v17"`, `"CHANGE"`, `"NEW"` around the OTA download path suggest this is the most actively iterated/least stable part of the module currently — worth extra care/testing before shipping changes here.
 
 **`lorawan.py`**
+
 - Purpose: driver for a RAK3172-class LoRaWAN modem (standard RUI3 AT set): join, uplink send, downlink receive (including Class C via polling), network time sync.
 - Public API (all `async` unless noted): `connect(lorawan_class="A", attempts=1)`, `join_network()`, `send_uplink(port, data)`, `get_downlink_messages()`, `request_time()`, `get_network_time()`, `sleep()`, `check_network_connection()`.
 - Depends on: no `lib/` drivers — talks AT directly over UART. Reuses the **same physical UART pins** as `nb_iot.py` (`static_config.pinout.nb-iot.{tx_pin,rx_pin}`) — confirms WiFi/NB-IoT/LoRaWAN modem variants are mutually exclusive at the hardware level, selected by `static_config`'s modem field.
@@ -105,10 +114,12 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 - **AT command groups used**: `AT+NWM=` (network mode), `AT+NJM=` (join mode ABP/OTAA), `AT+CLASS=`, `AT+BAND=`, `AT+CFM=` (confirmed uplinks), `AT+DEVEUI=`/`AT+APPEUI=`/`AT+APPKEY=`, `AT+JOIN=1:0:<interval>:<attempts>` (waits for `+EVT:JOINED`), `AT+TIMEREQ=1` + `AT+LTIME=?` (network time), `AT+SEND=<port>:<data>` (waits `+EVT:SEND_CONFIRMED_OK` or `+EVT:TX_DONE`), `AT+LPM=1`/`AT+SLEEP` (low power), `ATZ` (reset), `AT+NJS=?` (join status), `ATC+GETDL` (custom: poll buffered Class C downlinks), and passive `+EVT:RX...` URCs parsed for real-time downlinks.
 
 **`umqttsimple.py`**
+
 - Purpose: lightweight MQTT 3.1.1 client over TCP/TLS socket, used only for the Wi-Fi transport.
 - Origin: based on Paul Sokolovsky's classic `micropython-lib` MQTT client (2013–2016), modified by ISURKI/Steminds — `check_msg()` was rewritten to return a list of all pending messages instead of a single callback. QoS 2 is not implemented. Technically lives in `modules/` but is functionally a third-party library — arguably belongs closer to `lib/`.
 
 **`ble_manager.py`**
+
 - Purpose: BLE GATT server for local configuration/monitoring, activated by the magnet-wakeup mode. One notify characteristic (data) and one write characteristic (commands).
 - Public API: `BLEManager(device_name=..., command_callback=...)`, `update_data_payload(payload)`, `stop()`.
 - Depends on: `lib/aioble` (Service/Characteristic/advertise/security).
@@ -116,12 +127,14 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 - Note: implements LE Secure pairing/bonding with MITM protection and a fixed PIN (DISPLAY_ONLY IO capability); rejects commands on unencrypted characteristics.
 
 **`downlink_manager.py`**
+
 - Purpose: unifies downlink handling across the three transports (Wi-Fi, NB-IoT, LoRaWAN): manual SD/EV commands, remote config application (LPP-decoded), and OTA kick-off (NB-IoT only).
 - Public API: `process_wifi_downlinks(...)`, `process_nbiot_downlinks(...)`, `process_lorawan_downlinks(...)` (all `async`), `apply_config(hex_text)`, `is_manual_command(text)`.
 - Depends on: `lib/IsurlogLPP`, `lib/ota.rollback`; deferred imports of `modbus_sensor`, `update_manager`, `remote_repl`.
 - Note: contains the full OTA flow — download, SHA-256 checksum verification, base64 decode, partition write, and `rollback.cancel_force()` on failure.
 
 **`remote_repl.py`**
+
 - Purpose: remote Python REPL over MQTT (Wi-Fi or NB-IoT) for field debugging — receives Python code as an MQTT message, `eval`/`exec`s it, returns captured stdout on another topic.
 - ⚠️ **Security note**: this executes arbitrary code with no authentication beyond whatever the MQTT broker/channel provides. It's a powerful admin backdoor — worth confirming the MQTT channel is properly secured (TLS + broker ACLs) wherever this is enabled in the field.
 
