@@ -92,3 +92,8 @@ markdown_extensions:
   - tables
   - attr_list
   - md_in_html
+
+extra:
+  analytics:
+    provider: google
+    property: G-639QHEW68F

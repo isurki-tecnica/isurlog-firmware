@@ -43,3 +43,5 @@ markdown_extensions:
   - tables
   - attr_list
   - md_in_html
+  - pymdownx.highlight
+  - pymdownx.superfences
