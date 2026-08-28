@@ -2,434 +2,434 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
         <loc>https://docs.isurlog.isurki.com/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/architecture-overview/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/architecture-overview/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/architecture-overview/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/build-environment/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/build-environment/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/build-environment/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/communications/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/communications/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/communications/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/consumption-graphs/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/consumption-graphs/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/consumption-graphs/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/contribution-guide/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/contribution-guide/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/contribution-guide/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/data-access-overview/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/data-access-overview/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/data-access-overview/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/datalogger-operation/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/datalogger-operation/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/datalogger-operation/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/flashing-application-upload/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/flashing-application-upload/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/flashing-application-upload/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/gpio-mapping/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/gpio-mapping/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/gpio-mapping/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/historical-data-influxdb/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/historical-data-influxdb/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/historical-data-influxdb/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/installation-commissioning/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/installation-commissioning/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/installation-commissioning/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/isurdash-access-login/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-access-login/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-access-login/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/isurdash-alarms/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-alarms/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-alarms/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/isurdash-dashboard/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-dashboard/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-dashboard/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/isurdash-devices/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-devices/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-devices/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/isurdash-maintenance/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-maintenance/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-maintenance/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/isurdash-platform/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-platform/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-platform/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/isurdash-profiles/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-profiles/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-profiles/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/isurdash-tags/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-tags/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-tags/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/isurdash-users/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-users/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-users/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/lorawan-modem-guide/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/lorawan-modem-guide/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/lorawan-modem-guide/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/module-library-reference/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/module-library-reference/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/module-library-reference/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/nbiot-modem-guide/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/nbiot-modem-guide/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/nbiot-modem-guide/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/power-budget/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/power-budget/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/power-budget/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/power-supply/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/power-supply/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/power-supply/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/realtime-data-mqtt/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/realtime-data-mqtt/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/realtime-data-mqtt/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/reference-parameters/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/reference-parameters/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/reference-parameters/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/remote-configuration-api/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/remote-configuration-api/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/remote-configuration-api/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/sensor-connections/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/sensor-connections/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/sensor-connections/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/troubleshooting/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/troubleshooting/"/>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/troubleshooting/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/architecture-overview/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/architecture-overview/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/architecture-overview/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/build-environment/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/build-environment/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/build-environment/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/communications/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/communications/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/communications/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/consumption-graphs/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/consumption-graphs/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/consumption-graphs/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/contribution-guide/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/contribution-guide/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/contribution-guide/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/data-access-overview/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/data-access-overview/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/data-access-overview/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/datalogger-operation/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/datalogger-operation/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/datalogger-operation/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/flashing-application-upload/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/flashing-application-upload/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/flashing-application-upload/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/gpio-mapping/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/gpio-mapping/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/gpio-mapping/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/historical-data-influxdb/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/historical-data-influxdb/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/historical-data-influxdb/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/installation-commissioning/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/installation-commissioning/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/installation-commissioning/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/isurdash-access-login/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-access-login/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-access-login/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/isurdash-alarms/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-alarms/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-alarms/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/isurdash-dashboard/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-dashboard/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-dashboard/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/isurdash-devices/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-devices/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-devices/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/isurdash-maintenance/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-maintenance/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-maintenance/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/isurdash-platform/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-platform/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-platform/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/isurdash-profiles/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-profiles/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-profiles/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/isurdash-tags/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-tags/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-tags/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/isurdash-users/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/isurdash-users/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/isurdash-users/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/lorawan-modem-guide/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/lorawan-modem-guide/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/lorawan-modem-guide/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/module-library-reference/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/module-library-reference/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/module-library-reference/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/nbiot-modem-guide/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/nbiot-modem-guide/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/nbiot-modem-guide/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/power-budget/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/power-budget/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/power-budget/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/power-supply/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/power-supply/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/power-supply/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/realtime-data-mqtt/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/realtime-data-mqtt/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/realtime-data-mqtt/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/reference-parameters/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/reference-parameters/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/reference-parameters/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/remote-configuration-api/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/remote-configuration-api/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/remote-configuration-api/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/sensor-connections/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/sensor-connections/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/sensor-connections/"/>
     </url>
     <url>
         <loc>https://docs.isurlog.isurki.com/es/troubleshooting/</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-08-28</lastmod>
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="es" href="https://docs.isurlog.isurki.com/es/troubleshooting/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://docs.isurlog.isurki.com/troubleshooting/"/>
