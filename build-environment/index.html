@@ -1956,64 +1956,66 @@
 <h2 id="13-build-instructions-ubuntu-wsl">1.3 Build Instructions (Ubuntu / WSL)</h2>
 <h3 id="step-1-install-system-dependencies">Step 1: Install System Dependencies</h3>
 <p>Open your Ubuntu terminal and install all required packages:</p>
-<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
-sudo apt-get install build-essential libffi-dev git pkg-config
-sudo apt install -y git wget curl flex bison gperf python3 python3-pip python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
-</code></pre>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>libffi-dev<span class="w"> </span>git<span class="w"> </span>pkg-config
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>git<span class="w"> </span>wget<span class="w"> </span>curl<span class="w"> </span>flex<span class="w"> </span>bison<span class="w"> </span>gperf<span class="w"> </span>python3<span class="w"> </span>python3-pip<span class="w"> </span>python3-venv<span class="w"> </span>cmake<span class="w"> </span>ninja-build<span class="w"> </span>ccache<span class="w"> </span>libffi-dev<span class="w"> </span>libssl-dev<span class="w"> </span>dfu-util<span class="w"> </span>libusb-1.0-0
+</code></pre></div>
 <h3 id="step-2-clone-and-install-esp-idf">Step 2: Clone and Install ESP-IDF</h3>
 <p>This firmware requires ESP-IDF v5.2.x. We recommend <code>v5.2.6</code> for optimal compatibility with the MicroPython base.</p>
-<pre><code class="language-bash"># Create a directory for ESP-IDF
-mkdir -p ~/esp
-cd ~/esp
+<div class="highlight"><pre><span></span><code><span class="c1"># Create a directory for ESP-IDF</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>~/esp
+<span class="nb">cd</span><span class="w"> </span>~/esp
 
-# Clone the correct version
-git clone -b v5.4.1 --recursive [https://github.com/espressif/esp-idf.git](https://github.com/espressif/esp-idf.git)
+<span class="c1"># Clone the correct version</span>
+git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>v5.4.1<span class="w"> </span>--recursive<span class="w"> </span><span class="o">[</span>https://github.com/espressif/esp-idf.git<span class="o">](</span>https://github.com/espressif/esp-idf.git<span class="o">)</span>
 
-# Install the toolchain
-cd esp-idf
-./install.sh esp32
-</code></pre>
+<span class="c1"># Install the toolchain</span>
+<span class="nb">cd</span><span class="w"> </span>esp-idf
+./install.sh<span class="w"> </span>esp32
+</code></pre></div>
 <h3 id="step-3-activate-esp-idf-environment">Step 3: Activate ESP-IDF Environment</h3>
 <p>You must "source" the export script in your terminal to set environment variables.</p>
-<pre><code class="language-bash"># Add the export command to your profile
-echo -e '\n. $HOME/esp/esp-idf/export.sh' &gt;&gt; ~/.profile
+<div class="highlight"><pre><span></span><code><span class="c1"># Add the export command to your profile</span>
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s1">'\n. $HOME/esp/esp-idf/export.sh'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.profile
 
-# Source it for the current session
-source $HOME/esp/esp-idf/export.sh
-</code></pre>
+<span class="c1"># Source it for the current session</span>
+<span class="nb">source</span><span class="w"> </span><span class="nv">$HOME</span>/esp/esp-idf/export.sh
+</code></pre></div>
 <h3 id="step-4-clone-this-repository">Step 4: Clone This Repository</h3>
 <p>Clone the firmware repository to your system:</p>
-<pre><code class="language-bash">cd ~
-git clone [https://github.com/isurki-tecnica/isurlog-firmware.git](https://github.com/isurki-tecnica/isurlog-firmware.git)
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~
+git<span class="w"> </span>clone<span class="w"> </span><span class="o">[</span>https://github.com/isurki-tecnica/isurlog-firmware.git<span class="o">](</span>https://github.com/isurki-tecnica/isurlog-firmware.git<span class="o">)</span>
 
-# Navigate into the repo
-cd isurlog-firmware
+<span class="c1"># Navigate into the repo</span>
+<span class="nb">cd</span><span class="w"> </span>isurlog-firmware
 
-# Switch to our working branch (if not already on 'main')
-git checkout main
-
-</code></pre>
+<span class="c1"># Switch to our working branch (if not already on 'main')</span>
+git<span class="w"> </span>checkout<span class="w"> </span>main
+</code></pre></div>
 <h3 id="step-5-compile-the-firmware">Step 5: Compile the Firmware</h3>
 <p>Finally, navigate to the <code>esp32</code> port directory within the cloned repository and run the build commands:</p>
-<pre><code class="language-bash"># Navigate to the ESP32 port
-cd ports/esp32
+<div class="highlight"><pre><span></span><code><span class="c1"># Navigate to the ESP32 port</span>
+<span class="nb">cd</span><span class="w"> </span>ports/esp32
 
-# Clean any previous builds (optional, but recommended for fresh builds)
-make BOARD=ESP32_GENERIC BOARD_VARIANT=SPIRAM clean
+<span class="c1"># Clean any previous builds (optional, but recommended for fresh builds)</span>
+make<span class="w"> </span><span class="nv">BOARD</span><span class="o">=</span>ESP32_GENERIC<span class="w"> </span><span class="nv">BOARD_VARIANT</span><span class="o">=</span>SPIRAM<span class="w"> </span>clean
 
-# Download MicroPython specific submodules
-make submodules
+<span class="c1"># Download MicroPython specific submodules</span>
+make<span class="w"> </span>submodules
 
-# Start the build process
-make BOARD=ESP32_GENERIC BOARD_VARIANT=SPIRAM
-</code></pre>
+<span class="c1"># Start the build process</span>
+make<span class="w"> </span><span class="nv">BOARD</span><span class="o">=</span>ESP32_GENERIC<span class="w"> </span><span class="nv">BOARD_VARIANT</span><span class="o">=</span>SPIRAM
+</code></pre></div>
 <h2 id="14-output-files">1.4 Output Files</h2>
 <h3 id="firmware-binary-location">Firmware Binary Location</h3>
 <p>The compiled firmware <code>.bin</code> file will be generated in the following directory:</p>
 <p><code>ports/esp32/build-ESP32_GENERIC-SPIRAM/firmware.bin</code></p>
 <h2 id="application-code-app">Application Code (<code>app/</code>)</h2>
 <p>This repository also contains the <code>app/</code> folder.</p>
-<p>IMPORTANT: The contents of this folder (<code>main.py</code>, <code>config/</code>, etc.) are NOT compiled into the firmware. These files represent the Python application logic and must be uploaded manually to the ESP32's filesystem (using tools like Thonny or rshell) after flashing the <code>firmware.bin</code>. This allows for flexible updates to the application logic without recompiling the entire firmware.</p>
+<div class="admonition note">
+<p class="admonition-title">app/ is not part of the firmware</p>
+<p>The contents of this folder (<code>main.py</code>, <code>config/</code>, etc.) are NOT compiled into the firmware. These files represent the Python application logic and must be uploaded manually to the ESP32's filesystem (using tools like Thonny or rshell) after flashing the <code>firmware.bin</code>. This allows for flexible updates to the application logic without recompiling the entire firmware.</p>
+</div>
 
 
 

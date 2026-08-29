@@ -2170,40 +2170,40 @@
 </ul>
 <h4 id="example-of-payload-json-chirpstack">Example of Payload JSON (ChirpStack)</h4>
 <p>This example shows the key structure and content of the <code>object</code> field with the decoded readings:</p>
-<pre><code class="language-json">{
-  &quot;deviceInfo&quot;: {
-    &quot;applicationName&quot;: &quot;Isurlog&quot;,
-    &quot;deviceName&quot;: &quot;c-123&quot;,
-    &quot;devEui&quot;: &quot;xxxxxxxxxxxxx&quot;
-  },
-  &quot;fCnt&quot;: 61,
-  &quot;fPort&quot;: 2,
-  &quot;data&quot;: &quot;AHVoyD3dAHQP5wAAAABnAPcAaIcAAv+d&quot;,
-  &quot;object&quot;: {
-    &quot;AnalogInput_0&quot;: -0.99,
-    &quot;DigitalInput_0&quot;: 0.0,
-    &quot;HumiditySensor_0&quot;: 67.5,
-    &quot;TemperatureSensor_0&quot;: 24.7,
-    &quot;UnixTime_0&quot;: 1757953501.0,
-    &quot;VoltageInput_0&quot;: 4071.0
-  },
-  &quot;rxInfo&quot;: [
-    {
-      &quot;gatewayId&quot;: &quot;b827ebfffe70a454&quot;,
-      &quot;rssi&quot;: -51,
-      &quot;snr&quot;: 6.2
-    }
-  ],
-  &quot;txInfo&quot;: {
-    &quot;frequency&quot;: 867500000,
-    &quot;modulation&quot;: {
-      &quot;lora&quot;: {
-        &quot;spreadingFactor&quot;: 7
-      }
-    }
-  }
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"deviceInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"applicationName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isurlog"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"deviceName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c-123"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"devEui"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxxxxxxxxxxxx"</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"fCnt"</span><span class="p">:</span><span class="w"> </span><span class="mi">61</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"fPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AHVoyD3dAHQP5wAAAABnAPcAaIcAAv+d"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"AnalogInput_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.99</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"DigitalInput_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"HumiditySensor_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">67.5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"TemperatureSensor_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">24.7</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"UnixTime_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">1757953501.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"VoltageInput_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">4071.0</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"rxInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"gatewayId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b827ebfffe70a454"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"rssi"</span><span class="p">:</span><span class="w"> </span><span class="mi">-51</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"snr"</span><span class="p">:</span><span class="w"> </span><span class="mf">6.2</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"txInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"frequency"</span><span class="p">:</span><span class="w"> </span><span class="mi">867500000</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"modulation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"lora"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"spreadingFactor"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <h3 id="332-nb-iot-devices">3.3.2 NB-IoT Devices</h3>
 <ul>
 <li><strong>Topic Structure:</strong> <code>isurlog/datos/{device_id}</code></li>
@@ -2220,7 +2220,7 @@
 <li><strong>Data Type:</strong> A 1-byte code that specifies the type of data being sent (e.g., temperature, voltage).</li>
 <li><strong>Value:</strong> The raw sensor reading, encoded over N bytes.</li>
 </ul>
-<p>All multi-byte values are encoded in <strong>Big-Endian</strong> byte order. The first data payload transmitted begins with a <strong>Unix Timestamp chunk (Type $0\times75$)</strong>.</p>
+<p>All multi-byte values are encoded in <strong>Big-Endian</strong> byte order. The first data payload transmitted begins with a <strong>Unix Timestamp chunk (Type 0x75)</strong>.</p>
 <h3 id="data-type-reference">Data Type Reference</h3>
 <table>
 <thead>
@@ -2236,77 +2236,77 @@
 <tr>
 <td style="text-align: left;"><strong>Digital Input</strong></td>
 <td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times00$</td>
+<td style="text-align: left;">0x00</td>
 <td style="text-align: left;">1-byte Unsigned Integer</td>
 <td style="text-align: left;">Final Value = Integer</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Analog Input</strong></td>
 <td style="text-align: left;">0-3</td>
-<td style="text-align: left;">$0\times02$</td>
+<td style="text-align: left;">0x02</td>
 <td style="text-align: left;">2-byte Signed Integer</td>
 <td style="text-align: left;">Final Value = Integer / 100.0</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Modbus Input</strong></td>
 <td style="text-align: left;">0-3</td>
-<td style="text-align: left;">$0\times04$</td>
+<td style="text-align: left;">0x04</td>
 <td style="text-align: left;">2-byte Signed Integer</td>
 <td style="text-align: left;">Final Value = Integer / 100.0</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>PT100 Temperature</strong></td>
 <td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times66$</td>
+<td style="text-align: left;">0x66</td>
 <td style="text-align: left;">2-byte Signed Integer</td>
 <td style="text-align: left;">Final Value = Integer / 10.0</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Temperature Sensor</strong></td>
 <td style="text-align: left;">0 (internal) / 1 (external, QWIIC)</td>
-<td style="text-align: left;">$0\times67$</td>
+<td style="text-align: left;">0x67</td>
 <td style="text-align: left;">2-byte Signed Integer</td>
 <td style="text-align: left;">Final Value = Integer / 10.0</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Humidity Sensor</strong></td>
 <td style="text-align: left;">0 (internal) / 1 (external, QWIIC)</td>
-<td style="text-align: left;">$0\times68$</td>
+<td style="text-align: left;">0x68</td>
 <td style="text-align: left;">1-byte Unsigned Integer</td>
 <td style="text-align: left;">Final Value = Integer / 2.0</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Accelerometer</strong></td>
 <td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times71$</td>
+<td style="text-align: left;">0x71</td>
 <td style="text-align: left;">6 bytes = three 2-byte Signed Integers (X, Y, Z)</td>
 <td style="text-align: left;">Final Value (per axis) = Integer / 1000.0 (g)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Battery Voltage</strong></td>
 <td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times74$</td>
+<td style="text-align: left;">0x74</td>
 <td style="text-align: left;">2-byte Unsigned Integer</td>
 <td style="text-align: left;">Final Value = Integer (in mV)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Unix Timestamp</strong></td>
 <td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times75$</td>
+<td style="text-align: left;">0x75</td>
 <td style="text-align: left;">4-byte Unsigned Integer</td>
 <td style="text-align: left;">Final Value = Integer (seconds)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Battery C-Rate</strong></td>
 <td style="text-align: left;">0</td>
-<td style="text-align: left;">$0\times77$</td>
+<td style="text-align: left;">0x77</td>
 <td style="text-align: left;">1-byte Signed Integer</td>
 <td style="text-align: left;">Final Value = Integer / 10.0 (%/h)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Modem Signal Quality</strong></td>
 <td style="text-align: left;">0 (RSRQ) / 1 (RSRP)</td>
-<td style="text-align: left;">$0\times78$</td>
+<td style="text-align: left;">0x78</td>
 <td style="text-align: left;">1-byte Unsigned Integer</td>
 <td style="text-align: left;">Final Value = Integer (channel 0: dB · channel 1: dBm). <strong>NB-IoT devices only.</strong></td>
 </tr>
@@ -2339,27 +2339,27 @@
 <li><strong>Bytes:</strong> <code>00670137</code></li>
 <li><strong>Type:</strong> <code>0x67</code> (Internal Temperature Sensor)</li>
 <li><strong>Value:</strong> <code>0x0137</code> (311 decimal, signed)</li>
-<li><strong>Calculation:</strong> $311 / 10.0 = 31.1 ^\circ C$</li>
+<li><strong>Calculation:</strong> 311 / 10.0 = 31.1 °C</li>
 </ul>
 <h3 id="chunk-4-internal-humidity">Chunk 4: Internal Humidity</h3>
 <ul>
 <li><strong>Bytes:</strong> <code>006840</code></li>
 <li><strong>Type:</strong> <code>0x68</code> (Internal Humidity Sensor)</li>
 <li><strong>Value:</strong> <code>0x40</code> (64 decimal)</li>
-<li><strong>Calculation:</strong> $64 / 2.0 = 32.0\%$</li>
+<li><strong>Calculation:</strong> 64 / 2.0 = 32.0%</li>
 </ul>
 <h3 id="chunk-5-analog-input">Chunk 5: Analog Input</h3>
 <ul>
 <li><strong>Bytes:</strong> <code>0002021D</code></li>
 <li><strong>Type:</strong> <code>0x02</code> (Analog Input)</li>
 <li><strong>Value:</strong> <code>0x021D</code> (541 decimal, signed)</li>
-<li><strong>Calculation:</strong> $541 / 100.0 = 5.41$ (in engineering units)</li>
+<li><strong>Calculation:</strong> 541 / 100.0 = 5.41 (in engineering units)</li>
 </ul>
 <h2 id="36-reference-implementation">3.6 Reference Implementation</h2>
 <p>A complete Python script demonstrating the connection, subscription, payload decoding, and a <strong>live-updating dashboard</strong> is provided in the accompanying file: <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/isurlog_mqtt_demo.py">isurlog_mqtt_demo.py</a></strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Dependency Note</p>
-<p>The script requires the accompanying library file, <strong><code>IsurlogLPP.py</code></strong>, to handle the decoding and calculation of sensor values from the raw Cayenne LPP payload format. Both files must be present in the same directory for the example to run.</p>
+<p>The script requires the accompanying library file, <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/IsurlogLPP.py">IsurlogLPP.py</a></strong>, to handle the decoding and calculation of sensor values from the raw Cayenne LPP payload format. Both files must be present in the same directory for the example to run.</p>
 </div>
 <p>A device is only ever <strong>one</strong> connectivity type, so the script subscribes to a single topic based on a <code>DEVICE_TYPE</code> setting (<code>"nb-iot"</code> or <code>"lorawan"</code>, matching the same values used in the ISURLOG's own <code>static_config.json</code>) — not to both NB-IoT and LoRaWAN topics at once. For LoRaWAN, fill in your specific <code>APPLICATION_ID</code> and <code>DEVICE_EUI</code> rather than using a wildcard topic, which would otherwise subscribe to every device on every application your credentials can see.</p>
 <h3 id="try-it-instantly-no-credentials-needed">Try It Instantly — No Credentials Needed</h3>
@@ -2369,11 +2369,11 @@
 <li><strong>Topic:</strong> <code>isurlog/datos/c-866</code> — subscription is restricted to this device's own topic only, it cannot receive any other client's data.</li>
 </ul>
 <p>To run it, from inside <code>data_integration/</code>:</p>
-<pre><code class="language-bash">python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python isurlog_mqtt_demo.py
-</code></pre>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+python<span class="w"> </span>isurlog_mqtt_demo.py
+</code></pre></div>
 <p>When you're done: <code>deactivate</code>.</p>
 <h3 id="live-dashboard">Live Dashboard</h3>
 <p>In addition to printing every decoded message as it arrives, the script opens the <strong>same dashboard layout</strong> as the InfluxDB reference implementation — two large panels on top for the soil probe (<strong>Soil — Irrigation</strong>: VWC/EC, <strong>Soil — Diagnostics</strong>: Temperature/Epsilon), three smaller ones below for the device's own housekeeping metrics (battery, internal temperature/humidity, NB-IoT signal quality) — except here it's fed <strong>live</strong> by the MQTT stream instead of a one-off historical query, with new points appearing as they're received (redrawn every 2 seconds).</p>
@@ -2386,8 +2386,8 @@ python isurlog_mqtt_demo.py
 <li>Running the MQTT client's network loop in a background thread (<code>client.loop_start()</code>), so the main thread is free to run matplotlib's own event loop (<code>plt.show()</code>) and periodically redraw from the buffers via <code>matplotlib.animation.FuncAnimation</code>.</li>
 </ol>
 <div class="admonition note">
-<p class="admonition-title">A pitfall worth knowing if you build your own live dual-axis chart</p>
-<p>the figure, subplots, and each panel's twin Y-axis (<code>ax.twinx()</code>) are created <strong>once</strong>, in <code>build_dashboard()</code>. Only the line data is updated afterwards, on every animation frame (<code>_update_line()</code>, via <code>line.set_data()</code> + <code>ax.relim()</code> + <code>ax.autoscale_view()</code>). Recreating the twin axes on every redraw (e.g. calling <code>ax.clear()</code> then <code>ax.twinx()</code> again in a loop) leaves the previous twin axes behind instead of replacing them — they silently stack on top of each other frame after frame, which is what causes overlapping scales and labels spilling outside the plot after the chart has been running for a while.</p>
+<p class="admonition-title">Twin-Axis Pitfall</p>
+<p>The figure, subplots, and each panel's twin Y-axis (<code>ax.twinx()</code>) are created <strong>once</strong>, in <code>build_dashboard()</code>. Only the line data is updated afterwards, on every animation frame (<code>_update_line()</code>, via <code>line.set_data()</code> + <code>ax.relim()</code> + <code>ax.autoscale_view()</code>). Recreating the twin axes on every redraw (e.g. calling <code>ax.clear()</code> then <code>ax.twinx()</code> again in a loop) leaves the previous twin axes behind instead of replacing them — they silently stack on top of each other frame after frame, which is what causes overlapping scales and labels spilling outside the plot after the chart has been running for a while.</p>
 </div>
 
 

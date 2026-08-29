@@ -1806,7 +1806,7 @@
 <p>InfluxDB provides a wide range of officially supported client libraries for popular programming languages, including Python, JavaScript, Java, Go, and C#, which simplifies data interaction.</p>
 <ul>
 <li>The complete official documentation for the InfluxDB v2 API and these client libraries can be found at the following URL:<ul>
-<li><code>https://docs.influxdata.com/influxdb/v2/api-guide/client-libraries/</code></li>
+<li><a href="https://docs.influxdata.com/influxdb/v2/api-guide/client-libraries/">https://docs.influxdata.com/influxdb/v2/api-guide/client-libraries/</a></li>
 </ul>
 </li>
 </ul>
@@ -1823,7 +1823,7 @@
 <p>This section provides the mapping between the physical and virtual inputs of the Isurlog datalogger and the corresponding <code>_field</code> keys used in the InfluxDB database. The value associated with each field key represents the final <strong>processed and scaled measurement</strong> from the sensor, ready for use in engineering units.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For analog, digital, and Modbus inputs, the final value and its engineering unit (e.g., $m^{3}$, bar, pH) are determined by the scaling and configuration applied in the IsurDASH application. The value stored in the database is the final, scaled result.</p>
+<p>For analog, digital, and Modbus inputs, the final value and its engineering unit (e.g., m³, bar, pH) are determined by the scaling and configuration applied in the IsurDASH application. The value stored in the database is the final, scaled result.</p>
 </div>
 <table>
 <thead>
@@ -1882,17 +1882,17 @@
 <tr>
 <td style="text-align: left;"><strong>PT100 Input</strong></td>
 <td style="text-align: left;"><code>TemperatureInput0</code></td>
-<td style="text-align: left;">Temperature measurement from the external PT100 sensor in degrees Celsius ($^\circ$C).</td>
+<td style="text-align: left;">Temperature measurement from the external PT100 sensor in degrees Celsius (°C).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Internal Temperature</strong></td>
 <td style="text-align: left;"><code>TemperatureSensor0</code></td>
-<td style="text-align: left;">Temperature from the sensor embedded on the ISURLOG's own PCB, in degrees Celsius ($^\circ$C).</td>
+<td style="text-align: left;">Temperature from the sensor embedded on the ISURLOG's own PCB, in degrees Celsius (°C).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>External Temperature</strong></td>
 <td style="text-align: left;"><code>TemperatureSensor1</code></td>
-<td style="text-align: left;">Temperature from an external sensor connected via the <strong>QWIIC (I2C)</strong> port, in degrees Celsius ($^\circ$C). Only present if that sensor is connected.</td>
+<td style="text-align: left;">Temperature from an external sensor connected via the <strong>QWIIC (I2C)</strong> port, in degrees Celsius (°C). Only present if that sensor is connected.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Internal Humidity</strong></td>
@@ -1952,14 +1952,14 @@
 </ul>
 <p>This demo device reports: accelerometer (X/Y/Z), internal temperature and humidity, battery voltage, battery C-rate, NB-IoT signal quality (RSRQ/RSRP), and — via a Modbus soil probe (S-Soil MTEC-02B) wired to it — soil temperature, moisture (VWC), electrical conductivity (EC), and raw dielectric permittivity (Epsilon), so it exercises most of the field keys in the table above.</p>
 <p>To run it, from inside <code>data_integration/</code>, using a virtual environment (standard practice, and required on newer Debian/Ubuntu-based systems such as WSL, which block system-wide <code>pip install</code>):</p>
-<pre><code class="language-bash">python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python isurlog_influx_demo.py
-</code></pre>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+python<span class="w"> </span>isurlog_influx_demo.py
+</code></pre></div>
 <p>When you're done:</p>
-<pre><code class="language-bash">deactivate
-</code></pre>
+<div class="highlight"><pre><span></span><code>deactivate
+</code></pre></div>
 <p>This prints a table of the last 7 days of readings and opens a <strong>single window with a dashboard</strong> (via <code>matplotlib</code>), instead of one pop-up per chart. The layout is two rows — the soil probe readings on top, larger, since they're the main point of this demo; the device's own housekeeping metrics below, smaller:</p>
 <p><img alt="Reference implementation dashboard: soil probe readings and device housekeeping metrics" src="../images/10-influx-dashboard.png" width="800" /></p>
 <p><em>The reference script's dashboard — soil probe readings on top, device housekeeping metrics below.</em></p>
@@ -1970,8 +1970,8 @@ python isurlog_influx_demo.py
 <li><strong>Internal Temperature &amp; Humidity</strong> <em>(small)</em> — <code>TemperatureSensor0</code> (left axis) vs. <code>HumiditySensor0</code> (right axis).</li>
 <li><strong>NB-IoT Network Quality</strong> <em>(small)</em> — RSRQ in dB (<code>ModemData0</code>, left axis) vs. RSRP in dBm (<code>ModemData1</code>, right axis).</li>
 </ol>
-<p>Each chart plots two fields with independent Y-axes (left/right), since they're normally on very different scales. The underlying <code>_plot_dual_axis()</code> helper can be reused to build additional charts for any other <code>_field</code> key from <strong>10.4 Data Schema</strong>. The uneven panel sizes are built with <code>matplotlib</code>'s <code>GridSpec</code> (rather than a uniform <code>plt.subplots()</code> grid) so the two large panels can each span what would otherwise be 1.5 columns of a plain 3-column layout.</p>
-<p>To query your <strong>own</strong> devices, replace <code>URL</code>, <code>TOKEN</code>, and <code>BUCKET</code> at the top of the script with the private credentials Isurki provides you (see <strong>2.3 Connection Parameters</strong>).</p>
+<p>Each chart plots two fields with independent Y-axes (left/right), since they're normally on very different scales. The underlying <code>_plot_dual_axis()</code> helper can be reused to build additional charts for any other <code>_field</code> key from <strong><a href="#24-data-schema-field-key-reference">2.4 Data Schema: Field Key Reference</a></strong>. The uneven panel sizes are built with <code>matplotlib</code>'s <code>GridSpec</code> (rather than a uniform <code>plt.subplots()</code> grid) so the two large panels can each span what would otherwise be 1.5 columns of a plain 3-column layout.</p>
+<p>To query your <strong>own</strong> devices, replace <code>URL</code>, <code>TOKEN</code>, and <code>BUCKET</code> at the top of the script with the private credentials Isurki provides you (see <strong><a href="#23-connection-parameters">2.3 Connection Parameters</a></strong>).</p>
 
 
 

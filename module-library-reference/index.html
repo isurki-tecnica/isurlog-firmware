@@ -1889,7 +1889,7 @@
 <h1 id="21-module-library-reference-api-guide">2.1 Module &amp; Library Reference (API Guide)</h1>
 <div class="admonition note">
 <p class="admonition-title">Scope</p>
-<p>this page documents the <strong>production</strong> code tree — <code>app/main.py</code>, <code>ports/esp32/modules/modules/</code> (high-level wrappers) and <code>ports/esp32/modules/lib/</code> (low-level drivers) — as tracked on this repository's <code>main</code> branch. If you work from the internal development sandbox, some experimental modules (async variants, alternate storage drivers, etc.) may not be listed here yet because they haven't been promoted to this repository. See <strong>[8. Development Workflow (Sandbox → Production)]</strong> <em>(coming soon)</em> for how that promotion works.</p>
+<p>This page documents the <strong>production</strong> code tree — <code>app/main.py</code>, <code>ports/esp32/modules/modules/</code> (high-level wrappers) and <code>ports/esp32/modules/lib/</code> (low-level drivers) — as tracked on this repository's <code>main</code> branch. If you work from the internal development sandbox, some experimental modules (async variants, alternate storage drivers, etc.) may not be listed here yet because they haven't been promoted to this repository. See <strong>[8. Development Workflow (Sandbox → Production)]</strong> <em>(coming soon)</em> for how that promotion works.</p>
 </div>
 <p>This page complements <strong><a href="../architecture-overview/">2. Architecture Overview</a></strong>: that page explains the <code>/lib</code> vs <code>/modules</code> split conceptually, this one is the per-file reference — what each module does, what it depends on, and what configuration it reads.</p>
 <hr />
@@ -2231,7 +2231,7 @@
 </table>
 <hr />
 <h2 id="214-module-dependency-map">2.1.4 Module Dependency Map</h2>
-<pre><code>main.py
+<div class="highlight"><pre><span></span><code>main.py
  ├─ power_manager ──── lib/uds3231 | lib/RV3028
  ├─ rtc_memory
  ├─ led_manager ─────── lib/esp32_ulp
@@ -2256,7 +2256,7 @@
      └─ internal_storage
 
 utils.py is imported by nearly every module above (omitted from the tree for readability).
-</code></pre>
+</code></pre></div>
 <p><code>main.py</code> doesn't import every module unconditionally — sensors and connectivity modules are imported lazily, gated by <code>static_config</code>/<code>dynamic_config</code> (which modem, which sensors are enabled, whether a magnet-wakeup or OTA/REPL downlink was received). This keeps RAM usage down at boot, which matters on MicroPython.</p>
 
 

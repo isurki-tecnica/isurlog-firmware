@@ -1209,10 +1209,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#54-advanced-energy-management-esp32-nrf9160-pins" class="md-nav__link">
+  <a href="#54-advanced-energy-management-esp32-nrf9151-pins" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5.4 Advanced Energy Management: ESP32 - nRF9160 Pins
+        5.4 Advanced Energy Management: ESP32 - nRF9151 Pins
       
     </span>
   </a>
@@ -1846,10 +1846,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#54-advanced-energy-management-esp32-nrf9160-pins" class="md-nav__link">
+  <a href="#54-advanced-energy-management-esp32-nrf9151-pins" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5.4 Advanced Energy Management: ESP32 - nRF9160 Pins
+        5.4 Advanced Energy Management: ESP32 - nRF9151 Pins
       
     </span>
   </a>
@@ -1977,14 +1977,14 @@
 
 
 <h1 id="5-advanced-nb-iot-modem-guide">5. Advanced NB-IoT Modem Guide</h1>
-<p>This guide is intended for developers who need to modify, compile, or flash custom applications onto the <strong>nRF9160</strong> modem (Actinius-SoM) used by the ISURLOG, replacing the default AT command application.</p>
+<p>This guide is intended for developers who need to modify, compile, or flash custom applications onto the <strong>nRF9151</strong> modem (Actinius-SoM) used by the ISURLOG, replacing the default AT command application.</p>
 <h2 id="51-firmware-architecture-distinction">5.1 Firmware Architecture Distinction</h2>
-<p>When developing for the nRF9160, it is crucial to distinguish between two distinct layers of software:</p>
+<p>When developing for the nRF9151, it is crucial to distinguish between two distinct layers of software:</p>
 <ol>
 <li>
 <p><strong>Modem Firmware (Low-Level Radio Stack):</strong> This is the internal firmware that controls the radio protocols (LTE-M/NB-IoT), security, and signal processing. The firmware can be updated using the <strong>Programmer</strong> app inside <strong>nRF Connect for Desktop</strong>. <strong>It is usually not necessary to update this firmware</strong>, as the factory version is typically stable.</p>
 <ul>
-<li><strong>Download Location:</strong> The modem firmware can be obtained directly from Nordic Semiconductor by downloading the ZIP package for the desired version: <a href="https://www.nordicsemi.com/Products/nRF9160/Download?lang=en#infotabs">https://www.nordicsemi.com/Products/nRF9160/Download?lang=en#infotabs</a>.</li>
+<li><strong>Download Location:</strong> The modem firmware can be obtained directly from Nordic Semiconductor by downloading the ZIP package for the desired version: <a href="https://www.nordicsemi.com/Products/nRF9151/Download?lang=en#infotabs">https://www.nordicsemi.com/Products/nRF9151/Download?lang=en#infotabs</a>.</li>
 </ul>
 </li>
 <li>
@@ -1993,7 +1993,7 @@
 </ol>
 <hr />
 <h2 id="52-prerequisites-and-sdk-installation">5.2 Prerequisites and SDK Installation</h2>
-<p>To compile Application Firmware for the nRF9160, you must install the Nordic Semiconductor toolchain, which is managed through nRF Connect for Desktop.</p>
+<p>To compile Application Firmware for the nRF9151, you must install the Nordic Semiconductor toolchain, which is managed through nRF Connect for Desktop.</p>
 <h3 id="installation-procedure">Installation Procedure</h3>
 <ol>
 <li>Install <strong>nRF Connect for Desktop</strong>.</li>
@@ -2001,12 +2001,12 @@
 <li>Open the Toolchain Manager and install <strong>nRF Connect SDK v.2.6.2</strong>. We recommend this version for optimal compatibility with the ISURLOG base firmware.</li>
 </ol>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For the physical hardware needed to flash the modem (programmer, cable, connection), see <strong>5.6 Flashing Hardware Requirements and Connection</strong> below.</p>
+<p class="admonition-title">See Also</p>
+<p>For the physical hardware needed to flash the modem (programmer, cable, connection), see <strong><a href="#56-flashing-hardware-requirements-and-connection">5.6 Flashing Hardware Requirements and Connection</a></strong> below.</p>
 </div>
 <hr />
 <h2 id="53-uart-communication-and-at-commands">5.3 UART Communication and AT Commands</h2>
-<p>The ISURLOG uses the nRF9160 modem to establish NB-IoT communication via a UART port and <strong>AT commands</strong>. The default UART port configuration (ESP32 side) is:</p>
+<p>The ISURLOG uses the nRF9151 modem to establish NB-IoT communication via a UART port and <strong>AT commands</strong>. The default UART port configuration (ESP32 side) is:</p>
 <ul>
 <li><strong>TX:</strong> GPIO4</li>
 <li><strong>RX:</strong> GPIO2</li>
@@ -2014,19 +2014,19 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Reference</p>
-<p>The complete and official AT command reference for the nRF9160 modem can be found in the Nordic Semiconductor documentation: <a href="https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/applications/serial_lte_modem/README.html">https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/applications/serial_lte_modem/README.html</a></p>
+<p>The complete and official AT command reference for the nRF9151 modem can be found in the Nordic Semiconductor documentation: <a href="https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/applications/serial_lte_modem/README.html">https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/applications/serial_lte_modem/README.html</a></p>
 <p>If you're building a <strong>replacement</strong> application firmware for the modem, it must keep supporting the same AT command surface the ISURLOG's own driver (<code>modules/nb_iot.py</code>) actually depends on — see the verified command list in <strong><a href="../module-library-reference/">2.1 Module &amp; Library Reference</a></strong> as a compatibility checklist.</p>
 </div>
 <hr />
-<h2 id="54-advanced-energy-management-esp32-nrf9160-pins">5.4 Advanced Energy Management: ESP32 - nRF9160 Pins</h2>
-<p>In addition to data communication via the UART port, the ESP32 and the nRF9160 modem are connected through two dedicated GPIO lines. These connections enable dynamic and efficient management of both processors' low-power modes, optimizing the autonomy of the <strong>ISURLOG</strong>.</p>
+<h2 id="54-advanced-energy-management-esp32-nrf9151-pins">5.4 Advanced Energy Management: ESP32 - nRF9151 Pins</h2>
+<p>In addition to data communication via the UART port, the ESP32 and the nRF9151 modem are connected through two dedicated GPIO lines. These connections enable dynamic and efficient management of both processors' low-power modes, optimizing the autonomy of the <strong>ISURLOG</strong>.</p>
 <p>The connection between the modules is as follows:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">Name</th>
 <th style="text-align: left;">Pin ESP32</th>
-<th style="text-align: left;">Pin nRF9160</th>
+<th style="text-align: left;">Pin nRF9151</th>
 <th style="text-align: left;">Description</th>
 </tr>
 </thead>
@@ -2045,23 +2045,23 @@
 </tr>
 </tbody>
 </table>
-<p>This functionality is particularly useful when the nRF9160 modem operates in <strong>eDRX (Extended Discontinuous Reception)</strong> mode. The <code>ESP_WAKE_UP</code> signal enables the nRF9160 modem to activate the ESP32. Once awake, the ESP32 can communicate with the nRF9160 via UART to process the received data. This "wake-on-demand" capability significantly reduces the latency for receiving commands or configurations from the server.</p>
+<p>This functionality is particularly useful when the nRF9151 modem operates in <strong>eDRX (Extended Discontinuous Reception)</strong> mode. The <code>ESP_WAKE_UP</code> signal enables the nRF9151 modem to activate the ESP32. Once awake, the ESP32 can communicate with the nRF9151 via UART to process the received data. This "wake-on-demand" capability significantly reduces the latency for receiving commands or configurations from the server.</p>
 <hr />
 <h2 id="55-sim-selection-and-gpio-control">5.5 SIM Selection and GPIO Control</h2>
-<p>The nRF9160 modem selects between the <strong>eSIM</strong> and the <strong>Nano-SIM</strong> based on the state of <strong>GPIO12</strong>. The ESP32 can control the state of GPIO12 via AT commands.</p>
+<p>The nRF9151 modem selects between the <strong>eSIM</strong> and the <strong>Nano-SIM</strong> based on the state of <strong>GPIO12</strong>. The ESP32 can control the state of GPIO12 via AT commands.</p>
 <p><strong>1. Configure GPIO12 as Output:</strong></p>
 <p><code>AT#XGPIOCFG=1,12</code></p>
 <p><strong>2. Set GPIO12 High/Low (Select SIM):</strong></p>
 <p><code>AT#XGPIO=0,12,val</code> (where <code>val</code> is the desired value, 0 for low and 1 for high).</p>
 <h2 id="56-flashing-hardware-requirements-and-connection">5.6 Flashing Hardware Requirements and Connection</h2>
-<p>To physically load new firmware onto the nRF9160 modem, specialized hardware is required:</p>
+<p>To physically load new firmware onto the nRF9151 modem, specialized hardware is required:</p>
 <ul>
 <li><strong>Programmer:</strong> A <strong>Segger J-Link</strong> programmer.</li>
-<li><strong>Connection Method:</strong> A <strong>Tag-Connect</strong> cable or equivalent connector compatible with the nRF9160's JTAG port.</li>
+<li><strong>Connection Method:</strong> A <strong>Tag-Connect</strong> cable or equivalent connector compatible with the nRF9151's JTAG port.</li>
 </ul>
 <h3 id="physical-connection">Physical Connection</h3>
 <p>The programming sequence involves connecting the <strong>J-Link</strong> programmer to your PC via USB. You then connect the programmer to the <strong>JTAG port</strong> on the ISURLOG PCB using the Tag-Connect cable.</p>
-<p>The JTAG port on the ISURLOG PCB (which is the programming port for the nRF9160 modem) is located as shown below:</p>
+<p>The JTAG port on the ISURLOG PCB (which is the programming port for the nRF9151 modem) is located as shown below:</p>
 <p><img alt="ISURLOG PCB layout with the JTAG programming port highlighted" src="../images/5-jtag-port-location.jpg" width="502" /></p>
 <p><em>The JTAG programming port, for the nRF9151 modem.</em></p>
 <h2 id="57-updating-modem-firmware-from-official-binaries">5.7 Updating Modem Firmware from Official Binaries</h2>

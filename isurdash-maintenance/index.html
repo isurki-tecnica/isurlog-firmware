@@ -1713,7 +1713,7 @@
 <p><img alt="IsurDASH Mantenimiento de dispositivos" src="../images/7-maintenance-list.png" width="1000" /></p>
 <p><em>The Mantenimiento de dispositivos list, with per-device maintenance actions.</em></p>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
+<p class="admonition-title">Destructive Actions</p>
 <p>Several of these actions (factory reset, revoke access, end of life) are destructive and not easily reversible — use with care.</p>
 </div>
 <h2 id="firmware-update">Firmware Update</h2>
@@ -1731,7 +1731,7 @@
 <p><em>The firmware update flow — choose a method, then a version.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Building your own firmware?</p>
-<p>This flow only installs official releases published on GitHub. If you're a firmware developer working from a locally-built <code>firmware.bin</code> that isn't (yet) a published release, use the manual flashing procedure instead — see <strong>3. Flashing and Application Upload</strong>.</p>
+<p>This flow only installs official releases published on GitHub. If you're a firmware developer working from a locally-built <code>firmware.bin</code> that isn't (yet) a published release, use the manual flashing procedure instead — see <strong><a href="../flashing-application-upload/">3. Flashing and Application Upload</a></strong>.</p>
 </div>
 <h2 id="micropython-repl">MicroPython REPL</h2>
 <p>Clicking <strong>MicroPython REPL</strong> connects you to the device's live MicroPython console (see <code>remote_repl.py</code> in the firmware) to run commands, inspect state, or debug. It's the same <strong>REPL</strong> button available on a device's own page (see <a href="../isurdash-devices/#633-device-visualization-and-status">6.3.3</a>) — this section describes what it does.</p>
@@ -1745,8 +1745,8 @@
 <li>The console <strong>times out automatically after 2 minutes</strong> without a command.</li>
 <li><strong>Workaround:</strong> once connected, you can raise this by editing the <code>REPL_TIMEOUT</code> variable yourself (in milliseconds), e.g.:</li>
 </ul>
-<p><code>python
-  REPL_TIMEOUT = 120000</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">REPL_TIMEOUT</span> <span class="o">=</span> <span class="mi">120000</span>
+</code></pre></div>
 <ul>
 <li>The session can be <strong>exported as a <code>.txt</code> file</strong> for later reference.</li>
 </ul>

@@ -2612,8 +2612,8 @@
 <h3 id="analog-sensor-4-20ma-inputs">Analog Sensor (4-20mA Inputs)</h3>
 <p>This section allows configuring any of the <strong>four analog inputs</strong> of the <strong>ISURLOG</strong> to read sensors with a 4-20mA current output, whether they are active (externally powered) or passive (powered by the <strong>ISURLOG</strong>).</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For the physical connection scheme of the sensors to the terminals, refer to the <strong>1. Sensor Connections</strong> section.</p>
+<p class="admonition-title">See Also</p>
+<p>For the physical connection scheme of the sensors to the terminals, refer to the <strong><a href="../sensor-connections/">1. Sensor Connections</a></strong> section.</p>
 </div>
 <h4 id="analog-input-parameters">Analog Input Parameters</h4>
 <ul>
@@ -2671,8 +2671,8 @@
 <h3 id="digital-sensor">Digital Sensor</h3>
 <p>This section details the configuration of the digital input on the <strong>ISURLOG</strong>. The input can operate as a state detector (open/closed) or as a pulse counter.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For the physical connection scheme of the sensor to the terminals, the user should consult the <strong>1. Sensor Connections</strong> section.</p>
+<p class="admonition-title">See Also</p>
+<p>For the physical connection scheme of the sensor to the terminals, the user should consult the <strong><a href="../sensor-connections/">1. Sensor Connections</a></strong> section.</p>
 </div>
 <h4 id="digital-sensor-parameters">Digital Sensor Parameters</h4>
 <ul>
@@ -2730,8 +2730,8 @@
 <h3 id="modbus-inputs-rs485">Modbus Inputs (RS485)</h3>
 <p>This section allows configuring readings from external devices that utilize the Modbus RTU protocol via the <strong>ISURLOG's</strong> RS485 interface.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For the physical wiring scheme of the sensors to the RS485 bus, the user should consult the <strong>1. Sensor Connections</strong> section.</p>
+<p class="admonition-title">See Also</p>
+<p>For the physical wiring scheme of the sensors to the RS485 bus, the user should consult the <strong><a href="../sensor-connections/">1. Sensor Connections</a></strong> section.</p>
 </div>
 <h4 id="modbus-parameters">Modbus Parameters</h4>
 <ul>
@@ -2785,7 +2785,7 @@
 </li>
 <li><strong>Number of Decimals (Número de decimales):</strong><ul>
 <li><strong>Description:</strong> Applies a division factor to the numerical values read to position the decimal point. The value read is divided by 10 raised to this number.</li>
-<li><strong>Example:</strong> If the device returns 2530 and 2 decimals are configured, the final value will be 25.30 (because $2530 / 10^2 = 25.30$).</li>
+<li><strong>Example:</strong> If the device returns 2530 and 2 decimals are configured, the final value will be 25.30 (because 2530 / 10² = 25.30).</li>
 </ul>
 </li>
 <li><strong>Offset:</strong><ul>
@@ -2829,8 +2829,8 @@
 <h3 id="pt100-temperature-sensor">PT100 Temperature Sensor</h3>
 <p>This section details the parameters for configuring the input for PT100 temperature probes.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For the physical connection scheme and the probe's hardware configuration, the user should consult the <strong>1. Sensor Connections</strong> section (specifically the PT100 subsection).</p>
+<p class="admonition-title">See Also</p>
+<p>For the physical connection scheme and the probe's hardware configuration, the user should consult the <strong><a href="../sensor-connections/">1. Sensor Connections</a></strong> section (specifically the PT100 subsection).</p>
 </div>
 <h4 id="pt100-parameters">PT100 Parameters</h4>
 <ul>
@@ -3010,7 +3010,7 @@
 <li><strong>Activate High Alarm (Activar alarma de alto eje X/Y/Z):</strong> Checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) <em>in addition</em> to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.</li>
 </ul>
 <div class="admonition note">
-<p class="admonition-title">Coming Soon</p>
+<p class="admonition-title">🚧 Coming Soon</p>
 <p>The firmware already supports forcing an immediate transmission from an axis alarm when the Logging Mode is set to "Conditional" (the same <strong>Activate Alarm Condition</strong> behavior available for the other sensors), but this option is <strong>not yet exposed in IsurDASH</strong> for the accelerometer axes. It will be made available in an upcoming platform update.</p>
 </div>
 
