@@ -23,8 +23,8 @@ The RAK3172 RUI3 core natively supports development via the **Arduino IDE** or V
 ### RUI3 Arduino API Reference
 When compiling custom firmware to run natively on the module, developers can leverage the unified Arduino API provided by RAKwireless to manage LoRaWAN parameters, internal hardware, and peripherals: [https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/arduino-api](https://docs.rakwireless.com/product-categories/software-apis-and-libraries/rui3/arduino-api)
 
-!!! note
-    For the physical hardware needed to flash the modem, see **6.5 Flashing Hardware Requirements and Connection** below.
+!!! note "See Also"
+    For the physical hardware needed to flash the modem, see **[6.5 Flashing Hardware Requirements and Connection](#65-flashing-hardware-requirements-and-connection)** below.
 
 ---
 ## 6.3 UART Communication and AT Commands
@@ -94,8 +94,8 @@ Each [ISURLOG firmware release](https://github.com/isurki-tecnica/isurlog-firmwa
 
 * **`System_Custom_ATCMD.ino.bin`**
 
-!!! note "Coming soon"
-    support for updating the RAK3172 directly from IsurDASH, the same way the [6.8 Device Maintenance](isurdash-maintenance.md) flow already updates the **ESP32**. Until then, the recommended tool is the one below.
+!!! note "🚧 Coming soon"
+    IsurDASH will support updating the RAK3172 directly, the same way the [6.8 Device Maintenance](isurdash-maintenance.md) flow already updates the **ESP32**. Until then, use the tool below.
 
 ### Update Tool
 

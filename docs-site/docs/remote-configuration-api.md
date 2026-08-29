@@ -1,6 +1,6 @@
 # 4. Remote Configuration API (Downlink)
 
-This guide documents the structure and mapping of configuration commands that can be sent remotely to the **ISURLOG** device via Downlink messages (e.g., through LoRaWAN downlinks or specific NB-IoT commands). The commands utilize a binary structure, processed by the accompanying Python library, `IsurlogLPP.py`.
+This guide documents the structure and mapping of configuration commands that can be sent remotely to the **ISURLOG** device via Downlink messages (e.g., through LoRaWAN downlinks or specific NB-IoT commands). The commands utilize a binary structure, processed by the accompanying Python library, **[IsurlogLPP.py](https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/IsurlogLPP.py)**.
 
 !!! note "Note"
     This is the full list of parameters the **firmware** supports over downlink — it doesn't necessarily match **[7. Reference Configuration Parameters](reference-parameters.md)**. Page 7 documents only what **IsurDASH currently lets you configure** through its UI; the ISURLOG firmware can support more parameters than IsurDASH currently exposes. Where the **IsurDASH Configurable** column says **Yes**, it links to the corresponding section of page 7.

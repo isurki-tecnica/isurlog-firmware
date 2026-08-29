@@ -1,7 +1,7 @@
 # 2.1 Module & Library Reference (API Guide)
 
 !!! note "Scope"
-    this page documents the **production** code tree — `app/main.py`, `ports/esp32/modules/modules/` (high-level wrappers) and `ports/esp32/modules/lib/` (low-level drivers) — as tracked on this repository's `main` branch. If you work from the internal development sandbox, some experimental modules (async variants, alternate storage drivers, etc.) may not be listed here yet because they haven't been promoted to this repository. See **[8. Development Workflow (Sandbox → Production)]** *(coming soon)* for how that promotion works.
+    This page documents the **production** code tree — `app/main.py`, `ports/esp32/modules/modules/` (high-level wrappers) and `ports/esp32/modules/lib/` (low-level drivers) — as tracked on this repository's `main` branch. If you work from the internal development sandbox, some experimental modules (async variants, alternate storage drivers, etc.) may not be listed here yet because they haven't been promoted to this repository. See **[8. Development Workflow (Sandbox → Production)]** *(coming soon)* for how that promotion works.
 
 This page complements **[2. Architecture Overview](architecture-overview.md)**: that page explains the `/lib` vs `/modules` split conceptually, this one is the per-file reference — what each module does, what it depends on, and what configuration it reads.
 

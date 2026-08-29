@@ -67,7 +67,7 @@ The MCP23008 (reached over the shared I2C bus above) adds 8 extra GPIO pins (GP0
 
 | MCP Pin | Function | Description |
 | :--- | :--- | :--- |
-| **INT** | Interrupt output | Goes to ESP32 **GPIO34** — see **4.2 Analog and Digital Inputs** ("Wake up from MCP23008"). |
+| **INT** | Interrupt output | Goes to ESP32 **GPIO34** — see **[4.2 Analog and Digital Inputs](#42-analog-and-digital-inputs)** ("Wake up from MCP23008"). |
 | **GP0** | RV3028 Interrupt | Connected to the RV3028 RTC's interrupt output. |
 | **GP1** | SSR 1 Enable | Enables the first relay of the dual solid-state relay (GAQW212GEH). |
 | **GP2** | SSR 2 Enable | Enables the second relay of the dual solid-state relay (GAQW212GEH). |

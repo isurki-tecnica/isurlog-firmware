@@ -7,7 +7,7 @@ The ISURLOG features different power supply options to adapt to the greatest num
 The ISURLOG features an integrated battery charger and power management circuitry, supporting three modes of operation.
 
 !!! note "Installation Note"
-    For the step-by-step procedure on how to install and remove the batteries, please refer to the **4. Installation and Commissioning** section.
+    For the step-by-step procedure on how to install and remove the batteries, please refer to the **[4. Installation and Commissioning](installation-commissioning.md)** section.
 
 ### 2.1.1. Internal Batteries Only
 
@@ -27,7 +27,9 @@ The device can be powered externally without batteries. The power source must pr
 * **Connection Points:**
     1.  **USB-C Port:** Located on the lower right side of the PCB. A conventional 5V mobile charger providing a **minimum current of 1A** can be used.
     2.  **Pressure Terminals (PIN 5V MAX):** The last two pressure terminals on the lower right.
-* **Caution:** **Do not use the USB-C port and the pressure terminals simultaneously as power sources**.
+
+!!! warning "Caution"
+    Do not use the USB-C port and the pressure terminals simultaneously as power sources.
 
 ![The USB-C port and PWR IN pressure terminals for external power](images/3-external-power-connections.jpg){width="883" height="789"}
 

@@ -10,8 +10,12 @@ Isurlog provides two primary methods for data access, each designed for a differ
 * **Mechanism:** This method allows clients to query the database on-demand to retrieve data from any time period.
 * **Data Format:** Data provided through the API is already **decoded** and presented in a human-readable format.
 
+For the full details of this method, see **[2. Historical Data via InfluxDB API (Pull Method)](historical-data-influxdb.md)**.
+
 ## 1.2 Real-Time Data via MQTT (Push Method)
 
 * **Use Case:** Perfect for live monitoring, immediate alerts, and event-driven applications.
 * **Mechanism:** This method provides a continuous stream of data pushed directly from the Isurlog server to a client's systems the moment a new measurement is received.
 * **Data Format:** This stream consists of the **raw device payload**, which **requires decoding** on the client's end.
+
+For the full details of this method, see **[3. Real-Time Data via MQTT (Push Method)](realtime-data-mqtt.md)**.

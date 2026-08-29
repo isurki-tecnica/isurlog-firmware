@@ -72,5 +72,5 @@ Captured with the PPK2 in Ampere meter mode, 1,000 samples/second, over a 10-sec
 !!! note "The periodic spikes"
     Same cause as the NB-IoT capture above: the board's own power regulator switching into a pulsed low-power operating mode at very light load, firing brief current pulses to top up its output capacitor. Not the ESP32 or modem doing anything.
 
-!!! note "Coming soon"
+!!! note "🚧 Coming soon"
     Deep Sleep — Wi-Fi, Wake + Sensor Read, and a transmission-cycle capture for each connectivity option.

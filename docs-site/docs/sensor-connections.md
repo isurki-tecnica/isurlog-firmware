@@ -60,7 +60,7 @@ The ISURLOG supports PT100 temperature probes configured for 2, 3, or 4 wires.
 Achieving an accurate reading requires **two steps** of configuration:
 
 1.  **Hardware (Jumpers):** Soldering or removing the appropriate jumpers on the underside of the PCB.
-2.  **Software (Parameter):** Setting the correct wire count within the MicroPython configuration via IsurDASH.
+2.  **Software (Parameter):** Setting the correct wire count in the Isurlog's configuration via IsurDASH.
 
 | Wire Configuration | Required Jumpers | Connection to F+/F- |
 | :--- | :--- | :--- |
@@ -124,7 +124,7 @@ The AUX-IO connector is a **1mm-pitch (P=1mm) connector** that breaks out extra 
 
 ## 1.8. Internal Sensors and Diagnostics
 
-The datalogger includes two key internal features for monitoring and field interaction:
+The datalogger includes two onboard components for monitoring and field interaction:
 
 1.  **SHT30 Sensor**
     This sensor measures ambient **temperature and humidity** *inside* the enclosure. This acts as an **early warning system** for potential water ingress or component overheating, allowing for preventive maintenance.

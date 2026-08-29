@@ -45,6 +45,44 @@ plugins:
         - locale: es
           name: Español
           build: true
+          nav_translations:
+            Home: Inicio
+            "🛠️ Module A - Use and Hardware": "🛠️ Módulo A - Uso y Hardware"
+            "1. Sensor Connections": "1. Conexión de Sensores"
+            "2. Power Supply Methods": "2. Métodos de Alimentación"
+            "3. Communications": "3. Comunicaciones"
+            "4. Installation and Commissioning": "4. Instalación y Puesta en Marcha"
+            "5. Datalogger Operation": "5. Funcionamiento del Datalogger"
+            "6. IsurDASH Platform": "6. Plataforma IsurDASH"
+            Overview: "Visión General"
+            "6.1. Access and Login": "6.1. Acceso e Inicio de Sesión"
+            "6.2. Dashboard": "6.2. Dashboard"
+            "6.3. Devices": "6.3. Dispositivos"
+            "6.4. Alarms": "6.4. Alarmas"
+            "6.5. Users": "6.5. Usuarios"
+            "6.6. Profiles": "6.6. Perfiles"
+            "6.7. Tags": "6.7. Tags"
+            "6.8. Device Maintenance": "6.8. Mantenimiento de Dispositivos"
+            "7. Reference Configuration Parameters": "7. Referencia de Parámetros de Configuración"
+            "💻 Module B - Firmware Development": "💻 Módulo B - Desarrollo de Firmware"
+            "1. Build Environment Setup": "1. Configuración del Entorno de Compilación"
+            "2. Architecture Overview": "2. Visión General de la Arquitectura"
+            "2.1. Module & Library Reference": "2.1. Referencia de Módulos y Librerías"
+            "3. Flashing and Application Upload": "3. Grabado del Firmware y Carga de la Aplicación"
+            "4. GPIO Mapping (Hardware-Software)": "4. Mapeo de GPIO (Hardware-Software)"
+            "5. Advanced NB-IoT Modem Guide": "5. Guía Avanzada del Módem NB-IoT"
+            "6. Advanced LoRaWAN Modem Guide": "6. Guía Avanzada del Módem LoRaWAN"
+            "7. Contribution Guide": "7. Guía de Contribución"
+            "☁️ Module C - Data Integration & APIs": "☁️ Módulo C - Integración de Datos y APIs"
+            "1. Data Access Overview": "1. Resumen de Acceso a Datos"
+            "2. Historical Data (InfluxDB)": "2. Datos Históricos (InfluxDB)"
+            "3. Real-Time Data (MQTT)": "3. Datos en Tiempo Real (MQTT)"
+            "4. Remote Configuration API (Downlink)": "4. API de Configuración Remota (Downlink)"
+            "⚡ Module D - Power Consumption & Battery Life": "⚡ Módulo D - Consumo de Energía y Vida de la Batería"
+            "1. Consumption Graphs": "1. Gráficos de Consumo"
+            "2. Power Budget Calculator": "2. Calculadora de Consumo de Energía"
+            "🩺 Module E - Troubleshooting": "🩺 Módulo E - Resolución de Problemas"
+            "1. Troubleshooting": "1. Resolución de Problemas"
 
 nav:
   - Home: index.md
@@ -92,6 +130,8 @@ markdown_extensions:
   - tables
   - attr_list
   - md_in_html
+  - pymdownx.highlight
+  - pymdownx.superfences
 
 extra:
   analytics:

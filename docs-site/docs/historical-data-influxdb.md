@@ -11,7 +11,7 @@ Data accessed via this method is **fully decoded** and available in a human-read
 InfluxDB provides a wide range of officially supported client libraries for popular programming languages, including Python, JavaScript, Java, Go, and C#, which simplifies data interaction.
 
 * The complete official documentation for the InfluxDB v2 API and these client libraries can be found at the following URL:
-    * `https://docs.influxdata.com/influxdb/v2/api-guide/client-libraries/`
+    * [https://docs.influxdata.com/influxdb/v2/api-guide/client-libraries/](https://docs.influxdata.com/influxdb/v2/api-guide/client-libraries/)
 
 ## 2.3 Connection Parameters
 
@@ -28,7 +28,7 @@ The following parameters are required to establish a secure connection to the Is
 This section provides the mapping between the physical and virtual inputs of the Isurlog datalogger and the corresponding `_field` keys used in the InfluxDB database. The value associated with each field key represents the final **processed and scaled measurement** from the sensor, ready for use in engineering units.
 
 !!! note "Note"
-    For analog, digital, and Modbus inputs, the final value and its engineering unit (e.g., $m^{3}$, bar, pH) are determined by the scaling and configuration applied in the IsurDASH application. The value stored in the database is the final, scaled result.
+    For analog, digital, and Modbus inputs, the final value and its engineering unit (e.g., m³, bar, pH) are determined by the scaling and configuration applied in the IsurDASH application. The value stored in the database is the final, scaled result.
 
 | Isurlog Input | InfluxDB `_field` Key | Description |
 | :--- | :--- | :--- |
@@ -41,9 +41,9 @@ This section provides the mapping between the physical and virtual inputs of the
 | **Modbus Virtual 1** | `ModbusInput1` | The measurement in engineering units as configured in IsurDASH. |
 | **Modbus Virtual 2** | `ModbusInput2` | The measurement in engineering units as configured in IsurDASH. |
 | **Modbus Virtual 3** | `ModbusInput3` | The measurement in engineering units as configured in IsurDASH. |
-| **PT100 Input** | `TemperatureInput0` | Temperature measurement from the external PT100 sensor in degrees Celsius ($^\circ$C). |
-| **Internal Temperature** | `TemperatureSensor0` | Temperature from the sensor embedded on the ISURLOG's own PCB, in degrees Celsius ($^\circ$C). |
-| **External Temperature** | `TemperatureSensor1` | Temperature from an external sensor connected via the **QWIIC (I2C)** port, in degrees Celsius ($^\circ$C). Only present if that sensor is connected. |
+| **PT100 Input** | `TemperatureInput0` | Temperature measurement from the external PT100 sensor in degrees Celsius (°C). |
+| **Internal Temperature** | `TemperatureSensor0` | Temperature from the sensor embedded on the ISURLOG's own PCB, in degrees Celsius (°C). |
+| **External Temperature** | `TemperatureSensor1` | Temperature from an external sensor connected via the **QWIIC (I2C)** port, in degrees Celsius (°C). Only present if that sensor is connected. |
 | **Internal Humidity** | `HumiditySensor0` | Relative humidity from the sensor embedded on the ISURLOG's own PCB (%). |
 | **External Humidity** | `HumiditySensor1` | Relative humidity from an external sensor connected via the **QWIIC (I2C)** port (%). Only present if that sensor is connected. |
 | **Accelerometer X-axis** | `AccelerometerX0` | Acceleration on the X axis (g). |
@@ -95,6 +95,6 @@ This prints a table of the last 7 days of readings and opens a **single window w
 4. **Internal Temperature & Humidity** *(small)* — `TemperatureSensor0` (left axis) vs. `HumiditySensor0` (right axis).
 5. **NB-IoT Network Quality** *(small)* — RSRQ in dB (`ModemData0`, left axis) vs. RSRP in dBm (`ModemData1`, right axis).
 
-Each chart plots two fields with independent Y-axes (left/right), since they're normally on very different scales. The underlying `_plot_dual_axis()` helper can be reused to build additional charts for any other `_field` key from **10.4 Data Schema**. The uneven panel sizes are built with `matplotlib`'s `GridSpec` (rather than a uniform `plt.subplots()` grid) so the two large panels can each span what would otherwise be 1.5 columns of a plain 3-column layout.
+Each chart plots two fields with independent Y-axes (left/right), since they're normally on very different scales. The underlying `_plot_dual_axis()` helper can be reused to build additional charts for any other `_field` key from **[2.4 Data Schema: Field Key Reference](#24-data-schema-field-key-reference)**. The uneven panel sizes are built with `matplotlib`'s `GridSpec` (rather than a uniform `plt.subplots()` grid) so the two large panels can each span what would otherwise be 1.5 columns of a plain 3-column layout.
 
-To query your **own** devices, replace `URL`, `TOKEN`, and `BUCKET` at the top of the script with the private credentials Isurki provides you (see **2.3 Connection Parameters**).
+To query your **own** devices, replace `URL`, `TOKEN`, and `BUCKET` at the top of the script with the private credentials Isurki provides you (see **[2.3 Connection Parameters](#23-connection-parameters)**).

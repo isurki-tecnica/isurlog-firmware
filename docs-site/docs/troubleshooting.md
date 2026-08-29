@@ -55,7 +55,8 @@ During this state, the Configuration widget on the device's dashboard reads **"S
 
 Clicking **Sincronizar** queues the configuration to be sent to the device — the widget then switches to **"Sincronizado"** *("Synchronized")*.
 
-**Important — "Sincronizado" does not mean the device is already running the new configuration.** It only means the configuration has been sent from IsurDASH's side. For it to actually reach and take effect on the ISURLOG:
+!!! warning "Important"
+    "Sincronizado" does not mean the device is already running the new configuration. It only means the configuration has been sent from IsurDASH's side. For it to actually reach and take effect on the ISURLOG:
 
 1. The ISURLOG has to perform an **uplink** (a data transmission) — this applies the same way to NB-IoT, LoRaWAN, and Wi-Fi devices.
       * **Exception — NB-IoT with eDRX:** on **NB-IoT devices with eDRX enabled**, the wait is much shorter. Instead of waiting for the next full transmission cycle, the configuration can reach the device within the configured **eDRX timer** — typically **40.96 seconds** on standard firmware versions.

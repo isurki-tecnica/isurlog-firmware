@@ -6,15 +6,14 @@ This section covers the physical installation, safety warnings, and the final po
 
 The ISURLOG is powered by lithium batteries. Manipulation, installation, and disposal must adhere to current European standards (Directive 2006/66/CE, Regulation (EU) 2019/1020).
 
-### Key Safety Instructions
-
-* **Battery Type:** Use only the battery type and model specified by the manufacturer.
-* **Mixing:** Do not mix new and used batteries, or combine batteries of different capacity, type, or manufacturer.
-* **Polarity:** Always respect the correct polarity (+/-) indicated in the battery compartment. Incorrect polarity can cause short circuits or overheating.
-* **Damage:** Insert batteries gently to avoid damaging the insulating sleeve. Do not puncture or deform the batteries.
-* **Exposure:** Avoid exposing the device or batteries to heat sources above $60^{\circ}C$, humidity, or liquids.
-* **Storage:** If the product will not be used for a prolonged period, remove the batteries.
-* **Disposal:** Do not dispose of batteries with household waste. Deposit them at authorized selective collection points (ISURKI is a member of ERP, certificate n° 4598).
+!!! warning "Key Safety Instructions"
+    * **Battery Type:** Use only the battery type and model specified by the manufacturer.
+    * **Mixing:** Do not mix new and used batteries, or combine batteries of different capacity, type, or manufacturer.
+    * **Polarity:** Always respect the correct polarity (+/-) indicated in the battery compartment. Incorrect polarity can cause short circuits or overheating.
+    * **Damage:** Insert batteries gently to avoid damaging the insulating sleeve. Do not puncture or deform the batteries.
+    * **Exposure:** Avoid exposing the device or batteries to heat sources above 60 °C, humidity, or liquids.
+    * **Storage:** If the product will not be used for a prolonged period, remove the batteries.
+    * **Disposal:** Do not dispose of batteries with household waste. Deposit them at authorized selective collection points (ISURKI is a member of ERP, certificate n° 4598).
 
 ## 4.2. Physical Mounting
 

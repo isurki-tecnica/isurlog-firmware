@@ -110,4 +110,5 @@ The compiled firmware `.bin` file will be generated in the following directory:
 
 This repository also contains the `app/` folder.
 
-IMPORTANT: The contents of this folder (`main.py`, `config/`, etc.) are NOT compiled into the firmware. These files represent the Python application logic and must be uploaded manually to the ESP32's filesystem (using tools like Thonny or rshell) after flashing the `firmware.bin`. This allows for flexible updates to the application logic without recompiling the entire firmware.
+!!! note "app/ is not part of the firmware"
+    The contents of this folder (`main.py`, `config/`, etc.) are NOT compiled into the firmware. These files represent the Python application logic and must be uploaded manually to the ESP32's filesystem (using tools like Thonny or rshell) after flashing the `firmware.bin`. This allows for flexible updates to the application logic without recompiling the entire firmware.

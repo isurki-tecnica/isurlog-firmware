@@ -4,7 +4,7 @@ IsurDASH is the centralized web platform from which the entire fleet of **ISURLO
 
 All data sent by the **ISURLOG** is received on Isurki's secure servers, where it is stored indefinitely, guaranteeing that the history of measurements is never lost.
 
-For advanced users, **API access** is offered, allowing the integration of **ISURLOG** data into third-party applications or SCADA systems. Furthermore, for organizations requiring total control over their data, the IsurDASH platform can be installed on the client's own servers. For both API access and custom installation options, contact Isurki.
+For advanced users, **[API access](data-access-overview.md)** is offered, allowing the integration of **ISURLOG** data into third-party applications or SCADA systems. Furthermore, for organizations requiring total control over their data, the IsurDASH platform can be installed on the client's own servers. For this custom installation option, contact Isurki.
 
 ## Top Toolbar
 

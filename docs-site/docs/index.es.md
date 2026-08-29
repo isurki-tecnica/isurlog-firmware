@@ -9,6 +9,7 @@
 * **Un firmware, múltiples redes** — NB-IoT, LTE-M, DECT NR+, y satélite NTN a través del nRF9151, o LoRaWAN, de forma exclusiva por unidad, además de Wi-Fi y BLE local para la configuración.
 * **Gestionable en remoto, no solo legible en remoto** — configuración, ajuste de sensores, actualizaciones OTA, y una REPL de MicroPython en vivo, todo desde [IsurDASH](https://isurdash.isurki.com), sin desplazamiento a campo.
 * **MicroPython real, no una caja negra** — un fork genuino de [MicroPython](https://micropython.org), legible y modificable en cada capa.
+* **Sin dependencia del fabricante** — el firmware es de código abierto en GitHub, y cualquier dispositivo puede reconfigurarse para apuntar a otro broker MQTT o backend en cualquier momento. Si ISURKI desapareciera mañana, tus ISURLOG seguirían funcionando: se reprograman y se sigue adelante, nunca se quedan de pisapapeles.
 
 ---
 
@@ -25,7 +26,7 @@
 
 ## Estimar la duración de la batería
 
-La **[calculadora interactiva de presupuesto energético](power-budget.md)** modela el ciclo de trabajo completo de un dispositivo — conectividad, los sensores configurados en IsurDASH, y la configuración de batería (Li-Ion o Li-SOCl2) — para una estimación real en vez de una regla general.
+La **[calculadora interactiva de consumo de energía](power-budget.md)** modela el ciclo de trabajo completo de un dispositivo — conectividad, los sensores configurados en IsurDASH, y la configuración de batería (Li-Ion o Li-SOCl2) — para una estimación real en vez de una regla general.
 
 ---
 
@@ -77,7 +78,7 @@ ISURLOG es un producto en mantenimiento activo con despliegues reales en campo, 
 
 </details>
 
-**¿Alguna sugerencia o idea?** Abrir una [GitHub Issue](https://github.com/isurki-tecnica/isurlog-firmware/issues/new) describiéndola — se aceptan tanto peticiones de nuevas funciones como ideas de integración de hardware, no solo reportes de errores. Ver [7.4 Using the Issues Tracker](contribution-guide.md#74-using-the-issues-tracker) para qué hace que una petición sea buena.
+**¿Alguna sugerencia o idea?** Abrir una [GitHub Issue](https://github.com/isurki-tecnica/isurlog-firmware/issues/new) describiéndola — se aceptan tanto peticiones de nuevas funciones como ideas de integración de hardware, no solo reportes de errores. Ver [7.4 Uso del Rastreador de Issues](contribution-guide.md#74-uso-del-rastreador-de-issues) para qué hace que una petición sea buena.
 
 ---
 

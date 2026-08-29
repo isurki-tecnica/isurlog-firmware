@@ -94,23 +94,23 @@ Each payload consists of one or more concatenated data chunks. Each chunk follow
 * **Data Type:** A 1-byte code that specifies the type of data being sent (e.g., temperature, voltage).
 * **Value:** The raw sensor reading, encoded over N bytes.
 
-All multi-byte values are encoded in **Big-Endian** byte order. The first data payload transmitted begins with a **Unix Timestamp chunk (Type $0\times75$)**.
+All multi-byte values are encoded in **Big-Endian** byte order. The first data payload transmitted begins with a **Unix Timestamp chunk (Type 0x75)**.
 
 ### Data Type Reference
 
 | Sensor Name | Channel | Type (Hex) | Data Format | Value Calculation |
 | :--- | :--- | :--- | :--- | :--- |
-| **Digital Input** | 0 | $0\times00$ | 1-byte Unsigned Integer | Final Value = Integer |
-| **Analog Input** | 0-3 | $0\times02$ | 2-byte Signed Integer | Final Value = Integer / 100.0 |
-| **Modbus Input** | 0-3 | $0\times04$ | 2-byte Signed Integer | Final Value = Integer / 100.0 |
-| **PT100 Temperature** | 0 | $0\times66$ | 2-byte Signed Integer | Final Value = Integer / 10.0 |
-| **Temperature Sensor** | 0 (internal) / 1 (external, QWIIC) | $0\times67$ | 2-byte Signed Integer | Final Value = Integer / 10.0 |
-| **Humidity Sensor** | 0 (internal) / 1 (external, QWIIC) | $0\times68$ | 1-byte Unsigned Integer | Final Value = Integer / 2.0 |
-| **Accelerometer** | 0 | $0\times71$ | 6 bytes = three 2-byte Signed Integers (X, Y, Z) | Final Value (per axis) = Integer / 1000.0 (g) |
-| **Battery Voltage** | 0 | $0\times74$ | 2-byte Unsigned Integer | Final Value = Integer (in mV) |
-| **Unix Timestamp** | 0 | $0\times75$ | 4-byte Unsigned Integer | Final Value = Integer (seconds) |
-| **Battery C-Rate** | 0 | $0\times77$ | 1-byte Signed Integer | Final Value = Integer / 10.0 (%/h) |
-| **Modem Signal Quality** | 0 (RSRQ) / 1 (RSRP) | $0\times78$ | 1-byte Unsigned Integer | Final Value = Integer (channel 0: dB · channel 1: dBm). **NB-IoT devices only.** |
+| **Digital Input** | 0 | 0x00 | 1-byte Unsigned Integer | Final Value = Integer |
+| **Analog Input** | 0-3 | 0x02 | 2-byte Signed Integer | Final Value = Integer / 100.0 |
+| **Modbus Input** | 0-3 | 0x04 | 2-byte Signed Integer | Final Value = Integer / 100.0 |
+| **PT100 Temperature** | 0 | 0x66 | 2-byte Signed Integer | Final Value = Integer / 10.0 |
+| **Temperature Sensor** | 0 (internal) / 1 (external, QWIIC) | 0x67 | 2-byte Signed Integer | Final Value = Integer / 10.0 |
+| **Humidity Sensor** | 0 (internal) / 1 (external, QWIIC) | 0x68 | 1-byte Unsigned Integer | Final Value = Integer / 2.0 |
+| **Accelerometer** | 0 | 0x71 | 6 bytes = three 2-byte Signed Integers (X, Y, Z) | Final Value (per axis) = Integer / 1000.0 (g) |
+| **Battery Voltage** | 0 | 0x74 | 2-byte Unsigned Integer | Final Value = Integer (in mV) |
+| **Unix Timestamp** | 0 | 0x75 | 4-byte Unsigned Integer | Final Value = Integer (seconds) |
+| **Battery C-Rate** | 0 | 0x77 | 1-byte Signed Integer | Final Value = Integer / 10.0 (%/h) |
+| **Modem Signal Quality** | 0 (RSRQ) / 1 (RSRP) | 0x78 | 1-byte Unsigned Integer | Final Value = Integer (channel 0: dB · channel 1: dBm). **NB-IoT devices only.** |
 
 !!! note "Note on channel semantics"
     for most sensor types, the channel identifies which physical input the reading came from (e.g. Analog Input 0-3). For **Accelerometer**, the same chunk packs all three axes together (there's no separate channel per axis). For **Modem Signal Quality**, the channel is repurposed to distinguish the *metric* (0 = RSRQ, 1 = RSRP) rather than a physical input.
@@ -141,28 +141,28 @@ This payload contains a timestamp followed by four sensor readings. The client a
 * **Bytes:** `00670137`
 * **Type:** `0x67` (Internal Temperature Sensor)
 * **Value:** `0x0137` (311 decimal, signed)
-* **Calculation:** $311 / 10.0 = 31.1 ^\circ C$
+* **Calculation:** 311 / 10.0 = 31.1 °C
 
 ### Chunk 4: Internal Humidity
 
 * **Bytes:** `006840`
 * **Type:** `0x68` (Internal Humidity Sensor)
 * **Value:** `0x40` (64 decimal)
-* **Calculation:** $64 / 2.0 = 32.0\%$
+* **Calculation:** 64 / 2.0 = 32.0%
 
 ### Chunk 5: Analog Input
 
 * **Bytes:** `0002021D`
 * **Type:** `0x02` (Analog Input)
 * **Value:** `0x021D` (541 decimal, signed)
-* **Calculation:** $541 / 100.0 = 5.41$ (in engineering units)
+* **Calculation:** 541 / 100.0 = 5.41 (in engineering units)
 
 ## 3.6 Reference Implementation
 
 A complete Python script demonstrating the connection, subscription, payload decoding, and a **live-updating dashboard** is provided in the accompanying file: **[isurlog_mqtt_demo.py](https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/isurlog_mqtt_demo.py)**.
 
 !!! note "Dependency Note"
-    The script requires the accompanying library file, **`IsurlogLPP.py`**, to handle the decoding and calculation of sensor values from the raw Cayenne LPP payload format. Both files must be present in the same directory for the example to run.
+    The script requires the accompanying library file, **[IsurlogLPP.py](https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/IsurlogLPP.py)**, to handle the decoding and calculation of sensor values from the raw Cayenne LPP payload format. Both files must be present in the same directory for the example to run.
 
 A device is only ever **one** connectivity type, so the script subscribes to a single topic based on a `DEVICE_TYPE` setting (`"nb-iot"` or `"lorawan"`, matching the same values used in the ISURLOG's own `static_config.json`) — not to both NB-IoT and LoRaWAN topics at once. For LoRaWAN, fill in your specific `APPLICATION_ID` and `DEVICE_EUI` rather than using a wildcard topic, which would otherwise subscribe to every device on every application your credentials can see.
 
@@ -198,5 +198,5 @@ This works by:
 2. Appending to the right buffer inside the MQTT `on_message` callback as each payload is decoded.
 3. Running the MQTT client's network loop in a background thread (`client.loop_start()`), so the main thread is free to run matplotlib's own event loop (`plt.show()`) and periodically redraw from the buffers via `matplotlib.animation.FuncAnimation`.
 
-!!! note "A pitfall worth knowing if you build your own live dual-axis chart"
-    the figure, subplots, and each panel's twin Y-axis (`ax.twinx()`) are created **once**, in `build_dashboard()`. Only the line data is updated afterwards, on every animation frame (`_update_line()`, via `line.set_data()` + `ax.relim()` + `ax.autoscale_view()`). Recreating the twin axes on every redraw (e.g. calling `ax.clear()` then `ax.twinx()` again in a loop) leaves the previous twin axes behind instead of replacing them — they silently stack on top of each other frame after frame, which is what causes overlapping scales and labels spilling outside the plot after the chart has been running for a while.
+!!! note "Twin-Axis Pitfall"
+    The figure, subplots, and each panel's twin Y-axis (`ax.twinx()`) are created **once**, in `build_dashboard()`. Only the line data is updated afterwards, on every animation frame (`_update_line()`, via `line.set_data()` + `ax.relim()` + `ax.autoscale_view()`). Recreating the twin axes on every redraw (e.g. calling `ax.clear()` then `ax.twinx()` again in a loop) leaves the previous twin axes behind instead of replacing them — they silently stack on top of each other frame after frame, which is what causes overlapping scales and labels spilling outside the plot after the chart has been running for a while.

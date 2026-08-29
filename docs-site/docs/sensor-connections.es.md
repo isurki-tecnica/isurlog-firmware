@@ -60,7 +60,7 @@ El ISURLOG admite sondas de temperatura PT100 configuradas a 2, 3 o 4 hilos.
 Obtener una lectura precisa requiere **dos pasos** de configuración:
 
 1.  **Hardware (Jumpers):** soldar o retirar los jumpers correspondientes en la cara inferior de la PCB.
-2.  **Software (Parámetro):** ajustar el número de hilos correcto en la configuración de MicroPython a través de IsurDASH.
+2.  **Software (Parámetro):** ajustar el número de hilos correcto en la configuración del Isurlog a través de IsurDASH.
 
 | Configuración de Hilos | Jumpers Requeridos | Conexión a F+/F- |
 | :--- | :--- | :--- |
@@ -98,11 +98,11 @@ El ISURLOG también expone su bus I2C interno a través de un conector **QWIIC**
 *El conector QWIIC — GND, 3V3, SDA, SCL.*
 
 !!! note "Nota sobre Alimentación"
-    El riel **3V3** de este conector es la alimentación principal de 3.3V del propio datalogger — **no puede desactivarse** por firmware. Si la aplicación requiere bajo consumo, es necesario que el sensor QWIIC conectado disponga de su propio modo de bajo consumo, o contabilizar su consumo en reposo dentro del presupuesto energético.
+    El riel **3V3** de este conector es la alimentación principal de 3.3V del propio datalogger — **no puede desactivarse** por firmware. Si la aplicación requiere bajo consumo, es necesario que el sensor QWIIC conectado disponga de su propio modo de bajo consumo, o contabilizar su consumo en reposo dentro del consumo energético total.
 
 ## 1.7. Conector AUX-IO
 
-El conector AUX-IO es un **conector de paso de 1mm (P=1mm)** que expone señales adicionales del expansor de E/S MCP23008 del ISURLOG — ver [4.5 MCP23008 I/O Expander Pinout](gpio-mapping.md#45-mcp23008-io-expander-pinout).
+El conector AUX-IO es un **conector de paso de 1mm (P=1mm)** que expone señales adicionales del expansor de E/S MCP23008 del ISURLOG — ver [4.5 Pinout del Expansor de I/O MCP23008](gpio-mapping.md#45-pinout-del-expansor-de-io-mcp23008).
 
 El **pin 1** está marcado con un triángulo en la serigrafía de la PCB; los pines se numeran a partir de ahí, empezando por la parte inferior del conector en la imagen siguiente.
 
@@ -124,7 +124,7 @@ El **pin 1** está marcado con un triángulo en la serigrafía de la PCB; los pi
 
 ## 1.8. Sensores Internos y Diagnóstico
 
-El datalogger incluye dos funciones internas clave para monitorización e interacción en campo:
+El datalogger incorpora dos elementos internos para la monitorización y la interacción en campo:
 
 1.  **Sensor SHT30**
     Este sensor mide la **temperatura y humedad** ambiente *dentro* de la carcasa, actuando como un **sistema de alerta temprana** ante posibles entradas de agua o sobrecalentamiento de componentes, lo que permite mantenimiento preventivo.

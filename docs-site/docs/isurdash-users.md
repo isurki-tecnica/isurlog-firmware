@@ -33,7 +33,7 @@ A view-only role, ideal for personnel who need to monitor data without being abl
 
 Has everything an Operador de planta has, plus the ability to **edit the configuration of Isurlogs**, and access to the **Usuarios, Perfiles, Tags**, and **Mantenimiento de dispositivos** menus — i.e. can create/manage other users, profiles and tags.
 
-!!! note
+!!! note "Admin Role"
     There is a third, higher role (**admin**) with access to the Panel de administrador (Servicios, Registro de dispositivos, File Scheduler, Grupos de usuario) — that's an internal Isurki role, not something a client account can be assigned or create, so it's out of scope for this guide.
 
 ## 6.5.3. Create and Assign a New User

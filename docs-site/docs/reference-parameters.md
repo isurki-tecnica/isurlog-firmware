@@ -129,8 +129,8 @@ These parameters are configured when adding or editing a specific sensor from th
 
 This section allows configuring any of the **four analog inputs** of the **ISURLOG** to read sensors with a 4-20mA current output, whether they are active (externally powered) or passive (powered by the **ISURLOG**).
 
-!!! note
-    For the physical connection scheme of the sensors to the terminals, refer to the **1. Sensor Connections** section.
+!!! note "See Also"
+    For the physical connection scheme of the sensors to the terminals, refer to the **[1. Sensor Connections](sensor-connections.md)** section.
 
 #### Analog Input Parameters
 
@@ -165,8 +165,8 @@ This section allows configuring any of the **four analog inputs** of the **ISURL
 
 This section details the configuration of the digital input on the **ISURLOG**. The input can operate as a state detector (open/closed) or as a pulse counter.
 
-!!! note
-    For the physical connection scheme of the sensor to the terminals, the user should consult the **1. Sensor Connections** section.
+!!! note "See Also"
+    For the physical connection scheme of the sensor to the terminals, the user should consult the **[1. Sensor Connections](sensor-connections.md)** section.
 
 #### Digital Sensor Parameters
 
@@ -201,8 +201,8 @@ This section details the configuration of the digital input on the **ISURLOG**. 
 
 This section allows configuring readings from external devices that utilize the Modbus RTU protocol via the **ISURLOG's** RS485 interface.
 
-!!! note
-    For the physical wiring scheme of the sensors to the RS485 bus, the user should consult the **1. Sensor Connections** section.
+!!! note "See Also"
+    For the physical wiring scheme of the sensors to the RS485 bus, the user should consult the **[1. Sensor Connections](sensor-connections.md)** section.
 
 #### Modbus Parameters
 
@@ -232,7 +232,7 @@ This section allows configuring readings from external devices that utilize the 
     * **Description:** This is a checkbox field. It must be activated if the value to be read occupies two consecutive registers and is encoded in the 32-bit IEEE 754 floating-point format.
 * **Number of Decimals (Número de decimales):**
     * **Description:** Applies a division factor to the numerical values read to position the decimal point. The value read is divided by 10 raised to this number.
-    * **Example:** If the device returns 2530 and 2 decimals are configured, the final value will be 25.30 (because $2530 / 10^2 = 25.30$).
+    * **Example:** If the device returns 2530 and 2 decimals are configured, the final value will be 25.30 (because 2530 / 10² = 25.30).
 * **Offset:**
     * **Description:** A numerical value that is added or subtracted from the read value (already adjusted by the decimals) to perform a final calibration or adjustment.
 * **Mode (Modo):**
@@ -257,8 +257,8 @@ This section allows configuring readings from external devices that utilize the 
 
 This section details the parameters for configuring the input for PT100 temperature probes.
 
-!!! note
-    For the physical connection scheme and the probe's hardware configuration, the user should consult the **1. Sensor Connections** section (specifically the PT100 subsection).
+!!! note "See Also"
+    For the physical connection scheme and the probe's hardware configuration, the user should consult the **[1. Sensor Connections](sensor-connections.md)** section (specifically the PT100 subsection).
 
 #### PT100 Parameters
 
@@ -375,5 +375,5 @@ The same four parameters repeat per axis (**X**, **Y**, **Z**):
 * **High Alarm (Alarma de alto eje X/Y/Z):** Defines the upper acceleration threshold (in g) for that axis. If the measured value exceeds this threshold, an alarm will be recorded.
 * **Activate High Alarm (Activar alarma de alto eje X/Y/Z):** Checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
 
-!!! note "Coming Soon"
+!!! note "🚧 Coming Soon"
     The firmware already supports forcing an immediate transmission from an axis alarm when the Logging Mode is set to "Conditional" (the same **Activate Alarm Condition** behavior available for the other sensors), but this option is **not yet exposed in IsurDASH** for the accelerometer axes. It will be made available in an upcoming platform update.
