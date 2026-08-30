@@ -159,7 +159,7 @@ Este payload contiene una marca de tiempo seguida de cuatro lecturas de sensores
 
 ## 3.6 Implementación de Referencia
 
-En el archivo adjunto **[isurlog_mqtt_demo.py](https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/isurlog_mqtt_demo.py)** se ofrece un script completo en Python que muestra la conexión, la suscripción, la decodificación del payload, y un **dashboard actualizado en vivo**.
+En el archivo adjunto **`isurlog_mqtt_demo.py`** se ofrece un script completo en Python que muestra la conexión, la suscripción, la decodificación del payload, y un **dashboard actualizado en vivo** — 🚧 enlace disponible próximamente.
 
 !!! note "Nota de dependencia"
     El script requiere el archivo de librería adjunto, **[IsurlogLPP.py](https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/IsurlogLPP.py)**, para gestionar la decodificación y el cálculo de los valores de sensores a partir del formato de payload Cayenne LPP en bruto. Ambos archivos deben estar en el mismo directorio para que el ejemplo funcione.

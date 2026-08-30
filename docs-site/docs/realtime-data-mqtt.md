@@ -159,7 +159,7 @@ This payload contains a timestamp followed by four sensor readings. The client a
 
 ## 3.6 Reference Implementation
 
-A complete Python script demonstrating the connection, subscription, payload decoding, and a **live-updating dashboard** is provided in the accompanying file: **[isurlog_mqtt_demo.py](https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/isurlog_mqtt_demo.py)**.
+A complete Python script demonstrating the connection, subscription, payload decoding, and a **live-updating dashboard** is provided in the accompanying file, **`isurlog_mqtt_demo.py`** — 🚧 link coming soon.
 
 !!! note "Dependency Note"
     The script requires the accompanying library file, **[IsurlogLPP.py](https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/IsurlogLPP.py)**, to handle the decoding and calculation of sensor values from the raw Cayenne LPP payload format. Both files must be present in the same directory for the example to run.
