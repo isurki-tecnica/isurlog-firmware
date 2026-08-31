@@ -1,6 +1,6 @@
 
 <!doctype html>
-<html lang="es" class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
@@ -10,35 +10,33 @@
       
       
       
-        <link rel="canonical" href="https://docs.isurlog.isurki.com/es/contribution-guide/">
+        <link rel="canonical" href="https://docs.isurlog.isurki.com/configurator/">
       
       
-        <link rel="prev" href="../lorawan-modem-guide/">
+        <link rel="prev" href="../parts-and-accessories/">
       
-      
-        <link rel="next" href="../data-access-overview/">
       
       
         
-          <link rel="alternate" href="../../contribution-guide/" hreflang="en">
+          <link rel="alternate" href="./" hreflang="en">
         
-          <link rel="alternate" href="./" hreflang="es">
+          <link rel="alternate" href="../es/configurator/" hreflang="es">
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>7. Guía de Contribución - ISURLOG Docs</title>
+        <title>2. Build Your Own ISURLOG - ISURLOG Docs</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -57,7 +55,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -92,8 +90,8 @@
     <div data-md-component="skip">
       
         
-        <a href="#7-guia-de-contribucion" class="md-skip">
-          Saltar a contenido
+        <a href="#2-build-your-own-isurlog" class="md-skip">
+          Skip to content
         </a>
       
     </div>
@@ -107,8 +105,8 @@
   
 
 <header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Cabecera">
-    <a href="../" title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -128,7 +126,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              7. Guía de Contribución
+              2. Build Your Own ISURLOG
             
           </span>
         </div>
@@ -168,20 +166,20 @@
       <div class="md-header__option">
   <div class="md-select">
     
-    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+    <button class="md-header__button md-icon" aria-label="Select language">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
     </button>
     <div class="md-select__inner">
       <ul class="md-select__list">
         
           <li class="md-select__item">
-            <a href="../../contribution-guide/" hreflang="en" class="md-select__link">
+            <a href="./" hreflang="en" class="md-select__link">
               English
             </a>
           </li>
         
           <li class="md-select__item">
-            <a href="./" hreflang="es" class="md-select__link">
+            <a href="../es/configurator/" hreflang="es" class="md-select__link">
               Español
             </a>
           </li>
@@ -202,16 +200,16 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
-      <nav class="md-search__options" aria-label="Buscar">
+      <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
@@ -222,7 +220,7 @@
       <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Inicializando búsqueda
+            Initializing search
           </div>
           <ol class="md-search-result__list" role="presentation"></ol>
         </div>
@@ -234,7 +232,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+        <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -268,9 +266,9 @@
 
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../" title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+    <a href=".." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -280,7 +278,7 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+      <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -300,14 +298,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Inicio
+    Home
   
 
     
@@ -361,7 +359,7 @@
   <span class="md-ellipsis">
     
   
-    🛠️ Módulo A - Uso y Hardware
+    🛠️ Module A - Use and Hardware
   
 
     
@@ -377,7 +375,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    🛠️ Módulo A - Uso y Hardware
+    🛠️ Module A - Use and Hardware
   
 
           </label>
@@ -397,7 +395,7 @@
   <span class="md-ellipsis">
     
   
-    1. Conexión de Sensores
+    1. Sensor Connections
   
 
     
@@ -425,7 +423,7 @@
   <span class="md-ellipsis">
     
   
-    2. Métodos de Alimentación
+    2. Power Supply Methods
   
 
     
@@ -453,7 +451,7 @@
   <span class="md-ellipsis">
     
   
-    3. Comunicaciones
+    3. Communications
   
 
     
@@ -481,7 +479,7 @@
   <span class="md-ellipsis">
     
   
-    4. Instalación y Puesta en Marcha
+    4. Installation and Commissioning
   
 
     
@@ -509,7 +507,7 @@
   <span class="md-ellipsis">
     
   
-    5. Funcionamiento del Datalogger
+    5. Datalogger Operation
   
 
     
@@ -568,7 +566,7 @@
   <span class="md-ellipsis">
     
   
-    6. Plataforma IsurDASH
+    6. IsurDASH Platform
   
 
     
@@ -584,7 +582,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    6. Plataforma IsurDASH
+    6. IsurDASH Platform
   
 
           </label>
@@ -604,7 +602,7 @@
   <span class="md-ellipsis">
     
   
-    Visión General
+    Overview
   
 
     
@@ -632,7 +630,7 @@
   <span class="md-ellipsis">
     
   
-    6.1. Acceso e Inicio de Sesión
+    6.1. Access and Login
   
 
     
@@ -688,7 +686,7 @@
   <span class="md-ellipsis">
     
   
-    6.3. Dispositivos
+    6.3. Devices
   
 
     
@@ -716,7 +714,7 @@
   <span class="md-ellipsis">
     
   
-    6.4. Alarmas
+    6.4. Alarms
   
 
     
@@ -744,7 +742,7 @@
   <span class="md-ellipsis">
     
   
-    6.5. Usuarios
+    6.5. Users
   
 
     
@@ -772,7 +770,7 @@
   <span class="md-ellipsis">
     
   
-    6.6. Perfiles
+    6.6. Profiles
   
 
     
@@ -828,7 +826,7 @@
   <span class="md-ellipsis">
     
   
-    6.8. Mantenimiento de Dispositivos
+    6.8. Device Maintenance
   
 
     
@@ -864,7 +862,7 @@
   <span class="md-ellipsis">
     
   
-    7. Referencia de Parámetros de Configuración
+    7. Reference Configuration Parameters
   
 
     
@@ -889,10 +887,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -916,11 +912,11 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -930,7 +926,7 @@
   <span class="md-ellipsis">
     
   
-    💻 Módulo B - Desarrollo de Firmware
+    💻 Module B - Firmware Development
   
 
     
@@ -941,12 +937,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
   
-    💻 Módulo B - Desarrollo de Firmware
+    💻 Module B - Firmware Development
   
 
           </label>
@@ -966,7 +962,7 @@
   <span class="md-ellipsis">
     
   
-    1. Configuración del Entorno de Compilación
+    1. Build Environment Setup
   
 
     
@@ -994,7 +990,7 @@
   <span class="md-ellipsis">
     
   
-    2. Visión General de la Arquitectura
+    2. Architecture Overview
   
 
     
@@ -1022,7 +1018,7 @@
   <span class="md-ellipsis">
     
   
-    2.1. Referencia de Módulos y Librerías
+    2.1. Module & Library Reference
   
 
     
@@ -1050,7 +1046,7 @@
   <span class="md-ellipsis">
     
   
-    3. Grabado del Firmware y Carga de la Aplicación
+    3. Flashing and Application Upload
   
 
     
@@ -1078,7 +1074,7 @@
   <span class="md-ellipsis">
     
   
-    4. Mapeo de GPIO (Hardware-Software)
+    4. GPIO Mapping (Hardware-Software)
   
 
     
@@ -1106,7 +1102,7 @@
   <span class="md-ellipsis">
     
   
-    5. Guía Avanzada del Módem NB-IoT
+    5. Advanced NB-IoT Modem Guide
   
 
     
@@ -1134,7 +1130,7 @@
   <span class="md-ellipsis">
     
   
-    6. Guía Avanzada del Módem LoRaWAN
+    6. Advanced LoRaWAN Modem Guide
   
 
     
@@ -1152,44 +1148,17 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    7. Guía de Contribución
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../contribution-guide/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    7. Guía de Contribución
+    7. Contribution Guide
   
 
     
@@ -1198,131 +1167,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Tabla de contenidos
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#71-formas-de-contribuir" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7.1 Formas de Contribuir
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#72-requisitos-previos-para-enviar-codigo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7.2 Requisitos Previos para Enviar Código
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#73-el-proceso-de-contribucion" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7.3 El Proceso de Contribución
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="7.3 El Proceso de Contribución">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-hacer-un-fork-del-repositorio" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Hacer un Fork del Repositorio
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-crear-una-rama-de-trabajo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Crear una Rama de Trabajo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-implementar-los-cambios" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Implementar los Cambios
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-crear-un-pull-request-pr" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Crear un Pull Request (PR)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#74-uso-del-rastreador-de-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7.4 Uso del Rastreador de Issues
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#75-donde-mirar-segun-que-quieras-tocar" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7.5 Dónde Mirar, Según Qué Quieras Tocar
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1370,7 +1214,7 @@
   <span class="md-ellipsis">
     
   
-    ☁️ Módulo C - Integración de Datos y APIs
+    ☁️ Module C - Data Integration & APIs
   
 
     
@@ -1386,7 +1230,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    ☁️ Módulo C - Integración de Datos y APIs
+    ☁️ Module C - Data Integration & APIs
   
 
           </label>
@@ -1406,7 +1250,7 @@
   <span class="md-ellipsis">
     
   
-    1. Resumen de Acceso a Datos
+    1. Data Access Overview
   
 
     
@@ -1434,7 +1278,7 @@
   <span class="md-ellipsis">
     
   
-    2. Datos Históricos (InfluxDB)
+    2. Historical Data (InfluxDB)
   
 
     
@@ -1462,7 +1306,7 @@
   <span class="md-ellipsis">
     
   
-    3. Datos en Tiempo Real (MQTT)
+    3. Real-Time Data (MQTT)
   
 
     
@@ -1490,7 +1334,7 @@
   <span class="md-ellipsis">
     
   
-    4. API de Configuración Remota (Downlink)
+    4. Remote Configuration API (Downlink)
   
 
     
@@ -1542,7 +1386,7 @@
   <span class="md-ellipsis">
     
   
-    ⚡ Módulo D - Consumo de Energía y Vida de la Batería
+    ⚡ Module D - Power Consumption & Battery Life
   
 
     
@@ -1558,7 +1402,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    ⚡ Módulo D - Consumo de Energía y Vida de la Batería
+    ⚡ Module D - Power Consumption & Battery Life
   
 
           </label>
@@ -1578,7 +1422,7 @@
   <span class="md-ellipsis">
     
   
-    1. Gráficos de Consumo
+    1. Consumption Graphs
   
 
     
@@ -1606,7 +1450,7 @@
   <span class="md-ellipsis">
     
   
-    2. Calculadora de Consumo de Energía
+    2. Power Budget Calculator
   
 
     
@@ -1656,7 +1500,7 @@
   <span class="md-ellipsis">
     
   
-    🩺 Módulo E - Resolución de Problemas
+    🩺 Module E - Troubleshooting
   
 
     
@@ -1672,7 +1516,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    🩺 Módulo E - Resolución de Problemas
+    🩺 Module E - Troubleshooting
   
 
           </label>
@@ -1692,7 +1536,7 @@
   <span class="md-ellipsis">
     
   
-    1. Resolución de Problemas
+    1. Troubleshooting
   
 
     
@@ -1717,8 +1561,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -1730,11 +1576,11 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -1744,7 +1590,7 @@
   <span class="md-ellipsis">
     
   
-    🧰 Módulo F - Piezas y Accesorios
+    🧰 Module F - Parts and Accessories
   
 
     
@@ -1755,12 +1601,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
-    🧰 Módulo F - Piezas y Accesorios
+    🧰 Module F - Parts and Accessories
   
 
           </label>
@@ -1780,7 +1626,7 @@
   <span class="md-ellipsis">
     
   
-    1. Piezas y Accesorios
+    1. Parts and Accessories
   
 
     
@@ -1798,17 +1644,26 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../configurator/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
     
   
-    2. Configura tu ISURLOG
+    2. Build Your Own ISURLOG
   
 
     
@@ -1817,6 +1672,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -1842,125 +1698,12 @@
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
   
     
   
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Tabla de contenidos
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#71-formas-de-contribuir" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7.1 Formas de Contribuir
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#72-requisitos-previos-para-enviar-codigo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7.2 Requisitos Previos para Enviar Código
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#73-el-proceso-de-contribucion" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7.3 El Proceso de Contribución
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="7.3 El Proceso de Contribución">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-hacer-un-fork-del-repositorio" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1. Hacer un Fork del Repositorio
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-crear-una-rama-de-trabajo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Crear una Rama de Trabajo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-implementar-los-cambios" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Implementar los Cambios
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-crear-un-pull-request-pr" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Crear un Pull Request (PR)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#74-uso-del-rastreador-de-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7.4 Uso del Rastreador de Issues
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#75-donde-mirar-segun-que-quieras-tocar" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7.5 Dónde Mirar, Según Qué Quieras Tocar
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -1980,102 +1723,264 @@
   
 
 
-<h1 id="7-guia-de-contribucion">7. Guía de Contribución</h1>
-<p>¡El firmware del <strong>ISURLOG</strong> es un proyecto de código abierto, y las contribuciones de la comunidad son bienvenidas! Ya sea una simple corrección de errores, la sugerencia de una nueva funcionalidad, o la optimización de las rutinas de consumo de energía, tu ayuda es muy valorada.</p>
-<div class="admonition note">
-<p class="admonition-title">¿Dónde vive realmente el código propio de ISURKI?</p>
-<p>Este repositorio es un <strong>fork completo de MicroPython</strong> — la gran mayoría del árbol de código (<code>py/</code>, <code>extmod/</code>, la mayor parte de <code>ports/</code>, etc.) es MicroPython original (upstream), mantenido sincronizado a través del remoto <code>upstream</code>. El código propio de ISURKI — la parte a la que en la mayoría de los casos contribuirás — vive en solo dos sitios: <strong><code>app/</code></strong> (la aplicación, <code>main.py</code> + configuración) y <strong><code>ports/esp32/modules/{modules,lib}</code></strong> (los envoltorios y drivers). Ver <strong><a href="../architecture-overview/">2. Visión General de la Arquitectura</a></strong> y <strong><a href="../module-library-reference/">2.1 Referencia de Módulos y Librerías</a></strong> antes de empezar — ahí se explica la separación entre <code>lib</code>/<code>modules</code> y se documenta cada archivo existente, para saber dónde encaja un nuevo driver de sensor o una nueva funcionalidad.</p>
+<h1 id="2-build-your-own-isurlog">2. Build Your Own ISURLOG</h1>
+<p>Pick your options below — the total updates as you go. This only includes items available directly from Isurki (with a real price); for the "bring your own" alternatives, full specs, and supplier links for each item, see <strong><a href="../parts-and-accessories/">1. Parts and Accessories</a></strong>. When you're ready, request a quote and we'll confirm compatibility and final pricing.</p>
+<p><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"></p>
+<style>
+  .cfg-wrap{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#f6f8f7;
+    --border:#d7dcda; --border-strong:#b9c1be;
+    --text:#182322; --text-2:#4d5957; --text-3:#7c8886;
+    --accent:#b8721e; --accent-ink:#5c3810; --accent-bg:#f7e8d4;
+    --warn-bg:#f8e4e1; --warn-ink:#7a2b1c;
+    --radius:10px;
+    --font-ui: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+  }
+  [data-md-color-scheme="slate"] .cfg-wrap{
+    --bg:#121615; --surface:#1b201f; --surface-2:#212726;
+    --border:#333b39; --border-strong:#454f4c;
+    --text:#e8ece9; --text-2:#aab5b1; --text-3:#78827f;
+    --accent:#e5a355; --accent-ink:#ffe4bd; --accent-bg:#3a2a15;
+    --warn-bg:#3a201a; --warn-ink:#f0b3a3;
+  }
+  .cfg-wrap, .cfg-wrap *{box-sizing:border-box;}
+  .cfg-wrap{max-width:900px;margin:0 auto;padding:1.5rem 0 2rem;font-family:var(--font-ui);color:var(--text);}
+  .cfg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1.1rem;}
+  .cfg-card h3{font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin:0 0 .9rem;color:var(--text-2);}
+  .cfg-seg{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem;}
+  .cfg-seg-btn{flex:1;min-width:140px;text-align:left;padding:.6rem .8rem;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-2);cursor:pointer;}
+  .cfg-seg-btn[data-active="true"]{background:var(--accent-bg);color:var(--accent-ink);border-color:var(--accent);}
+  .cfg-seg-btn .lbl{display:block;font-size:.85rem;font-weight:600;}
+  .cfg-seg-btn .pr{display:block;font-size:.78rem;font-family:var(--font-mono);margin-top:.15rem;color:var(--text-3);}
+  .cfg-seg-btn[data-active="true"] .pr{color:var(--accent-ink);}
+  .cfg-row{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem 0;border-top:1px solid var(--border);}
+  .cfg-row:first-of-type{border-top:none;}
+  .cfg-row input{margin-top:.25rem;accent-color:var(--accent);width:16px;height:16px;flex:none;}
+  .cfg-row label{flex:1;font-size:.85rem;cursor:pointer;}
+  .cfg-row .pr{font-family:var(--font-mono);font-size:.85rem;font-weight:600;white-space:nowrap;padding-left:.5rem;}
+  .cfg-row .sub{display:block;font-size:.76rem;color:var(--text-3);margin-top:.1rem;font-weight:400;}
+  .cfg-warn{margin-top:.7rem;padding:.6rem .8rem;border-radius:8px;background:var(--warn-bg);color:var(--warn-ink);font-size:.8rem;display:none;}
+  .cfg-warn.show{display:block;}
+  .cfg-warn p{margin:0 0 .3rem;}
+  .cfg-warn p:last-child{margin-bottom:0;}
+  .cfg-summary{background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--radius);padding:1.25rem;}
+  .cfg-summary h3{font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin:0 0 .8rem;color:var(--text-2);}
+  .cfg-line{display:flex;justify-content:space-between;font-size:.82rem;padding:.3rem 0;color:var(--text-2);}
+  .cfg-line span:last-child{font-family:var(--font-mono);color:var(--text);}
+  .cfg-empty{font-size:.8rem;color:var(--text-3);padding:.3rem 0;}
+  .cfg-total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--border-strong);margin-top:.6rem;padding-top:.8rem;}
+  .cfg-total .label{font-size:.85rem;font-weight:600;}
+  .cfg-total .num{font-family:var(--font-mono);font-size:1.8rem;font-weight:600;color:var(--accent-ink);}
+  .cfg-cta{display:block;text-align:center;margin-top:1.1rem;padding:.75rem 1rem;border-radius:8px;background:var(--accent);color:#fff;font-weight:600;text-decoration:none;font-size:.9rem;}
+  .cfg-cta:hover{opacity:.92;}
+  .cfg-note{font-size:.74rem;color:var(--text-3);margin-top:.6rem;line-height:1.5;}
+</style>
+
+<div class="cfg-wrap">
+
+  <div class="cfg-card">
+    <h3>Connectivity</h3>
+    <div class="cfg-seg" id="cfg-variant">
+      <div class="cfg-seg-btn" data-key="nbiot" data-active="true"><span class="lbl">NB-IoT / LTE-M</span><span class="pr">€387</span></div>
+      <div class="cfg-seg-btn" data-key="lora" data-active="false"><span class="lbl">LoRaWAN</span><span class="pr">€330</span></div>
+      <div class="cfg-seg-btn" data-key="wifi" data-active="false"><span class="lbl">Wi-Fi only</span><span class="pr">€310</span></div>
+    </div>
+    <p class="cfg-note" id="cfg-antenna-note"></p>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Firmware</h3>
+    <div class="cfg-seg" id="cfg-firmware" style="flex-direction:column;">
+      <div class="cfg-seg-btn" data-key="standard" data-active="true"><span class="lbl">Standard firmware, connected to IsurDASH</span><span class="pr">€0</span></div>
+      <div class="cfg-seg-btn" data-key="byo" data-active="false"><span class="lbl">Flash your own firmware</span><span class="pr">€0</span></div>
+    </div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Protective Coating</h3>
+    <div class="cfg-seg" id="cfg-coating" style="flex-direction:column;">
+      <div class="cfg-seg-btn" data-key="standard" data-active="true"><span class="lbl">Standard conformal coating</span><span class="pr">Included</span></div>
+      <div class="cfg-seg-btn" data-key="extra" data-active="false"><span class="lbl">Extra conformal coating layer</span><span class="pr">+€15</span></div>
+      <div class="cfg-seg-btn" data-key="resin" data-active="false"><span class="lbl">Resin potting (Li-SOCl2 only)</span><span class="pr">+€80</span></div>
+    </div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Enclosure &amp; Mounting</h3>
+    <div class="cfg-row"><input type="checkbox" id="cfg-enclosure"><label for="cfg-enclosure">3D-printed enclosure (PETG, IP66)</label><span class="pr">€35</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-dinrail"><label for="cfg-dinrail">DIN rail mount</label><span class="pr">€28</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-pole"><label for="cfg-pole">Pole mount</label><span class="pr">€18</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-er34615holder"><label for="cfg-er34615holder">ER34615 battery holder/adapter<span class="sub">Required to use Li-SOCl2 batteries</span></label><span class="pr">€20</span></div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Batteries</h3>
+    <div class="cfg-row"><input type="checkbox" id="cfg-liion"><label for="cfg-liion">18650 Li-Ion, set of 5 (rechargeable)</label><span class="pr">€30</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-lisocl2"><label for="cfg-lisocl2">Li-SOCl2, set of 2 (non-rechargeable, v3.3+)</label><span class="pr">€40</span></div>
+    <div class="cfg-warn" id="cfg-warn-battery"></div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>External / Solar Power</h3>
+    <div class="cfg-row"><input type="checkbox" id="cfg-solar5v"><label for="cfg-solar5v">5V regulated solar panel</label><span class="pr">€34</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-walladapter"><label for="cfg-walladapter">5V/1A wall power adapter</label><span class="pr">€20</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-usbcable"><label for="cfg-usbcable">USB-A to Micro-USB cable (for PIN-terminal power)</label><span class="pr">€10</span></div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Connectivity Plan</h3>
+    <div class="cfg-row"><input type="checkbox" id="cfg-esim"><label for="cfg-esim">Integrated eSIM + data plan<span class="sub">500 MB or 5 years, whichever comes first</span></label><span class="pr">€36</span></div>
+  </div>
+
+  <div class="cfg-summary">
+    <h3>Your Configuration</h3>
+    <div id="cfg-lines"><div class="cfg-empty">No add-ons selected yet — just the base unit.</div></div>
+    <div class="cfg-total"><span class="label">Total</span><span class="num" id="cfg-total-num">€387</span></div>
+    <a class="cfg-cta" id="cfg-quote-btn" href="#">Request a Quote for This Configuration</a>
+    <p class="cfg-note">This is an estimate, not a final price — we'll confirm compatibility and exact cost when you request a quote. Clicking the button opens your email client with everything pre-filled.</p>
+  </div>
+
 </div>
-<h2 id="71-formas-de-contribuir">7.1 Formas de Contribuir</h2>
-<p>Se aceptan contribuciones en las siguientes áreas:</p>
-<ul>
-<li><strong>Contribuciones de código (Pull Requests):</strong> correcciones de errores, nuevos drivers de sensores, optimizaciones de rendimiento, o nuevas funcionalidades.</li>
-<li><strong>Documentación:</strong> mejorar la calidad, claridad y completitud de esta Wiki o de los comentarios en el código.</li>
-<li><strong>Reportes de errores:</strong> enviar reportes claros y detallados a través del rastreador de Issues de GitHub.</li>
-<li><strong>Peticiones de funcionalidad:</strong> sugerencias de funcionalidad futura o de integración de hardware.</li>
-<li><strong>Hardware (Printables):</strong> aportar accesorios, soportes o carcasas nuevos o mejorados para el datalogger.</li>
-</ul>
-<h2 id="72-requisitos-previos-para-enviar-codigo">7.2 Requisitos Previos para Enviar Código</h2>
-<p>Antes de enviar un <strong>Pull Request (PR)</strong>, asegúrate de cumplir los siguientes requisitos:</p>
-<ol>
-<li><strong>Entorno:</strong> debes usar el entorno de desarrollo recomendado <strong>Ubuntu/WSL</strong>, tal como se detalla en <strong>1. Configuración del Entorno de Compilación</strong>.</li>
-<li><strong>Base de código:</strong> tu rama de desarrollo debe partir de la rama <code>main</code> del repositorio oficial de <strong>ISURLOG</strong> y estar actualizada con ella.</li>
-<li><strong>Calidad del código:</strong> seguir los estándares de código de Python/MicroPython (p. ej. PEP 8 donde aplique). Los mensajes de commit deben seguir el <code>CODECONVENTIONS.md</code> del proyecto (heredado del MicroPython original) — prefijar cada commit con el directorio o archivo al que afecta, p. ej. <code>modules/nb_iot: Fix eDRX timeout handling.</code></li>
-<li><strong>Pruebas locales:</strong> los cambios que afecten a código relacionado con el hardware (sensores, gestión de energía, comunicaciones) deben probarse en un dispositivo <strong>ISURLOG</strong> físico. Las contribuciones que no toquen el hardware en absoluto (p. ej. una corrección del códec de payload en <code>IsurlogLPP.py</code>, o una corrección de lógica pura) pueden revisarse en su lugar con pruebas a nivel de unidad — indica en tu PR cómo lo has probado, en cualquiera de los dos casos.</li>
-<li>
-<p><strong>Licencia:</strong> al contribuir, aceptas que tu código se licencie bajo la licencia <strong>GPL-3.0</strong> del proyecto (ver <code>LICENSE</code>). Los archivos nuevos deben llevar la misma cabecera de copyright usada en todo el código base:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Copyright (C) 2026 ISURKI</span>
-<span class="c1">#</span>
-<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
-<span class="c1"># it under the terms of the GNU General Public License as published by</span>
-<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
-<span class="c1"># (at your option) any later version.</span>
-<span class="c1">#</span>
-<span class="c1"># SPDX-License-Identifier: GPL-3.0-or-later</span>
-</code></pre></div>
-</li>
-</ol>
-<h2 id="73-el-proceso-de-contribucion">7.3 El Proceso de Contribución</h2>
-<p>Sigue estos pasos para una contribución limpia y eficiente:</p>
-<h3 id="1-hacer-un-fork-del-repositorio">1. Hacer un Fork del Repositorio</h3>
-<p>Empieza haciendo un fork del repositorio principal <code>isurlog-firmware</code> a tu cuenta personal de GitHub.</p>
-<h3 id="2-crear-una-rama-de-trabajo">2. Crear una Rama de Trabajo</h3>
-<p>Crea una rama dedicada para tu corrección o funcionalidad concreta. Esto mantiene los cambios aislados.
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/tu-funcionalidad-genial
-</code></pre></div></p>
-<h3 id="3-implementar-los-cambios">3. Implementar los Cambios</h3>
-<p>Haz commits de tus cambios con frecuencia, con mensajes descriptivos que sigan el <code>CODECONVENTIONS.md</code> (p. ej., <code>modules/max31865_sensor: Fix float conversion in PT100 driver.</code>).</p>
-<h3 id="4-crear-un-pull-request-pr">4. Crear un Pull Request (PR)</h3>
-<ol>
-<li>Sube tu rama de trabajo a tu fork personal en GitHub.</li>
-<li>Ve a la página del repositorio oficial de ISURLOG e inicia un nuevo Pull Request.</li>
-<li>Descripción del PR: describe con claridad el problema resuelto o la funcionalidad añadida. Incluye detalles de cómo has probado el cambio.</li>
-</ol>
-<h2 id="74-uso-del-rastreador-de-issues">7.4 Uso del Rastreador de Issues</h2>
-<p>Usa la pestaña de Issues de GitHub para lo siguiente:</p>
-<ul>
-<li>
-<p><strong>Reportes de errores</strong>: incluye pasos claros para reproducir el error, el comportamiento esperado, y el comportamiento real observado.</p>
-</li>
-<li>
-<p><strong>Peticiones de funcionalidad</strong>: describe la nueva funcionalidad y por qué sería valiosa para la comunidad de ISURLOG.</p>
-</li>
-</ul>
-<h2 id="75-donde-mirar-segun-que-quieras-tocar">7.5 Dónde Mirar, Según Qué Quieras Tocar</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Quieres...</th>
-<th style="text-align: left;">Empieza aquí</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Entender la estructura del código base</td>
-<td style="text-align: left;"><strong><a href="../architecture-overview/">2. Visión General de la Arquitectura</a></strong> / <strong><a href="../module-library-reference/">2.1 Referencia de Módulos y Librerías</a></strong></td>
-</tr>
-<tr>
-<td style="text-align: left;">Añadir o corregir un driver de sensor</td>
-<td style="text-align: left;"><strong><a href="../module-library-reference/">2.1 Referencia de Módulos y Librerías</a></strong></td>
-</tr>
-<tr>
-<td style="text-align: left;">Cambiar una asignación de GPIO/hardware</td>
-<td style="text-align: left;"><strong><a href="../gpio-mapping/">4. Mapeo de GPIO (Hardware-Software)</a></strong></td>
-</tr>
-<tr>
-<td style="text-align: left;">Trabajar en el módem NB-IoT (nRF9160/nRF9151)</td>
-<td style="text-align: left;"><strong><a href="../nbiot-modem-guide/">5. Guía Avanzada del Módem NB-IoT</a></strong></td>
-</tr>
-<tr>
-<td style="text-align: left;">Trabajar en el módem LoRaWAN (RAK3172)</td>
-<td style="text-align: left;"><strong><a href="../lorawan-modem-guide/">6. Guía Avanzada del Módem LoRaWAN</a></strong></td>
-</tr>
-<tr>
-<td style="text-align: left;">Grabar tu build para pruebas locales</td>
-<td style="text-align: left;"><strong><a href="../flashing-application-upload/">3. Grabado del Firmware y Carga de la Aplicación</a></strong></td>
-</tr>
-</tbody>
-</table>
+
+<script>
+(function(){
+  var VARIANTS = {
+    nbiot: {label:"ISURLOG — NB-IoT/LTE-M variant", price:387, antenna:"Includes the NB-IoT/LTE-M antenna (shared with GPS reception)."},
+    lora:  {label:"ISURLOG — LoRaWAN variant", price:330, antenna:"Includes the LoRaWAN (868 MHz) antenna."},
+    wifi:  {label:"ISURLOG — Wi-Fi only", price:310, antenna:"Uses the antenna integrated on the PCB — no external antenna needed."}
+  };
+  var COATINGS = {
+    standard: {label:"Standard conformal coating", price:0},
+    extra:    {label:"Extra conformal coating layer", price:15},
+    resin:    {label:"Resin potting", price:80}
+  };
+  var ADDONS = [
+    {id:"cfg-enclosure", label:"3D-printed enclosure (PETG, IP66)", price:35},
+    {id:"cfg-dinrail", label:"DIN rail mount", price:28},
+    {id:"cfg-pole", label:"Pole mount", price:18},
+    {id:"cfg-er34615holder", label:"ER34615 battery holder/adapter", price:20},
+    {id:"cfg-liion", label:"18650 Li-Ion batteries, set of 5", price:30},
+    {id:"cfg-lisocl2", label:"Li-SOCl2 batteries, set of 2", price:40},
+    {id:"cfg-solar5v", label:"5V regulated solar panel", price:34},
+    {id:"cfg-walladapter", label:"5V/1A wall power adapter", price:20},
+    {id:"cfg-usbcable", label:"USB-A to Micro-USB cable", price:10},
+    {id:"cfg-esim", label:"Integrated eSIM + data plan", price:36}
+  ];
+  var FIRMWARE = {
+    standard: {label:"Standard firmware, connected to IsurDASH", price:0},
+    byo:      {label:"Flash your own firmware", price:0}
+  };
+
+  var variant = "nbiot";
+  var firmware = "standard";
+  var coating = "standard";
+
+  function fmt(n){ return "€" + n; }
+
+  function selectSeg(container, key){
+    container.querySelectorAll(".cfg-seg-btn").forEach(function(btn){
+      btn.dataset.active = (btn.dataset.key === key) ? "true" : "false";
+    });
+  }
+
+  var variantEl = document.getElementById("cfg-variant");
+  variantEl.querySelectorAll(".cfg-seg-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      variant = btn.dataset.key;
+      selectSeg(variantEl, variant);
+      update();
+    });
+  });
+
+  var firmwareEl = document.getElementById("cfg-firmware");
+  firmwareEl.querySelectorAll(".cfg-seg-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      firmware = btn.dataset.key;
+      selectSeg(firmwareEl, firmware);
+      update();
+    });
+  });
+
+  var coatingEl = document.getElementById("cfg-coating");
+  coatingEl.querySelectorAll(".cfg-seg-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      coating = btn.dataset.key;
+      selectSeg(coatingEl, coating);
+      update();
+    });
+  });
+
+  ADDONS.forEach(function(a){
+    document.getElementById(a.id).addEventListener("change", update);
+  });
+
+  function update(){
+    var v = VARIANTS[variant];
+    var f = FIRMWARE[firmware];
+    var c = COATINGS[coating];
+    var total = v.price + f.price + c.price;
+    var lines = [];
+
+    document.getElementById("cfg-antenna-note").textContent = v.antenna;
+
+    lines.push({label: v.label, price: v.price});
+    lines.push({label: f.label, price: f.price});
+    if (c.price > 0) lines.push({label: c.label, price: c.price});
+
+    var selectedIds = {};
+    ADDONS.forEach(function(a){
+      var checked = document.getElementById(a.id).checked;
+      selectedIds[a.id] = checked;
+      if (checked){
+        total += a.price;
+        lines.push({label: a.label, price: a.price});
+      }
+    });
+
+    var linesEl = document.getElementById("cfg-lines");
+    if (lines.length === 2){
+      linesEl.innerHTML = '<div class="cfg-empty">No add-ons selected yet — just the base unit.</div>';
+    } else {
+      linesEl.innerHTML = lines.map(function(l){
+        return '<div class="cfg-line"><span>' + l.label + '</span><span>' + fmt(l.price) + '</span></div>';
+      }).join("");
+    }
+    document.getElementById("cfg-total-num").textContent = fmt(total);
+
+    // Soft warnings only — nothing is blocked
+    var warnEl = document.getElementById("cfg-warn-battery");
+    var warnings = [];
+    if (coating === "resin" && !selectedIds["cfg-lisocl2"]){
+      warnings.push("Resin potting is only compatible with Li-SOCl2 batteries — add those below, or switch coating.");
+    }
+    if (selectedIds["cfg-lisocl2"] && !selectedIds["cfg-er34615holder"]){
+      warnings.push("Li-SOCl2 batteries need the ER34615 battery holder/adapter (in Enclosure & Mounting) — add it above.");
+    }
+    if (warnings.length){
+      warnEl.innerHTML = warnings.map(function(w){ return "<p>⚠️ " + w + "</p>"; }).join("");
+      warnEl.classList.add("show");
+    } else {
+      warnEl.classList.remove("show");
+      warnEl.innerHTML = "";
+    }
+
+    // Build the quote request mailto
+    var subject = "ISURLOG - Solicitud de Presupuesto (Configurador)";
+    var body = "Hola equipo de ISURKI,\n\nMe gustaria solicitar presupuesto para la siguiente configuracion de ISURLOG:\n\n";
+    lines.forEach(function(l){
+      body += "- " + l.label + " (" + fmt(l.price) + ")\n";
+    });
+    body += "\nTotal estimado: " + fmt(total) + "\n\nGracias!";
+    var mailto = "mailto:tecnica@isurki.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    document.getElementById("cfg-quote-btn").setAttribute("href", mailto);
+  }
+
+  update();
+})();
+</script>
 
 
 
@@ -2127,10 +2032,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
