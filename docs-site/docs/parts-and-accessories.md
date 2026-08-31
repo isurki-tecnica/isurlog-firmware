@@ -61,9 +61,9 @@ See [2. Power Supply Methods](power-supply.md) for jumper configuration and batt
 
 For deployments combining batteries with an external charging source. The MPPC input accepts one of three voltage ranges — see [2.2 Jumper Configuration](power-supply.md#22-jumper-configuration-for-power-modes) for the required jumper settings.
 
-| MPPC Input | From Isurki | Bring your own |
+| Item | From Isurki | Bring your own |
 | :--- | :--- | :--- |
-| **5V** — solar panel or a standard 5V charger | **€34** | [Example panel](https://www.amazon.es/dp/B09Q87WKGR?ref=fed_asin_title&th=1) — see warning below before choosing your own |
+| **5V solar panel** | **€34** | [Example panel](https://www.amazon.es/dp/B09Q87WKGR?ref=fed_asin_title&th=1) — see warning below before choosing your own |
 | **1.5V** — micro solar panel | — | 🚧 *No specific recommended model yet* |
 | **0.3V** — TEG (Thermoelectric Generator) | — | 🚧 *No specific recommended model yet* |
 

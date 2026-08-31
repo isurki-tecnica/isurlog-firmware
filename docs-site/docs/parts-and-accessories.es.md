@@ -61,9 +61,9 @@ Ver [2. Métodos de Alimentación](power-supply.md) para la configuración de ju
 
 Para instalaciones que combinan baterías con una fuente de carga externa. La entrada MPPC acepta uno de tres rangos de tensión — ver [2.2 Configuración de Jumpers](power-supply.md#22-configuracion-de-jumpers-para-los-modos-de-alimentacion) para la configuración de jumpers necesaria.
 
-| Entrada MPPC | Desde Isurki | Consíguelo tú mismo |
+| Elemento | Desde Isurki | Consíguelo tú mismo |
 | :--- | :--- | :--- |
-| **5V** — panel solar o cargador estándar de 5V | **€34** | [Panel de ejemplo](https://www.amazon.es/dp/B09Q87WKGR?ref=fed_asin_title&th=1) — ver la advertencia de abajo antes de elegir el tuyo |
+| **Panel solar 5V** | **€34** | [Panel de ejemplo](https://www.amazon.es/dp/B09Q87WKGR?ref=fed_asin_title&th=1) — ver la advertencia de abajo antes de elegir el tuyo |
 | **1.5V** — micropanel solar | — | 🚧 *Todavía sin modelo recomendado* |
 | **0.3V** — TEG (generador termoeléctrico) | — | 🚧 *Todavía sin modelo recomendado* |
 
