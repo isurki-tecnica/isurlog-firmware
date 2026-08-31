@@ -66,6 +66,12 @@ Pick your options below — the total updates as you go. This only includes item
       <div class="cfg-seg-btn" data-key="wifi" data-active="false"><span class="lbl">Wi-Fi only</span><span class="pr">€310</span></div>
     </div>
     <p class="cfg-note" id="cfg-antenna-note"></p>
+    <div class="cfg-row" id="cfg-extantenna-row">
+      <input type="checkbox" id="cfg-extantenna">
+      <label for="cfg-extantenna">External antenna (higher gain / remote mounting)<span class="sub" id="cfg-extantenna-sub">Includes U.FL-to-SMA pigtail + external antenna</span></label>
+      <span class="pr" id="cfg-extantenna-price">€18</span>
+    </div>
+    <div class="cfg-warn" id="cfg-warn-antenna"></div>
   </div>
 
   <div class="cfg-card">
@@ -115,9 +121,9 @@ Pick your options below — the total updates as you go. This only includes item
   <div class="cfg-summary">
     <h3>Your Configuration</h3>
     <div id="cfg-lines"><div class="cfg-empty">No add-ons selected yet — just the base unit.</div></div>
-    <div class="cfg-total"><span class="label">Total</span><span class="num" id="cfg-total-num">€387</span></div>
+    <div class="cfg-total"><span class="label">Total (excl. VAT)</span><span class="num" id="cfg-total-num">€387</span></div>
     <a class="cfg-cta" id="cfg-quote-btn" href="#">Request a Quote for This Configuration</a>
-    <p class="cfg-note">This is an estimate, not a final price — we'll confirm compatibility and exact cost when you request a quote. Clicking the button opens your email client with everything pre-filled.</p>
+    <p class="cfg-note">This is an estimate, not a final price — we'll confirm compatibility and exact cost when you request a quote. Prices shown exclude VAT. Clicking the button opens your email client with everything pre-filled.</p>
   </div>
 
 </div>
@@ -149,6 +155,10 @@ Pick your options below — the total updates as you go. This only includes item
   var FIRMWARE = {
     standard: {label:"Standard firmware, connected to IsurDASH", price:0},
     byo:      {label:"Flash your own firmware", price:0}
+  };
+  var EXT_ANTENNA = {
+    nbiot: {price:18, label:"External antenna + U.FL-to-SMA pigtail (NB-IoT/LTE-M)"},
+    lora:  {price:22, label:"External antenna + U.FL-to-SMA pigtail (LoRaWAN)"}
   };
 
   var variant = "nbiot";
@@ -193,6 +203,7 @@ Pick your options below — the total updates as you go. This only includes item
   ADDONS.forEach(function(a){
     document.getElementById(a.id).addEventListener("change", update);
   });
+  document.getElementById("cfg-extantenna").addEventListener("change", update);
 
   function update(){
     var v = VARIANTS[variant];
@@ -203,9 +214,42 @@ Pick your options below — the total updates as you go. This only includes item
 
     document.getElementById("cfg-antenna-note").textContent = v.antenna;
 
+    var extRow = document.getElementById("cfg-extantenna-row");
+    var extCheckbox = document.getElementById("cfg-extantenna");
+    var extPriceEl = document.getElementById("cfg-extantenna-price");
+    var extSubEl = document.getElementById("cfg-extantenna-sub");
+    var extLine = null;
+    if (variant === "wifi"){
+      extCheckbox.checked = false;
+      extCheckbox.disabled = true;
+      extRow.style.opacity = "0.45";
+      extPriceEl.textContent = "—";
+      extSubEl.textContent = "Not applicable — Wi-Fi uses the onboard antenna";
+    } else {
+      extCheckbox.disabled = false;
+      extRow.style.opacity = "1";
+      var ext = EXT_ANTENNA[variant];
+      extPriceEl.textContent = fmt(ext.price);
+      extSubEl.textContent = "Includes U.FL-to-SMA pigtail + external antenna";
+      if (extCheckbox.checked){
+        total += ext.price;
+        extLine = {label: ext.label, price: ext.price};
+      }
+    }
+
+    var warnAntennaEl = document.getElementById("cfg-warn-antenna");
+    if (extCheckbox.checked && document.getElementById("cfg-enclosure").checked){
+      warnAntennaEl.innerHTML = "<p>⚠️ Mounting the antenna outside the 3D-printed enclosure means drilling through it — this breaks its IP66 rating unless the passthrough is properly sealed.</p>";
+      warnAntennaEl.classList.add("show");
+    } else {
+      warnAntennaEl.classList.remove("show");
+      warnAntennaEl.innerHTML = "";
+    }
+
     lines.push({label: v.label, price: v.price});
     lines.push({label: f.label, price: f.price});
     if (c.price > 0) lines.push({label: c.label, price: c.price});
+    if (extLine) lines.push(extLine);
 
     var selectedIds = {};
     ADDONS.forEach(function(a){
@@ -250,7 +294,7 @@ Pick your options below — the total updates as you go. This only includes item
     lines.forEach(function(l){
       body += "- " + l.label + " (" + fmt(l.price) + ")\n";
     });
-    body += "\nTotal estimado: " + fmt(total) + "\n\nGracias!";
+    body += "\nTotal estimado (sin IVA): " + fmt(total) + "\n\nGracias!";
     var mailto = "mailto:tecnica@isurki.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     document.getElementById("cfg-quote-btn").setAttribute("href", mailto);
   }

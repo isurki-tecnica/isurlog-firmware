@@ -4,6 +4,8 @@ Una referencia completa de todo el hardware que puede acompañar a un ISURLOG �
 
 ¿Prefieres montar un pedido a medida en vez de leer tablas? Ver **[2. Configura tu ISURLOG](configurator.md)** para un configurador interactivo que va sumando el total a medida que eliges.
 
+*Todos los precios "Desde Isurki" están en EUR y no incluyen IVA.*
+
 !!! note "Trabajo en progreso"
     🚧 Varias filas de más abajo son huecos por rellenar — faltan precios, modelos, y enlaces de proveedor reales. Nada aquí está inventado; donde no tenemos todavía una cifra confirmada, se indica explícitamente en vez de dejarla sin comprobar.
 
@@ -46,6 +48,19 @@ Ver [4.2 Montaje Físico](installation-commissioning.md#42-montaje-fisico) para 
 | **Antena LoRaWAN** (868 MHz) | *Incluida con la unidad LoRaWAN* | [TE Connectivity 2195835-3](https://www.digikey.es/es/products/detail/te-connectivity-amp-connectors/2195835-3/13926726) — debe ser de 868 MHz, 50 Ω, bajo ROE (VSWR). **No es la misma antena que la de NB-IoT** — banda de frecuencia distinta. |
 
 Ambas usan un **conector U.FL** en la PCB. El Wi-Fi y el Bluetooth no necesitan antena externa — usan la integrada directamente en la PCB. Ver [3. Comunicaciones](communications.md) para los requisitos de conexión completos.
+
+### Antenas de Montaje Externo (Mayor Ganancia / Montaje Remoto)
+
+Si hace falta una antena externa de mayor ganancia, las antenas de arriba — que se montan directamente sobre el conector U.FL de la placa — no son la opción adecuada. Un pigtail saca la conexión hacia una antena externa, montada por cable.
+
+| Elemento | Desde Isurki | Consíguelo tú mismo |
+| :--- | :--- | :--- |
+| **Cable pigtail U.FL a SMA-hembra** — saca la conexión U.FL hacia un conector SMA-hembra montable en panel/mamparo. Compatible con el conector U.FL de a bordo tanto del módulo NB-IoT/LTE-M como del LoRaWAN. | **€12** | [RS Online — Cable coaxial U.FL a SMA-hembra](https://es.rs-online.com/web/p/cables-coaxiales/7619881?gb=a), o cualquier otro pigtail U.FL a SMA-hembra con impedancia de 50 Ω |
+| **Antena externa NB-IoT / LTE-M** (SMA macho) | **€6** | [SR Passives GSM-ANT-SV03](https://www.tme.eu/es/details/gsm-ant-sv03/antenas-gsm/sr-passives/), o cualquier otra antena SMA compatible con NB-IoT de 50 Ω de impedancia |
+| **Antena externa LoRaWAN** (SMA macho, 868 MHz) | **€10** | [RS Online — Antena de telemetría 868 MHz](https://es.rs-online.com/web/p/antenas-de-telemetria/2150982), o cualquier otra antena SMA de 868 MHz con impedancia de 50 Ω |
+
+!!! warning "Pierde la Protección IP66"
+    Montar la antena fuera de la [carcasa impresa en 3D](#12-carcasa-y-montaje) implica taladrarla para pasar el pigtail — esto rompe su protección **IP66** a menos que el paso quede correctamente sellado (por ejemplo, con un prensaestopas o un conector SMA de panel con junta).
 
 ## 1.4 Baterías
 

@@ -36,7 +36,7 @@ This post walks through what NTN actually is, what it takes to bring it up on an
 | **NTN SIM card** | — | [Monogoto](https://monogoto.io) — check [NTN satellite coverage](https://docs.monogoto.io/getting-started/ntn-satellite-coverage) for your region before ordering |
 | **Sensor** *(optional — any ISURLOG-compatible sensor works)* | — | Example used here: a **Paratronic NRV485** radar level sensor over Modbus RS485. No extra sensor needed to just test the NTN link — the onboard **SHT30** (temperature/humidity) or **LIS2DH12** (accelerometer) work fine too. |
 
-**Total hardware cost:** ~€417 without the enclosure, ~€452 with it — plus the Monogoto SIM/data plan (pricing depends on the plan chosen, not included above). For the full accessory catalog and an interactive price builder, see [Parts and Accessories](https://docs.isurlog.isurki.com/parts-and-accessories/) and the [configurator](https://docs.isurlog.isurki.com/configurator/).
+**Total hardware cost:** ~€417 without the enclosure, ~€452 with it *(excl. VAT)* — plus the Monogoto SIM/data plan (pricing depends on the plan chosen, not included above). For the full accessory catalog and an interactive price builder, see [Parts and Accessories](https://docs.isurlog.isurki.com/parts-and-accessories/) and the [configurator](https://docs.isurlog.isurki.com/configurator/).
 
 ![The test setup on the bench: the Paratronic NRV485 radar sensor, the ISURLOG open in its 3D-printed PETG enclosure, and the enclosure lid to the side](../images/ntn-office-bench-setup.jpg){width="700"}
 

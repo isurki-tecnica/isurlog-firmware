@@ -4,6 +4,8 @@ A complete reference for every piece of hardware that can go with an ISURLOG —
 
 Want to build a custom order instead of reading through tables? See **[2. Build Your Own ISURLOG](configurator.md)** for an interactive configurator that adds up the total as you go.
 
+*All "From Isurki" prices are in EUR and exclude VAT.*
+
 !!! note "Work in progress"
     🚧 Several rows below are placeholders — real prices, models, and supplier links need to be filled in. Nothing here is fabricated; where we don't have a confirmed figure yet, it's marked explicitly rather than guessed.
 
@@ -46,6 +48,19 @@ See [4.2 Physical Mounting](installation-commissioning.md#42-physical-mounting) 
 | **LoRaWAN antenna** (868 MHz) | *Included with the LoRaWAN unit* | [TE Connectivity 2195835-3](https://www.digikey.es/es/products/detail/te-connectivity-amp-connectors/2195835-3/13926726) — must be 868 MHz, 50 Ω, low VSWR. **Not the same antenna as NB-IoT** — different frequency band. |
 
 Both use a **U.FL connector** on the PCB. Wi-Fi and Bluetooth don't need an external antenna — they use the one integrated directly on the PCB. See [3. Communications](communications.md) for the full connection requirements.
+
+### External-Mount Antennas (Higher Gain / Remote Mounting)
+
+If a higher-gain external antenna is needed, the antennas above — which mount directly on the PCB's U.FL connector — aren't the right fit. A pigtail brings the connection out to an external, cable-mounted antenna instead.
+
+| Item | From Isurki | Bring your own |
+| :--- | :--- | :--- |
+| **U.FL to SMA-female pigtail cable** — brings the U.FL connection out to a panel/bulkhead-mountable SMA-female connector. Fits both the NB-IoT/LTE-M and LoRaWAN modules' onboard U.FL connector. | **€12** | [RS Online — U.FL to SMA-female coaxial cable](https://es.rs-online.com/web/p/cables-coaxiales/7619881?gb=a), or any other U.FL to SMA-female pigtail with 50 Ω impedance |
+| **External NB-IoT/LTE-M antenna** (SMA male) | **€6** | [SR Passives GSM-ANT-SV03](https://www.tme.eu/es/details/gsm-ant-sv03/antenas-gsm/sr-passives/), or any other NB-IoT-compatible SMA antenna with 50 Ω impedance |
+| **External LoRaWAN antenna** (SMA male, 868 MHz) | **€10** | [RS Online — 868 MHz telemetry antenna](https://es.rs-online.com/web/p/antenas-de-telemetria/2150982), or any other 868 MHz SMA antenna with 50 Ω impedance |
+
+!!! warning "Breaks the IP66 Seal"
+    Mounting the antenna outside the [3D-printed enclosure](#12-enclosure-mounting) means drilling a hole through it for the pigtail — this breaks its **IP66** rating unless the passthrough is properly sealed (e.g. with a cable gland or a panel-mount SMA bulkhead connector and gasket).
 
 ## 1.4 Batteries
 
