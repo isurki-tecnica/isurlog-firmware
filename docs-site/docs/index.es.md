@@ -84,7 +84,7 @@ ISURLOG es un producto en mantenimiento activo con despliegues reales en campo, 
 
 ## Conseguir un ISURLOG
 
-ISURLOG se vende directamente desde ISURKI, configurado según la conectividad y los sensores de cada proyecto. Para precio y disponibilidad, [solicitar presupuesto](mailto:tecnica@isurki.com?subject=ISURLOG%20-%20Solicitud%20de%20Presupuesto&body=Hola%20equipo%20de%20ISURKI%2C%0A%0AEstoy%20interesado%2Fa%20en%20ISURLOG%20para%20el%20siguiente%20caso%20de%20uso%3A%0A%0A-%20Aplicaci%C3%B3n%2Fentorno%3A%20%0A-%20Cantidad%20aproximada%3A%20%0A-%20Conectividad%20preferida%20(NB-IoT%2FLTE-M%2C%20LoRaWAN%2C%20o%20Wi-Fi)%3A%20%0A-%20Pa%C3%ADs%2Fregi%C3%B3n%3A%20%0A%0AGracias!).
+ISURLOG se vende directamente desde ISURKI, configurado según la conectividad y los sensores de cada proyecto. Usa el **[configurador interactivo](configurator.md)** para montar tu configuración exacta, ver el precio de cada opción, y solicitar presupuesto — o consulta antes la referencia completa de **[Piezas y Accesorios](parts-and-accessories.md)**.
 
 ---
 

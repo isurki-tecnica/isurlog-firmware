@@ -84,7 +84,7 @@ ISURLOG is an actively maintained product with real field deployments, not a pro
 
 ## Get ISURLOG
 
-ISURLOG is sold directly by ISURKI, configured for your specific connectivity and sensor setup — [request a quote](mailto:tecnica@isurki.com?subject=ISURLOG%20-%20Quote%20Request&body=Hi%20ISURKI%20team%2C%0A%0AI'm%20interested%20in%20ISURLOG%20for%20the%20following%20use%20case%3A%0A%0A-%20Application%2Fenvironment%3A%20%0A-%20Approximate%20quantity%3A%20%0A-%20Preferred%20connectivity%20(NB-IoT%2FLTE-M%2C%20LoRaWAN%2C%20or%20Wi-Fi)%3A%20%0A-%20Country%2Fregion%3A%20%0A%0AThanks!) and we'll get back to you with pricing and availability.
+ISURLOG is sold directly by ISURKI, configured for your specific connectivity and sensor setup. Use the **[interactive configurator](configurator.md)** to build your exact setup, see live pricing for every option, and request a quote — or browse the full **[Parts and Accessories](parts-and-accessories.md)** reference first.
 
 ---
 

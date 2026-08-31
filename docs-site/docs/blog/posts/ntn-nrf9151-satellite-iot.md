@@ -1,11 +1,13 @@
 ---
 draft: true
-date: 2026-08-27
+date: 2026-08-28
 authors:
   - isurki
 ---
 
 # NTN on the nRF9151: Low-Cost Satellite IoT Without a Separate Satellite Modem
+
+![ISURLOG open outdoors, with the Monogoto NTN SIM card sitting on the board](../images/ntn-cover.jpg){width="700"}
 
 ## Why
 
@@ -29,12 +31,16 @@ This post walks through what NTN actually is, what it takes to bring it up on an
 | :--- | :--- | :--- |
 | **ISURLOG datalogger** — PCB with NB-IoT module (nRF9151) | **€387** | *No alternative — this is the core hardware* |
 | **Antenna** — same one used for regular terrestrial NB-IoT, no NTN-specific antenna needed | **€5** | [Molex 209142-0180](https://www.mouser.es/es/ProductDetail/Molex/209142-0180) — ~€3.78 |
-| **3D-printed enclosure** *(optional)* | **From €35** *(depends on accessories)* | 🚧 Coming soon — printable files on Printables |
+| **3D-printed enclosure** *(optional)* | **From €35** *(depends on accessories)* | 💬 In discussion — printable files on Printables, direction not yet decided. If you'd find these useful, [let us know](https://github.com/isurki-tecnica/isurlog-firmware/issues/new) |
 | **Li-Ion 18650 batteries** — 2 minimum for transmission current peaks, 5 for full internal capacity | **€30** *(set of 5, rechargeable)* | e.g. [Samsung INR18650-35E, 3400mAh / 8A](https://www.nkon.nl/es/samsung-inr18650-35e.html) — ~€2.59/unit |
 | **NTN SIM card** | — | [Monogoto](https://monogoto.io) — check [NTN satellite coverage](https://docs.monogoto.io/getting-started/ntn-satellite-coverage) for your region before ordering |
 | **Sensor** *(optional — any ISURLOG-compatible sensor works)* | — | Example used here: a **Paratronic NRV485** radar level sensor over Modbus RS485. No extra sensor needed to just test the NTN link — the onboard **SHT30** (temperature/humidity) or **LIS2DH12** (accelerometer) work fine too. |
 
 **Total hardware cost:** ~€422 without the enclosure, from ~€457 with it — plus the Monogoto SIM/data plan (pricing depends on the plan chosen, not included above).
+
+![The test setup on the bench: the Paratronic NRV485 radar sensor, the ISURLOG open in its 3D-printed PETG enclosure, and the enclosure lid to the side](../images/ntn-office-bench-setup.jpg){width="700"}
+
+*The bench setup — Paratronic radar sensor, ISURLOG in its 3D-printed enclosure, lid off to the side.*
 
 !!! tip "A clear view of the sky"
     Unlike terrestrial NB-IoT, which happily works indoors or in a pocket, NTN needs the modem to actually see a satellite pass — no roof, no dense tree cover, ideally outdoors and away from tall buildings. Testing from inside a building won't connect, no matter how well everything else is set up.
@@ -74,6 +80,10 @@ That flow only installs official published releases. Flashing outside of IsurDAS
 ### Step 3: Insert the SIM, connect the antenna, power on
 
 With both firmwares up to date, insert the Monogoto NTN SIM and double-check the antenna is properly connected to the PCB's U.FL socket — before powering on, not after, since transmitting without an antenna connected can damage the RF circuit. From there it's the same power-up sequence as any ISURLOG: flip the **ON/OFF** switch on the PCB. Full details in [4.4. Power-Up Sequence](https://docs.isurlog.isurki.com/installation-commissioning/#44-power-up-sequence).
+
+![The ISURLOG board on its own, out of the enclosure, showing the Molex antenna cable and the Li-Ion 18650 battery](../images/ntn-isurlog-antenna-battery.jpg){width="380"}
+
+*The ISURLOG board on its own — Molex antenna cable and the Li-Ion 18650 battery.*
 
 ### Step 4: Connect to the NTN network
 
@@ -125,7 +135,22 @@ True
 OK
 [101] DEBUG: Sent AT command: AT%XMONITOR
 [103] DEBUG: Received response: %XMONITOR: 4
+OK
 ...
+[397] DEBUG: Sent AT command: AT%XMONITOR
+[399] DEBUG: Received response: %XMONITOR: 2
+OK
+...
+[439] DEBUG: Sent AT command: AT%XMONITOR
+[441] DEBUG: Received response: 5,"","","90198","3AB0",14,255,"0024D9B0",24,228841,4,14,"","11100000","00111000","11100000",0,3,8,8
+OK
+[439] DEBUG: Sent AT command: AT+CGDCONT?
+[441] DEBUG: Received response: +CGDCONT: 0,"IP","data.mono","10.137.26.202",0,0
++CGDCONT: 1,"IP","data.mono","",0,0
+OK
+[441] INFO: Verified data session on CID 0. IP: 10.137.26.202
+[441] INFO: Device fully connected with IP address.
+True
 ```
 
 The `uart_id`/`tx_pin`/`rx_pin`/`baudrate` values match the ISURLOG's standard NB-IoT UART wiring, documented in [5.3 UART Communication and AT Commands](https://docs.isurlog.isurki.com/nbiot-modem-guide/#53-uart-communication-and-at-commands). A few of these commands are worth calling out:
@@ -137,7 +162,7 @@ The `uart_id`/`tx_pin`/`rx_pin`/`baudrate` values match the ISURLOG's standard N
 * **`AT%LOCATION`** — this one has no terrestrial equivalent. A cell tower's position is irrelevant to the device; a satellite's visibility from a given point on Earth very much isn't, so the modem is given an approximate location (lat/lon/elevation, with a precision estimate) to help it know which passes are actually worth waiting for.
 * **`AT+CGDCONT`** — the usual PDP context/APN setup, `data.mono` being Monogoto's.
 * **`AT+CFUN=1`** — the actual "go": full functionality, radio on, start trying to register. Everything before this line was configuration; this is what turns it into a connection attempt.
-* **`wait_for_network_connection(timeout=300000)`** — a 5-minute timeout, not the few seconds a terrestrial NB-IoT connection takes. This is the "waiting for a satellite pass" behavior from the section above, made concrete: `AT%XMONITOR` gets polled repeatedly until registration completes, however long that takes within the window.
+* **`wait_for_network_connection(timeout=300000)`** — a 5-minute timeout, not the few seconds a terrestrial NB-IoT connection takes. This is the "waiting for a satellite pass" behavior from the section above, made concrete: `AT%XMONITOR` gets polled repeatedly, its registration-status field moving from `4` (unknown) to `2` (searching) and finally `5` (registered, roaming) once a satellite pass brings the network into view — at which point a quick `AT+CGDCONT?` check confirms an IP address was actually assigned before returning `True`.
 
 ### Step 5: Read sensors and package the payload
 
@@ -152,7 +177,7 @@ With the connection under way, the next step is reading the sensors and packagin
 [17] ERROR: RTC lost power! Time is invalid.
 ```
 
-That error means the RTC has no [CR2032 backup battery](https://docs.isurlog.isurki.com/power-supply/#23-rtc-backup-battery-cr2032) connected — without it, the clock doesn't survive a full power cycle. Either set it by hand, as done here, or with the GPS fix from the bonus track further down (`time_str = parsed_gps_response[3]`):
+That error means the RTC has no [CR2032 backup battery](https://docs.isurlog.isurki.com/power-supply/#23-rtc-backup-battery-cr2032) connected — without it, the clock doesn't survive a full power cycle. Either set it by hand, as done here (`mode="GPS"` just selects the matching string-format parser, not the time source), or with the GPS fix from the bonus track further down (`time_str = parsed_gps_response[3]`):
 
 ```pycon
 >>> time_str = "2026-08-28 09:11:15"
@@ -227,6 +252,10 @@ That hex string is what actually goes out over the NTN link in the next step.
 
 ### Step 6: Send the payload
 
+![The real test outdoors, clear sky, ISURLOG connected to a laptop running the tutorial commands](../images/ntn-outdoor-clear-sky-test.jpg){width="700"}
+
+*The real test — outdoors, clear sky, ISURLOG connected to a laptop running through this same tutorial.*
+
 With the payload encoded, sending it is a plain UDP socket — open, send, close:
 
 ```pycon
@@ -238,20 +267,10 @@ With the payload encoded, sending it is a plain UDP socket — open, send, close
 OK
 True
 >>> nb_iot_module.send_at_command_check(f'AT#XSENDTO="{server}",{port},"{encoded_payload}"', expected_response="OK", timeout=10000)
-[3253] DEBUG: Sent AT command: AT#XSENDTO="80.24.238.36",1200,"00756a913e9700740e570067011400684600050002"
-[3263] WARNING: Timeout waiting for 'OK'. Received: ERROR
-[3263] ERROR: Timeout waiting for response to AT command: AT#XSENDTO="80.24.238.36",1200,"00756a913e9700740e570067011400684600050002"
-[3263] WARNING: AT command failed, retrying (1/3)...
-[3264] DEBUG: Sent AT command: AT#XSENDTO="80.24.238.36",1200,"00756a913e9700740e570067011400684600050002"
-[3274] WARNING: Timeout waiting for 'OK'. Received: ERROR
-[3274] ERROR: Timeout waiting for response to AT command: AT#XSENDTO="80.24.238.36",1200,"00756a913e9700740e570067011400684600050002"
-[3274] WARNING: AT command failed, retrying (2/3)...
-[3275] DEBUG: Sent AT command: AT#XSENDTO="80.24.238.36",1200,"00756a913e9700740e570067011400684600050002"
-[3285] WARNING: Timeout waiting for 'OK'. Received: ERROR
-[3285] ERROR: Timeout waiting for response to AT command: AT#XSENDTO="80.24.238.36",1200,"00756a913e9700740e570067011400684600050002"
-[3285] WARNING: AT command failed, retrying (3/3)...
-[3286] ERROR: AT command 'AT#XSENDTO="80.24.238.36",1200,"00756a913e9700740e570067011400684600050002"' failed after 3 retries.
-False
+[525] DEBUG: Sent AT command: AT#XSENDTO="80.24.238.36",1200,"00756a913e9700740e570067011400684600050002"
+[527] DEBUG: Received response: #XSENDTO: 42
+OK
+True
 >>> nb_iot_module.send_at_command_check("AT#XSOCKET=0")
 [3301] DEBUG: Sent AT command: AT#XSOCKET=0
 [3303] DEBUG: Received response: #XSOCKET: 0,"closed"
@@ -307,18 +326,15 @@ True
 
 No separate GPS antenna needed — the same Molex antenna already on the board picks up the GPS L1 band fine, thanks to an onboard RF amplifier tuned for it. `AT%XCOEX0` and `AT%XSYSTEMMODE=0,0,1,0,0` switch the modem's RF front-end over to that band for the duration of the fix; `AT+CFUN=31`/`30` are the GNSS-specific functional modes that bracket it (activate, then deactivate once done); and `AT#XGPS=1,0,0,0` requests a single-shot fix rather than continuous tracking — enough for an ISURLOG that only needs a location every so often, not a real-time GPS trace.
 
-!!! note "Coming next"
-    The same send from somewhere with real sky visibility, the wait for an actual satellite pass, and the real current-draw numbers.
-
 ## Limitations and What's Next
 
 Everything above worked, but it's not a finished feature — worth being upfront about the real gaps.
 
 **No modem sleep command in NTN firmware.** ISURLOG's own `nb_iot` driver puts the modem to sleep between transmissions with `AT#XSLEEP` — and that command doesn't appear anywhere in Nordic's NTN AT command reference (`v0.8`, itself still pre-1.0). The standard 3GPP power-saving mechanisms, PSM (`AT+CPSMS`) and eDRX (`AT+CEDRXS`), are both explicitly listed as supported for NTN NB-IoT in that same manual — so the modem clearly *can* sleep on this firmware, the same way it already does over terrestrial NB-IoT. What's missing is driver work on ISURLOG's side: switching to PSM/eDRX for NTN mode instead of assuming `#XSLEEP` is always available. Until that lands, running NTN today means the modem stays awake between transmissions — a real cost on a platform whose whole pitch is ~20 µA in deep sleep.
 
-**Satellite passes, not a permanent connection.** Every wait in this post — the 5-minute registration timeout, the failed indoor send — comes from the same fact: a satellite isn't always overhead. Real deployments need to plan around pass windows, not assume the always-on availability terrestrial NB-IoT takes for granted.
+**Satellite passes, not a permanent connection.** The 5-minute registration timeout earlier in this post comes from the same fact: a satellite isn't always overhead. Real deployments need to plan around pass windows, not assume the always-on availability terrestrial NB-IoT takes for granted.
 
 **Early software, both sides.** The NTN modem firmware (`1.0.1`) and its own AT command reference (`v0.8`) are both young. Some of the rough edges here are ISURLOG's to fix; some are simply what "early" looks like industry-wide for NB-NTN right now.
 
-!!! note "Coming next"
+!!! note "🚧 Coming next"
     A future post will dig into some of these more advanced uses: getting NTN into a real low-power mode instead of a fully-powered idle modem, receiving data over UDP (downlink, not just uplink), and whatever else falls out of closing the gaps above.
