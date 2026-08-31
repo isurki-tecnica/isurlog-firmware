@@ -1789,6 +1789,12 @@
       <div class="cfg-seg-btn" data-key="wifi" data-active="false"><span class="lbl">Solo Wi-Fi</span><span class="pr">€310</span></div>
     </div>
     <p class="cfg-note" id="cfg-antenna-note"></p>
+    <div class="cfg-row" id="cfg-extantenna-row">
+      <input type="checkbox" id="cfg-extantenna">
+      <label for="cfg-extantenna">Antena externa (mayor ganancia / montaje remoto)<span class="sub" id="cfg-extantenna-sub">Incluye pigtail U.FL a SMA + antena externa</span></label>
+      <span class="pr" id="cfg-extantenna-price">€18</span>
+    </div>
+    <div class="cfg-warn" id="cfg-warn-antenna"></div>
   </div>
 
   <div class="cfg-card">
@@ -1838,9 +1844,9 @@
   <div class="cfg-summary">
     <h3>Tu Configuración</h3>
     <div id="cfg-lines"><div class="cfg-empty">Todavía no hay accesorios seleccionados — solo la unidad base.</div></div>
-    <div class="cfg-total"><span class="label">Total</span><span class="num" id="cfg-total-num">€387</span></div>
+    <div class="cfg-total"><span class="label">Total (sin IVA)</span><span class="num" id="cfg-total-num">€387</span></div>
     <a class="cfg-cta" id="cfg-quote-btn" href="#">Solicitar Presupuesto para Esta Configuración</a>
-    <p class="cfg-note">Esto es una estimación, no un precio final — confirmaremos compatibilidad y coste exacto al solicitar presupuesto. Al pulsar el botón se abre tu cliente de correo con todo ya rellenado.</p>
+    <p class="cfg-note">Esto es una estimación, no un precio final — confirmaremos compatibilidad y coste exacto al solicitar presupuesto. Los precios mostrados no incluyen IVA. Al pulsar el botón se abre tu cliente de correo con todo ya rellenado.</p>
   </div>
 
 </div>
@@ -1872,6 +1878,10 @@
   var FIRMWARE = {
     standard: {label:"Firmware estándar, conectado a IsurDASH", price:0},
     byo:      {label:"Graba tu propio firmware", price:0}
+  };
+  var EXT_ANTENNA = {
+    nbiot: {price:18, label:"Antena externa + pigtail U.FL a SMA (NB-IoT/LTE-M)"},
+    lora:  {price:22, label:"Antena externa + pigtail U.FL a SMA (LoRaWAN)"}
   };
 
   var variant = "nbiot";
@@ -1916,6 +1926,7 @@
   ADDONS.forEach(function(a){
     document.getElementById(a.id).addEventListener("change", update);
   });
+  document.getElementById("cfg-extantenna").addEventListener("change", update);
 
   function update(){
     var v = VARIANTS[variant];
@@ -1926,9 +1937,42 @@
 
     document.getElementById("cfg-antenna-note").textContent = v.antenna;
 
+    var extRow = document.getElementById("cfg-extantenna-row");
+    var extCheckbox = document.getElementById("cfg-extantenna");
+    var extPriceEl = document.getElementById("cfg-extantenna-price");
+    var extSubEl = document.getElementById("cfg-extantenna-sub");
+    var extLine = null;
+    if (variant === "wifi"){
+      extCheckbox.checked = false;
+      extCheckbox.disabled = true;
+      extRow.style.opacity = "0.45";
+      extPriceEl.textContent = "—";
+      extSubEl.textContent = "No aplica — el Wi-Fi usa la antena integrada en la placa";
+    } else {
+      extCheckbox.disabled = false;
+      extRow.style.opacity = "1";
+      var ext = EXT_ANTENNA[variant];
+      extPriceEl.textContent = fmt(ext.price);
+      extSubEl.textContent = "Incluye pigtail U.FL a SMA + antena externa";
+      if (extCheckbox.checked){
+        total += ext.price;
+        extLine = {label: ext.label, price: ext.price};
+      }
+    }
+
+    var warnAntennaEl = document.getElementById("cfg-warn-antenna");
+    if (extCheckbox.checked && document.getElementById("cfg-enclosure").checked){
+      warnAntennaEl.innerHTML = "<p>⚠️ Montar la antena fuera de la carcasa impresa en 3D implica taladrarla — esto rompe su protección IP66 a menos que el paso quede correctamente sellado.</p>";
+      warnAntennaEl.classList.add("show");
+    } else {
+      warnAntennaEl.classList.remove("show");
+      warnAntennaEl.innerHTML = "";
+    }
+
     lines.push({label: v.label, price: v.price});
     lines.push({label: f.label, price: f.price});
     if (c.price > 0) lines.push({label: c.label, price: c.price});
+    if (extLine) lines.push(extLine);
 
     var selectedIds = {};
     ADDONS.forEach(function(a){
@@ -1973,7 +2017,7 @@
     lines.forEach(function(l){
       body += "- " + l.label + " (" + fmt(l.price) + ")\n";
     });
-    body += "\nTotal estimado: " + fmt(total) + "\n\nGracias!";
+    body += "\nTotal estimado (sin IVA): " + fmt(total) + "\n\nGracias!";
     var mailto = "mailto:tecnica@isurki.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     document.getElementById("cfg-quote-btn").setAttribute("href", mailto);
   }

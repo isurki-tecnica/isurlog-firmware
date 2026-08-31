@@ -1728,6 +1728,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="1.3 Antenas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#antenas-de-montaje-externo-mayor-ganancia-montaje-remoto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Antenas de Montaje Externo (Mayor Ganancia / Montaje Remoto)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1914,6 +1931,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="1.3 Antenas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#antenas-de-montaje-externo-mayor-ganancia-montaje-remoto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Antenas de Montaje Externo (Mayor Ganancia / Montaje Remoto)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2005,6 +2039,7 @@
 <h1 id="1-piezas-y-accesorios">1. Piezas y Accesorios</h1>
 <p>Una referencia completa de todo el hardware que puede acompañar a un ISURLOG — el propio dispositivo, carcasa/montaje, antenas, baterías, alimentación externa/solar, y conectividad. Para cada elemento: qué puedes conseguir directamente <strong>de Isurki</strong>, y qué puedes <strong>conseguir por tu cuenta</strong> si prefieres comprarlo tú o ya lo tienes.</p>
 <p>¿Prefieres montar un pedido a medida en vez de leer tablas? Ver <strong><a href="../configurator/">2. Configura tu ISURLOG</a></strong> para un configurador interactivo que va sumando el total a medida que eliges.</p>
+<p><em>Todos los precios "Desde Isurki" están en EUR y no incluyen IVA.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Trabajo en progreso</p>
 <p>🚧 Varias filas de más abajo son huecos por rellenar — faltan precios, modelos, y enlaces de proveedor reales. Nada aquí está inventado; donde no tenemos todavía una cifra confirmada, se indica explícitamente en vez de dejarla sin comprobar.</p>
@@ -2121,6 +2156,38 @@
 </tbody>
 </table>
 <p>Ambas usan un <strong>conector U.FL</strong> en la PCB. El Wi-Fi y el Bluetooth no necesitan antena externa — usan la integrada directamente en la PCB. Ver <a href="../communications/">3. Comunicaciones</a> para los requisitos de conexión completos.</p>
+<h3 id="antenas-de-montaje-externo-mayor-ganancia-montaje-remoto">Antenas de Montaje Externo (Mayor Ganancia / Montaje Remoto)</h3>
+<p>Si hace falta una antena externa de mayor ganancia, las antenas de arriba — que se montan directamente sobre el conector U.FL de la placa — no son la opción adecuada. Un pigtail saca la conexión hacia una antena externa, montada por cable.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Elemento</th>
+<th style="text-align: left;">Desde Isurki</th>
+<th style="text-align: left;">Consíguelo tú mismo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Cable pigtail U.FL a SMA-hembra</strong> — saca la conexión U.FL hacia un conector SMA-hembra montable en panel/mamparo. Compatible con el conector U.FL de a bordo tanto del módulo NB-IoT/LTE-M como del LoRaWAN.</td>
+<td style="text-align: left;"><strong>€12</strong></td>
+<td style="text-align: left;"><a href="https://es.rs-online.com/web/p/cables-coaxiales/7619881?gb=a">RS Online — Cable coaxial U.FL a SMA-hembra</a>, o cualquier otro pigtail U.FL a SMA-hembra con impedancia de 50 Ω</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Antena externa NB-IoT / LTE-M</strong> (SMA macho)</td>
+<td style="text-align: left;"><strong>€6</strong></td>
+<td style="text-align: left;"><a href="https://www.tme.eu/es/details/gsm-ant-sv03/antenas-gsm/sr-passives/">SR Passives GSM-ANT-SV03</a>, o cualquier otra antena SMA compatible con NB-IoT de 50 Ω de impedancia</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Antena externa LoRaWAN</strong> (SMA macho, 868 MHz)</td>
+<td style="text-align: left;"><strong>€10</strong></td>
+<td style="text-align: left;"><a href="https://es.rs-online.com/web/p/antenas-de-telemetria/2150982">RS Online — Antena de telemetría 868 MHz</a>, o cualquier otra antena SMA de 868 MHz con impedancia de 50 Ω</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Pierde la Protección IP66</p>
+<p>Montar la antena fuera de la <a href="#12-carcasa-y-montaje">carcasa impresa en 3D</a> implica taladrarla para pasar el pigtail — esto rompe su protección <strong>IP66</strong> a menos que el paso quede correctamente sellado (por ejemplo, con un prensaestopas o un conector SMA de panel con junta).</p>
+</div>
 <h2 id="14-baterias">1.4 Baterías</h2>
 <table>
 <thead>

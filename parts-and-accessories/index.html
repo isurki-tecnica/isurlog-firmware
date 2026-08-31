@@ -1728,6 +1728,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="1.3 Antennas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#external-mount-antennas-higher-gain-remote-mounting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External-Mount Antennas (Higher Gain / Remote Mounting)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1914,6 +1931,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="1.3 Antennas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#external-mount-antennas-higher-gain-remote-mounting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External-Mount Antennas (Higher Gain / Remote Mounting)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2005,6 +2039,7 @@
 <h1 id="1-parts-and-accessories">1. Parts and Accessories</h1>
 <p>A complete reference for every piece of hardware that can go with an ISURLOG — the unit itself, mounting/enclosure, antennas, batteries, external/solar power, and connectivity. For each item: what you can get directly <strong>from Isurki</strong>, and what you can <strong>source yourself</strong> if you'd rather buy or already have it.</p>
 <p>Want to build a custom order instead of reading through tables? See <strong><a href="../configurator/">2. Build Your Own ISURLOG</a></strong> for an interactive configurator that adds up the total as you go.</p>
+<p><em>All "From Isurki" prices are in EUR and exclude VAT.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Work in progress</p>
 <p>🚧 Several rows below are placeholders — real prices, models, and supplier links need to be filled in. Nothing here is fabricated; where we don't have a confirmed figure yet, it's marked explicitly rather than guessed.</p>
@@ -2121,6 +2156,38 @@
 </tbody>
 </table>
 <p>Both use a <strong>U.FL connector</strong> on the PCB. Wi-Fi and Bluetooth don't need an external antenna — they use the one integrated directly on the PCB. See <a href="../communications/">3. Communications</a> for the full connection requirements.</p>
+<h3 id="external-mount-antennas-higher-gain-remote-mounting">External-Mount Antennas (Higher Gain / Remote Mounting)</h3>
+<p>If a higher-gain external antenna is needed, the antennas above — which mount directly on the PCB's U.FL connector — aren't the right fit. A pigtail brings the connection out to an external, cable-mounted antenna instead.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Item</th>
+<th style="text-align: left;">From Isurki</th>
+<th style="text-align: left;">Bring your own</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>U.FL to SMA-female pigtail cable</strong> — brings the U.FL connection out to a panel/bulkhead-mountable SMA-female connector. Fits both the NB-IoT/LTE-M and LoRaWAN modules' onboard U.FL connector.</td>
+<td style="text-align: left;"><strong>€12</strong></td>
+<td style="text-align: left;"><a href="https://es.rs-online.com/web/p/cables-coaxiales/7619881?gb=a">RS Online — U.FL to SMA-female coaxial cable</a>, or any other U.FL to SMA-female pigtail with 50 Ω impedance</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>External NB-IoT/LTE-M antenna</strong> (SMA male)</td>
+<td style="text-align: left;"><strong>€6</strong></td>
+<td style="text-align: left;"><a href="https://www.tme.eu/es/details/gsm-ant-sv03/antenas-gsm/sr-passives/">SR Passives GSM-ANT-SV03</a>, or any other NB-IoT-compatible SMA antenna with 50 Ω impedance</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>External LoRaWAN antenna</strong> (SMA male, 868 MHz)</td>
+<td style="text-align: left;"><strong>€10</strong></td>
+<td style="text-align: left;"><a href="https://es.rs-online.com/web/p/antenas-de-telemetria/2150982">RS Online — 868 MHz telemetry antenna</a>, or any other 868 MHz SMA antenna with 50 Ω impedance</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Breaks the IP66 Seal</p>
+<p>Mounting the antenna outside the <a href="#12-enclosure-mounting">3D-printed enclosure</a> means drilling a hole through it for the pigtail — this breaks its <strong>IP66</strong> rating unless the passthrough is properly sealed (e.g. with a cable gland or a panel-mount SMA bulkhead connector and gasket).</p>
+</div>
 <h2 id="14-batteries">1.4 Batteries</h2>
 <table>
 <thead>
