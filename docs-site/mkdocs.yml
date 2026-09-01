@@ -89,7 +89,7 @@ plugins:
 
 nav:
   - Home: index.md
-  # 📝 Blog: blog/index.md — re-add once the blog is ready to go live (see deploy.sh)
+  - 📝 Blog: https://docs.isurlog.isurki.com/blog/
   - 🛠️ Module A - Use and Hardware:
       - 1. Sensor Connections: sensor-connections.md
       - 2. Power Supply Methods: power-supply.md

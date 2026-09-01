@@ -1,6 +1,5 @@
 ---
-draft: true
-date: 2026-08-28
+date: 2026-08-31
 authors:
   - isurki
 ---
@@ -43,7 +42,7 @@ This post walks through what NTN actually is, what it takes to bring it up on an
 *The bench setup — Paratronic radar sensor, ISURLOG in its 3D-printed enclosure, lid off to the side.*
 
 !!! tip "A clear view of the sky"
-    Unlike terrestrial NB-IoT, which happily works indoors or in a pocket, NTN needs the modem to actually see a satellite pass — no roof, no dense tree cover, ideally outdoors and away from tall buildings. Testing from inside a building won't connect, no matter how well everything else is set up.
+    Unlike terrestrial NB-IoT, which happily works indoors or in a pocket, NTN needs the antenna to have a clear line of sight to the sky — no roof, no dense tree cover, ideally outdoors and away from tall buildings. Testing from inside a building won't connect, no matter how well everything else is set up.
 
 ### Tools you'll also need
 
@@ -55,13 +54,15 @@ Beyond the materials above, a bit of general-purpose tooling — reusable across
 
 ## How NTN actually works
 
-NB-IoT already solved the "long battery life, low bandwidth" side of the equation for terrestrial cellular. What Release 17 changes is where "cellular" is allowed to originate from.
+Terrestrial cellular only covers around 15% of the Earth's surface — despite reaching roughly 90% of the population, since coverage clusters around where people actually live. NB-IoT already solved the "long battery life, low bandwidth" side of the equation for that 15%. What [3GPP Release 17](https://docs.monogoto.io/ntn-satellite-networks/introduction-to-ntn) adds is a way to reach the other 85%: the same NB-IoT protocol, relayed through a satellite instead of a cell tower.
 
-A satellite in low Earth orbit (LEO) is hundreds of kilometers away and moving at roughly 7 km/s relative to the ground. Both of those facts break assumptions terrestrial NB-IoT takes for granted: round-trip signal delay goes from milliseconds to tens or hundreds of milliseconds, and the Doppler shift from a satellite crossing overhead is large enough to shift the carrier frequency the modem is listening on. NB-NTN — the NB-IoT flavor of NTN — extends the standard's timing advance, random access procedure, and frequency compensation to handle both, without changing the underlying waveform or the AT-command interface a device already speaks to reach a terrestrial tower.
+Not all satellites work the same way. **GEO** satellites sit at roughly 36,000 km altitude, stay fixed over one region, and relay the signal transparently — continuous coverage, but low throughput (around 1-2 kbps), which suits infrequent small messages like alarms. **LEO** satellites orbit far closer, at 600-800 km, completing a full pass roughly every 90 minutes, and offer higher throughput (20-40 kbps) — but a single satellite is only overhead for a few minutes at a time, so always-on coverage needs a constellation of tens to hundreds of them working together. [Monogoto's network is a hybrid of both](https://monogoto.io/satellite-ntn/) — GEO via partners like Skylo and Viasat, LEO via OQ Technology. This test connected over Skylo's GEO network specifically: the registration log in Step 4 below reports PLMN `90198`, Skylo's assigned code.
 
-That's the part that matters for hardware: the nRF9151 doesn't need a different radio to do this. Nordic ships NB-NTN support as a modem firmware capability on the same chip already driving ISURLOG's terrestrial NB-IoT connection — same antenna, same SIM slot, same low-power sleep behavior between transmissions. Bringing NTN up on ISURLOG is a firmware and configuration change, not a new bill of materials.
+Being GEO changes what's actually driving the radio-level engineering here — a geostationary satellite doesn't move relative to the ground, so there's no meaningful Doppler shift to compensate for. What it does add is distance: at roughly 36,000 km, one-way signal delay is on the order of a hundred milliseconds or more, far beyond what terrestrial NB-IoT's timing budget assumes. NB-NTN — the NB-IoT flavor of NTN — extends the standard's timing advance and random access procedure to cover that, without changing the underlying waveform or the AT-command interface a device already speaks to reach a terrestrial tower.
 
-The practical difference shows up at connection time, not before it. A cell tower is always there; a satellite isn't always overhead. Where a terrestrial NB-IoT device attaches to the network in seconds, an NTN device may need to wait for a satellite pass within view before it can register and send — a real, physical constraint of orbital mechanics, not a firmware limitation. Understanding that window is most of what changes about designing for NTN versus designing for terrestrial NB-IoT.
+That's the part that matters for hardware: the nRF9151 doesn't need a different radio to do this. [Nordic markets it as a single "Multimode LTE-M/NB-IoT/NB-NTN with GNSS" chip](http://nordicsemi.com/Products/Wireless/Low-power-cellular-IoT/What-is-NTN) — the same silicon already driving ISURLOG's terrestrial NB-IoT connection handles NTN too, with the same antenna and the same SIM slot. Bringing NTN up on ISURLOG is a firmware and configuration change, not a new bill of materials — though not every terrestrial behavior carries over unchanged; see Limitations below for what doesn't (yet).
+
+The practical difference shows up at connection time, not before it. A terrestrial NB-IoT device attaches to the network in seconds; this test's NTN connection took a real, multi-minute wait to register instead — the transcript is in Step 4 below. Designing for NTN means planning around a registration process that can take minutes, not the near-instant, always-on assumption terrestrial NB-IoT gets to make.
 
 ## Setting it up on ISURLOG
 
@@ -73,7 +74,7 @@ The flashing procedure is exactly the one already documented for updating any mo
 
 ### Step 2: Install the latest ISURLOG firmware
 
-With the modem side updated, the ESP32 application firmware needs to be current too. The easiest path is IsurDASH's own guided updater: **Mantenimiento de dispositivos → Actualización de firmware**, picking either **Remoto** (over the air, on firmware v1.1.9+) or **Serial port (USB)** (wired, works on any version — IsurDASH walks through the RST/BOOT sequence itself). Either way, choose the release marked **Latest** from the list pulled from GitHub. Full details in [6.8. Device Maintenance](https://docs.isurlog.isurki.com/isurdash-maintenance/#firmware-update).
+Only needed if the unit isn't already running the latest firmware — every ISURLOG ships from the factory with the latest release pre-installed, so this step is really for units that have been sitting around for a while, or that already had an older firmware flashed onto them. With the modem side updated, the ESP32 application firmware needs to be current too. The easiest path is IsurDASH's own guided updater: **Mantenimiento de dispositivos → Actualización de firmware**, picking either **Remoto** (over the air, on firmware v1.1.9+) or **Serial port (USB)** (wired, works on any version — IsurDASH walks through the RST/BOOT sequence itself). Either way, choose the release marked **Latest** from the list pulled from GitHub. Full details in [6.8. Device Maintenance](https://docs.isurlog.isurki.com/isurdash-maintenance/#firmware-update).
 
 That flow only installs official published releases. Flashing outside of IsurDASH — using the UART-to-USB cable directly, with a locally-built `firmware.bin` — is also an option, and the only one if you're working from a custom or not-yet-published build. See [Flashing and Application Upload](https://docs.isurlog.isurki.com/flashing-application-upload/) for that procedure.
 
@@ -88,6 +89,8 @@ With both firmwares up to date, insert the Monogoto NTN SIM and double-check the
 ### Step 4: Connect to the NTN network
 
 With the ISURLOG powered on, the modem side is configured and connected from a MicroPython REPL — no custom firmware needed, since the `nb_iot` module already ships in the standard firmware. Any of the REPL access methods covered in [MicroPython REPL](https://docs.isurlog.isurki.com/isurdash-maintenance/#micropython-repl) work here. One session covers everything from switching to the external SIM through to attempting the connection:
+
+`lat`, `lon`, `elevation`, and `precision` (a position-uncertainty estimate) below are this test's own values — swap them for your own deployment's before running this. More on what they're actually used for in the `AT%LOCATION` note further down.
 
 ```pycon
 >>> from modules import nb_iot
@@ -159,10 +162,10 @@ The `uart_id`/`tx_pin`/`rx_pin`/`baudrate` values match the ISURLOG's standard N
 * **`AT+CGMR`** — reads back the modem firmware version, confirming `mfw_nrf9151-ntn_1.0.1` from Step 1 actually took.
 * **`AT%XSYSTEMMODE=0,0,0,0,1`** — this is the same system-mode command used to pick LTE-M/NB-IoT/GPS on terrestrial ISURLOG units, with a fifth parameter added for NTN mode. The extension, not a replacement — same command a reader would already recognize from a terrestrial setup.
 * **`AT%XBANDLOCK`** — restricts the modem to the specific NTN bands relevant to this deployment.
-* **`AT%LOCATION`** — this one has no terrestrial equivalent. A cell tower's position is irrelevant to the device; a satellite's visibility from a given point on Earth very much isn't, so the modem is given an approximate location (lat/lon/elevation, with a precision estimate) to help it know which passes are actually worth waiting for.
+* **`AT%LOCATION`** — this one has no terrestrial equivalent. A cell tower's position is irrelevant to the device; a satellite's visibility from a given point on Earth very much isn't, so the modem is given an approximate location (lat/lon/elevation, with a precision estimate) to help it calculate the initial timing advance, delay compensation, and beam selection for the stationary satellite.
 * **`AT+CGDCONT`** — the usual PDP context/APN setup, `data.mono` being Monogoto's.
 * **`AT+CFUN=1`** — the actual "go": full functionality, radio on, start trying to register. Everything before this line was configuration; this is what turns it into a connection attempt.
-* **`wait_for_network_connection(timeout=300000)`** — a 5-minute timeout, not the few seconds a terrestrial NB-IoT connection takes. This is the "waiting for a satellite pass" behavior from the section above, made concrete: `AT%XMONITOR` gets polled repeatedly, its registration-status field moving from `4` (unknown) to `2` (searching) and finally `5` (registered, roaming) once a satellite pass brings the network into view — at which point a quick `AT+CGDCONT?` check confirms an IP address was actually assigned before returning `True`.
+* **`wait_for_network_connection(timeout=300000)`** — a 5-minute timeout, not the few seconds a terrestrial NB-IoT connection takes. This is the real, multi-minute registration wait from the section above, made concrete: `AT%XMONITOR` gets polled repeatedly, its registration-status field moving from `4` (unknown) to `2` (searching) and finally `5` (registered, roaming) — at which point a quick `AT+CGDCONT?` check confirms an IP address was actually assigned before returning `True`.
 
 ### Step 5: Read sensors and package the payload
 
@@ -256,10 +259,10 @@ That hex string is what actually goes out over the NTN link in the next step.
 
 *The real test — outdoors, clear sky, ISURLOG connected to a laptop running through this same tutorial.*
 
-With the payload encoded, sending it is a plain UDP socket — open, send, close:
+With the payload encoded, sending it is a plain UDP socket — open, send, close. That's not a stylistic choice: [NB-IoT NTN supports UDP traffic only](https://docs.monogoto.io/ntn-satellite-networks/udp-communication-for-ntn-applications) — no TCP/IP, which rules out MQTT (and TLS, HTTPS, WebSockets) directly over the satellite link. The reason is the link itself: TCP's connection handshake and ongoing acknowledgments assume a session that stays up and responds quickly, an assumption that [breaks down over intermittent, high-latency satellite connections](https://www.tartabit.com/blog/unseen-complexities-ntn-cellular-via-satellite-nb-iot) where a device may only get a short, sparse window to communicate. UDP's fire-and-forget model — no handshake, low overhead — fits that link instead, at the cost of not guaranteeing delivery; retries and deduplication become the application's problem, not the protocol's.
 
 ```pycon
->>> server = "80.24.238.36"
+>>> server = "203.0.113.10"  # your own UDP receiver's address
 >>> port = 1200
 >>> nb_iot_module.send_at_command_check("AT#XSOCKET=1,2,0")
 [3214] DEBUG: Sent AT command: AT#XSOCKET=1,2,0
@@ -267,7 +270,7 @@ With the payload encoded, sending it is a plain UDP socket — open, send, close
 OK
 True
 >>> nb_iot_module.send_at_command_check(f'AT#XSENDTO="{server}",{port},"{encoded_payload}"', expected_response="OK", timeout=10000)
-[525] DEBUG: Sent AT command: AT#XSENDTO="80.24.238.36",1200,"00756a913e9700740e570067011400684600050002"
+[525] DEBUG: Sent AT command: AT#XSENDTO="203.0.113.10",1200,"00756a913e9700740e570067011400684600050002"
 [527] DEBUG: Received response: #XSENDTO: 42
 OK
 True
@@ -332,9 +335,34 @@ Everything above worked, but it's not a finished feature — worth being upfront
 
 **No modem sleep command in NTN firmware.** ISURLOG's own `nb_iot` driver puts the modem to sleep between transmissions with `AT#XSLEEP` — and that command doesn't appear anywhere in Nordic's NTN AT command reference (`v0.8`, itself still pre-1.0). The standard 3GPP power-saving mechanisms, PSM (`AT+CPSMS`) and eDRX (`AT+CEDRXS`), are both explicitly listed as supported for NTN NB-IoT in that same manual — so the modem clearly *can* sleep on this firmware, the same way it already does over terrestrial NB-IoT. What's missing is driver work on ISURLOG's side: switching to PSM/eDRX for NTN mode instead of assuming `#XSLEEP` is always available. Until that lands, running NTN today means the modem stays awake between transmissions — a real cost on a platform whose whole pitch is ~20 µA in deep sleep.
 
-**Satellite passes, not a permanent connection.** The 5-minute registration timeout earlier in this post comes from the same fact: a satellite isn't always overhead. Real deployments need to plan around pass windows, not assume the always-on availability terrestrial NB-IoT takes for granted.
+**Registration is slow, and the reason isn't confirmed yet.** The 5-minute timeout earlier in this post is real, not a conservative default — it took that long to register on Skylo's GEO network (see [How NTN actually works](#how-ntn-actually-works) above for how we know it was GEO, not LEO). What exactly drives that delay — link acquisition on a weaker signal, an early-firmware inefficiency, something else — isn't confirmed yet. Real deployments should plan around a registration process that can take minutes, not the near-instant, always-on availability terrestrial NB-IoT takes for granted.
+
+**No MQTT — UDP only.** Covered in Step 6 above: NB-IoT NTN doesn't support TCP/IP, which rules out MQTT along with TLS, HTTPS, and WebSockets over the satellite link directly. Anything built on top of ISURLOG's terrestrial MQTT integration needs a UDP-based path for NTN instead — not a driver gap to fix, but a real architectural difference to design around.
 
 **Early software, both sides.** The NTN modem firmware (`1.0.1`) and its own AT command reference (`v0.8`) are both young. Some of the rough edges here are ISURLOG's to fix; some are simply what "early" looks like industry-wide for NB-NTN right now.
 
 !!! note "🚧 Coming next"
     A future post will dig into some of these more advanced uses: getting NTN into a real low-power mode instead of a fully-powered idle modem, receiving data over UDP (downlink, not just uplink), and whatever else falls out of closing the gaps above.
+
+## Want to Deploy a Real Installation?
+
+If you have an operational scenario where NTN genuinely earns its place — a site terrestrial NB-IoT or GPRS simply can't reach — we'd like to propose an evaluation program.
+
+**What Isurki provides:**
+
+* **One evaluation unit** — an ISURLOG NB-IoT NTN datalogger, at no acquisition cost.
+* **Global connectivity** — access to a solution that guarantees sensor data reception from anywhere on the planet.
+* **Yours to keep** — once the one-year evaluation period is complete, the unit is yours at no cost, no strings attached.
+
+**What you provide:**
+
+* **A real use case** — a commitment to install and activate the unit somewhere that technically justifies satellite connectivity (no terrestrial NB-IoT or GPRS coverage).
+* **Continuity and maintenance** — keeping the unit running for at least one year, covering the NTN data plan and any sensors needed (from your own inventory, or acquired for the project).
+
+**Program terms:**
+
+1. **Deployment** — commit to installing and activating the unit within a reasonable time after receiving it.
+2. **Operation** — keep the system active and perform preventive maintenance on the datalogger and sensors throughout the one-year evaluation.
+3. **Technical fit** — the application must genuinely require NTN connectivity, with no terrestrial alternative available.
+
+Interested? [Reply to us](mailto:tecnica@isurki.com?subject=ISURLOG%20NTN%20-%20Evaluation%20Program) and we'll follow up to coordinate the details.
