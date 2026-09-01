@@ -3,6 +3,10 @@ site_url: https://docs.isurlog.isurki.com/blog/
 docs_dir: docs/blog
 site_dir: blog-site
 
+nav:
+  - Home: https://docs.isurlog.isurki.com/
+  - Blog: index.md
+
 theme:
   name: material
   palette:

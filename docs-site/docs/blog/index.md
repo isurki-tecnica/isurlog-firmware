@@ -1,4 +1,8 @@
-[← Back to Docs](../){: .md-button }
+---
+title: Blog
+---
+
+[← Back to Docs](https://docs.isurlog.isurki.com/){: .md-button }
 
 # Blog
 
