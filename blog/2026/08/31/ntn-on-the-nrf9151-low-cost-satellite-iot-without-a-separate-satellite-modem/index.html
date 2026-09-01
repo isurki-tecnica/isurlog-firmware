@@ -1,0 +1,1006 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.isurlog.isurki.com/blog/2026/08/31/ntn-on-the-nrf9151-low-cost-satellite-iot-without-a-separate-satellite-modem/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>NTN on the nRF9151: Low-Cost Satellite IoT Without a Separate Satellite Modem - ISURLOG Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ntn-on-the-nrf9151-low-cost-satellite-iot-without-a-separate-satellite-modem" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ISURLOG Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              NTN on the nRF9151: Low-Cost Satellite IoT Without a Separate Satellite Modem
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ISURLOG Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-youll-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you'll need
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What you&#39;ll need">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tools-youll-also-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools you'll also need
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-ntn-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How NTN actually works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-it-up-on-isurlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting it up on ISURLOG
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting it up on ISURLOG">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-flash-the-ntn-modem-firmware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Flash the NTN modem firmware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-install-the-latest-isurlog-firmware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Install the latest ISURLOG firmware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-insert-the-sim-connect-the-antenna-power-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Insert the SIM, connect the antenna, power on
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-connect-to-the-ntn-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Connect to the NTN network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-read-sensors-and-package-the-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Read sensors and package the payload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-send-the-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Send the payload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bonus-track-getting-the-coordinates-automatically" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bonus track: getting the coordinates automatically
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-and-whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations and What's Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#want-to-deploy-a-real-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Want to Deploy a Real Installation?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="../../../../images/author-isurki.jpg" alt="ISURKI">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          ISURKI
+                        
+                      </strong>
+                      <br>
+                      Firmware & Hardware Team
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2026-08-31 00:00:00+00:00" class="md-ellipsis">August 31, 2026</time>
+                      </div>
+                    </li>
+                    
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              17 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+
+
+<h1 id="ntn-on-the-nrf9151-low-cost-satellite-iot-without-a-separate-satellite-modem">NTN on the nRF9151: Low-Cost Satellite IoT Without a Separate Satellite Modem</h1>
+<p><img alt="ISURLOG open outdoors, with the Monogoto NTN SIM card sitting on the board" src="../../../../images/ntn-cover.jpg" width="700" /></p>
+<h2 id="why">Why</h2>
+<p>Satellite connectivity has always meant a trade-off nobody actually wanted to make: either your device lives in cellular coverage, or you pay for it. A dedicated satellite modem alone can cost more than an entire ISURLOG unit does today — before you've added a single sensor, an enclosure, or a battery that survives a season in the field. That cost has quietly drawn a line across the map: everything inside cellular coverage gets real-time IoT, and everything outside it — the forest, the mountain pass, the offshore platform, the pipeline crossing open country — gets a manual visit, or nothing at all.</p>
+<p>NTN is the reason that line is starting to move.</p>
+<!-- more -->
+
+<p>Non-Terrestrial Networks — standardized in 3GPP Release 17 — do something deceptively simple: they let a normal NB-IoT device talk to a satellite using the <em>same</em> protocol stack it already uses to talk to a cell tower. No proprietary satellite radio. No second modem bolted onto the board. No separate ecosystem to integrate. If your device's modem supports NTN, reaching a satellite is a firmware capability, not a hardware redesign.</p>
+<p>ISURLOG's NB-IoT connectivity already runs on the Nordic nRF9151 — the same chip driving this shift. That's the part worth sitting with for a second: a datalogger built from well under €500 in materials, open-source down to the firmware, engineered from day one to run for years on a couple of Li-Ion 18650 cells — is standing on hardware that can also reach a satellite. Not a €5,000 satellite-only unit. Not a closed platform where you rent connectivity and hope the vendor is still around in three years. The same board, the same firmware repo, the same low-power discipline that gets ISURLOG to ~20µA in deep sleep — extended to cover the one gap terrestrial cellular could never close.</p>
+<p>That combination — satellite reach, industrial-grade sensing, real battery life, and a firmware anyone can read line by line — isn't something the IoT industry has been able to offer at this price point. It's usually pick two. This is what it looks like to not have to.</p>
+<p>This post walks through what NTN actually is, what it takes to bring it up on an nRF9151, and what ISURLOG looked like the first time it reached a satellite instead of a tower.</p>
+<h2 id="what-youll-need">What you'll need</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Item</th>
+<th style="text-align: left;">From Isurki</th>
+<th style="text-align: left;">Bring your own</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>ISURLOG datalogger</strong> — PCB with NB-IoT module (nRF9151)</td>
+<td style="text-align: left;"><strong>€387</strong></td>
+<td style="text-align: left;"><em>No alternative — this is the core hardware</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Antenna</strong> — same one used for regular terrestrial NB-IoT, no NTN-specific antenna needed</td>
+<td style="text-align: left;"><em>Included with the unit</em></td>
+<td style="text-align: left;"><a href="https://www.mouser.es/es/ProductDetail/Molex/209142-0180">Molex 209142-0180</a> — ~€3.78, or any other NB-IoT-compatible antenna with 50 Ω impedance</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3D-printed enclosure</strong> <em>(optional)</em></td>
+<td style="text-align: left;"><strong>€35</strong></td>
+<td style="text-align: left;">💬 In discussion — direction not yet decided. If you'd find this useful, <a href="https://github.com/isurki-tecnica/isurlog-firmware/issues/new">let us know</a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Li-Ion 18650 batteries</strong> — 2 minimum for transmission current peaks, 5 for full internal capacity</td>
+<td style="text-align: left;"><strong>€30</strong> <em>(set of 5, rechargeable)</em></td>
+<td style="text-align: left;">e.g. <a href="https://www.nkon.nl/es/samsung-inr18650-35e.html">Samsung INR18650-35E, 3400mAh / 8A</a> — ~€2.59/unit</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NTN SIM card</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"><a href="https://monogoto.io">Monogoto</a> — check <a href="https://docs.monogoto.io/getting-started/ntn-satellite-coverage">NTN satellite coverage</a> for your region before ordering</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Sensor</strong> <em>(optional — any ISURLOG-compatible sensor works)</em></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Example used here: a <strong>Paratronic NRV485</strong> radar level sensor over Modbus RS485. No extra sensor needed to just test the NTN link — the onboard <strong>SHT30</strong> (temperature/humidity) or <strong>LIS2DH12</strong> (accelerometer) work fine too.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total hardware cost:</strong> ~€417 without the enclosure, ~€452 with it <em>(excl. VAT)</em> — plus the Monogoto SIM/data plan (pricing depends on the plan chosen, not included above). For the full accessory catalog and an interactive price builder, see <a href="https://docs.isurlog.isurki.com/parts-and-accessories/">Parts and Accessories</a> and the <a href="https://docs.isurlog.isurki.com/configurator/">configurator</a>.</p>
+<p><img alt="The test setup on the bench: the Paratronic NRV485 radar sensor, the ISURLOG open in its 3D-printed PETG enclosure, and the enclosure lid to the side" src="../../../../images/ntn-office-bench-setup.jpg" width="700" /></p>
+<p><em>The bench setup — Paratronic radar sensor, ISURLOG in its 3D-printed enclosure, lid off to the side.</em></p>
+<div class="admonition tip">
+<p class="admonition-title">A clear view of the sky</p>
+<p>Unlike terrestrial NB-IoT, which happily works indoors or in a pocket, NTN needs the antenna to have a clear line of sight to the sky — no roof, no dense tree cover, ideally outdoors and away from tall buildings. Testing from inside a building won't connect, no matter how well everything else is set up.</p>
+</div>
+<h3 id="tools-youll-also-need">Tools you'll also need</h3>
+<p>Beyond the materials above, a bit of general-purpose tooling — reusable across projects, not something bought per unit:</p>
+<ul>
+<li><strong>A computer</strong> (Windows, macOS, or Linux) — to flash firmware and run the tools below.</li>
+<li><strong>A UART-to-USB TTL cable</strong> — the ISURLOG doesn't have an onboard USB-to-UART converter, so this is how the ESP32 side gets flashed. Full details in <a href="https://docs.isurlog.isurki.com/flashing-application-upload/">Flashing and Application Upload</a>.</li>
+<li><strong>An <a href="https://www.digikey.es/es/products/detail/nordic-semiconductor-asa/NRF9160-DK/9740721">nRF9160-DK</a></strong>, a <strong><a href="https://www.tag-connect.com/product/tc2030-ctx-nl-6-pin-no-legs-cable-with-10-pin-micro-connector-for-cortex-processors">6-pin TAG-Connect cable</a></strong>, and <strong><a href="https://www.nordicsemi.com/Products/Development-tools/nRF-Connect-for-Desktop">nRF Connect for Desktop</a></strong> — this is what actually loads the NTN modem firmware in the next section. No SDK or toolchain needed, just the Programmer app. Full details in <a href="https://docs.isurlog.isurki.com/nbiot-modem-guide/#56-flashing-hardware-requirements-and-connection">5.6 Flashing Hardware Requirements</a>.</li>
+</ul>
+<h2 id="how-ntn-actually-works">How NTN actually works</h2>
+<p>Terrestrial cellular only covers around 15% of the Earth's surface — despite reaching roughly 90% of the population, since coverage clusters around where people actually live. NB-IoT already solved the "long battery life, low bandwidth" side of the equation for that 15%. What <a href="https://docs.monogoto.io/ntn-satellite-networks/introduction-to-ntn">3GPP Release 17</a> adds is a way to reach the other 85%: the same NB-IoT protocol, relayed through a satellite instead of a cell tower.</p>
+<p>Not all satellites work the same way. <strong>GEO</strong> satellites sit at roughly 36,000 km altitude, stay fixed over one region, and relay the signal transparently — continuous coverage, but low throughput (around 1-2 kbps), which suits infrequent small messages like alarms. <strong>LEO</strong> satellites orbit far closer, at 600-800 km, completing a full pass roughly every 90 minutes, and offer higher throughput (20-40 kbps) — but a single satellite is only overhead for a few minutes at a time, so always-on coverage needs a constellation of tens to hundreds of them working together. <a href="https://monogoto.io/satellite-ntn/">Monogoto's network is a hybrid of both</a> — GEO via partners like Skylo and Viasat, LEO via OQ Technology. This test connected over Skylo's GEO network specifically: the registration log in Step 4 below reports PLMN <code>90198</code>, Skylo's assigned code.</p>
+<p>Being GEO changes what's actually driving the radio-level engineering here — a geostationary satellite doesn't move relative to the ground, so there's no meaningful Doppler shift to compensate for. What it does add is distance: at roughly 36,000 km, one-way signal delay is on the order of a hundred milliseconds or more, far beyond what terrestrial NB-IoT's timing budget assumes. NB-NTN — the NB-IoT flavor of NTN — extends the standard's timing advance and random access procedure to cover that, without changing the underlying waveform or the AT-command interface a device already speaks to reach a terrestrial tower.</p>
+<p>That's the part that matters for hardware: the nRF9151 doesn't need a different radio to do this. <a href="http://nordicsemi.com/Products/Wireless/Low-power-cellular-IoT/What-is-NTN">Nordic markets it as a single "Multimode LTE-M/NB-IoT/NB-NTN with GNSS" chip</a> — the same silicon already driving ISURLOG's terrestrial NB-IoT connection handles NTN too, with the same antenna and the same SIM slot. Bringing NTN up on ISURLOG is a firmware and configuration change, not a new bill of materials — though not every terrestrial behavior carries over unchanged; see Limitations below for what doesn't (yet).</p>
+<p>The practical difference shows up at connection time, not before it. A terrestrial NB-IoT device attaches to the network in seconds; this test's NTN connection took a real, multi-minute wait to register instead — the transcript is in Step 4 below. Designing for NTN means planning around a registration process that can take minutes, not the near-instant, always-on assumption terrestrial NB-IoT gets to make.</p>
+<h2 id="setting-it-up-on-isurlog">Setting it up on ISURLOG</h2>
+<h3 id="step-1-flash-the-ntn-modem-firmware">Step 1: Flash the NTN modem firmware</h3>
+<p>The nRF9151 ships from the factory speaking terrestrial NB-IoT/LTE-M. Reaching a satellite starts with loading Nordic's dedicated NTN modem firmware — at the time of writing, <a href="https://www.nordicsemi.com/Products/nRF9151/Download?lang=en#infotabs"><code>mfw_nrf9151-ntn_1.0.1</code></a>, available from the same Nordic downloads page as the regular modem firmware.</p>
+<p>The flashing procedure is exactly the one already documented for updating any modem firmware binary: nRF9160-DK connected via the TAG-Connect cable to the ISURLOG's JTAG port, loaded through the Programmer app in nRF Connect for Desktop. Only the binary changes — swap the usual <code>mfw_nrf91x1_x.x.x.zip</code> for the NTN one. The full step-by-step is in <a href="https://docs.isurlog.isurki.com/nbiot-modem-guide/#57-updating-modem-firmware-from-official-binaries">5.7 Updating Modem Firmware from Official Binaries</a>.</p>
+<h3 id="step-2-install-the-latest-isurlog-firmware">Step 2: Install the latest ISURLOG firmware</h3>
+<p>Only needed if the unit isn't already running the latest firmware — every ISURLOG ships from the factory with the latest release pre-installed, so this step is really for units that have been sitting around for a while, or that already had an older firmware flashed onto them. With the modem side updated, the ESP32 application firmware needs to be current too. The easiest path is IsurDASH's own guided updater: <strong>Mantenimiento de dispositivos → Actualización de firmware</strong>, picking either <strong>Remoto</strong> (over the air, on firmware v1.1.9+) or <strong>Serial port (USB)</strong> (wired, works on any version — IsurDASH walks through the RST/BOOT sequence itself). Either way, choose the release marked <strong>Latest</strong> from the list pulled from GitHub. Full details in <a href="https://docs.isurlog.isurki.com/isurdash-maintenance/#firmware-update">6.8. Device Maintenance</a>.</p>
+<p>That flow only installs official published releases. Flashing outside of IsurDASH — using the UART-to-USB cable directly, with a locally-built <code>firmware.bin</code> — is also an option, and the only one if you're working from a custom or not-yet-published build. See <a href="https://docs.isurlog.isurki.com/flashing-application-upload/">Flashing and Application Upload</a> for that procedure.</p>
+<h3 id="step-3-insert-the-sim-connect-the-antenna-power-on">Step 3: Insert the SIM, connect the antenna, power on</h3>
+<p>With both firmwares up to date, insert the Monogoto NTN SIM and double-check the antenna is properly connected to the PCB's U.FL socket — before powering on, not after, since transmitting without an antenna connected can damage the RF circuit. From there it's the same power-up sequence as any ISURLOG: flip the <strong>ON/OFF</strong> switch on the PCB. Full details in <a href="https://docs.isurlog.isurki.com/installation-commissioning/#44-power-up-sequence">4.4. Power-Up Sequence</a>.</p>
+<p><img alt="The ISURLOG board on its own, out of the enclosure, showing the Molex antenna cable and the Li-Ion 18650 battery" src="../../../../images/ntn-isurlog-antenna-battery.jpg" width="380" /></p>
+<p><em>The ISURLOG board on its own — Molex antenna cable and the Li-Ion 18650 battery.</em></p>
+<h3 id="step-4-connect-to-the-ntn-network">Step 4: Connect to the NTN network</h3>
+<p>With the ISURLOG powered on, the modem side is configured and connected from a MicroPython REPL — no custom firmware needed, since the <code>nb_iot</code> module already ships in the standard firmware. Any of the REPL access methods covered in <a href="https://docs.isurlog.isurki.com/isurdash-maintenance/#micropython-repl">MicroPython REPL</a> work here. One session covers everything from switching to the external SIM through to attempting the connection:</p>
+<p><code>lat</code>, <code>lon</code>, <code>elevation</code>, and <code>precision</code> (a position-uncertainty estimate) below are this test's own values — swap them for your own deployment's before running this. More on what they're actually used for in the <code>AT%LOCATION</code> note further down.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">nb_iot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lat</span> <span class="o">=</span> <span class="mf">43.32898</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lon</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.82535</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elevation</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">precision</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apn</span> <span class="o">=</span> <span class="s2">"data.mono"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span> <span class="o">=</span> <span class="n">nb_iot</span><span class="o">.</span><span class="n">NBIoT</span><span class="p">(</span><span class="n">uart_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tx_pin</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">rx_pin</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="mi">115200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">select_SIM</span><span class="p">(</span><span class="n">external_sim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">[58] DEBUG: Sent AT command: AT+CFUN=0</span>
+<span class="go">[60] DEBUG: Received response: OK</span>
+<span class="go">[60] DEBUG: Sent AT command: AT#XGPIOCFG=1,12</span>
+<span class="go">[62] DEBUG: Received response: OK</span>
+<span class="go">[62] DEBUG: Sent AT command: AT#XGPIO=0,12,0</span>
+<span class="go">[64] DEBUG: Received response: OK</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command</span><span class="p">(</span><span class="s2">"AT+CGMR"</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<span class="go">[65] DEBUG: Sent AT command: AT+CGMR</span>
+<span class="go">[67] DEBUG: Received response: mfw_nrf9151-ntn_1.0.1</span>
+<span class="go">OK</span>
+<span class="go">'mfw_nrf9151-ntn_1.0.1\r\nOK'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT</span><span class="si">%X</span><span class="s2">SYSTEMMODE=0,0,0,0,1"</span><span class="p">)</span>
+<span class="go">[69] DEBUG: Sent AT command: AT%XSYSTEMMODE=0,0,0,0,1</span>
+<span class="go">[71] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s1">'AT</span><span class="si">%X</span><span class="s1">BANDLOCK=2,,"23,255,256"'</span><span class="p">)</span>
+<span class="go">[76] DEBUG: Sent AT command: AT%XBANDLOCK=2,,"23,255,256"</span>
+<span class="go">[78] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="sa">f</span><span class="s1">'AT%LOCATION=2,"</span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s1">","</span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s1">","</span><span class="si">{</span><span class="n">elevation</span><span class="si">}</span><span class="s1">",</span><span class="si">{</span><span class="n">precision</span><span class="si">}</span><span class="s1">,0'</span><span class="p">)</span>
+<span class="go">[81] DEBUG: Sent AT command: AT%LOCATION=2,"43.32898","-1.82535","15",10,0</span>
+<span class="go">[83] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="sa">f</span><span class="s1">'AT+CGDCONT=1,"IP","</span><span class="si">{</span><span class="n">apn</span><span class="si">}</span><span class="s1">"'</span><span class="p">)</span>
+<span class="go">[85] DEBUG: Sent AT command: AT+CGDCONT=1,"IP","data.mono"</span>
+<span class="go">[87] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT+CFUN=1"</span><span class="p">)</span>
+<span class="go">[90] DEBUG: Sent AT command: AT+CFUN=1</span>
+<span class="go">[92] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">wait_for_network_connection</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">300000</span><span class="p">)</span>
+<span class="go">[97] DEBUG: Sent AT command: AT%XMONITOR</span>
+<span class="go">[99] DEBUG: Received response: %XMONITOR: 4</span>
+<span class="go">OK</span>
+<span class="go">[101] DEBUG: Sent AT command: AT%XMONITOR</span>
+<span class="go">[103] DEBUG: Received response: %XMONITOR: 4</span>
+<span class="go">OK</span>
+<span class="go">...</span>
+<span class="go">[397] DEBUG: Sent AT command: AT%XMONITOR</span>
+<span class="go">[399] DEBUG: Received response: %XMONITOR: 2</span>
+<span class="go">OK</span>
+<span class="go">...</span>
+<span class="go">[439] DEBUG: Sent AT command: AT%XMONITOR</span>
+<span class="go">[441] DEBUG: Received response: 5,"","","90198","3AB0",14,255,"0024D9B0",24,228841,4,14,"","11100000","00111000","11100000",0,3,8,8</span>
+<span class="go">OK</span>
+<span class="go">[439] DEBUG: Sent AT command: AT+CGDCONT?</span>
+<span class="go">[441] DEBUG: Received response: +CGDCONT: 0,"IP","data.mono","10.137.26.202",0,0</span>
+<span class="go">+CGDCONT: 1,"IP","data.mono","",0,0</span>
+<span class="go">OK</span>
+<span class="go">[441] INFO: Verified data session on CID 0. IP: 10.137.26.202</span>
+<span class="go">[441] INFO: Device fully connected with IP address.</span>
+<span class="go">True</span>
+</code></pre></div>
+<p>The <code>uart_id</code>/<code>tx_pin</code>/<code>rx_pin</code>/<code>baudrate</code> values match the ISURLOG's standard NB-IoT UART wiring, documented in <a href="https://docs.isurlog.isurki.com/nbiot-modem-guide/#53-uart-communication-and-at-commands">5.3 UART Communication and AT Commands</a>. A few of these commands are worth calling out:</p>
+<ul>
+<li><strong><code>select_SIM(external_sim=True)</code></strong> — switches the modem from the board's integrated eSIM to the external Nano-SIM slot, where the Monogoto NTN SIM is inserted. Under the hood it drives the same GPIO12 SIM-select line documented in <a href="https://docs.isurlog.isurki.com/nbiot-modem-guide/#55-sim-selection-and-gpio-control">5.5 SIM Selection and GPIO Control</a>.</li>
+<li><strong><code>AT+CGMR</code></strong> — reads back the modem firmware version, confirming <code>mfw_nrf9151-ntn_1.0.1</code> from Step 1 actually took.</li>
+<li><strong><code>AT%XSYSTEMMODE=0,0,0,0,1</code></strong> — this is the same system-mode command used to pick LTE-M/NB-IoT/GPS on terrestrial ISURLOG units, with a fifth parameter added for NTN mode. The extension, not a replacement — same command a reader would already recognize from a terrestrial setup.</li>
+<li><strong><code>AT%XBANDLOCK</code></strong> — restricts the modem to the specific NTN bands relevant to this deployment.</li>
+<li><strong><code>AT%LOCATION</code></strong> — this one has no terrestrial equivalent. A cell tower's position is irrelevant to the device; a satellite's visibility from a given point on Earth very much isn't, so the modem is given an approximate location (lat/lon/elevation, with a precision estimate) to help it calculate the initial timing advance, delay compensation, and beam selection for the stationary satellite.</li>
+<li><strong><code>AT+CGDCONT</code></strong> — the usual PDP context/APN setup, <code>data.mono</code> being Monogoto's.</li>
+<li><strong><code>AT+CFUN=1</code></strong> — the actual "go": full functionality, radio on, start trying to register. Everything before this line was configuration; this is what turns it into a connection attempt.</li>
+<li><strong><code>wait_for_network_connection(timeout=300000)</code></strong> — a 5-minute timeout, not the few seconds a terrestrial NB-IoT connection takes. This is the real, multi-minute registration wait from the section above, made concrete: <code>AT%XMONITOR</code> gets polled repeatedly, its registration-status field moving from <code>4</code> (unknown) to <code>2</code> (searching) and finally <code>5</code> (registered, roaming) — at which point a quick <code>AT+CGDCONT?</code> check confirms an IP address was actually assigned before returning <code>True</code>.</li>
+</ul>
+<h3 id="step-5-read-sensors-and-package-the-payload">Step 5: Read sensors and package the payload</h3>
+<p>With the connection under way, the next step is reading the sensors and packaging their values into a transmittable payload. This test uses three sensors: a <strong>Paratronic NRV485</strong> radar level sensor over Modbus, plus the ISURLOG's own onboard SHT30 (temperature/humidity) and MAX17048 (battery fuel gauge) — a representative real-world sensor mix, not something specific to NTN.</p>
+<p><strong>Timestamp first.</strong> Every payload gets referenced against the time it was taken, since it might sit in the device's storage for a while before actually being transmitted:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">modules.power_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">pm</span>
+<span class="go">[17] INFO: ESP32 Wakeup reason: Power-on reset</span>
+<span class="go">[17] ERROR: RTC lost power! Time is invalid.</span>
+</code></pre></div>
+<p>That error means the RTC has no <a href="https://docs.isurlog.isurki.com/power-supply/#23-rtc-backup-battery-cr2032">CR2032 backup battery</a> connected — without it, the clock doesn't survive a full power cycle. Either set it by hand, as done here (<code>mode="GPS"</code> just selects the matching string-format parser, not the time source), or with the GPS fix from the bonus track further down (<code>time_str = parsed_gps_response[3]</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">time_str</span> <span class="o">=</span> <span class="s2">"2026-08-28 09:11:15"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pm</span><span class="o">.</span><span class="n">set_rtc_time</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"GPS"</span><span class="p">)</span>
+<span class="go">[393] INFO: Local time tuple: (2026, 8, 28, 1, 9, 11, 15, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"addUnixTime"</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">rtc</span><span class="o">.</span><span class="n">get_unix_time</span><span class="p">()]]</span>
+</code></pre></div>
+<p><strong>Battery voltage</strong>, from the MAX17048 fuel gauge:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lib.max1704x</span><span class="w"> </span><span class="kn">import</span> <span class="n">max1704x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">max17048_sensor</span> <span class="o">=</span> <span class="n">max1704x</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">battery_voltage</span> <span class="o">=</span> <span class="n">max17048_sensor</span><span class="o">.</span><span class="n">getVCell</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utils</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Battery Voltage: </span><span class="si">{</span><span class="n">battery_voltage</span><span class="si">}</span><span class="s2">mV"</span><span class="p">)</span>
+<span class="go">[795] INFO: Battery Voltage: 3671.25mV</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"addVoltageInput"</span><span class="p">,</span> <span class="n">battery_voltage</span><span class="p">])</span>
+</code></pre></div>
+<p><strong>Temperature and humidity</strong>, from the onboard SHT30:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">sht30_sensor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sht_sensor</span> <span class="o">=</span> <span class="n">sht30_sensor</span><span class="o">.</span><span class="n">SHT30Sensor</span><span class="p">()</span>
+<span class="go">[1893] INFO: SHT30 sensor initialized successfully.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sensor_data</span> <span class="o">=</span> <span class="n">sht_sensor</span><span class="o">.</span><span class="n">read_data</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utils</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Temperature: </span><span class="si">{</span><span class="n">sensor_data</span><span class="p">[</span><span class="s1">'temperature'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> °C, Humidity: </span><span class="si">{</span><span class="n">sensor_data</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> %RH"</span><span class="p">)</span>
+<span class="go">[1912] INFO: Temperature: 27.69 °C, Humidity: 35.39 %RH</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"addTemperatureSensor"</span><span class="p">,</span> <span class="n">sensor_data</span><span class="p">[</span><span class="s1">'temperature'</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"addHumiditySensor"</span><span class="p">,</span> <span class="n">sensor_data</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">]])</span>
+</code></pre></div>
+<p><strong>Radar level</strong>, over Modbus, needs its power turned on first — unlike the two onboard sensors above. The Paratronic NRV485 takes 9–20VDC, so the board's configurable sensor supply is set to 12V through the onboard digital potentiometer/boost regulator, then the VDC rail and the RS485 transceiver's own 5V rail are switched on:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lib.mcp4017</span><span class="w"> </span><span class="kn">import</span> <span class="n">MCP4017</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pot</span> <span class="o">=</span> <span class="n">MCP4017</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pot</span><span class="o">.</span><span class="n">set_mt3608_voltage</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pm</span><span class="o">.</span><span class="n">control_vdc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pm</span><span class="o">.</span><span class="n">control_5v</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>The sensor needs about 12 seconds after power-up to settle before its reading is worth trusting:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">modbus_sensor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">modbus_module</span> <span class="o">=</span> <span class="n">modbus_sensor</span><span class="o">.</span><span class="n">ModbusSensor</span><span class="p">(</span><span class="n">baudrate</span><span class="o">=</span><span class="mi">9600</span><span class="p">,</span> <span class="n">data_bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">parity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_bits</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[2453] WARNING: Pin configuration: en_pin: 33 rx_pin: 14 tx_pin: 23</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slave_addr</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fc</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">register_addr</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_fp</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">value</span> <span class="o">=</span> <span class="n">modbus_module</span><span class="o">.</span><span class="n">read_modbus_data</span><span class="p">(</span><span class="n">slave_addr</span><span class="p">,</span> <span class="n">fc</span><span class="p">,</span> <span class="n">register_addr</span><span class="p">,</span> <span class="n">is_fp</span><span class="p">)</span>
+<span class="go">[2646] INFO: Modbus response: (2094,)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"addModbusGenericInput"</span><span class="p">,</span> <span class="n">value</span><span class="p">])</span>
+</code></pre></div>
+<p>The raw register value (<code>2094</code>) is the level in millimeters — dividing by 1000 gives the reading in meters.</p>
+<p><strong>Encoding the payload.</strong> With all three readings in <code>data</code>, it gets run through ISURKI's own LPP-style codec:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lib.IsurlogLPP</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsurlogLPPEncoder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder</span> <span class="o">=</span> <span class="n">IsurlogLPPEncoder</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utils</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Encoded Payload: </span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="go">[2840] INFO: Encoded Payload: 00756a913e9700740e570067011400684600050002</span>
+</code></pre></div>
+<p>That hex string is what actually goes out over the NTN link in the next step.</p>
+<h3 id="step-6-send-the-payload">Step 6: Send the payload</h3>
+<p><img alt="The real test outdoors, clear sky, ISURLOG connected to a laptop running the tutorial commands" src="../../../../images/ntn-outdoor-clear-sky-test.jpg" width="700" /></p>
+<p><em>The real test — outdoors, clear sky, ISURLOG connected to a laptop running through this same tutorial.</em></p>
+<p>With the payload encoded, sending it is a plain UDP socket — open, send, close. That's not a stylistic choice: <a href="https://docs.monogoto.io/ntn-satellite-networks/udp-communication-for-ntn-applications">NB-IoT NTN supports UDP traffic only</a> — no TCP/IP, which rules out MQTT (and TLS, HTTPS, WebSockets) directly over the satellite link. The reason is the link itself: TCP's connection handshake and ongoing acknowledgments assume a session that stays up and responds quickly, an assumption that <a href="https://www.tartabit.com/blog/unseen-complexities-ntn-cellular-via-satellite-nb-iot">breaks down over intermittent, high-latency satellite connections</a> where a device may only get a short, sparse window to communicate. UDP's fire-and-forget model — no handshake, low overhead — fits that link instead, at the cost of not guaranteeing delivery; retries and deduplication become the application's problem, not the protocol's.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">server</span> <span class="o">=</span> <span class="s2">"203.0.113.10"</span>  <span class="c1"># your own UDP receiver's address</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">port</span> <span class="o">=</span> <span class="mi">1200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT#XSOCKET=1,2,0"</span><span class="p">)</span>
+<span class="go">[3214] DEBUG: Sent AT command: AT#XSOCKET=1,2,0</span>
+<span class="go">[3216] DEBUG: Received response: #XSOCKET: 0,2,17</span>
+<span class="go">OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="sa">f</span><span class="s1">'AT#XSENDTO="</span><span class="si">{</span><span class="n">server</span><span class="si">}</span><span class="s1">",</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s1">,"</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s1">"'</span><span class="p">,</span> <span class="n">expected_response</span><span class="o">=</span><span class="s2">"OK"</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="go">[525] DEBUG: Sent AT command: AT#XSENDTO="203.0.113.10",1200,"00756a913e9700740e570067011400684600050002"</span>
+<span class="go">[527] DEBUG: Received response: #XSENDTO: 42</span>
+<span class="go">OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT#XSOCKET=0"</span><span class="p">)</span>
+<span class="go">[3301] DEBUG: Sent AT command: AT#XSOCKET=0</span>
+<span class="go">[3303] DEBUG: Received response: #XSOCKET: 0,"closed"</span>
+<span class="go">OK</span>
+<span class="go">True</span>
+</code></pre></div>
+<h3 id="bonus-track-getting-the-coordinates-automatically">Bonus track: getting the coordinates automatically</h3>
+<p>The <code>lat</code>/<code>lon</code>/<code>elevation</code> values used back in Step 4 were typed in by hand — good enough to get the first connection working, but the nRF9151 has its own GPS receiver, and it can work that location out itself instead:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT+CFUN=4"</span><span class="p">)</span>
+<span class="go">[3811] DEBUG: Sent AT command: AT+CFUN=4</span>
+<span class="go">[3813] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT</span><span class="si">%X</span><span class="s2">ANTCFG=1"</span><span class="p">)</span>
+<span class="go">[3827] DEBUG: Sent AT command: AT%XANTCFG=1</span>
+<span class="go">[3829] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT</span><span class="si">%X</span><span class="s2">COEX0=1,1,1570,1580"</span><span class="p">)</span>
+<span class="go">[3837] DEBUG: Sent AT command: AT%XCOEX0=1,1,1570,1580</span>
+<span class="go">[3839] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT</span><span class="si">%X</span><span class="s2">SYSTEMMODE=0,0,1,0,0"</span><span class="p">)</span>
+<span class="go">[3852] DEBUG: Sent AT command: AT%XSYSTEMMODE=0,0,1,0,0</span>
+<span class="go">[3854] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT+CFUN=31"</span><span class="p">)</span>
+<span class="go">[3867] DEBUG: Sent AT command: AT+CFUN=31</span>
+<span class="go">[3869] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT#XGPS=1,0,0,0"</span><span class="p">,</span> <span class="n">expected_response</span><span class="o">=</span><span class="s2">"XGPS"</span><span class="p">)</span>
+<span class="go">[4059] DEBUG: Sent AT command: AT#XGPS=1,0,0,0</span>
+<span class="go">[4061] DEBUG: Received response: OK</span>
+<span class="go">#XGPS: 1,1</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gps_response</span> <span class="o">=</span> <span class="n">nb_iot_module</span><span class="o">.</span><span class="n">_wait_for_response</span><span class="p">(</span><span class="s2">"#XGPS"</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gps_response</span>
+<span class="go">'#XGPS: 43.328939,-1.825317,68.279625,58.445137,0.245044,0.000000,"2026-08-28 08:31:50"'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT#XGPS=0"</span><span class="p">)</span>
+<span class="go">[4440] DEBUG: Sent AT command: AT#XGPS=0</span>
+<span class="go">[4442] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb_iot_module</span><span class="o">.</span><span class="n">send_at_command_check</span><span class="p">(</span><span class="s2">"AT+CFUN=30"</span><span class="p">)</span>
+<span class="go">[4463] DEBUG: Sent AT command: AT+CFUN=30</span>
+<span class="go">[4465] DEBUG: Received response: OK</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parsed_gps_response</span> <span class="o">=</span> <span class="n">nb_iot_module</span><span class="o">.</span><span class="n">_parse_gps_response</span><span class="p">(</span><span class="n">gps_response</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parsed_gps_response</span>
+<span class="go">[43.32894, -1.825317, 68.27962, '2026-08-28 08:31:50']</span>
+</code></pre></div>
+<p>No separate GPS antenna needed — the same Molex antenna already on the board picks up the GPS L1 band fine, thanks to an onboard RF amplifier tuned for it. <code>AT%XCOEX0</code> and <code>AT%XSYSTEMMODE=0,0,1,0,0</code> switch the modem's RF front-end over to that band for the duration of the fix; <code>AT+CFUN=31</code>/<code>30</code> are the GNSS-specific functional modes that bracket it (activate, then deactivate once done); and <code>AT#XGPS=1,0,0,0</code> requests a single-shot fix rather than continuous tracking — enough for an ISURLOG that only needs a location every so often, not a real-time GPS trace.</p>
+<h2 id="limitations-and-whats-next">Limitations and What's Next</h2>
+<p>Everything above worked, but it's not a finished feature — worth being upfront about the real gaps.</p>
+<p><strong>No modem sleep command in NTN firmware.</strong> ISURLOG's own <code>nb_iot</code> driver puts the modem to sleep between transmissions with <code>AT#XSLEEP</code> — and that command doesn't appear anywhere in Nordic's NTN AT command reference (<code>v0.8</code>, itself still pre-1.0). The standard 3GPP power-saving mechanisms, PSM (<code>AT+CPSMS</code>) and eDRX (<code>AT+CEDRXS</code>), are both explicitly listed as supported for NTN NB-IoT in that same manual — so the modem clearly <em>can</em> sleep on this firmware, the same way it already does over terrestrial NB-IoT. What's missing is driver work on ISURLOG's side: switching to PSM/eDRX for NTN mode instead of assuming <code>#XSLEEP</code> is always available. Until that lands, running NTN today means the modem stays awake between transmissions — a real cost on a platform whose whole pitch is ~20 µA in deep sleep.</p>
+<p><strong>Registration is slow, and the reason isn't confirmed yet.</strong> The 5-minute timeout earlier in this post is real, not a conservative default — it took that long to register on Skylo's GEO network (see <a href="#how-ntn-actually-works">How NTN actually works</a> above for how we know it was GEO, not LEO). What exactly drives that delay — link acquisition on a weaker signal, an early-firmware inefficiency, something else — isn't confirmed yet. Real deployments should plan around a registration process that can take minutes, not the near-instant, always-on availability terrestrial NB-IoT takes for granted.</p>
+<p><strong>No MQTT — UDP only.</strong> Covered in Step 6 above: NB-IoT NTN doesn't support TCP/IP, which rules out MQTT along with TLS, HTTPS, and WebSockets over the satellite link directly. Anything built on top of ISURLOG's terrestrial MQTT integration needs a UDP-based path for NTN instead — not a driver gap to fix, but a real architectural difference to design around.</p>
+<p><strong>Early software, both sides.</strong> The NTN modem firmware (<code>1.0.1</code>) and its own AT command reference (<code>v0.8</code>) are both young. Some of the rough edges here are ISURLOG's to fix; some are simply what "early" looks like industry-wide for NB-NTN right now.</p>
+<div class="admonition note">
+<p class="admonition-title">🚧 Coming next</p>
+<p>A future post will dig into some of these more advanced uses: getting NTN into a real low-power mode instead of a fully-powered idle modem, receiving data over UDP (downlink, not just uplink), and whatever else falls out of closing the gaps above.</p>
+</div>
+<h2 id="want-to-deploy-a-real-installation">Want to Deploy a Real Installation?</h2>
+<p>If you have an operational scenario where NTN genuinely earns its place — a site terrestrial NB-IoT or GPRS simply can't reach — we'd like to propose an evaluation program.</p>
+<p><strong>What Isurki provides:</strong></p>
+<ul>
+<li><strong>One evaluation unit</strong> — an ISURLOG NB-IoT NTN datalogger, at no acquisition cost.</li>
+<li><strong>Global connectivity</strong> — access to a solution that guarantees sensor data reception from anywhere on the planet.</li>
+<li><strong>Yours to keep</strong> — once the one-year evaluation period is complete, the unit is yours at no cost, no strings attached.</li>
+</ul>
+<p><strong>What you provide:</strong></p>
+<ul>
+<li><strong>A real use case</strong> — a commitment to install and activate the unit somewhere that technically justifies satellite connectivity (no terrestrial NB-IoT or GPRS coverage).</li>
+<li><strong>Continuity and maintenance</strong> — keeping the unit running for at least one year, covering the NTN data plan and any sensors needed (from your own inventory, or acquired for the project).</li>
+</ul>
+<p><strong>Program terms:</strong></p>
+<ol>
+<li><strong>Deployment</strong> — commit to installing and activating the unit within a reasonable time after receiving it.</li>
+<li><strong>Operation</strong> — keep the system active and perform preventive maintenance on the datalogger and sensors throughout the one-year evaluation.</li>
+<li><strong>Technical fit</strong> — the application must genuinely require NTN connectivity, with no terrestrial alternative available.</li>
+</ol>
+<p>Interested? <a href="mailto:tecnica@isurki.com?subject=ISURLOG%20NTN%20-%20Evaluation%20Program">Reply to us</a> and we'll follow up to coordinate the details.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tracking", "toc.follow", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
