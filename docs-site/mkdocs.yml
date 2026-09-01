@@ -89,7 +89,6 @@ plugins:
 
 nav:
   - Home: index.md
-  - 📝 Blog: https://docs.isurlog.isurki.com/blog/
   - 🛠️ Module A - Use and Hardware:
       - 1. Sensor Connections: sensor-connections.md
       - 2. Power Supply Methods: power-supply.md
@@ -129,6 +128,7 @@ nav:
   - 🧰 Module F - Parts and Accessories:
       - 1. Parts and Accessories: parts-and-accessories.md
       - 2. Build Your Own ISURLOG: configurator.md
+  - 📝 Blog: https://docs.isurlog.isurki.com/blog/
 
 markdown_extensions:
   - admonition
