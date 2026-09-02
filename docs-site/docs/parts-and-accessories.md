@@ -36,7 +36,7 @@ For more details on resin potting, [contact Isurki](mailto:tecnica@isurki.com).
 | **Pole mount** | **€18** | 💬 In discussion |
 | **ER34615 battery holder/adapter** — small PCB that takes power from up to 2 ER34615 cells and combines it into a single output feeding the ISURLOG. Required to use [Li-SOCl2 batteries](#14-batteries). | **€20** | 💬 In discussion |
 
-💬 **A self-sourced/DIY path for these parts (enclosure, mounting) isn't available yet — direction still in discussion.** [Let us know](https://github.com/isurki-tecnica/isurlog-firmware/issues/new) if you'd find this useful.
+💬 **A self-sourced/DIY path for these parts (enclosure, mounting) isn't available yet — direction still in discussion.** [Let us know](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) if you'd find this useful.
 
 See [4.2 Physical Mounting](installation-commissioning.md#42-physical-mounting) for the standard mounting-hole dimensions if you're designing your own bracket instead.
 
@@ -123,4 +123,4 @@ See [3.2 SIM Management Flexibility](communications.md#sim-management-flexibilit
 
 ---
 
-Missing something you'd expect to see here, or have a supplier recommendation for one of the 🚧 rows? [Open a GitHub Issue](https://github.com/isurki-tecnica/isurlog-firmware/issues/new) — see [7.4 Using the Issues Tracker](contribution-guide.md#74-using-the-issues-tracker).
+Missing something you'd expect to see here, or have a supplier recommendation for one of the 🚧 rows? [Start a GitHub Discussion](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) — see [7.4 Using Issues and Discussions](contribution-guide.md#74-using-issues-and-discussions).

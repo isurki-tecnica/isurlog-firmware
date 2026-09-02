@@ -12,7 +12,7 @@ Se aceptan contribuciones en las siguientes áreas:
 * **Contribuciones de código (Pull Requests):** correcciones de errores, nuevos drivers de sensores, optimizaciones de rendimiento, o nuevas funcionalidades.
 * **Documentación:** mejorar la calidad, claridad y completitud de esta Wiki o de los comentarios en el código.
 * **Reportes de errores:** enviar reportes claros y detallados a través del rastreador de Issues de GitHub.
-* **Peticiones de funcionalidad:** sugerencias de funcionalidad futura o de integración de hardware.
+* **Peticiones de funcionalidad:** sugerencias de funcionalidad futura o de integración de hardware, a través de GitHub Discussions.
 * **Hardware (Printables):** aportar accesorios, soportes o carcasas nuevos o mejorados para el datalogger.
 
 ## 7.2 Requisitos Previos para Enviar Código
@@ -60,13 +60,14 @@ Haz commits de tus cambios con frecuencia, con mensajes descriptivos que sigan e
 2. Ve a la página del repositorio oficial de ISURLOG e inicia un nuevo Pull Request.
 3. Descripción del PR: describe con claridad el problema resuelto o la funcionalidad añadida. Incluye detalles de cómo has probado el cambio.
 
-## 7.4 Uso del Rastreador de Issues
+## 7.4 Uso de Issues y Discussions
 
-Usa la pestaña de Issues de GitHub para lo siguiente:
+Usamos dos herramientas distintas según lo concreto que sea tu feedback:
 
-* **Reportes de errores**: incluye pasos claros para reproducir el error, el comportamiento esperado, y el comportamiento real observado.
-
-* **Peticiones de funcionalidad**: describe la nueva funcionalidad y por qué sería valiosa para la comunidad de ISURLOG.
+* **[GitHub Discussions](https://github.com/isurki-tecnica/isurlog-firmware/discussions)** — para ideas abiertas, sugerencias de funcionalidad, peticiones de accesorios/hardware, y preguntas generales. Usa la categoría **Ideas** para sugerencias ("¿sería útil X?"), y **Q&A** para preguntas de soporte. Empieza aquí si todavía no tienes claro si algo encaja en Issues.
+* **GitHub Issues** — para errores confirmados, y peticiones de funcionalidad ya concretas y listas para convertirse en trabajo real:
+    * **Reportes de errores**: incluye pasos claros para reproducir el error, el comportamiento esperado, y el comportamiento real observado.
+    * **Peticiones de funcionalidad**: describe la nueva funcionalidad y por qué sería valiosa para la comunidad de ISURLOG.
 
 ## 7.5 Dónde Mirar, Según Qué Quieras Tocar
 

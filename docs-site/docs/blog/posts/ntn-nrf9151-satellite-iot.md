@@ -31,7 +31,7 @@ This post walks through what NTN actually is, what it takes to bring it up on an
 | :--- | :--- | :--- |
 | **ISURLOG datalogger** — PCB with NB-IoT module (nRF9151) | **€387** | *No alternative — this is the core hardware* |
 | **Antenna** — same one used for regular terrestrial NB-IoT, no NTN-specific antenna needed | *Included with the unit* | [Molex 209142-0180](https://www.mouser.es/es/ProductDetail/Molex/209142-0180) — ~€3.78, or any other NB-IoT-compatible antenna with 50 Ω impedance |
-| **3D-printed enclosure** *(optional)* | **€35** | 💬 In discussion — direction not yet decided. If you'd find this useful, [let us know](https://github.com/isurki-tecnica/isurlog-firmware/issues/new) |
+| **3D-printed enclosure** *(optional)* | **€35** | 💬 In discussion — direction not yet decided. If you'd find this useful, [let us know](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) |
 | **Li-Ion 18650 batteries** — 2 minimum for transmission current peaks, 5 for full internal capacity | **€30** *(set of 5, rechargeable)* | e.g. [Samsung INR18650-35E, 3400mAh / 8A](https://www.nkon.nl/es/samsung-inr18650-35e.html) — ~€2.59/unit |
 | **NTN SIM card** | — | [Monogoto](https://monogoto.io) — check [NTN satellite coverage](https://docs.monogoto.io/getting-started/ntn-satellite-coverage) for your region before ordering |
 | **Sensor** *(optional — any ISURLOG-compatible sensor works)* | — | Example used here: a **Paratronic NRV485** radar level sensor over Modbus RS485. No extra sensor needed to just test the NTN link — the onboard **SHT30** (temperature/humidity) or **LIS2DH12** (accelerometer) work fine too. |

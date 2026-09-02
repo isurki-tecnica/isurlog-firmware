@@ -36,7 +36,7 @@ Para más detalles sobre el encapsulado en resina, [contacta con Isurki](mailto:
 | **Soporte de poste** | **€18** | 💬 En debate |
 | **Soporte/adaptador de baterías ER34615** — pequeña PCB que toma la alimentación de hasta 2 celdas ER34615 y la combina en una única salida que alimenta al ISURLOG. Necesario para usar [baterías Li-SOCl2](#14-baterias). | **€20** | 💬 En debate |
 
-💬 **Todavía no hay una vía de autofabricación/DIY disponible para estas piezas (carcasa, montaje) — la dirección sigue en debate.** [Avísanos](https://github.com/isurki-tecnica/isurlog-firmware/issues/new) si te resultaría útil.
+💬 **Todavía no hay una vía de autofabricación/DIY disponible para estas piezas (carcasa, montaje) — la dirección sigue en debate.** [Avísanos](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) si te resultaría útil.
 
 Ver [4.2 Montaje Físico](installation-commissioning.md#42-montaje-fisico) para las dimensiones estándar de los orificios de montaje, si prefieres diseñar tu propio soporte.
 
@@ -123,4 +123,4 @@ Ver [3.2 Flexibilidad en la Gestión de la SIM](communications.md#flexibilidad-e
 
 ---
 
-¿Falta algo que esperabas encontrar aquí, o tienes una recomendación de proveedor para alguna de las filas 🚧? [Abre un GitHub Issue](https://github.com/isurki-tecnica/isurlog-firmware/issues/new) — ver [7.4 Uso del Rastreador de Issues](contribution-guide.md#74-uso-del-rastreador-de-issues).
+¿Falta algo que esperabas encontrar aquí, o tienes una recomendación de proveedor para alguna de las filas 🚧? [Abre una GitHub Discussion](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) — ver [7.4 Uso de Issues y Discussions](contribution-guide.md#74-uso-de-issues-y-discussions).

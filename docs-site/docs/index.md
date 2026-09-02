@@ -78,7 +78,7 @@ ISURLOG is an actively maintained product with real field deployments, not a pro
 
 </details>
 
-**Have a suggestion or an idea?** Open a [GitHub Issue](https://github.com/isurki-tecnica/isurlog-firmware/issues/new) describing it — feature requests and hardware integration ideas are welcome, not just bug reports. See [7.4 Using the Issues Tracker](contribution-guide.md#74-using-the-issues-tracker) for what makes a good one.
+**Have a suggestion or an idea?** Start a [GitHub Discussion](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) in the Ideas category — feature requests and hardware integration ideas are welcome. Found an actual bug instead? [Open a GitHub Issue](https://github.com/isurki-tecnica/isurlog-firmware/issues/new). See [7.4 Using Issues and Discussions](contribution-guide.md#74-using-issues-and-discussions) for the difference.
 
 ---
 

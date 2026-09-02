@@ -78,7 +78,7 @@ ISURLOG es un producto en mantenimiento activo con despliegues reales en campo, 
 
 </details>
 
-**¿Alguna sugerencia o idea?** Abrir una [GitHub Issue](https://github.com/isurki-tecnica/isurlog-firmware/issues/new) describiéndola — se aceptan tanto peticiones de nuevas funciones como ideas de integración de hardware, no solo reportes de errores. Ver [7.4 Uso del Rastreador de Issues](contribution-guide.md#74-uso-del-rastreador-de-issues) para qué hace que una petición sea buena.
+**¿Alguna sugerencia o idea?** Abre una [GitHub Discussion](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) en la categoría Ideas — se aceptan tanto peticiones de nuevas funciones como ideas de integración de hardware. ¿Has encontrado un error de verdad? [Abre un GitHub Issue](https://github.com/isurki-tecnica/isurlog-firmware/issues/new). Ver [7.4 Uso de Issues y Discussions](contribution-guide.md#74-uso-de-issues-y-discussions) para la diferencia.
 
 ---
 

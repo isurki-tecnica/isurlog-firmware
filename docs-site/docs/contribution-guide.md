@@ -12,7 +12,7 @@ We accept contributions in the following areas:
 * **Code Contributions (Pull Requests):** Bug fixes, new sensor drivers, performance optimizations, or new functionalities.
 * **Documentation:** Improving the quality, clarity, and completeness of this Wiki or inline comments.
 * **Bug Reports:** Submitting clear, detailed reports via the GitHub Issues tracker.
-* **Feature Requests:** Suggestions for future functionality or hardware integration.
+* **Feature Requests:** Suggestions for future functionality or hardware integration, via GitHub Discussions.
 * **Hardware (Printables):** Providing new or improved accessories, mounts, or enclosures for the datalogger.
 
 ## 7.2 Prerequisites for Code Submission
@@ -60,13 +60,14 @@ Commit your changes frequently with descriptive commit messages following `CODEC
 2. Go to the official ISURLOG repository page and initiate a new Pull Request.
 3. PR Description: Clearly describe the problem solved or the feature added. Include details on how you tested the change.
 
-## 7.4 Using the Issues Tracker
+## 7.4 Using Issues and Discussions
 
-Please use the GitHub Issues tab for the following purposes:
+We use two separate tools depending on how concrete your feedback is:
 
-* **Bug Reports**: Include clear steps to reproduce the bug, the expected behavior, and the actual behavior observed.
-
-* **Feature Requests**: Describe the new functionality and why it would be valuable to the ISURLOG community.
+* **[GitHub Discussions](https://github.com/isurki-tecnica/isurlog-firmware/discussions)** — for open-ended ideas, feature suggestions, hardware/accessory requests, and general questions. Use the **Ideas** category for suggestions ("would X be useful?"), and **Q&A** for support questions. Start here if you're not sure yet whether something belongs in Issues.
+* **GitHub Issues** — for confirmed bugs, and for feature requests that are already well-defined and ready to be tracked as actual work:
+    * **Bug Reports**: Include clear steps to reproduce the bug, the expected behavior, and the actual behavior observed.
+    * **Feature Requests**: Describe the new functionality and why it would be valuable to the ISURLOG community.
 
 ## 7.5 Where to Look, Depending on What You Want to Touch
 
