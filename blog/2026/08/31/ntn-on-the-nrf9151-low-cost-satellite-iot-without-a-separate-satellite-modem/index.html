@@ -998,6 +998,54 @@
 
 
 
+  <h2 id="__comments">Comments</h2>
+  <script src="https://giscus.app/client.js"
+    data-repo="isurki-tecnica/isurlog-firmware"
+    data-repo-id="R_kgDOQJ_3uQ"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQJ_3uc4DEtMc"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Synchronize theme with palette */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme)
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          if (frame) {
+            frame.contentWindow.postMessage(
+              { giscus: { setConfig: { theme } } },
+              "https://giscus.app"
+            )
+          }
+        }
+      })
+    })
+  </script>
+
       
     </article>
   </div>
