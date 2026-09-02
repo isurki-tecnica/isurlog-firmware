@@ -47,7 +47,7 @@ ISURLOG es un producto en mantenimiento activo con despliegues reales en campo, 
 
 | Función | Tipo | Estado | Disponible Desde |
 | :--- | :--- | :--- | :--- |
-| Arquitectura de funciones asíncronas para ejecución de tareas en paralelo, reduciendo el tiempo que el datalogger permanece encendido | Firmware | 🧪 Experimental | v2.0.1 (pre-release) |
+| Arquitectura de funciones asíncronas para ejecución de tareas en paralelo, reduciendo el tiempo que el datalogger permanece encendido | Firmware | 🧪 Experimental | FW v2.0.1 |
 | Soporte de baterías no recargables Li-SOCl2 | Hardware | 🧪 Experimental | PCB v3.3 |
 | Búfer de transmisión ampliado mediante EEPROM I2C externa (24LC1025), eliminando la limitación actual de tamaño de la RAM del RTC | Firmware | 🧪 Experimental | FW v2.0.2 |
 | Alarma del acelerómetro → transmisión inmediata forzada | Firmware | 🔜 Planificado | — |
