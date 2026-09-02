@@ -2,6 +2,7 @@
 date: 2026-08-31
 authors:
   - isurki
+comments: true
 ---
 
 # NTN on the nRF9151: Low-Cost Satellite IoT Without a Separate Satellite Modem

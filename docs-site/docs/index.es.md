@@ -57,7 +57,7 @@ ISURLOG es un producto en mantenimiento activo con despliegues reales en campo, 
 | TinyML — inferencia en el propio dispositivo para tareas ligeras como detección local de anomalías o mantenimiento predictivo, sin ida y vuelta a la nube | Firmware | 🔜 Planificado | — |
 | Actualización de firmware del RAK3172 directamente desde IsurDASH (actualmente requiere una herramienta web externa) | Firmware | 🔜 Planificado | — |
 | Archivos de caja imprimible en 3D, publicados en Printables | Hardware | 💬 En debate | — |
-| Migración de ESP32 a ESP32-S3 o al recién anunciado ESP32-S31 (elección final aún sin decidir) — USB nativo y un núcleo RISC-V LP en lugar del actual coprocesador ULP FSM | Hardware + Firmware | 💬 En debate | — |
+| Migración de ESP32 a ESP32-S3 o al recién anunciado ESP32-S31 (elección final aún sin decidir) — USB nativo y un núcleo RISC-V LP en lugar del actual coprocesador ULP FSM. También se está considerando una versión basada en i.MX RT1064 | Hardware + Firmware | 💬 En debate | — |
 
 <details markdown="1">
 <summary>✅ Ya estable (11 funciones)</summary>
