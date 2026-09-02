@@ -8,7 +8,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from machine import I2C, Pin, wake_reason
-from lib.mcp23008 import MCP23008
 from lib.LIS2DH12 import lis2dh12
 import esp32
 import time
@@ -22,15 +21,22 @@ class Accelerometer:
     and MCP23008 port expander to trigger ESP32 wakeups.
     """
 
-    def __init__(self, sda_pin=None, scl_pin=None, i2c_freq=None, mcp_addr=0x20, lis2dh_addr=0x18, mcp_int_pin=None):
+    def __init__(self, mcp, sda_pin=None, scl_pin=None, i2c_freq=None, lis2dh_addr=0x18, mcp_int_pin=None):
         """
         Initializes the TheftManager module.
 
         Args:
+            mcp: an already-constructed MCP23008 instance (see lib/mcp23008.py),
+                 created and owned by the caller (main.py), typically with
+                 start_init=False. This class never constructs or replaces
+                 it - the only exception is the one-time full init() call
+                 from check_wakeup() on a genuine cold boot, which resets
+                 this same object's registers rather than creating a new one,
+                 since main.py may share this instance with other consumers
+                 (e.g. digital_sensor.py for GP3/GP4/GP5).
             sda_pin: The I2C SDA pin.
             scl_pin: The I2C SCL pin.
             i2c_freq: The I2C frequency.
-            mcp_addr: The I2C address of the MCP23008.
             lis2dh_addr: The I2C address of the LIS2DH12.
             mcp_int_pin: RTC GPIO connected to MCP23008 INT.
         """
@@ -39,7 +45,7 @@ class Accelerometer:
         self.scl_pin = scl_pin if scl_pin is not None else config_manager.static_config.get("pinout", {}).get("i2c", {}).get("scl_pin", 22)
         self.i2c_freq = i2c_freq if i2c_freq is not None else config_manager.static_config.get("i2c_freq", 100000)
         self.lis2dh_addr = lis2dh_addr
-        self.mcp_addr = mcp_addr
+        self.mcp = mcp
         self.hardware_ready = False
         
         self.mcp_int_pin_num = mcp_int_pin if mcp_int_pin is not None else config_manager.static_config.get("pinout", {}).get("mcp_int_pin", 34)
@@ -48,12 +54,11 @@ class Accelerometer:
         
         self.devices = self.i2c.scan()
         
-        if 0x18 in self.devices and 0x20 in self.devices:
+        if 0x18 in self.devices and self.mcp is not None:
 
             # Initialize sensor instances
             # start_init=False prevents resetting the MCP registers during a wakeup read
             self.sensor = lis2dh12(self.i2c, int_pin=None, slave_address=self.lis2dh_addr)
-            self.mcp = MCP23008(self.i2c, address=self.mcp_addr, start_init=False)
             
             # Internal Detection Thresholds
             self.THRESHOLD_MIN = 0.85
@@ -66,7 +71,6 @@ class Accelerometer:
         else:
             
             utils.log_error("Incompatible hardware for accelerometer.")
-            
 
     def check_wakeup(self, on_theft_confirmed=None):
         """
@@ -105,8 +109,9 @@ class Accelerometer:
                 return False
         else:
             utils.log_info("Cold boot or manual reset. Initializing sensors...")
-            # Perform full MCP initialization on power-on
-            self.mcp = MCP23008(self.i2c, address=self.mcp_addr, start_init=True)
+            # Perform full MCP initialization on power-on, on the same
+            # injected object (not a new instance - see __init__ docstring)
+            self.mcp.init()
             self.arm()
             return False
 
@@ -169,7 +174,7 @@ class Accelerometer:
         Puts the LIS2DH12 into Power-Down mode (0.5µA) and disables 
         MCP23008 interrupts to achieve minimum power consumption.
         """
-        utils.log_info("[SEC] Dsisarming system and entering Power-Down mode...")
+        utils.log_info("[SEC] Disarming system and entering Power-Down mode...")
         try:
             # 1. LIS2DH12: Set ODR to 0 to enter Power-Down (IddPdn = 0.5µA)
             self.sensor._write_data(0x1E, 0x90) # In order to disable the internal pull-up on the SDO/SA0 pin, write 90h in CTRL_REG0 (1Eh).

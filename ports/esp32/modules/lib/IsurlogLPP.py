@@ -166,7 +166,7 @@ class IsurlogLPPEncoder:
             #New addition to configure parameters of the new version of Isurlog v3: SoC, CRate, VDCVoltage, Theft alert
             'setBatteryInputSoC': {'type': "8F", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setBatteryInputCRate': {'type': "90", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            'setVDCVoltage': {'type': "91", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
+            'setVDCVoltage': {'type': "91", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 24},
             'setTheftAlert': {'type': "92", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
              #New addition to configure Wireless parameter: MQTT server, WiFi credentials, Nb-IoT connection parameters, LoRaWAN class. --> Only via Bluetooh.
             'setAPN': {'type': "93", 'size': 0, 'multipl': 1, 'signed': False},

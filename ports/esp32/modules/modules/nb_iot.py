@@ -193,7 +193,7 @@ class NBIoT:
                  utils.log_warning(f"Timeout waiting for '{expected_response}'. Received: {full_response_text}")
             return None
     
-    async def select_SIM(self, external_sim="eSIM"):
+    async def select_SIM(self, external_sim=True):
         """
         Selects between the eSIM of the NB-IoT module o the physical external sim.
 

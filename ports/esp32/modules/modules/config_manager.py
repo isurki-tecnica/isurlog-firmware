@@ -18,7 +18,7 @@ CONFIG_MAP = {
     # General
     'setLatencyTime': ('general', 'latency_time'),
     'setRtcSync': ('general', 'rtc_sync', bool),
-    'setRegisterMode': ('general', 'register_mode'),
+    'setRegisterMode': ('general', 'upload_mode'),
     'setRegisterAccumulator': ('general', 'register_acumulator'),
     'setMagnetWakeup': ('general', 'magnet_wakeup', bool),
     'setDebugLED': ('general', 'debug_led', bool),
@@ -37,8 +37,6 @@ CONFIG_MAP = {
     'setLoRaWANAppEUI': ('communications', 'lorawan', 'app_eui', lambda v: f"{v:016X}"),
     'setLoRaWANAppKey': ('communications', 'lorawan', 'app_key', lambda v: f"{v:032X}"),
     'setLoRaWANClass': ('communications', 'lorawan', 'class'),
-    # NB-IoT
-    'setNB_IoTeDRX': ('communications', 'nb_iot', 'edrx', bool),
     # Analog Inputs
     'setAnalogPreAcquisition': ('analog_config', 'pre_acquisition'),
     'setAnalogInputEnable': ('analog_config', 'inputs', '{channel}', 'enable', bool),
@@ -49,14 +47,16 @@ CONFIG_MAP = {
     'setAnalogInputLowCond': ('analog_config', 'inputs', '{channel}', 'low_cond', bool),
     'setAnalogInputHighCond': ('analog_config', 'inputs', '{channel}', 'high_cond', bool),
     # Digital Inputs
-    'setDigitalEnable': ("digital_config", "enable", bool),
-    "setDigitalCounter": ("digital_config", "counter", bool),
-    "setDigitalPulseWeight": ("digital_config", "pulse_weight"),
-    "setDigitalWake": ("digital_config", "wake"),
-    "setDigitalLow": ("digital_config", "low"),
-    "setDigitalHigh": ("digital_config", "high"),
-    "setDigitalLowCond": ("digital_config", "low_cond", bool),
-    "setDigitalHighCond": ("digital_config", "high_cond", bool),
+    # channel 0 = native ESP32 pin (ULP), channels 1/2/3 = GP3/GP4/GP5 on
+    # the MCP23008 expander - see modules/digital_sensor.py and main.py.
+    'setDigitalEnable': ("digital_config", "inputs", "{channel}", "enable", bool),
+    "setDigitalCounter": ("digital_config", "inputs", "{channel}", "counter", bool),
+    "setDigitalPulseWeight": ("digital_config", "inputs", "{channel}", "pulse_weight"),
+    "setDigitalWake": ("digital_config", "inputs", "{channel}", "wake"),
+    "setDigitalLow": ("digital_config", "inputs", "{channel}", "low"),
+    "setDigitalHigh": ("digital_config", "inputs", "{channel}", "high"),
+    "setDigitalLowCond": ("digital_config", "inputs", "{channel}", "low_cond", bool),
+    "setDigitalHighCond": ("digital_config", "inputs", "{channel}", "high_cond", bool),
     # Modbus Inputs
     'setModbusPreAcquisition': ('modbus_config', 'pre_acquisition'),
     'setModbusInputBaudrate': ('modbus_config', 'baudrate'),
@@ -251,6 +251,15 @@ class ConfigManager:
                         while len(current_level) <= key:
                             current_level.append({})
                         current_level = current_level[key]
+                        # Consumers (main.py) identify an entry by its own
+                        # "channel" field, not by its position in the list
+                        # (config_manager.CONFIG_MAP indexes by {channel},
+                        # but readers do `input_cfg.get("channel")`). Make
+                        # sure it's always there - whether this entry was
+                        # just created above, or already existed but was
+                        # missing it (e.g. created before this fix existed).
+                        if isinstance(current_level, dict):
+                            current_level.setdefault("channel", key)
                     else:
                         utils.log_error(f"Invalid path or index: key '{key}' not found or out of bounds.")
                         return False

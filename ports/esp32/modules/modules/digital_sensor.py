@@ -54,7 +54,18 @@ class DigitalInputULP:
             return
         
         self.debounce_max_count = debounce_max_count if debounce_max_count is not None else 3
-        self.edge_count_to_wake_up = edge_count_to_wake_up if edge_count_to_wake_up is not None else config_manager.static_config.get("digital_config", {}).get("wake", 10)
+
+        # "wake" lives per-channel in dynamic_config.digital_config.inputs
+        # (a list, one entry per channel), not as a flat key - so we need
+        # to find the entry for channel 0 (this class only ever drives a
+        # single ULP-counted input) and read "wake" from it.
+        channel_0_wake = 10
+        digital_inputs = config_manager.get_dynamic("digital_config", "inputs", default=[])
+        for input_cfg in digital_inputs:
+            if input_cfg.get("channel") == 0:
+                channel_0_wake = input_cfg.get("wake", 10)
+                break
+        self.edge_count_to_wake_up = edge_count_to_wake_up if edge_count_to_wake_up is not None else channel_0_wake
         self.timer_period_us = timer_period_us if timer_period_us is not None else 50000
 
         #https://github.com/espressif/esp-idf/blob/v5.0.2/components/soc/esp32/rtc_io_periph.c
@@ -267,3 +278,49 @@ class DigitalInputULP:
         utils.log_info(f"Last cycles pulse counter: {pulse_count}, remainder: {pulse_count_remainder}.")
         return pulse_count
     
+
+class DigitalInputMCP23008:
+    '''
+    Reads state-only digital inputs wired to an MCP23008 I/O expander
+    (GP3, GP4, GP5 in this project). Unlike DigitalInputULP, there is no
+    background pulse counting here - the MCP has no coprocessor of its
+    own, so every reading is a live I2C transaction on the requested pin.
+
+    This class never resets or reconfigures the whole chip: it only ever
+    touches the specific pin it is asked about, via mcp.pin()'s
+    single-bit read-modify-write (MCP23008.Port._flip_property_bit reads
+    the register, flips one bit, writes it back - other pins are left
+    untouched). That matters if the MCP23008 is shared with other
+    functions (e.g. electrovalve outputs, accelerometer interrupt
+    routing): constructing a fresh MCP23008() with the default
+    start_init=True would reset the whole chip to all-inputs and wipe
+    any of those other pins' configuration. This class assumes the
+    caller already owns a correctly-initialized MCP23008 instance and
+    never creates or resets one itself.
+    '''
+
+    def __init__(self, mcp):
+        '''
+        :param mcp: an already-constructed, already-initialized MCP23008
+                     instance (see mcp23008.py). Owned by the caller.
+        '''
+        self._mcp = mcp
+
+    def configure_input(self, pin, pullup=False):
+        '''
+        Ensures a single pin is configured as an input (and optionally
+        its internal 100k pull-up), without touching any other pin's
+        configuration. Idempotent - safe to call once at boot, no need
+        to call it again on every read.
+        :param pin: MCP GPIO number (0-7)
+        :param pullup: enable the MCP's internal weak pull-up on this pin
+        '''
+        self._mcp.pin(pin, mode=1, pullup=1 if pullup else 0)  # mode=1 -> input
+
+    def read(self, pin):
+        '''
+        Reads the current state of a single pin.
+        :param pin: MCP GPIO number (0-7)
+        :return: 0 or 1
+        '''
+        return int(self._mcp.pin(pin))

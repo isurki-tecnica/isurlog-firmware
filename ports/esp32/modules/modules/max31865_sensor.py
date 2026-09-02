@@ -32,13 +32,11 @@ class MAX31865Sensor:
         """
 
         # Use the provided parameters or load from static_config if not provided
-        self.cs_pin = cs_pin if cs_pin is not None else config_manager.static_config.get("pinout", {}).get(
-            "spi", {}).get("nss_pin", 15)
+        self.cs_pin = cs_pin if cs_pin is not None else config_manager.static_config.get("pinout", {}).get("spi", {}).get("nss_pin", 15)
         self.rtd_nominal = rtd_nominal if rtd_nominal is not None else config_manager.static_config.get("rtd_nominal", 100)
         self.ref_resistor = ref_resistor if ref_resistor is not None else config_manager.static_config.get("ref_resistor", 430.0)
-        self.wires = wires if wires is not None else config_manager.static_config.get("wires", 4)
-        self.filter_frequency = filter_frequency if filter_frequency is not None else config_manager.static_config.get(
-            "filter_frequency", 60)
+        self.wires = wires if wires is not None else config_manager.get_dynamic("pt100_config", "wires", default=4)
+        self.filter_frequency = filter_frequency if filter_frequency is not None else config_manager.static_config.get("filter_frequency", 60)
         self.polarity = polarity if polarity is not None else config_manager.static_config.get("polarity", 0)
         self.phase = phase if phase is not None else config_manager.static_config.get("phase", 1)
 
@@ -63,8 +61,8 @@ class MAX31865Sensor:
         Creates a default SPI bus instance based on configuration or defaults.
         """
         sck_pin = config_manager.static_config.get("pinout", {}).get("spi", {}).get("sck_pin", 12)
-        mosi_pin = config_manager.static_config.get("pinout", {}).get("spi", {}).get("mosi_pin", 27)
-        miso_pin = config_manager.static_config.get("pinout", {}).get("spi", {}).get("miso_pin", 19)
+        mosi_pin = config_manager.static_config.get("pinout", {}).get("spi", {}).get("mosi_pin", 19)
+        miso_pin = config_manager.static_config.get("pinout", {}).get("spi", {}).get("miso_pin", 27)
 
         return SPI(1, baudrate=500000, polarity=self.polarity, phase=self.phase, sck=Pin(sck_pin), mosi=Pin(mosi_pin), miso=Pin(miso_pin))
 

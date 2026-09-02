@@ -6,10 +6,12 @@ from modules.config_manager import config_manager
 from modules import downlink_manager
 from lib.IsurlogLPP import IsurlogLPPEncoder
 from modules.rtc_memory import RTC_Memory
+from modules.eeprom_memory import EEPROM_Memory
 from modules.led_manager import LEDManagerULP
 from lib.ota import rollback
 from lib.mcp4017 import MCP4017
 from modules.accel_manager import Accelerometer
+from lib.mcp23008 import MCP23008
 from modules.version import VERSION
 import os
 import asyncio
@@ -26,6 +28,9 @@ nb_iot_module = None # Shared modem instance (UART-safe)
 mqtt_client = None  # Shared MQTT instance
 lorawan_module = None  # Shared LoRaWAN modem instance
 rtc_memory = None
+eeprom_memory = None
+mcp = None  # shared MCP23008 instance (GP6/7: accelerometer interrupts, GP3/4/5: digital inputs), created once at boot
+mcp_digital_input = None  # DigitalInputMCP23008 wrapping the shared mcp, set at boot if hardware is present
 modem_type = None  # Set once in __main__ from static_config (doesn't change at runtime)
 battery_voltage = None
 modem_lock = asyncio.Lock()           # Serializes ALL modem access between concurrent tasks
@@ -109,6 +114,129 @@ def init_rtc_memory():
         rtc_memory = RTC_Memory(max_payload_size=config_manager.dynamic_config["general"].get("max_payload_size", 256))
 
 
+def init_eeprom_memory():
+    """
+    Centralized, single-point initialization of eeprom_memory, mirroring
+    init_rtc_memory(). Kept as a fully independent object: rtc_memory and
+    eeprom_memory are same-level modules that don't call each other, so
+    all the RTC-vs-EEPROM routing lives in the helper functions below.
+    """
+    global eeprom_memory
+    if eeprom_memory is None:
+        eeprom_memory = EEPROM_Memory(max_payload_size=config_manager.dynamic_config["general"].get("max_payload_size", 256))
+        
+def get_accumulator_target():
+    """
+    Configured accumulator size, read fresh every time (like get_mqtt_settings())
+    since it can change at runtime via a config downlink.
+    """
+    return config_manager.dynamic_config["general"].get("register_acumulator", 5)
+
+def _migrate_rtc_to_eeprom():
+    """
+    Moves everything currently queued in RTC RAM to EEPROM in one shot,
+    then empties RTC RAM completely. Called when RTC RAM is full - normally
+    only because of a connectivity outage lasting longer than the
+    configured accumulator, since in the healthy case a transmission
+    clears RTC well before it physically fills up. Frees the whole RTC
+    buffer for new payloads to keep landing there (fast, no wear), while
+    the already-accumulated backlog is safe in EEPROM until a transmission
+    finally succeeds and drains both (see get_all_pending_payloads()).
+    """
+    pending = rtc_memory.get_payloads()
+    migrated = 0
+    for p in pending:
+        if eeprom_memory.store_payload(p):
+            migrated += 1
+        else:
+            utils.log_error("Failed to migrate an RTC payload to EEPROM, it will be lost")
+    rtc_memory.clear_memory()
+    utils.log_warning(f"RTC memory was full (connectivity outage?); migrated {migrated}/{len(pending)} payload(s) to EEPROM.")
+
+def store_payload_in_queue(payload):
+    """
+    Stores a payload in RTC RAM or EEPROM depending on the configured
+    accumulator size versus RTC RAM's physical capacity
+    (rtc_memory.max_possible_payloads). If the accumulator is small enough
+    to fit in RTC RAM but RTC RAM is currently full (connectivity outage),
+    migrates the existing backlog to EEPROM first to free it up.
+    :return: True if stored, False otherwise
+    """
+    if get_accumulator_target() > rtc_memory.max_possible_payloads:
+        # Accumulator larger than RTC RAM can ever hold: never let
+        # unconfirmed data sit only in volatile RTC memory (wiped by a
+        # real power loss/brownout, unlike deep sleep). Store straight
+        # to EEPROM from the very first cycle.
+        return eeprom_memory.store_payload(payload)
+
+    if rtc_memory.store_payload(payload):
+        return True
+
+    # RTC RAM full - only expected from a connectivity outage lasting
+    # longer than the configured accumulator. Free it up in one shot.
+    _migrate_rtc_to_eeprom()
+    return rtc_memory.store_payload(payload)
+
+def get_pending_payload_count():
+    """Total payloads currently pending across both backends."""
+    return eeprom_memory.get_pending_count() + rtc_memory.get_counter()
+
+def payload_queue_should_transmit():
+    """
+    True once the configured accumulator has been reached, counting
+    pending payloads across both RTC RAM and EEPROM - a payload doesn't
+    stop counting towards the accumulator just because it was migrated to
+    EEPROM during an outage.
+    """
+    # -1 because when this runs, the current cycle's payload is still
+    # pending to be stored (mirrors the original rtc_memory.should_transmit()).
+    return get_pending_payload_count() >= get_accumulator_target() - 1
+
+def get_all_pending_payloads():
+    """All pending payloads, oldest first: EEPROM backlog, then RTC RAM."""
+    return eeprom_memory.get_payloads(max_count=None) + rtc_memory.get_payloads()
+
+def remove_confirmed_payloads(n):
+    """
+    Removes exactly the first n payloads (oldest first) from the combined
+    queue - EEPROM's backlog first, then RTC RAM - leaving anything after
+    that untouched so it gets retried next cycle.
+
+    Use this after transmitting, with n = however many publish_payload()
+    calls actually returned True. Never clear the whole queue before a
+    transmission is confirmed: if the connection drops mid-batch, whatever
+    hasn't been removed yet stays queued instead of being lost.
+    """
+    if n <= 0:
+        return
+
+    eeprom_count = eeprom_memory.get_pending_count()
+    eeprom_remove = min(n, eeprom_count)
+    if eeprom_remove:
+        eeprom_memory.remove_confirmed(eeprom_remove)
+
+    rtc_remove = n - eeprom_remove
+    if rtc_remove:
+        # RTC_Memory has no native "remove first n" (it's a plain growing
+        # array of slots, not a circular FIFO like EEPROM's). Simulated
+        # here with existing calls only - no changes to rtc_memory.py -
+        # since RTC RAM has no wear concern, a full rewrite is fine.
+        remaining = rtc_memory.get_payloads()[rtc_remove:]
+        rtc_memory.clear_memory()
+        for p in remaining:
+            rtc_memory.store_payload(p)
+
+def clear_payload_queues():
+    """
+    Unconditionally wipes both backends, discarding anything pending.
+    NOT for use after a transmission attempt - a partial failure would
+    lose whatever wasn't actually sent. Use remove_confirmed_payloads()
+    for that. This is only for an intentional full reset (e.g. a manual
+    "clear queue" action).
+    """
+    eeprom_memory.clear_memory()
+    rtc_memory.clear_memory()
+
 def get_mqtt_settings():
     """
     Returns (mqtt_config, base_topic). Looked up fresh on every call (unlike
@@ -190,7 +318,7 @@ async def read_all_sensors(upload_mode, ble = False, n_loop = 1, n_seconds = 10,
     
     if accel_config and accel_config.get("enable", False):
         
-        accel = Accelerometer()
+        accel = Accelerometer(mcp)
         if accel.hardware_ready:
             accel_values  = list(accel.sensor.read_acceleration)
             utils.log_info(f"Accelerometer acceleration: x: {accel_values[0]}g, y: {accel_values[1]}g, z: {accel_values[2]}g")
@@ -220,33 +348,67 @@ async def read_all_sensors(upload_mode, ble = False, n_loop = 1, n_seconds = 10,
         if output_config.get("active_vdc", False):
             pm.control_digital_output(1)
         
-    # Digital input
+    # Digital inputs - channel 0 is the native ESP32 pin (counter via ULP,
+    # or plain state); channels 3/4/5 are GP3/GP4/GP5 on the MCP23008
+    # (state only - no coprocessor there to count pulses in the background).
     digital_config = config_manager.get_dynamic("digital_config")
-
-    if digital_config and digital_config.get("enable", False):
-        from modules.digital_sensor import DigitalInputULP
-        #Digital input pulse counter mode
-        if digital_config.get("counter", True): 
-            ulp_digital_input = DigitalInputULP()
-            if not ulp_digital_input.ulp_loaded(): #Init ULP coprocessor only if the magic token is not set
-                ulp_digital_input.load_ulp()
-            pulses = ulp_digital_input.get_pulse_count()
-            data.append([0, "addDigitalInput", pulses])
-            
-            #Check alarms
-            if (upload_mode and (digital_config.get("low_cond", False)) and (pulses*digital_config.get("pulse_weight", 1) < digital_config.get("low", 0))):
-                alarm_condition = True
-            if (upload_mode and (digital_config.get("high_cond", False)) and (pulses*digital_config.get("pulse_weight", 1) > digital_config.get("high", 0))):
-                alarm_condition = True
         
-        #Digital input state mode
-        else:
-            
-            digital_input = Pin(DIO0_PIN, Pin.IN)
-            state = digital_input.value()
-            data.append([0, "addDigitalInput", state])
-            if state == 0 and DIO0_PIN not in wake_up_sources:
-                wake_up_sources.append(DIO0_PIN)
+    if digital_config:
+        from modules.digital_sensor import DigitalInputULP
+
+        # Back-compat: devices still on the old flat schema (no "inputs"
+        # list, just enable/counter/low/high at the top level) get wrapped
+        # as a single channel-0 entry, so old and new config pushes both work.
+        digital_inputs = digital_config.get("inputs")
+        if digital_inputs is None:
+            legacy_input = dict(digital_config)
+            legacy_input["channel"] = 0
+            legacy_input.setdefault("counter", True)  # matches the old flat schema's default
+            digital_inputs = [legacy_input]
+
+        for input_cfg in digital_inputs:
+            if not input_cfg.get("enable", False):
+                continue
+
+            channel = input_cfg.get("channel")
+
+            if channel == 0:
+                #Digital input pulse counter mode
+                if input_cfg.get("counter", False):
+                    ulp_digital_input = DigitalInputULP()
+                    if not ulp_digital_input.ulp_loaded(): #Init ULP coprocessor only if the magic token is not set
+                        ulp_digital_input.load_ulp()
+                    value = ulp_digital_input.get_pulse_count()
+                    weighted_value = value * input_cfg.get("pulse_weight", 1)
+                #Digital input state mode
+                else:
+                    digital_input = Pin(DIO0_PIN, Pin.IN)
+                    value = digital_input.value()
+                    weighted_value = value
+                    if value == 0 and DIO0_PIN not in wake_up_sources:
+                        wake_up_sources.append(DIO0_PIN)
+
+            elif channel in (1, 2, 3):
+                #MCP23008 expander input (state only), configured once at boot
+                if mcp_digital_input is not None:
+                    gp_num = int(channel) + 2
+                    value = mcp_digital_input.read(gp_num)
+                    weighted_value = value
+                else:
+                    utils.log_warning(f"Digital input channel {channel} configured but MCP23008/accelerometer hardware not detected - skipping.")
+                    continue
+
+            else:
+                utils.log_error(f"Unknown digital input channel {channel} in configuration - skipping.")
+                continue
+
+            data.append([channel, "addDigitalInput", value])
+
+            #Check alarms
+            if (upload_mode and input_cfg.get("low_cond", False) and weighted_value < input_cfg.get("low", 0)):
+                alarm_condition = True
+            if (upload_mode and input_cfg.get("high_cond", False) and weighted_value > input_cfg.get("high", 0)):
+                alarm_condition = True
                 
     # Internal temperature and humidity sensor (BME680 or SHT30)
     int_th_config = config_manager.get_dynamic("int_th_sensor")
@@ -976,10 +1138,10 @@ async def sensor_reading_task():
                 utils.log_error("Encoding failed. Sending empty payload")
                 encoded_payload = ""  # Send empty payload on failure
 
-            if not rtc_memory.store_payload(encoded_payload):
-                utils.log_error("Could not store payload in RTC memory.")
+            if not store_payload_in_queue(encoded_payload):
+                utils.log_error("Could not store payload in RTC memory or EEPROM.")
             else:
-                utils.log_info(f"Stored payload. Cycle {rtc_memory.get_counter()} of {rtc_memory.n_cycles}")
+                utils.log_info(f"Stored payload. Cycle {get_pending_payload_count()} of {get_accumulator_target()}")
 
             #Update alarm flag so run_telemetry_cycle()/theft logic can see it changed this cycle.
             rtc_memory.set_alarm_flag(alarm_condition)
@@ -1088,7 +1250,6 @@ async def establish_network_connection(force_hard_reset=False, max_retry_connect
         
         return True
     
-    
     elif modem_type == "lorawan":
 
         global lorawan_module
@@ -1164,6 +1325,7 @@ async def publish_payload(payload):
 
         if not await nb_iot_module.mqtt_publish(f"{base_topic}/datos/{ser_num}", payload):
             utils.log_error("Failed to publish payload through cellular MQTT client.")
+            return False
 
     elif modem_type == "wifi":
 
@@ -1172,6 +1334,7 @@ async def publish_payload(payload):
 
         if not mqtt_client.publish(f"{base_topic}/datos/{ser_num}", payload):
             utils.log_error("Failed to publish payload on WiFi broker.")
+            return False
             
     elif modem_type == "lorawan":
 
@@ -1180,6 +1343,9 @@ async def publish_payload(payload):
 
         if not await lorawan_module.send_uplink(2, payload):
             utils.log_error("Failed to publish payload through LoRaWAN.")
+            return False
+    
+    return True
             
 async def run_telemetry_cycle():
     """
@@ -1235,11 +1401,11 @@ async def run_telemetry_cycle():
                         print("[TASK: TELEMETRY] Downlinks processed.")
                         
                         await read_sensor_idle.wait()
-                        payloads = rtc_memory.get_payloads()
-                        rtc_memory.clear_memory()
+                        payloads = get_all_pending_payloads()
                         utils.log_info(f"Retrieved payloads: {payloads}")
                         
                         total_payloads = len(payloads)
+                        confirmed = 0
                         for i, payload in enumerate(payloads):
                             if (i == total_payloads - 1) and (config_manager.dynamic_config["communications"]["cellular_iot"].get("signal_data", False)):
                                 signal_data = await nb_iot_module.get_signal_data()
@@ -1250,7 +1416,13 @@ async def run_telemetry_cycle():
                                 payload += encoded_extra_payload
                             utils.log_info(f"Publishing payload {i+1}: {payload}")
                         
-                            await publish_payload(payload)
+                            if await publish_payload(payload):
+                                confirmed += 1
+                            else:
+                                utils.log_error(f"Publish failed for payload {i+1}/{total_payloads}; stopping this batch, {total_payloads - confirmed} payload(s) will be retried next cycle.")
+                                break
+
+                        remove_confirmed_payloads(confirmed)
                     
                     else:
                         connection_ok.clear()
@@ -1284,14 +1456,21 @@ async def run_telemetry_cycle():
                 print("[TASK: TELEMETRY] Downlinks processed.")
 
                 await read_sensor_idle.wait()
-                payloads = rtc_memory.get_payloads()
-                rtc_memory.clear_memory()
+                payloads = get_all_pending_payloads()
                 utils.log_info(f"Retrieved payloads: {payloads}")
 
+                total_payloads = len(payloads)
+                confirmed = 0
                 for i, payload in enumerate(payloads):
                     utils.log_info(f"Publishing payload {i+1}: {payload}")
-                    await publish_payload(payload)
-                    
+                    if await publish_payload(payload):
+                        confirmed += 1
+                    else:
+                        utils.log_error(f"Publish failed for payload {i+1}/{total_payloads}; stopping this batch, {total_payloads - confirmed} payload(s) will be retried next cycle.")
+                        break
+
+                remove_confirmed_payloads(confirmed)
+
                 try:
                     mqtt_client.disconnect()
                     await wifi.do_disconnect()
@@ -1329,13 +1508,20 @@ async def run_telemetry_cycle():
                         await lorawan_module.request_time()  # Enable time request on this uplink
 
                     await read_sensor_idle.wait()
-                    payloads = rtc_memory.get_payloads()
-                    rtc_memory.clear_memory()
+                    payloads = get_all_pending_payloads()
                     utils.log_info(f"Retrieved payloads: {payloads}")
 
+                    total_payloads = len(payloads)
+                    confirmed = 0
                     for i, payload in enumerate(payloads):
                         utils.log_info(f"Publishing payload {i+1}: {payload}")
-                        await publish_payload(payload)
+                        if await publish_payload(payload):
+                            confirmed += 1
+                        else:
+                            utils.log_error(f"Publish failed for payload {i+1}/{total_payloads}; stopping this batch, {total_payloads - confirmed} payload(s) will be retried next cycle.")
+                            break
+
+                    remove_confirmed_payloads(confirmed)
 
                     if resync_requested:  # Time should be available now, since it was requested on the uplink above
                         new_time = await lorawan_module.get_network_time()
@@ -1350,7 +1536,6 @@ async def run_telemetry_cycle():
                     utils.log_error(f"[TASK: TELEMETRY] No connection after {retry_attempt} attempt(s). Will retry on the next wake-up.")
                     
                 await lorawan_module.sleep()
-
 
     except Exception as e:
         utils.log_error(f"[TASK: TELEMETRY] Upload failed: {e}")
@@ -1383,14 +1568,14 @@ async def scheduled_telemetry_task():
         boot_requires_telemetry = first_iteration and pm.wakeup_reason in boot_wakeup_reasons
         first_iteration = False
 
-        if rtc_memory.should_transmit():
+        if payload_queue_should_transmit():
             _trigger_send_telemetry("accumulator due")
         elif previous_cycle_alarm:
             _trigger_send_telemetry("previous-cycle alarm")
         elif boot_requires_telemetry:
             _trigger_send_telemetry(f"boot ({pm.wakeup_reason})")
         else:
-            utils.log_info(f"[TASK: SCHEDULE] Not due yet (cycle {rtc_memory.get_counter()} of {rtc_memory.n_cycles}). Skipping modem wake-up.")
+            utils.log_info(f"[TASK: SCHEDULE] Not due yet (cycle {get_pending_payload_count()} of {get_accumulator_target()}). Skipping modem wake-up.")
 
         latency_s = config_manager.dynamic_config["general"].get("latency_time", 10) * 60
         await asyncio.sleep(latency_s)
@@ -1559,8 +1744,9 @@ if __name__ == "__main__":
         pm.set_cpu_freq("low-power")
     utils.log_info(f"Isurlog with serial number: {ser_num}")
     
-    #Init RTC memory
+    #Init RTC memory and EEPROM backup queue
     init_rtc_memory()
+    init_eeprom_memory()
 
     # Declare status_led <º)))><
     status_led = LEDManagerULP()
@@ -1572,8 +1758,20 @@ if __name__ == "__main__":
         status_led.set_ulp_pattern(pulse_num=1, n_micro_pulses=20, delay_on=5, delay_off=20, inter_delay=500, wake_up_period=2) #Set status_led blinking.
         
         
+    #Shared MCP23008: GP6/GP7 are the accelerometer's interrupt pins
+    #(owned/configured by accel_manager.py), GP3/GP4/GP5 are plain digital
+    #inputs (owned/configured here). One instance, injected into both
+    #consumers, so there is a single source of truth for this chip instead
+    #of main.py reaching into another module's internals to get it.
+    mcp_i2c_sda = config_manager.static_config.get("pinout", {}).get("i2c", {}).get("sda_pin", 21)
+    mcp_i2c_scl = config_manager.static_config.get("pinout", {}).get("i2c", {}).get("scl_pin", 22)
+    mcp_i2c_freq = config_manager.static_config.get("i2c_freq", 100000)
+    mcp_i2c = I2C(0, scl=Pin(mcp_i2c_scl), sda=Pin(mcp_i2c_sda), freq=mcp_i2c_freq)
+    if 0x20 in mcp_i2c.scan():
+        mcp = MCP23008(mcp_i2c, address=0x20, start_init=False)
+
     #Check/Enable anti theft system
-    accel = Accelerometer()
+    accel = Accelerometer(mcp)
     if accel.hardware_ready:
         if config_manager.dynamic_config["general"].get("theft_alert", False):
             theft_confirmed = accel.check_wakeup()
@@ -1588,6 +1786,18 @@ if __name__ == "__main__":
                 
         else:
             accel.disarm()
+
+    if mcp is not None:
+        # GP3/GP4/GP5 are unused by the accelerometer (GP6/GP7 are its
+        # dedicated interrupt pins) - configure them once here as plain
+        # digital inputs for read_all_sensors(), independent of
+        # theft_alert and independent of accel.hardware_ready (the MCP
+        # can be present even if the LIS2DH12 isn't). External active
+        # signal on these pins -> no internal pull-up.
+        from modules.digital_sensor import DigitalInputMCP23008
+        mcp_digital_input = DigitalInputMCP23008(mcp)
+        for _pin in (3, 4, 5):
+            mcp_digital_input.configure_input(_pin, pullup=False)
     
     #Set VDC voltage via I2C
     pot = MCP4017()

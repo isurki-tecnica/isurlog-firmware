@@ -122,7 +122,7 @@ def process_sd_ev_manual_command(command, rtc_memory, ble=False):
             close_addr = modbus_addr + 1
 
             modbus_module.write_register(slave_address, open_addr, 1)
-            pm.smart_sleep(param, ble=ble)
+            time.sleep_ms(param)
             modbus_module.write_register(slave_address, close_addr, 1)
             time.sleep_ms(150)  # STM32L4 with MicroPython is slow.
 
@@ -174,7 +174,7 @@ async def _handle_ota_update(text, nb_iot_module, wdt, ser_num, base_topic):
                                 utils.log_info("Update process finished, rebooting in 5 seconds...")
                                 if await nb_iot_module.mqtt_publish(f"{base_topic}/update/{ser_num}", "Update OK"):
                                     utils.log_error("Failed to publish response")
-                                    pm.smart_sleep(5000)
+                                    await asyncio.sleep_ms(5000)
                                     reset()
                     except Exception as e_ota:
                         utils.log_error(f"Error during .py OTA update: {e_ota!r}")

@@ -150,14 +150,43 @@
       "active_vdc":false
    },
    "digital_config":{
-      "low_cond":false,
-      "low":2,
-      "counter":false,
-      "high":8,
-      "enable":false,
-      "wake":10,
-      "pulse_weight":1,
-      "high_cond":false
+        "inputs": [
+            {
+                "channel": 0,
+                "enable": false,
+                "counter": false,
+                "pulse_weight": 1,
+                "wake": 10,
+                "low_cond": false,
+                "low": 2,
+                "high_cond": false,
+                "high": 8
+            },
+            {
+                "channel": 1,
+                "enable": false,
+                "low_cond": false,
+                "low": 0,
+                "high_cond": false,
+                "high": 1
+            },
+            {
+                "channel": 2,
+                "enable": false,
+                "low_cond": false,
+                "low": 0,
+                "high_cond": false,
+                "high": 1
+            },
+            {
+                "channel": 3,
+                "enable": false,
+                "low_cond": false,
+                "low": 0,
+                "high_cond": false,
+                "high": 1
+            }
+        ]
    },
    "analog_config":{
       "pre_acquisition":1000,
