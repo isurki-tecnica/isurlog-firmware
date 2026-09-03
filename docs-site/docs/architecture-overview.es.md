@@ -8,15 +8,15 @@ El objetivo principal de esta estructura de software es proporcionar las herrami
 
 El software del repositorio presenta una estructura modular pensada para un uso flexible y sencillo, basada en los siguientes componentes clave:
 
-### 1. La Carpeta `/lib` (Librerías Base)
+### 1. La Carpeta `src/lib` (Librerías Base)
 
 * **Drivers de bajo nivel:** contiene librerías de MicroPython para controlar directamente los distintos IC presentes en la placa del **ISURLOG** (sensores, módem de comunicación, RTC, etc.).
 * **Gestión directa del hardware:** estas librerías gestionan la comunicación directa con el hardware (por ejemplo, vía I2C, SPI, UART).
 * **Librerías de terceros:** puede incluir librerías de terceros desarrolladas específicamente para el **ISURLOG** o adaptadas para él.
 
-### 2. La Carpeta `/modules` (Envoltorios de Alto Nivel)
+### 2. La Carpeta `src/modules` (Envoltorios de Alto Nivel)
 
-* **Capa de abstracción:** actúa como una capa de abstracción sobre las librerías de la carpeta `/lib`.
+* **Capa de abstracción:** actúa como una capa de abstracción sobre las librerías de la carpeta `src/lib`.
 * **Propósito:** estos módulos (o "wrappers") simplifican el uso de las funcionalidades del hardware, ofreciendo interfaces más intuitivas y reduciendo la cantidad de código de aplicación necesario.
 
 ### 3. El Archivo `main.py` (Punto de Entrada de la Aplicación)
@@ -43,8 +43,8 @@ La forma más sencilla de configurar el datalogger es estableciendo los parámet
 
 ### Modificación del Código
 
-Para lógicas de funcionamiento totalmente personalizadas o muy específicas que no puedan resolverse solo con la configuración JSON, el usuario siempre tiene la opción de modificar directamente el archivo `main.py` o incluir sus propios módulos en la carpeta `/modules`. Al ser el código abierto, el usuario tiene total libertad para adaptarlo a los requisitos exactos de cada aplicación.
+Para lógicas de funcionamiento totalmente personalizadas o muy específicas que no puedan resolverse solo con la configuración JSON, el usuario siempre tiene la opción de modificar directamente el archivo `main.py` o incluir sus propios módulos en la carpeta `src/modules`. Al ser el código abierto, el usuario tiene total libertad para adaptarlo a los requisitos exactos de cada aplicación.
 
 ## 2.3 ¿Buscas un módulo concreto?
 
-Para un desglose archivo por archivo de cada módulo en `/modules` y cada driver en `/lib` — su propósito, API pública, dependencias, y qué claves de configuración lee cada uno — ver **[2.1 Referencia de Módulos y Librerías](module-library-reference.md)**.
+Para un desglose archivo por archivo de cada módulo en `src/modules` y cada driver en `src/lib` — su propósito, API pública, dependencias, y qué claves de configuración lee cada uno — ver **[2.1 Referencia de Módulos y Librerías](module-library-reference.md)**.

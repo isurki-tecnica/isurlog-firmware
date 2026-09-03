@@ -8,15 +8,15 @@ The main objective of this software structure is to provide the necessary tools 
 
 The repository software presents a modular structure designed for flexible and easy use, based on the following key components:
 
-### 1. The `/lib` Folder (Base Libraries)
+### 1. The `src/lib` Folder (Base Libraries)
 
 * **Low-Level Drivers:** Contains MicroPython libraries to directly control the different ICs present on the **ISURLOG** board (sensors, communication modem, RTC, etc.).
 * **Direct Hardware Management:** These libraries handle direct communication with the hardware (e.g., via I2C, SPI, UART).
 * **Third-Party Libraries:** Can include third-party libraries developed specifically for the **ISURLOG** or adapted for it.
 
-### 2. The `/modules` Folder (High-Level Wrappers)
+### 2. The `src/modules` Folder (High-Level Wrappers)
 
-* **Abstraction Layer:** Acts as an abstraction layer over the libraries in the `/lib` folder.
+* **Abstraction Layer:** Acts as an abstraction layer over the libraries in the `src/lib` folder.
 * **Purpose:** These modules (or 'wrappers') simplify the use of hardware functionalities, offering more intuitive interfaces and reducing the amount of necessary application code.
 
 ### 3. The `main.py` File (Application Entry Point)
@@ -43,8 +43,8 @@ The easiest way to configure the datalogger is by setting the parameters in `dyn
 
 ### Code Modification
 
-For fully customized or highly specific operational logic that cannot be handled solely with JSON configuration, users always have the option to directly modify the `main.py` file or include their modules in the `/modules` folder. As the code is open source, users have total freedom to adapt the code to the exact requirements of each application.
+For fully customized or highly specific operational logic that cannot be handled solely with JSON configuration, users always have the option to directly modify the `main.py` file or include their modules in the `src/modules` folder. As the code is open source, users have total freedom to adapt the code to the exact requirements of each application.
 
 ## 2.3 Looking for a specific module?
 
-For a per-file breakdown of every module in `/modules` and driver in `/lib` — purpose, public API, dependencies, and which config keys each one reads — see **[2.1 Module & Library Reference](module-library-reference.md)**.
+For a per-file breakdown of every module in `src/modules` and driver in `src/lib` — purpose, public API, dependencies, and which config keys each one reads — see **[2.1 Module & Library Reference](module-library-reference.md)**.
