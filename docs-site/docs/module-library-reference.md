@@ -1,9 +1,9 @@
 # 2.1 Module & Library Reference (API Guide)
 
 !!! note "Scope"
-    This page documents the **production** code tree — `app/main.py`, `ports/esp32/modules/modules/` (high-level wrappers) and `ports/esp32/modules/lib/` (low-level drivers) — as tracked on this repository's `main` branch. If you work from the internal development sandbox, some experimental modules (async variants, alternate storage drivers, etc.) may not be listed here yet because they haven't been promoted to this repository. See **[8. Development Workflow (Sandbox → Production)]** *(coming soon)* for how that promotion works.
+    This page documents the **production** code tree — `app/main.py`, `src/modules/` (high-level wrappers) and `src/lib/` (low-level drivers) — as tracked on this repository's `main` branch. If you work from the internal development sandbox, some experimental modules (async variants, alternate storage drivers, etc.) may not be listed here yet because they haven't been promoted to this repository. See **[8. Development Workflow (Sandbox → Production)]** *(coming soon)* for how that promotion works.
 
-This page complements **[2. Architecture Overview](architecture-overview.md)**: that page explains the `/lib` vs `/modules` split conceptually, this one is the per-file reference — what each module does, what it depends on, and what configuration it reads.
+This page complements **[2. Architecture Overview](architecture-overview.md)**: that page explains the `src/lib` vs `src/modules` split conceptually, this one is the per-file reference — what each module does, what it depends on, and what configuration it reads.
 
 ---
 
@@ -33,6 +33,7 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 | `accel_manager.py` | LIS2DH12 + MCP23008 anti-theft/tamper detection. | sync |
 | `battery_monitor.py` | ESP32 ADC battery voltage fallback (no MAX17048). | sync |
 | `internal_storage.py` | FIFO payload backup on internal flash. | sync |
+| `eeprom_memory.py` | FIFO payload backup on external I2C EEPROM (24LC1025) — survives full power loss, not just deep sleep. | sync |
 | `update_manager.py` | OTA support: checksum, base64 decode, safe `main.py` replacement. | sync |
 | `led_manager.py` | ULP-driven status LED blink pattern. | sync |
 
@@ -160,6 +161,8 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 
 **`internal_storage.py`** — FIFO payload backup on internal flash (used when `general.internal_register` is enabled); auto-trims oldest lines when free space or line count thresholds are hit. Note: `delete_oldest_lines()` rewrites the whole file each time — O(n) per cleanup, worth watching flash wear if the log grows large.
 
+**`eeprom_memory.py`** — FIFO payload backup on an external I2C EEPROM (24AA1025/24LC1025/24FC1025, 128KB), initialized once from `main.py` (`init_eeprom_memory()`) as a same-level counterpart to `rtc_memory.py` rather than something it calls into directly — `main.py` decides which of the two to write to, and migrates the RTC backlog to EEPROM if RTC RAM fills up. Unlike RTC RAM, this survives a full power loss, not just deep sleep. Payload slots are sized to exactly one EEPROM page (32/64/128/256 bytes, configurable via `general.max_payload_size`), so every write is a single atomic page write. Depends on `lib/EEPROM24LC1025`. Config: `static_config.pinout.i2c.*`, `general.max_payload_size`, `general.eeprom_overwrite_oldest`.
+
 **`update_manager.py`** — OTA support utilities: SHA-256 checksum verification, chunked base64 decode, and safe `main.py` replacement (backup + rename, with rollback attempt on failure).
 
 ### Peripherals
@@ -176,6 +179,8 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 | `ADS1115.py` | ADS1115 16-bit ADC driver (I2C) | Third-party — W. Ewald, MIT |
 | `aioble/` | Async BLE (GATT, pairing, L2CAP) | Third-party — official micropython-lib, MIT |
 | `bme280_float.py` | BME280 driver (I2C) | Third-party — Adafruit-derived, MIT/BSD-style |
+| `crontab.py` | Cron-expression scheduling (MicroPython port, wired to `power_manager` as its time source) | Third-party — MicroPython port of Josiah Carlson's `crontab`, LGPL v2.1/v3. **Not currently used** by any module — vendored with a reserved config key (`crontab: "inactive"`) but not yet wired up. |
+| `EEPROM24LC1025.py` | 24AA1025/24LC1025/24FC1025 I2C EEPROM driver (128KB, dual 64KB-block addressing) | **ISURKI-authored**, GPL-3.0-or-later. Used by `modules/eeprom_memory.py`. |
 | `esp32_ulp/` | ULP coprocessor assembler/linker | Third-party — micropython-esp32-ulp, MIT |
 | `IsurlogLPP.py` | ISURKI's own "Isurlog LPP" payload codec (Cayenne-LPP-like, custom sensor + config types) | **ISURKI own**, GPL-3.0-or-later. Central interoperability piece with `config_manager.py`'s `CONFIG_MAP`. |
 | `LIS2DH12.py` | LIS2DH12 accelerometer driver (I2C) | Third-party — Quectel, Apache 2.0 |
@@ -196,7 +201,8 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 ```
 main.py
  ├─ power_manager ──── lib/uds3231 | lib/RV3028
- ├─ rtc_memory
+ ├─ rtc_memory         (same-level as eeprom_memory below - main.py routes
+ ├─ eeprom_memory ───── lib/EEPROM24LC1025   between them, they don't call each other)
  ├─ led_manager ─────── lib/esp32_ulp
  ├─ accel_manager ───── lib/mcp23008, lib/LIS2DH12
  ├─ downlink_manager ── lib/IsurlogLPP, lib/ota.rollback

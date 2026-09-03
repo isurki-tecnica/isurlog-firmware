@@ -1,9 +1,9 @@
 # 2.1 Referencia de Módulos y Librerías (Guía de API)
 
 !!! note "Alcance"
-    Esta página documenta el árbol de código de **producción** — `app/main.py`, `ports/esp32/modules/modules/` (envoltorios de alto nivel) y `ports/esp32/modules/lib/` (drivers de bajo nivel) — tal como se sigue en la rama `main` de este repositorio. Si trabajas desde el sandbox de desarrollo interno, algunos módulos experimentales (variantes asíncronas, drivers de almacenamiento alternativos, etc.) pueden no estar todavía listados aquí porque aún no se han promovido a este repositorio. Ver **[8. Flujo de Desarrollo (Sandbox → Producción)]** *(próximamente)* para saber cómo funciona esa promoción.
+    Esta página documenta el árbol de código de **producción** — `app/main.py`, `src/modules/` (envoltorios de alto nivel) y `src/lib/` (drivers de bajo nivel) — tal como se sigue en la rama `main` de este repositorio. Si trabajas desde el sandbox de desarrollo interno, algunos módulos experimentales (variantes asíncronas, drivers de almacenamiento alternativos, etc.) pueden no estar todavía listados aquí porque aún no se han promovido a este repositorio. Ver **[8. Flujo de Desarrollo (Sandbox → Producción)]** *(próximamente)* para saber cómo funciona esa promoción.
 
-Esta página complementa **[2. Visión General de la Arquitectura](architecture-overview.md)**: aquella página explica conceptualmente la separación entre `/lib` y `/modules`, esta es la referencia archivo por archivo — qué hace cada módulo, de qué depende, y qué configuración lee.
+Esta página complementa **[2. Visión General de la Arquitectura](architecture-overview.md)**: aquella página explica conceptualmente la separación entre `src/lib` y `src/modules`, esta es la referencia archivo por archivo — qué hace cada módulo, de qué depende, y qué configuración lee.
 
 ---
 
@@ -33,6 +33,7 @@ Esta página complementa **[2. Visión General de la Arquitectura](architecture-
 | `accel_manager.py` | Detección antirrobo/manipulación con LIS2DH12 + MCP23008. | síncrono |
 | `battery_monitor.py` | Lectura de tensión de batería por el ADC del ESP32 (respaldo sin MAX17048). | síncrono |
 | `internal_storage.py` | Respaldo FIFO de payloads en la flash interna. | síncrono |
+| `eeprom_memory.py` | Respaldo FIFO de payloads en una EEPROM I2C externa (24LC1025) — sobrevive a un corte de alimentación completo, no solo al reposo profundo. | síncrono |
 | `update_manager.py` | Soporte OTA: checksum, decodificación base64, sustitución segura de `main.py`. | síncrono |
 | `led_manager.py` | Patrón de parpadeo del LED de estado, gestionado por ULP. | síncrono |
 
@@ -160,6 +161,8 @@ Esta página complementa **[2. Visión General de la Arquitectura](architecture-
 
 **`internal_storage.py`** — respaldo FIFO de payloads en la flash interna (usado cuando `general.internal_register` está activado); recorta automáticamente las líneas más antiguas al alcanzar los umbrales de espacio libre o número de líneas. Nota: `delete_oldest_lines()` reescribe todo el archivo cada vez — O(n) por limpieza, vigilar el desgaste de la flash si el registro crece mucho.
 
+**`eeprom_memory.py`** — respaldo FIFO de payloads en una EEPROM I2C externa (24AA1025/24LC1025/24FC1025, 128KB), inicializada una sola vez desde `main.py` (`init_eeprom_memory()`) como homóloga de `rtc_memory.py` al mismo nivel, en vez de algo a lo que llama directamente — `main.py` decide a cuál de los dos escribir, y migra el backlog de RTC a EEPROM si la RAM del RTC se llena. A diferencia de la RAM del RTC, esto sobrevive a un corte de alimentación completo, no solo al reposo profundo. Los slots de payload tienen el tamaño exacto de una página de la EEPROM (32/64/128/256 bytes, configurable vía `general.max_payload_size`), así que cada escritura es una única escritura de página atómica. Depende de `lib/EEPROM24LC1025`. Configuración: `static_config.pinout.i2c.*`, `general.max_payload_size`, `general.eeprom_overwrite_oldest`.
+
 **`update_manager.py`** — utilidades de soporte OTA: verificación de checksum SHA-256, decodificación base64 en bloques, y sustitución segura de `main.py` (copia de seguridad + renombrado, con intento de rollback si falla).
 
 ### Periféricos
@@ -176,6 +179,8 @@ Esta página complementa **[2. Visión General de la Arquitectura](architecture-
 | `ADS1115.py` | Driver del ADC de 16 bits ADS1115 (I2C) | Terceros — W. Ewald, MIT |
 | `aioble/` | BLE asíncrono (GATT, emparejamiento, L2CAP) | Terceros — micropython-lib oficial, MIT |
 | `bme280_float.py` | Driver BME280 (I2C) | Terceros — derivado de Adafruit, MIT/estilo BSD |
+| `crontab.py` | Programación con expresiones cron (port a MicroPython, conectado a `power_manager` como fuente de tiempo) | Terceros — port a MicroPython de `crontab` de Josiah Carlson, LGPL v2.1/v3. **Ningún módulo lo usa actualmente** — está vendorizado con una clave de configuración reservada (`crontab: "inactive"`) pero aún no conectado. |
+| `EEPROM24LC1025.py` | Driver de EEPROM I2C 24AA1025/24LC1025/24FC1025 (128KB, direccionamiento en dos bloques de 64KB) | **Propio de ISURKI**, GPL-3.0-or-later. Usado por `modules/eeprom_memory.py`. |
 | `esp32_ulp/` | Ensamblador/enlazador del coprocesador ULP | Terceros — micropython-esp32-ulp, MIT |
 | `IsurlogLPP.py` | Códec de payload propio de ISURKI, "Isurlog LPP" (similar a Cayenne-LPP, con tipos propios de sensor + configuración) | **Propio de ISURKI**, GPL-3.0-or-later. Pieza central de interoperabilidad con el `CONFIG_MAP` de `config_manager.py`. |
 | `LIS2DH12.py` | Driver del acelerómetro LIS2DH12 (I2C) | Terceros — Quectel, Apache 2.0 |
@@ -196,7 +201,8 @@ Esta página complementa **[2. Visión General de la Arquitectura](architecture-
 ```
 main.py
  ├─ power_manager ──── lib/uds3231 | lib/RV3028
- ├─ rtc_memory
+ ├─ rtc_memory         (mismo nivel que eeprom_memory de abajo - main.py enruta
+ ├─ eeprom_memory ───── lib/EEPROM24LC1025   entre ambos, no se llaman entre sí)
  ├─ led_manager ─────── lib/esp32_ulp
  ├─ accel_manager ───── lib/mcp23008, lib/LIS2DH12
  ├─ downlink_manager ── lib/IsurlogLPP, lib/ota.rollback
