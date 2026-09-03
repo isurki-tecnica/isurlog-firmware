@@ -8,7 +8,7 @@
 * **Built for batteries** — as low as ~20 µA in deep sleep. An on-board energy-harvesting charger tops up from almost anything: a 0.3V TEG, a micro solar panel, a full 5V panel, or a plain USB charger.
 * **One firmware, multiple networks** — NB-IoT, LTE-M, DECT NR+, and satellite NTN via the nRF9151, or LoRaWAN, exclusively per unit, plus Wi-Fi and local BLE for setup.
 * **Remotely manageable, not just remotely readable** — configuration, sensor setup, OTA updates, and a live MicroPython REPL, all from [IsurDASH](https://isurdash.isurki.com), without a truck roll.
-* **Real MicroPython, not a black box** — a genuine fork of [MicroPython](https://micropython.org), readable and hackable at every layer.
+* **Real MicroPython, not a black box** — built on plain, unmodified [MicroPython](https://micropython.org) plus one small tracked patch, readable and hackable at every layer.
 * **No vendor lock-in** — the firmware is open source on GitHub, and every device can be repointed to a different MQTT broker or backend at any time. If ISURKI disappeared tomorrow, your ISURLOGs would keep working: reprogram them and move on, never a stranded paperweight.
 
 ---

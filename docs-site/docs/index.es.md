@@ -8,7 +8,7 @@
 * **Pensado para baterías** — hasta ~20 µA en reposo (deep sleep). Un cargador de recolección de energía integrado se alimenta de casi cualquier fuente: un TEG de 0.3V, un panel solar micro, un panel de 5V completo, o un cargador USB convencional.
 * **Un firmware, múltiples redes** — NB-IoT, LTE-M, DECT NR+, y satélite NTN a través del nRF9151, o LoRaWAN, de forma exclusiva por unidad, además de Wi-Fi y BLE local para la configuración.
 * **Gestionable en remoto, no solo legible en remoto** — configuración, ajuste de sensores, actualizaciones OTA, y una REPL de MicroPython en vivo, todo desde [IsurDASH](https://isurdash.isurki.com), sin desplazamiento a campo.
-* **MicroPython real, no una caja negra** — un fork genuino de [MicroPython](https://micropython.org), legible y modificable en cada capa.
+* **MicroPython real, no una caja negra** — construido sobre MicroPython original, sin modificar, más un único parche pequeño y versionado, legible y modificable en cada capa.
 * **Sin dependencia del fabricante** — el firmware es de código abierto en GitHub, y cualquier dispositivo puede reconfigurarse para apuntar a otro broker MQTT o backend en cualquier momento. Si ISURKI desapareciera mañana, tus ISURLOG seguirían funcionando: se reprograman y se sigue adelante, nunca se quedan de pisapapeles.
 
 ---
