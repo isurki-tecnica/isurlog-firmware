@@ -3,7 +3,7 @@
 ¡El firmware del **ISURLOG** es un proyecto de código abierto, y las contribuciones de la comunidad son bienvenidas! Ya sea una simple corrección de errores, la sugerencia de una nueva funcionalidad, o la optimización de las rutinas de consumo de energía, tu ayuda es muy valorada.
 
 !!! note "¿Dónde vive realmente el código propio de ISURKI?"
-    Este repositorio es un **fork completo de MicroPython** — la gran mayoría del árbol de código (`py/`, `extmod/`, la mayor parte de `ports/`, etc.) es MicroPython original (upstream), mantenido sincronizado a través del remoto `upstream`. El código propio de ISURKI — la parte a la que en la mayoría de los casos contribuirás — vive en solo dos sitios: **`app/`** (la aplicación, `main.py` + configuración) y **`ports/esp32/modules/{modules,lib}`** (los envoltorios y drivers). Ver **[2. Visión General de la Arquitectura](architecture-overview.md)** y **[2.1 Referencia de Módulos y Librerías](module-library-reference.md)** antes de empezar — ahí se explica la separación entre `lib`/`modules` y se documenta cada archivo existente, para saber dónde encaja un nuevo driver de sensor o una nueva funcionalidad.
+    `isurlog-firmware` **no es** un fork de MicroPython — es un repositorio ligero que contiene únicamente el código propio de ISURKI, y que se compila contra un MicroPython clonado aparte, sin modificar, más un único parche pequeño y versionado (`patches/main.c.patch`). Ver **[1. Configuración del Entorno de Compilación](build-environment.md)** para ver cómo encajan las piezas. El código propio de ISURKI — la parte a la que en la mayoría de los casos contribuirás — vive en solo dos sitios: **`app/`** (la aplicación, `main.py` + configuración) y **`src/modules/` / `src/lib/`** (los envoltorios y drivers). Ver **[2. Visión General de la Arquitectura](architecture-overview.md)** y **[2.1 Referencia de Módulos y Librerías](module-library-reference.md)** antes de empezar — ahí se explica la separación entre `lib`/`modules` y se documenta cada archivo existente, para saber dónde encaja un nuevo driver de sensor o una nueva funcionalidad.
 
 ## 7.1 Formas de Contribuir
 
@@ -21,7 +21,7 @@ Antes de enviar un **Pull Request (PR)**, asegúrate de cumplir los siguientes r
 
 1.  **Entorno:** debes usar el entorno de desarrollo recomendado **Ubuntu/WSL**, tal como se detalla en **1. Configuración del Entorno de Compilación**.
 2.  **Base de código:** tu rama de desarrollo debe partir de la rama `main` del repositorio oficial de **ISURLOG** y estar actualizada con ella.
-3.  **Calidad del código:** seguir los estándares de código de Python/MicroPython (p. ej. PEP 8 donde aplique). Los mensajes de commit deben seguir el `CODECONVENTIONS.md` del proyecto (heredado del MicroPython original) — prefijar cada commit con el directorio o archivo al que afecta, p. ej. `modules/nb_iot: Fix eDRX timeout handling.`
+3.  **Calidad del código:** seguir los estándares de código de Python/MicroPython (p. ej. PEP 8 donde aplique). Los mensajes de commit deben seguir el `CODECONVENTIONS.md` del proyecto (heredado del MicroPython original) — prefijar cada commit con el directorio o archivo al que afecta, p. ej. `src/modules/nb_iot: Fix eDRX timeout handling.`
 4.  **Pruebas locales:** los cambios que afecten a código relacionado con el hardware (sensores, gestión de energía, comunicaciones) deben probarse en un dispositivo **ISURLOG** físico. Las contribuciones que no toquen el hardware en absoluto (p. ej. una corrección del códec de payload en `IsurlogLPP.py`, o una corrección de lógica pura) pueden revisarse en su lugar con pruebas a nivel de unidad — indica en tu PR cómo lo has probado, en cualquiera de los dos casos.
 5.  **Licencia:** al contribuir, aceptas que tu código se licencie bajo la licencia **GPL-3.0** del proyecto (ver `LICENSE`). Los archivos nuevos deben llevar la misma cabecera de copyright usada en todo el código base:
 
@@ -53,7 +53,7 @@ git checkout -b feature/tu-funcionalidad-genial
 ```
 
 ### 3. Implementar los Cambios
-Haz commits de tus cambios con frecuencia, con mensajes descriptivos que sigan el `CODECONVENTIONS.md` (p. ej., `modules/max31865_sensor: Fix float conversion in PT100 driver.`).
+Haz commits de tus cambios con frecuencia, con mensajes descriptivos que sigan el `CODECONVENTIONS.md` (p. ej., `src/modules/max31865_sensor: Fix float conversion in PT100 driver.`).
 
 ### 4. Crear un Pull Request (PR)
 1. Sube tu rama de trabajo a tu fork personal en GitHub.

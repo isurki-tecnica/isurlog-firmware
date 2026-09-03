@@ -3,7 +3,7 @@
 The **ISURLOG** firmware is an open-source project, and we welcome contributions from the community! Whether you are providing a simple bug fix, suggesting a new feature, or optimizing power consumption routines, your help is highly valued.
 
 !!! note "Where does ISURKI's own code actually live?"
-    This repository is a **full fork of MicroPython** — the vast majority of the source tree (`py/`, `extmod/`, most of `ports/`, etc.) is upstream MicroPython, kept in sync via the `upstream` remote. ISURKI's own code — the part you'll actually be contributing to in most cases — lives in just two places: **`app/`** (the application, `main.py` + config) and **`ports/esp32/modules/{modules,lib}`** (the wrappers and drivers). See **[2. Architecture Overview](architecture-overview.md)** and **[2.1 Module & Library Reference](module-library-reference.md)** before diving in — they explain the `lib`/`modules` split and document every existing file, so you know where a new sensor driver or feature belongs.
+    `isurlog-firmware` is **not** a MicroPython fork — it's a slim repository containing only ISURKI's own code, which is built against a separately-cloned, unmodified MicroPython plus one small tracked patch (`patches/main.c.patch`). See **[1. Build Environment Setup](build-environment.md)** for how the pieces fit together. ISURKI's own code — the part you'll actually be contributing to in most cases — lives in just two places: **`app/`** (the application, `main.py` + config) and **`src/modules/` / `src/lib/`** (the wrappers and drivers). See **[2. Architecture Overview](architecture-overview.md)** and **[2.1 Module & Library Reference](module-library-reference.md)** before diving in — they explain the `lib`/`modules` split and document every existing file, so you know where a new sensor driver or feature belongs.
 
 ## 7.1 Ways to Contribute
 
@@ -21,7 +21,7 @@ Before submitting a **Pull Request (PR)**, please ensure you meet the following 
 
 1.  **Environment:** You must use the recommended **Ubuntu/WSL** development environment, as detailed in **1. Build Environment Setup**.
 2.  **Code Base:** Your development branch must be forked from and up-to-date with the `main` branch of the official **ISURLOG** repository.
-3.  **Code Quality:** Adhere to Python/MicroPython coding standards (e.g., PEP 8 where applicable). Commit messages should follow the project's `CODECONVENTIONS.md` (inherited from upstream MicroPython) — prefix each commit with the directory or file path it affects, e.g. `modules/nb_iot: Fix eDRX timeout handling.`
+3.  **Code Quality:** Adhere to Python/MicroPython coding standards (e.g., PEP 8 where applicable). Commit messages should follow the project's `CODECONVENTIONS.md` (inherited from upstream MicroPython) — prefix each commit with the directory or file path it affects, e.g. `src/modules/nb_iot: Fix eDRX timeout handling.`
 4.  **Test Locally:** Changes touching hardware-facing code (sensors, power management, communications) must be tested on a physical **ISURLOG** device. Contributions that don't touch hardware at all (e.g. a payload codec fix in `IsurlogLPP.py`, or a pure logic fix) may be reviewed with unit-level testing instead — mention in your PR how you tested it either way.
 5.  **License:** By contributing, you agree your code is licensed under the project's **GPL-3.0** license (see `LICENSE`). New files should carry the same copyright header used throughout the codebase:
 
@@ -53,7 +53,7 @@ git checkout -b feature/your-awesome-feature
 ```
 
 ### 3. Implement Changes
-Commit your changes frequently with descriptive commit messages following `CODECONVENTIONS.md` (e.g., `modules/max31865_sensor: Fix float conversion in PT100 driver.`).
+Commit your changes frequently with descriptive commit messages following `CODECONVENTIONS.md` (e.g., `src/modules/max31865_sensor: Fix float conversion in PT100 driver.`).
 
 ### 4. Create a Pull Request (PR)
 1. Push your topic branch to your personal fork on GitHub.
