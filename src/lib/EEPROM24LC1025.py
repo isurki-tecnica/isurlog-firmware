@@ -1,3 +1,12 @@
+# Copyright (C) 2026 ISURKI
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 '''
 @Description: Generic MicroPython driver for the I2C EEPROM series
               24AA1025 / 24LC1025 / 24FC1025 (1024-Kbit, 128KB)
