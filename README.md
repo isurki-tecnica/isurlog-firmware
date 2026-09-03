@@ -1,4 +1,4 @@
-![ISURLOG — Industrial NB-IoT/LoRa Datalogger](docs/img/gh-banner-isurlog.jpg)
+![ISURLOG — Industrial NB-IoT/LoRa Datalogger](.github/images/gh-banner-isurlog.jpg)
 
 # ISURLOG Firmware
 
@@ -21,7 +21,7 @@ Open-source MicroPython firmware for the **ISURLOG**, ISURKI's industrial IoT da
 * **Built for batteries:** as low as **~20 µA** in deep sleep, with the ESP32 waking on a schedule, on an external interrupt, or on-demand from the network (eDRX/Class C). An on-board energy-harvesting charger can top up the batteries from almost anything — a 0.3V thermoelectric generator (TEG), a small 1.5V micro solar panel, a full 5V solar panel, or a plain 5V USB charger.
 * **One firmware, multiple networks:** the cellular modem (Nordic nRF9151) and LoRaWAN (RAK3172, RUI3/AT) are both supported on the same PCB design — one gets soldered on at build time depending on the deployment — with Wi-Fi available where neither has coverage. The nRF9151 alone spans NB-IoT, LTE-M, DECT NR+, and satellite NTN — with NTN connectivity already implemented in firmware for true off-grid deployments. All networks enforce modern security (WPA2+, TLS, LoRaWAN OTAA).
 * **Remotely manageable, not just remotely readable:** configuration, sensor setup, firmware updates (OTA and wired), and even a live MicroPython REPL are all reachable from **[IsurDASH](https://isurdash.isurki.com)**, ISURKI's cloud platform — without a truck roll.
-* **Real MicroPython, not a black box:** this is a genuine fork of [MicroPython](https://micropython.org), with ISURKI's own drivers frozen into the firmware binary (`ports/esp32/modules/`) and the application logic (`app/main.py` + its two config files) deployed on top, either via IsurDASH's guided upload or manually — readable, debuggable, and hackable at every layer, not a proprietary firmware blob.
+* **Real MicroPython, not a black box:** this builds against a plain, unmodified [MicroPython](https://micropython.org) checkout (plus one small, tracked patch — see `patches/`), with ISURKI's own drivers frozen into the firmware binary (`src/modules/`, `src/lib/`) and the application logic (`app/main.py` + its two config files) deployed on top, either via IsurDASH's guided upload or manually — readable, debuggable, and hackable at every layer, not a proprietary firmware blob.
 * **Open data, no lock-in:** integrate directly with historical (InfluxDB) or real-time (MQTT) data access — see the reference implementations in the docs, including a live public demo you can query with zero setup.
 
 ---
@@ -114,7 +114,7 @@ ISURLOG is an actively maintained product with real field deployments, not a pro
 
 ## Contributing
 
-Bug fixes, new sensor drivers, and documentation improvements are all welcome — see the **[Contribution Guide](https://docs.isurlog.isurki.com/contribution-guide/)** for how this repository is organized (it's a full MicroPython fork — ISURKI's own code lives in `app/` and `ports/esp32/modules/`) and how to submit a pull request.
+Bug fixes, new sensor drivers, and documentation improvements are all welcome — see the **[Contribution Guide](https://docs.isurlog.isurki.com/contribution-guide/)** for how this repository is organized (it builds against a separate, unmodified MicroPython checkout — ISURKI's own code lives in `app/`, `src/`, and `boards/ISURLOG_ESP32/`) and how to submit a pull request.
 
 ---
 
