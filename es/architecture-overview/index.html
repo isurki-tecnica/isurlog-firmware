@@ -1059,10 +1059,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-la-carpeta-lib-librerias-base" class="md-nav__link">
+  <a href="#1-la-carpeta-srclib-librerias-base" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. La Carpeta /lib (Librerías Base)
+        1. La Carpeta src/lib (Librerías Base)
       
     </span>
   </a>
@@ -1070,10 +1070,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-la-carpeta-modules-envoltorios-de-alto-nivel" class="md-nav__link">
+  <a href="#2-la-carpeta-srcmodules-envoltorios-de-alto-nivel" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. La Carpeta /modules (Envoltorios de Alto Nivel)
+        2. La Carpeta src/modules (Envoltorios de Alto Nivel)
       
     </span>
   </a>
@@ -1890,10 +1890,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-la-carpeta-lib-librerias-base" class="md-nav__link">
+  <a href="#1-la-carpeta-srclib-librerias-base" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. La Carpeta /lib (Librerías Base)
+        1. La Carpeta src/lib (Librerías Base)
       
     </span>
   </a>
@@ -1901,10 +1901,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-la-carpeta-modules-envoltorios-de-alto-nivel" class="md-nav__link">
+  <a href="#2-la-carpeta-srcmodules-envoltorios-de-alto-nivel" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. La Carpeta /modules (Envoltorios de Alto Nivel)
+        2. La Carpeta src/modules (Envoltorios de Alto Nivel)
       
     </span>
   </a>
@@ -2002,15 +2002,15 @@
 <p>El objetivo principal de esta estructura de software es proporcionar las herramientas necesarias para interactuar con todos los circuitos integrados (IC) y periféricos del <strong>ISURLOG</strong>, además de ofrecer una plantilla de ejemplo funcional de una aplicación de datalogger típica.</p>
 <h2 id="21-la-estructura-modular-del-software">2.1 La Estructura Modular del Software</h2>
 <p>El software del repositorio presenta una estructura modular pensada para un uso flexible y sencillo, basada en los siguientes componentes clave:</p>
-<h3 id="1-la-carpeta-lib-librerias-base">1. La Carpeta <code>/lib</code> (Librerías Base)</h3>
+<h3 id="1-la-carpeta-srclib-librerias-base">1. La Carpeta <code>src/lib</code> (Librerías Base)</h3>
 <ul>
 <li><strong>Drivers de bajo nivel:</strong> contiene librerías de MicroPython para controlar directamente los distintos IC presentes en la placa del <strong>ISURLOG</strong> (sensores, módem de comunicación, RTC, etc.).</li>
 <li><strong>Gestión directa del hardware:</strong> estas librerías gestionan la comunicación directa con el hardware (por ejemplo, vía I2C, SPI, UART).</li>
 <li><strong>Librerías de terceros:</strong> puede incluir librerías de terceros desarrolladas específicamente para el <strong>ISURLOG</strong> o adaptadas para él.</li>
 </ul>
-<h3 id="2-la-carpeta-modules-envoltorios-de-alto-nivel">2. La Carpeta <code>/modules</code> (Envoltorios de Alto Nivel)</h3>
+<h3 id="2-la-carpeta-srcmodules-envoltorios-de-alto-nivel">2. La Carpeta <code>src/modules</code> (Envoltorios de Alto Nivel)</h3>
 <ul>
-<li><strong>Capa de abstracción:</strong> actúa como una capa de abstracción sobre las librerías de la carpeta <code>/lib</code>.</li>
+<li><strong>Capa de abstracción:</strong> actúa como una capa de abstracción sobre las librerías de la carpeta <code>src/lib</code>.</li>
 <li><strong>Propósito:</strong> estos módulos (o "wrappers") simplifican el uso de las funcionalidades del hardware, ofreciendo interfaces más intuitivas y reduciendo la cantidad de código de aplicación necesario.</li>
 </ul>
 <h3 id="3-el-archivo-mainpy-punto-de-entrada-de-la-aplicacion">3. El Archivo <code>main.py</code> (Punto de Entrada de la Aplicación)</h3>
@@ -2030,9 +2030,9 @@
 <h3 id="configuracion-mediante-json">Configuración mediante JSON</h3>
 <p>La forma más sencilla de configurar el datalogger es estableciendo los parámetros en <code>dynamic_config.json</code>. Esto cubre la mayoría de los casos de uso habituales.</p>
 <h3 id="modificacion-del-codigo">Modificación del Código</h3>
-<p>Para lógicas de funcionamiento totalmente personalizadas o muy específicas que no puedan resolverse solo con la configuración JSON, el usuario siempre tiene la opción de modificar directamente el archivo <code>main.py</code> o incluir sus propios módulos en la carpeta <code>/modules</code>. Al ser el código abierto, el usuario tiene total libertad para adaptarlo a los requisitos exactos de cada aplicación.</p>
+<p>Para lógicas de funcionamiento totalmente personalizadas o muy específicas que no puedan resolverse solo con la configuración JSON, el usuario siempre tiene la opción de modificar directamente el archivo <code>main.py</code> o incluir sus propios módulos en la carpeta <code>src/modules</code>. Al ser el código abierto, el usuario tiene total libertad para adaptarlo a los requisitos exactos de cada aplicación.</p>
 <h2 id="23-buscas-un-modulo-concreto">2.3 ¿Buscas un módulo concreto?</h2>
-<p>Para un desglose archivo por archivo de cada módulo en <code>/modules</code> y cada driver en <code>/lib</code> — su propósito, API pública, dependencias, y qué claves de configuración lee cada uno — ver <strong><a href="../module-library-reference/">2.1 Referencia de Módulos y Librerías</a></strong>.</p>
+<p>Para un desglose archivo por archivo de cada módulo en <code>src/modules</code> y cada driver en <code>src/lib</code> — su propósito, API pública, dependencias, y qué claves de configuración lee cada uno — ver <strong><a href="../module-library-reference/">2.1 Referencia de Módulos y Librerías</a></strong>.</p>
 
 
 

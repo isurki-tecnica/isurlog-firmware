@@ -2032,9 +2032,9 @@
 <h1 id="21-module-library-reference-api-guide">2.1 Module &amp; Library Reference (API Guide)</h1>
 <div class="admonition note">
 <p class="admonition-title">Scope</p>
-<p>This page documents the <strong>production</strong> code tree — <code>app/main.py</code>, <code>ports/esp32/modules/modules/</code> (high-level wrappers) and <code>ports/esp32/modules/lib/</code> (low-level drivers) — as tracked on this repository's <code>main</code> branch. If you work from the internal development sandbox, some experimental modules (async variants, alternate storage drivers, etc.) may not be listed here yet because they haven't been promoted to this repository. See <strong>[8. Development Workflow (Sandbox → Production)]</strong> <em>(coming soon)</em> for how that promotion works.</p>
+<p>This page documents the <strong>production</strong> code tree — <code>app/main.py</code>, <code>src/modules/</code> (high-level wrappers) and <code>src/lib/</code> (low-level drivers) — as tracked on this repository's <code>main</code> branch. If you work from the internal development sandbox, some experimental modules (async variants, alternate storage drivers, etc.) may not be listed here yet because they haven't been promoted to this repository. See <strong>[8. Development Workflow (Sandbox → Production)]</strong> <em>(coming soon)</em> for how that promotion works.</p>
 </div>
-<p>This page complements <strong><a href="../architecture-overview/">2. Architecture Overview</a></strong>: that page explains the <code>/lib</code> vs <code>/modules</code> split conceptually, this one is the per-file reference — what each module does, what it depends on, and what configuration it reads.</p>
+<p>This page complements <strong><a href="../architecture-overview/">2. Architecture Overview</a></strong>: that page explains the <code>src/lib</code> vs <code>src/modules</code> split conceptually, this one is the per-file reference — what each module does, what it depends on, and what configuration it reads.</p>
 <hr />
 <h2 id="211-quick-reference">2.1.1 Quick Reference</h2>
 <table>
@@ -2157,6 +2157,11 @@
 <td>sync</td>
 </tr>
 <tr>
+<td><code>eeprom_memory.py</code></td>
+<td>FIFO payload backup on external I2C EEPROM (24LC1025) — survives full power loss, not just deep sleep.</td>
+<td>sync</td>
+</tr>
+<tr>
 <td><code>update_manager.py</code></td>
 <td>OTA support: checksum, base64 decode, safe <code>main.py</code> replacement.</td>
 <td>sync</td>
@@ -2276,6 +2281,7 @@
 <p><strong><code>battery_monitor.py</code></strong> — ESP32-internal ADC battery voltage reading (fallback when no MAX17048 fuel gauge is present). No config, no <code>lib/</code> dependency.</p>
 <h3 id="storage-ota">Storage &amp; OTA</h3>
 <p><strong><code>internal_storage.py</code></strong> — FIFO payload backup on internal flash (used when <code>general.internal_register</code> is enabled); auto-trims oldest lines when free space or line count thresholds are hit. Note: <code>delete_oldest_lines()</code> rewrites the whole file each time — O(n) per cleanup, worth watching flash wear if the log grows large.</p>
+<p><strong><code>eeprom_memory.py</code></strong> — FIFO payload backup on an external I2C EEPROM (24AA1025/24LC1025/24FC1025, 128KB), initialized once from <code>main.py</code> (<code>init_eeprom_memory()</code>) as a same-level counterpart to <code>rtc_memory.py</code> rather than something it calls into directly — <code>main.py</code> decides which of the two to write to, and migrates the RTC backlog to EEPROM if RTC RAM fills up. Unlike RTC RAM, this survives a full power loss, not just deep sleep. Payload slots are sized to exactly one EEPROM page (32/64/128/256 bytes, configurable via <code>general.max_payload_size</code>), so every write is a single atomic page write. Depends on <code>lib/EEPROM24LC1025</code>. Config: <code>static_config.pinout.i2c.*</code>, <code>general.max_payload_size</code>, <code>general.eeprom_overwrite_oldest</code>.</p>
 <p><strong><code>update_manager.py</code></strong> — OTA support utilities: SHA-256 checksum verification, chunked base64 decode, and safe <code>main.py</code> replacement (backup + rename, with rollback attempt on failure).</p>
 <h3 id="peripherals">Peripherals</h3>
 <p><strong><code>led_manager.py</code></strong> — ULP-driven status LED blink pattern (configurable pulses/bursts/timing), so the CPU doesn't have to stay awake for it. Depends on <code>lib/esp32_ulp</code>. Shares the ULP coprocessor with <code>digital_sensor.py</code>'s pulse counter — <code>is_enabled()</code> acts as a mutex between the two (they can't run simultaneously).</p>
@@ -2309,6 +2315,16 @@
 <td><code>bme280_float.py</code></td>
 <td>BME280 driver (I2C)</td>
 <td>Third-party — Adafruit-derived, MIT/BSD-style</td>
+</tr>
+<tr>
+<td><code>crontab.py</code></td>
+<td>Cron-expression scheduling (MicroPython port, wired to <code>power_manager</code> as its time source)</td>
+<td>Third-party — MicroPython port of Josiah Carlson's <code>crontab</code>, LGPL v2.1/v3. <strong>Not currently used</strong> by any module — vendored with a reserved config key (<code>crontab: "inactive"</code>) but not yet wired up.</td>
+</tr>
+<tr>
+<td><code>EEPROM24LC1025.py</code></td>
+<td>24AA1025/24LC1025/24FC1025 I2C EEPROM driver (128KB, dual 64KB-block addressing)</td>
+<td><strong>ISURKI-authored</strong>, GPL-3.0-or-later. Used by <code>modules/eeprom_memory.py</code>.</td>
 </tr>
 <tr>
 <td><code>esp32_ulp/</code></td>
@@ -2376,7 +2392,8 @@
 <h2 id="214-module-dependency-map">2.1.4 Module Dependency Map</h2>
 <div class="highlight"><pre><span></span><code>main.py
  ├─ power_manager ──── lib/uds3231 | lib/RV3028
- ├─ rtc_memory
+ ├─ rtc_memory         (same-level as eeprom_memory below - main.py routes
+ ├─ eeprom_memory ───── lib/EEPROM24LC1025   between them, they don't call each other)
  ├─ led_manager ─────── lib/esp32_ulp
  ├─ accel_manager ───── lib/mcp23008, lib/LIS2DH12
  ├─ downlink_manager ── lib/IsurlogLPP, lib/ota.rollback

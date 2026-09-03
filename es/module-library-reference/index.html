@@ -2032,9 +2032,9 @@
 <h1 id="21-referencia-de-modulos-y-librerias-guia-de-api">2.1 Referencia de Módulos y Librerías (Guía de API)</h1>
 <div class="admonition note">
 <p class="admonition-title">Alcance</p>
-<p>Esta página documenta el árbol de código de <strong>producción</strong> — <code>app/main.py</code>, <code>ports/esp32/modules/modules/</code> (envoltorios de alto nivel) y <code>ports/esp32/modules/lib/</code> (drivers de bajo nivel) — tal como se sigue en la rama <code>main</code> de este repositorio. Si trabajas desde el sandbox de desarrollo interno, algunos módulos experimentales (variantes asíncronas, drivers de almacenamiento alternativos, etc.) pueden no estar todavía listados aquí porque aún no se han promovido a este repositorio. Ver <strong>[8. Flujo de Desarrollo (Sandbox → Producción)]</strong> <em>(próximamente)</em> para saber cómo funciona esa promoción.</p>
+<p>Esta página documenta el árbol de código de <strong>producción</strong> — <code>app/main.py</code>, <code>src/modules/</code> (envoltorios de alto nivel) y <code>src/lib/</code> (drivers de bajo nivel) — tal como se sigue en la rama <code>main</code> de este repositorio. Si trabajas desde el sandbox de desarrollo interno, algunos módulos experimentales (variantes asíncronas, drivers de almacenamiento alternativos, etc.) pueden no estar todavía listados aquí porque aún no se han promovido a este repositorio. Ver <strong>[8. Flujo de Desarrollo (Sandbox → Producción)]</strong> <em>(próximamente)</em> para saber cómo funciona esa promoción.</p>
 </div>
-<p>Esta página complementa <strong><a href="../architecture-overview/">2. Visión General de la Arquitectura</a></strong>: aquella página explica conceptualmente la separación entre <code>/lib</code> y <code>/modules</code>, esta es la referencia archivo por archivo — qué hace cada módulo, de qué depende, y qué configuración lee.</p>
+<p>Esta página complementa <strong><a href="../architecture-overview/">2. Visión General de la Arquitectura</a></strong>: aquella página explica conceptualmente la separación entre <code>src/lib</code> y <code>src/modules</code>, esta es la referencia archivo por archivo — qué hace cada módulo, de qué depende, y qué configuración lee.</p>
 <hr />
 <h2 id="211-referencia-rapida">2.1.1 Referencia Rápida</h2>
 <table>
@@ -2157,6 +2157,11 @@
 <td>síncrono</td>
 </tr>
 <tr>
+<td><code>eeprom_memory.py</code></td>
+<td>Respaldo FIFO de payloads en una EEPROM I2C externa (24LC1025) — sobrevive a un corte de alimentación completo, no solo al reposo profundo.</td>
+<td>síncrono</td>
+</tr>
+<tr>
 <td><code>update_manager.py</code></td>
 <td>Soporte OTA: checksum, decodificación base64, sustitución segura de <code>main.py</code>.</td>
 <td>síncrono</td>
@@ -2276,6 +2281,7 @@
 <p><strong><code>battery_monitor.py</code></strong> — lectura de tensión de batería por el ADC interno del ESP32 (respaldo cuando no hay fuel gauge MAX17048). Sin configuración, sin dependencia de <code>lib/</code>.</p>
 <h3 id="almacenamiento-y-ota">Almacenamiento y OTA</h3>
 <p><strong><code>internal_storage.py</code></strong> — respaldo FIFO de payloads en la flash interna (usado cuando <code>general.internal_register</code> está activado); recorta automáticamente las líneas más antiguas al alcanzar los umbrales de espacio libre o número de líneas. Nota: <code>delete_oldest_lines()</code> reescribe todo el archivo cada vez — O(n) por limpieza, vigilar el desgaste de la flash si el registro crece mucho.</p>
+<p><strong><code>eeprom_memory.py</code></strong> — respaldo FIFO de payloads en una EEPROM I2C externa (24AA1025/24LC1025/24FC1025, 128KB), inicializada una sola vez desde <code>main.py</code> (<code>init_eeprom_memory()</code>) como homóloga de <code>rtc_memory.py</code> al mismo nivel, en vez de algo a lo que llama directamente — <code>main.py</code> decide a cuál de los dos escribir, y migra el backlog de RTC a EEPROM si la RAM del RTC se llena. A diferencia de la RAM del RTC, esto sobrevive a un corte de alimentación completo, no solo al reposo profundo. Los slots de payload tienen el tamaño exacto de una página de la EEPROM (32/64/128/256 bytes, configurable vía <code>general.max_payload_size</code>), así que cada escritura es una única escritura de página atómica. Depende de <code>lib/EEPROM24LC1025</code>. Configuración: <code>static_config.pinout.i2c.*</code>, <code>general.max_payload_size</code>, <code>general.eeprom_overwrite_oldest</code>.</p>
 <p><strong><code>update_manager.py</code></strong> — utilidades de soporte OTA: verificación de checksum SHA-256, decodificación base64 en bloques, y sustitución segura de <code>main.py</code> (copia de seguridad + renombrado, con intento de rollback si falla).</p>
 <h3 id="perifericos">Periféricos</h3>
 <p><strong><code>led_manager.py</code></strong> — patrón de parpadeo del LED de estado gestionado por ULP (pulsos/ráfagas/temporización configurables), para que la CPU no tenga que permanecer despierta por esto. Depende de <code>lib/esp32_ulp</code>. Comparte el coprocesador ULP con el contador de pulsos de <code>digital_sensor.py</code> — <code>is_enabled()</code> actúa como mutex entre ambos (no pueden ejecutarse simultáneamente).</p>
@@ -2309,6 +2315,16 @@
 <td><code>bme280_float.py</code></td>
 <td>Driver BME280 (I2C)</td>
 <td>Terceros — derivado de Adafruit, MIT/estilo BSD</td>
+</tr>
+<tr>
+<td><code>crontab.py</code></td>
+<td>Programación con expresiones cron (port a MicroPython, conectado a <code>power_manager</code> como fuente de tiempo)</td>
+<td>Terceros — port a MicroPython de <code>crontab</code> de Josiah Carlson, LGPL v2.1/v3. <strong>Ningún módulo lo usa actualmente</strong> — está vendorizado con una clave de configuración reservada (<code>crontab: "inactive"</code>) pero aún no conectado.</td>
+</tr>
+<tr>
+<td><code>EEPROM24LC1025.py</code></td>
+<td>Driver de EEPROM I2C 24AA1025/24LC1025/24FC1025 (128KB, direccionamiento en dos bloques de 64KB)</td>
+<td><strong>Propio de ISURKI</strong>, GPL-3.0-or-later. Usado por <code>modules/eeprom_memory.py</code>.</td>
 </tr>
 <tr>
 <td><code>esp32_ulp/</code></td>
@@ -2376,7 +2392,8 @@
 <h2 id="214-mapa-de-dependencias-entre-modulos">2.1.4 Mapa de Dependencias entre Módulos</h2>
 <div class="highlight"><pre><span></span><code>main.py
  ├─ power_manager ──── lib/uds3231 | lib/RV3028
- ├─ rtc_memory
+ ├─ rtc_memory         (mismo nivel que eeprom_memory de abajo - main.py enruta
+ ├─ eeprom_memory ───── lib/EEPROM24LC1025   entre ambos, no se llaman entre sí)
  ├─ led_manager ─────── lib/esp32_ulp
  ├─ accel_manager ───── lib/mcp23008, lib/LIS2DH12
  ├─ downlink_manager ── lib/IsurlogLPP, lib/ota.rollback

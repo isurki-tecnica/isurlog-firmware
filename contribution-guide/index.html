@@ -2011,7 +2011,7 @@
 <p>The <strong>ISURLOG</strong> firmware is an open-source project, and we welcome contributions from the community! Whether you are providing a simple bug fix, suggesting a new feature, or optimizing power consumption routines, your help is highly valued.</p>
 <div class="admonition note">
 <p class="admonition-title">Where does ISURKI's own code actually live?</p>
-<p>This repository is a <strong>full fork of MicroPython</strong> — the vast majority of the source tree (<code>py/</code>, <code>extmod/</code>, most of <code>ports/</code>, etc.) is upstream MicroPython, kept in sync via the <code>upstream</code> remote. ISURKI's own code — the part you'll actually be contributing to in most cases — lives in just two places: <strong><code>app/</code></strong> (the application, <code>main.py</code> + config) and <strong><code>ports/esp32/modules/{modules,lib}</code></strong> (the wrappers and drivers). See <strong><a href="../architecture-overview/">2. Architecture Overview</a></strong> and <strong><a href="../module-library-reference/">2.1 Module &amp; Library Reference</a></strong> before diving in — they explain the <code>lib</code>/<code>modules</code> split and document every existing file, so you know where a new sensor driver or feature belongs.</p>
+<p><code>isurlog-firmware</code> is <strong>not</strong> a MicroPython fork — it's a slim repository containing only ISURKI's own code, which is built against a separately-cloned, unmodified MicroPython plus one small tracked patch (<code>patches/main.c.patch</code>). See <strong><a href="../build-environment/">1. Build Environment Setup</a></strong> for how the pieces fit together. ISURKI's own code — the part you'll actually be contributing to in most cases — lives in just two places: <strong><code>app/</code></strong> (the application, <code>main.py</code> + config) and <strong><code>src/modules/</code> / <code>src/lib/</code></strong> (the wrappers and drivers). See <strong><a href="../architecture-overview/">2. Architecture Overview</a></strong> and <strong><a href="../module-library-reference/">2.1 Module &amp; Library Reference</a></strong> before diving in — they explain the <code>lib</code>/<code>modules</code> split and document every existing file, so you know where a new sensor driver or feature belongs.</p>
 </div>
 <h2 id="71-ways-to-contribute">7.1 Ways to Contribute</h2>
 <p>We accept contributions in the following areas:</p>
@@ -2027,7 +2027,7 @@
 <ol>
 <li><strong>Environment:</strong> You must use the recommended <strong>Ubuntu/WSL</strong> development environment, as detailed in <strong>1. Build Environment Setup</strong>.</li>
 <li><strong>Code Base:</strong> Your development branch must be forked from and up-to-date with the <code>main</code> branch of the official <strong>ISURLOG</strong> repository.</li>
-<li><strong>Code Quality:</strong> Adhere to Python/MicroPython coding standards (e.g., PEP 8 where applicable). Commit messages should follow the project's <code>CODECONVENTIONS.md</code> (inherited from upstream MicroPython) — prefix each commit with the directory or file path it affects, e.g. <code>modules/nb_iot: Fix eDRX timeout handling.</code></li>
+<li><strong>Code Quality:</strong> Adhere to Python/MicroPython coding standards (e.g., PEP 8 where applicable). Commit messages should follow the project's <code>CODECONVENTIONS.md</code> (inherited from upstream MicroPython) — prefix each commit with the directory or file path it affects, e.g. <code>src/modules/nb_iot: Fix eDRX timeout handling.</code></li>
 <li><strong>Test Locally:</strong> Changes touching hardware-facing code (sensors, power management, communications) must be tested on a physical <strong>ISURLOG</strong> device. Contributions that don't touch hardware at all (e.g. a payload codec fix in <code>IsurlogLPP.py</code>, or a pure logic fix) may be reviewed with unit-level testing instead — mention in your PR how you tested it either way.</li>
 <li>
 <p><strong>License:</strong> By contributing, you agree your code is licensed under the project's <strong>GPL-3.0</strong> license (see <code>LICENSE</code>). New files should carry the same copyright header used throughout the codebase:</p>
@@ -2051,7 +2051,7 @@
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/your-awesome-feature
 </code></pre></div></p>
 <h3 id="3-implement-changes">3. Implement Changes</h3>
-<p>Commit your changes frequently with descriptive commit messages following <code>CODECONVENTIONS.md</code> (e.g., <code>modules/max31865_sensor: Fix float conversion in PT100 driver.</code>).</p>
+<p>Commit your changes frequently with descriptive commit messages following <code>CODECONVENTIONS.md</code> (e.g., <code>src/modules/max31865_sensor: Fix float conversion in PT100 driver.</code>).</p>
 <h3 id="4-create-a-pull-request-pr">4. Create a Pull Request (PR)</h3>
 <ol>
 <li>Push your topic branch to your personal fork on GitHub.</li>
