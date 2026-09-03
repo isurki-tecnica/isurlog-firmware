@@ -1,12 +1,11 @@
 # 1. Build Environment Setup
 
-This guide details the necessary steps to set up a stable development environment for compiling the custom MicroPython firmware binary (`firmware.bin`) for the ISURLOG datalogger.
+This guide walks through setting up a development environment and compiling the ISURLOG firmware from source.
 
-The firmware is based on **MicroPython v1.25.0** and includes custom modifications for optimized data logging applications.
+The firmware builds against a **plain, unmodified MicroPython checkout** (currently pinned to **v1.25.0**) plus one small, tracked patch — it is not a full fork. This repository (`isurlog-firmware`) only contains ISURKI's own code: the application logic, the drivers, and the board definition. MicroPython itself is cloned separately, so upgrading to a newer MicroPython version never requires touching this repository's history.
 
-!!! warning "WARNING"
-    This project is derived from MicroPython v1.25.0 and includes custom modifications. While effort is made to maintain stability, it is subject to changes and and may differ from upstream MicroPython.
-
+!!! warning "Still evolving"
+    ISURKI's own code is subject to change, and may occasionally lag behind the very latest upstream MicroPython release.
 
 ## 1.1 Supported Development Platforms
 
@@ -23,7 +22,19 @@ The recommended build environment is **Ubuntu Linux**.
 
 For Windows users, native compilation is complex and **not recommended**. Please use the **Windows Subsystem for Linux (WSL)** and follow the Ubuntu instructions below for a more stable and straightforward setup.
 
-## 1.3 Build Instructions (Ubuntu / WSL)
+## 1.3 How the Pieces Fit Together
+
+Before diving into commands, it helps to know what you're actually assembling — three separate things, cloned independently, that only come together at build time:
+
+| Piece | What it is | Where it lives |
+| :--- | :--- | :--- |
+| **MicroPython** | The upstream interpreter/runtime, unmodified except for one tiny patch (see Step 6 below) | Wherever you clone it — *not* inside this repository |
+| **`isurlog-firmware`** (this repo) | ISURKI's own code: the application (`app/`), the drivers (`src/`), and the board definition (`boards/ISURLOG_ESP32/`) | Cloned separately, anywhere you like |
+| **The patch** (`patches/main.c.patch`) | The one unavoidable change to MicroPython's own shared code — a PIN/authentication check before the REPL is reached | Tracked inside `isurlog-firmware`, applied to your MicroPython clone in Step 6 |
+
+The build command (Step 7) points at both locations at once — MicroPython supplies the compiler toolchain and the interpreter itself, `isurlog-firmware` supplies everything specific to the ISURLOG board.
+
+## 1.4 Build Instructions (Ubuntu / WSL)
 
 ### Step 1: Install System Dependencies
 
@@ -31,84 +42,98 @@ Open your Ubuntu terminal and install all required packages:
 
 ```bash
 sudo apt update && sudo apt upgrade -y
-sudo apt-get install build-essential libffi-dev git pkg-config
-sudo apt install -y git wget curl flex bison gperf python3 python3-pip python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
+sudo apt install -y git wget curl flex bison gperf python3 python3-pip python3-venv \
+  cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 build-essential pkg-config
 ```
 
 ### Step 2: Clone and Install ESP-IDF
 
-This firmware requires ESP-IDF v5.2.x. We recommend `v5.2.6` for optimal compatibility with the MicroPython base.
+This firmware currently builds against **ESP-IDF v5.4.1**.
 
 ```bash
-# Create a directory for ESP-IDF
 mkdir -p ~/esp
 cd ~/esp
+git clone -b v5.4.1 --recursive https://github.com/espressif/esp-idf.git
 
-# Clone the correct version
-git clone -b v5.4.1 --recursive [https://github.com/espressif/esp-idf.git](https://github.com/espressif/esp-idf.git)
-
-# Install the toolchain
 cd esp-idf
 ./install.sh esp32
 ```
 
-### Step 3: Activate ESP-IDF Environment
+### Step 3: Activate the ESP-IDF Environment
 
-You must "source" the export script in your terminal to set environment variables.
+Every new terminal session needs this "sourced" before building, since it sets up the compiler toolchain and environment variables:
 
 ```bash
-# Add the export command to your profile
+# Do this once, so it happens automatically in future terminals:
 echo -e '\n. $HOME/esp/esp-idf/export.sh' >> ~/.profile
 
-# Source it for the current session
+# For your current terminal:
 source $HOME/esp/esp-idf/export.sh
 ```
 
-### Step 4: Clone This Repository
+### Step 4: Clone MicroPython
 
-Clone the firmware repository to your system:
+Clone plain, upstream MicroPython at the version this project currently targets — **anywhere you like, outside this repository**:
 
 ```bash
 cd ~
-git clone [https://github.com/isurki-tecnica/isurlog-firmware.git](https://github.com/isurki-tecnica/isurlog-firmware.git)
-
-# Navigate into the repo
-cd isurlog-firmware
-
-# Switch to our working branch (if not already on 'main')
-git checkout main
-
+git clone --branch v1.25.0 --depth 1 https://github.com/micropython/micropython.git
 ```
 
-### Step 5: Compile the Firmware
-
-Finally, navigate to the `esp32` port directory within the cloned repository and run the build commands:
+### Step 5: Clone This Repository
 
 ```bash
-# Navigate to the ESP32 port
-cd ports/esp32
-
-# Clean any previous builds (optional, but recommended for fresh builds)
-make BOARD=ESP32_GENERIC BOARD_VARIANT=SPIRAM clean
-
-# Download MicroPython specific submodules
-make submodules
-
-# Start the build process
-make BOARD=ESP32_GENERIC BOARD_VARIANT=SPIRAM
+cd ~
+git clone https://github.com/isurki-tecnica/isurlog-firmware.git
+cd isurlog-firmware
 ```
 
-## 1.4 Output Files
+### Step 6: Apply the Patch and Fetch MicroPython's Own Submodules
 
-### Firmware Binary Location
+Now that both are cloned, apply `isurlog-firmware`'s one patch to the MicroPython checkout from Step 4:
 
-The compiled firmware `.bin` file will be generated in the following directory:
+```bash
+cd ~/micropython
+git apply ~/isurlog-firmware/patches/main.c.patch
+```
 
-`ports/esp32/build-ESP32_GENERIC-SPIRAM/firmware.bin`
+!!! note "What this patch does, and why it can't be avoided"
+    It adds a PIN/authentication check that runs right before the device would otherwise drop into a REPL prompt — closing off unauthenticated serial/USB access to a deployed unit. It has to live here, in MicroPython's own `main.c`, rather than in a plain `boot.py`: a `boot.py`-level check can be skipped by sending Ctrl-C at the right moment (MicroPython's boot sequence just moves on to the next step, it doesn't hard-fail), which would defeat the whole point. Placing it here, after every other startup script has already run, closes that gap.
 
-## Application Code (`app/`)
+Then fetch MicroPython's own dependencies (this downloads `lib/berkeley-db-1.xx`, `lib/tinyusb`, `lib/micropython-lib`, unrelated to the patch above):
+
+```bash
+cd ports/esp32
+make submodules
+```
+
+### Step 7: Compile the Firmware
+
+From the root of `isurlog-firmware` (not from inside the MicroPython clone), pointing `MICROPYTHON_DIR` at wherever you cloned it in Step 4:
+
+```bash
+cd ~/isurlog-firmware
+make VERSION=2.0.2 MICROPYTHON_DIR=~/micropython
+```
+
+`VERSION` is required — it gets written into the firmware itself (`src/modules/version.py`) so a running device can report which version it's on. Use whatever version you're actually building.
+
+If `MICROPYTHON_DIR` is missing or points somewhere that isn't a MicroPython checkout, the build fails immediately with a clear message rather than a confusing error further down the line.
+
+## 1.5 Output Files and Flashing
+
+The build produces its output inside the **MicroPython clone**, not inside `isurlog-firmware` — specifically in `$MICROPYTHON_DIR/ports/esp32/build-ISURLOG_ESP32/`. At the end of a successful build, the build system itself prints the exact flashing command for your setup, for example:
+
+```bash
+cd ~/micropython/ports/esp32/build-ISURLOG_ESP32
+python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"
+```
+
+`idf.py flash` (run from that same `build-ISURLOG_ESP32` directory) works too, if you'd rather not deal with `esptool` directly.
+
+## 1.6 Application Code (`app/`)
 
 This repository also contains the `app/` folder.
 
 !!! note "app/ is not part of the firmware"
-    The contents of this folder (`main.py`, `config/`, etc.) are NOT compiled into the firmware. These files represent the Python application logic and must be uploaded manually to the ESP32's filesystem (using tools like Thonny or rshell) after flashing the `firmware.bin`. This allows for flexible updates to the application logic without recompiling the entire firmware.
+    The contents of this folder (`main.py`, `config/`, etc.) are **not** compiled or frozen into the firmware binary — unlike `src/modules/` and `src/lib/`, which are. These files are the Python application logic, and get deployed onto the device's filesystem separately, after flashing the firmware: either through **IsurDASH's own guided updater** (the recommended path — see [6.8 Device Maintenance](isurdash-maintenance.md#firmware-update)), or manually with a tool like Thonny or rshell. This split is what lets the application logic be updated in the field without ever needing to reflash the firmware itself.
