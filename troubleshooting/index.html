@@ -1727,10 +1727,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-bluetooth-range" class="md-nav__link">
+  <a href="#2-the-isurlog-is-busy-with-something-else" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Bluetooth range
+        2. The ISURLOG is busy with something else
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-bluetooth-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Bluetooth range
       
     </span>
   </a>
@@ -2062,10 +2073,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-bluetooth-range" class="md-nav__link">
+  <a href="#2-the-isurlog-is-busy-with-something-else" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Bluetooth range
+        2. The ISURLOG is busy with something else
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-bluetooth-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Bluetooth range
       
     </span>
   </a>
@@ -2167,7 +2189,10 @@
 <p>To save battery, the ISURLOG doesn't keep its Bluetooth radio on. It has to be activated with the magnet first, as described in <strong><a href="../sensor-connections/#18-internal-sensors-and-diagnostics">1.8. Internal Sensors and Diagnostics</a></strong>: holding the magnet near the Hall effect sensor for <strong>more than 5 seconds</strong> puts the device into <strong>Bluetooth Diagnostics Mode</strong>.</p>
 <p>Once active, the Bluetooth interface stays open for <strong>2 minutes</strong> waiting for a pairing attempt. If nothing connects within that window, it automatically shuts back off to save power — so the app/IsurDASH has to attempt the connection inside that same 2-minute window, not before activating it or long after. Once a successful pairing happens, that 2-minute timeout no longer applies for the rest of the session.</p>
 <p><strong>Solution:</strong> Activate Bluetooth with the magnet (&gt;5s) right before attempting to connect, and complete the connection within the following 2 minutes. If it times out, simply reactivate it with the magnet again.</p>
-<h3 id="2-bluetooth-range">2. Bluetooth range</h3>
+<h3 id="2-the-isurlog-is-busy-with-something-else">2. The ISURLOG is busy with something else</h3>
+<p>The magnet is only checked once, right at boot or right after waking from deep sleep — it isn't checked again while the device is running. If the magnet is held near the device while the ISURLOG is reading sensors, connecting to the network, or transmitting data, nothing happens: the device just finishes that task normally, without entering Bluetooth mode. It only enters Bluetooth Diagnostics Mode if the magnet is present at the exact moment the device wakes from a real deep sleep.</p>
+<p><strong>Solution:</strong> Wait a moment and try again. As soon as the ISURLOG finishes its current cycle (sensor reading, connecting, transmitting) and drops into deep sleep, the next time you hold the magnet near it, it will be detected.</p>
+<h3 id="3-bluetooth-range">3. Bluetooth range</h3>
 <p>The ISURLOG's ESP32 uses the antenna embedded directly on the PCB rather than an external one, so BLE range is inherently short — typically around <strong>5 meters</strong>, and less depending on enclosure material, obstacles, and the surrounding environment (metal enclosures/cabinets in particular can reduce it further).</p>
 <p><strong>Solution:</strong> Get within a few meters of the device, with as clear a line of sight as possible, before attempting to pair.</p>
 
