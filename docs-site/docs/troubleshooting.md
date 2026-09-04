@@ -101,7 +101,13 @@ Once active, the Bluetooth interface stays open for **2 minutes** waiting for a 
 
 **Solution:** Activate Bluetooth with the magnet (>5s) right before attempting to connect, and complete the connection within the following 2 minutes. If it times out, simply reactivate it with the magnet again.
 
-### 2. Bluetooth range
+### 2. The ISURLOG is busy with something else
+
+The magnet is only checked once, right at boot or right after waking from deep sleep — it isn't checked again while the device is running. If the magnet is held near the device while the ISURLOG is reading sensors, connecting to the network, or transmitting data, nothing happens: the device just finishes that task normally, without entering Bluetooth mode. It only enters Bluetooth Diagnostics Mode if the magnet is present at the exact moment the device wakes from a real deep sleep.
+
+**Solution:** Wait a moment and try again. As soon as the ISURLOG finishes its current cycle (sensor reading, connecting, transmitting) and drops into deep sleep, the next time you hold the magnet near it, it will be detected.
+
+### 3. Bluetooth range
 
 The ISURLOG's ESP32 uses the antenna embedded directly on the PCB rather than an external one, so BLE range is inherently short — typically around **5 meters**, and less depending on enclosure material, obstacles, and the surrounding environment (metal enclosures/cabinets in particular can reduce it further).
 

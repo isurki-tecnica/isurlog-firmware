@@ -101,7 +101,13 @@ Una vez activo, la interfaz Bluetooth permanece abierta durante **2 minutos** es
 
 **Solución:** Activar el Bluetooth con el imán (>5s) justo antes de intentar conectar, y completar la conexión dentro de los siguientes 2 minutos. Si expira, simplemente reactívalo de nuevo con el imán.
 
-### 2. Alcance del Bluetooth
+### 2. El ISURLOG está ocupado con otra tarea
+
+El imán solo se comprueba una vez, justo al arrancar o al despertar del reposo profundo — no se vuelve a comprobar mientras el dispositivo está en marcha. Si se acerca el imán mientras el ISURLOG está leyendo sensores, conectándose a la red, o transmitiendo datos, no pasa nada: el dispositivo termina esa tarea con normalidad, sin entrar en modo Bluetooth. Solo entra en modo de diagnóstico por Bluetooth si el imán está presente en el instante exacto en que el dispositivo despierta de un reposo profundo real.
+
+**Solución:** Espera un momento y vuelve a intentarlo. En cuanto el ISURLOG termine su ciclo en curso (lectura de sensores, conexión, transmisión) y entre en reposo profundo, el siguiente acercamiento del imán sí lo detectará.
+
+### 3. Alcance del Bluetooth
 
 El ESP32 del ISURLOG usa la antena integrada directamente en la PCB en vez de una externa, así que el alcance del BLE es inherentemente corto — normalmente unos **5 metros**, y menos según el material de la carcasa, los obstáculos, y el entorno circundante (las carcasas/armarios metálicos en particular pueden reducirlo todavía más).
 
