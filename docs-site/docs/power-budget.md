@@ -62,6 +62,7 @@ Estimate battery life from a device's full duty cycle — wake, sensors, and rad
   .field label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text-2);margin-bottom:.3rem;}
   .field label b{font-family:var(--font-mono);color:var(--text);font-weight:600;font-variant-numeric:tabular-nums;}
   .field input[type="range"]{width:100%;accent-color:var(--accent);}
+  .buffer-alert{margin:-.3rem 0 .85rem;padding:.55rem .7rem;border-radius:7px;background:var(--danger-bg);color:var(--danger-ink);font-size:.78rem;line-height:1.4;}
   .field select, .field input[type="number"]{width:100%;height:32px;border-radius:6px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-family:var(--font-ui);font-size:.82rem;padding:0 .5rem;}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
   .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;}
@@ -123,8 +124,9 @@ Estimate battery life from a device's full duty cycle — wake, sensors, and rad
         </div>
         <div class="field">
           <label>Record accumulator <b id="out-acc">6 reads/tx</b></label>
-          <input type="range" id="acc" min="1" max="30" value="6" step="1">
+          <input type="range" id="acc" min="1" max="288" value="6" step="1">
         </div>
+        <div class="buffer-alert" id="buffer-alert" style="display:none;"></div>
 
         <details class="sensor-adv">
           <summary>Advanced</summary>
@@ -545,6 +547,15 @@ Estimate battery life from a device's full duty cycle — wake, sensors, and rad
 
     var readsDay = 1440 / latency;
     var txDay = readsDay / acc;
+
+    var bufferAlert = document.getElementById("buffer-alert");
+    if (txDay < 1){
+      var bufferHours = (latency*acc)/60;
+      bufferAlert.style.display = "block";
+      bufferAlert.textContent = "⚠️ At this schedule, the device transmits only every " + fmt(bufferHours,1) + " hours (less than once a day). This configuration is not recommended.";
+    } else {
+      bufferAlert.style.display = "none";
+    }
 
     // per-cycle: wake overhead time (mAh-equivalent, direct battery domain)
     var wakeMAh_perCycle = wakeI * (wakeT/3600000);
