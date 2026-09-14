@@ -5,7 +5,7 @@
 **ISURLOG** is an ESP32-based industrial datalogger built for field deployments where power is scarce and connectivity is never guaranteed. Real MicroPython firmware, real industrial signals, remotely managed from day one.
 
 * **Industrial-grade sensing** — 4-20 mA analog, Modbus RTU (RS485), PT100/PT1000, digital pulse counting, internal/external temperature & humidity, and an on-board accelerometer for tamper/vandalism detection.
-* **Built for batteries** — as low as ~20 µA in deep sleep. An on-board energy-harvesting charger tops up from almost anything: a 0.3V TEG, a micro solar panel, a full 5V panel, or a plain USB charger.
+* **Built for batteries** — as low as ~20 µA in deep sleep. An on-board energy-harvesting charger tops up rechargeable Li-Ion cells from almost anything: a 0.3V TEG, a micro solar panel, a full 5V panel, or a plain USB charger. Non-rechargeable Li-SOCl2 packs are also supported, for maximum battery life in hard-to-reach sites or to minimize maintenance visits.
 * **One firmware, multiple networks** — NB-IoT, LTE-M, DECT NR+, and satellite NTN via the nRF9151, or LoRaWAN, exclusively per unit, plus Wi-Fi and local BLE for setup.
 * **Remotely manageable, not just remotely readable** — configuration, sensor setup, OTA updates, and a live MicroPython REPL, all from [IsurDASH](https://isurdash.isurki.com), without a truck roll.
 * **Real MicroPython, not a black box** — built on plain, unmodified [MicroPython](https://micropython.org) plus one small tracked patch, readable and hackable at every layer.
