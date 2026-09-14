@@ -112,3 +112,16 @@ El imán solo se comprueba una vez, justo al arrancar o al despertar del reposo 
 El ESP32 del ISURLOG usa la antena integrada directamente en la PCB en vez de una externa, así que el alcance del BLE es inherentemente corto — normalmente unos **5 metros**, y menos según el material de la carcasa, los obstáculos, y el entorno circundante (las carcasas/armarios metálicos en particular pueden reducirlo todavía más).
 
 **Solución:** Acércate a pocos metros del dispositivo, con la mejor línea de visión posible, antes de intentar emparejar.
+
+---
+
+## ¿Sigues sin solucionarlo? Algo no cubierto aquí
+
+Para cualquier otro problema no listado arriba, o uno que la solución sugerida no llegó a resolver, la vía más rápida es capturar un registro en directo del problema ocurriendo de verdad, en vez de describirlo de memoria:
+
+1. Conecta un cable UART a USB entre el ISURLOG y tu ordenador.
+2. En IsurDASH, ve a **Mantenimiento de dispositivos → MicroPython REPL** (ver **[6.8. Mantenimiento de Dispositivos](isurdash-maintenance.md#micropython-repl)**), y abre la REPL mediante **Serial port (USB)**.
+3. Con la REPL conectada, espera a que el ISURLOG reproduzca el problema. Si el dispositivo está en reposo profundo, mantener el imán cerca durante aproximadamente **un segundo** activa el modo **Lectura y Envío Inmediato**, forzando un ciclo completo de lectura de sensores y transmisión al momento, sin esperar al siguiente intervalo programado — ver **[1.8. Sensores Internos y Diagnóstico](sensor-connections.md#18-sensores-internos-y-diagnostico)** para ambos modos del imán uno junto al otro (mantenerlo más de cinco segundos activa el Modo de Diagnóstico por Bluetooth en su lugar).
+4. En cuanto ocurra, exporta la sesión con el botón **Exportar**.
+
+Envía ese registro exportado al servicio técnico de ISURKI (ver la página de [Inicio](index.md)) — así podemos ver de primera mano qué estaba haciendo el dispositivo justo cuando ocurre el problema, algo que suele bastar para diagnosticar casos que no encajan en ninguna de las causas anteriores.

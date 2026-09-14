@@ -112,3 +112,16 @@ The magnet is only checked once, right at boot or right after waking from deep s
 The ISURLOG's ESP32 uses the antenna embedded directly on the PCB rather than an external one, so BLE range is inherently short — typically around **5 meters**, and less depending on enclosure material, obstacles, and the surrounding environment (metal enclosures/cabinets in particular can reduce it further).
 
 **Solution:** Get within a few meters of the device, with as clear a line of sight as possible, before attempting to pair.
+
+---
+
+## Still stuck? Something not covered here
+
+For any other issue not listed above, or one that the suggested fix didn't actually resolve, the fastest way forward is to capture a live log of the problem actually happening, rather than describing it from memory:
+
+1. Connect a UART-to-USB cable between the ISURLOG and your computer.
+2. In IsurDASH, go to **Mantenimiento de dispositivos → MicroPython REPL** (see **[6.8. Device Maintenance](isurdash-maintenance.md#micropython-repl)**), and open the REPL via **Serial port (USB)**.
+3. With the REPL connected, wait for the ISURLOG to reproduce the problem. If the device is in deep sleep, holding the magnet near it for about **one second** triggers **Immediate Read & Send** mode, forcing a full sensor-reading-and-transmission cycle right away instead of waiting for the next scheduled interval — see **[1.8. Internal Sensors and Diagnostics](sensor-connections.md#18-internal-sensors-and-diagnostics)** for both magnet modes side by side (holding it past five seconds triggers Bluetooth Diagnostics Mode instead).
+4. Once it does, export the session with the **Exportar** button.
+
+Send that exported log to ISURKI's technical support (see the [Home](index.md) page) — it gives them a real, first-hand record of what the device was actually doing when the problem happened, which is usually enough to diagnose issues that don't fit any of the causes above.
