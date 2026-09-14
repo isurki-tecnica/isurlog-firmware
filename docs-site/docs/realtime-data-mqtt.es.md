@@ -173,13 +173,37 @@ Los parámetros de conexión del script vienen precargados con una **demo públi
 * **Dispositivo:** `c-866`, un dispositivo NB-IoT (`DEVICE_TYPE = "nb-iot"`) — el mismo dispositivo de demostración público usado en [2.5 Implementación de Referencia](historical-data-influxdb.md#25-implementacion-de-referencia), con una sonda de suelo Modbus (S-Soil MTEC-02B) conectada.
 * **Topic:** `isurlog/datos/c-866` — la suscripción está limitada al topic propio de este dispositivo, no puede recibir datos de ningún otro cliente.
 
-Para ejecutarlo, desde dentro de `data_integration/`:
+Para ejecutarlo, desde dentro de `data_integration/`, usando un entorno virtual (práctica estándar, y obligatoria en sistemas basados en Debian/Ubuntu más recientes, como WSL, que bloquean el `pip install` a nivel de sistema):
+
+**Linux / macOS:**
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python isurlog_mqtt_demo.py
+```
+
+**Windows (PowerShell):**
+
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python isurlog_mqtt_demo.py
+```
+
+Si `Activate.ps1` queda bloqueado por la política de ejecución de PowerShell (la que viene por defecto en la mayoría de sistemas), permítela solo para la sesión actual:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+o sáltate la activación por completo llamando directamente al intérprete del entorno virtual:
+
+```powershell
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+.\venv\Scripts\python.exe isurlog_mqtt_demo.py
 ```
 
 Al terminar: `deactivate`.

@@ -70,11 +70,35 @@ This demo device reports: accelerometer (X/Y/Z), internal temperature and humidi
 
 To run it, from inside `data_integration/`, using a virtual environment (standard practice, and required on newer Debian/Ubuntu-based systems such as WSL, which block system-wide `pip install`):
 
+**Linux / macOS:**
+
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python isurlog_influx_demo.py
+```
+
+**Windows (PowerShell):**
+
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python isurlog_influx_demo.py
+```
+
+If `Activate.ps1` is blocked by PowerShell's execution policy (the default on most systems), allow it for the current session only:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+or skip activation entirely and call the venv's interpreter directly:
+
+```powershell
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+.\venv\Scripts\python.exe isurlog_influx_demo.py
 ```
 
 When you're done:
