@@ -47,13 +47,50 @@ Just below the status panel:
 
 * A table with the **most recent reading** of each of the connected sensors.
 * A map indicating the **last known location** of the device.
-* A **Datos SIM** card showing data consumed against the SIM's plan (e.g. "0.53 / 500 MB") and the current coverage quality — cellular coverage for NB-IoT/LTE-M devices, or coverage with the gateway for LoRa devices.
+* A **Datos SIM** card, showing:
+    * A progress bar of **data consumed against the SIM's plan** (e.g. "0.77 / 500 MB").
+    * The **current coverage level**, as a signal-bar indicator with a percentage and a qualitative label (e.g. "60% · Regular") — cellular coverage for NB-IoT/LTE-M devices, or coverage with the gateway for LoRa devices.
 
 ![IsurDASH device status, sensors, map and SIM data](images/7-device-visualizacion.png){width="1000"}
 
 *Device status, latest sensor readings, location, and SIM data.*
 
-Below that, an interactive chart area lets you analyze the evolution of sensor data and battery over time, with four views: **Gráfico principal** (time series per sensor), **Bubble chart**, **HeatMap de alarmas**, and **Tabla resumen**.
+The card's chart button expands it into two tabs:
+
+* **Consumo de datos:** a bar chart of data used per month over the last 6 months, plus the SIM's current status (**ONLINE**, **ATTACHED**, or **OFFLINE**) and the mobile operator it's currently connected to (Telefónica, Orange, Vodafone, etc.).
+* **Cobertura:** a chart of coverage over time. For NB-IoT/LTE-M devices, this requires the **Registrar calidad de red** parameter (see [7.2. Wireless Communications Parameters](reference-parameters.md#72-wireless-communications-parameters)) to be enabled on the device — without it, there's no signal-quality data to chart. LoRa devices always show gateway coverage here instead, independent of that parameter.
+
+![Expanded SIM Data card, Consumo de datos tab](images/7-device-sim-consumo.png){width="700"}
+
+*The expanded SIM Data card — data consumption by month, SIM status, and current operator.*
+
+The **Reset** button next to the chart button resets the SIM card's connectivity.
+
+Below that, an interactive chart area lets you analyze the evolution of sensor data and battery over time, with four views:
+
+* **Gráfico principal:** time series per sensor — the default view.
+
+![Interactive charts area in IsurDASH, Gráfico principal view](images/7-device-grafico-principal.png){width="1000"}
+
+*The interactive charts area, in the Gráfico principal view — time series per sensor.*
+
+* **Bubble chart:** for the selected sensor/parameter, shows what time of day it tends to have higher values — one row per each of the last several days, with a bubble for every 20-minute slot, sized by that slot's average value. Useful for spotting time-of-day patterns (e.g. a soil temperature sensor that consistently rises in the afternoon).
+
+![Bubble chart view of the interactive charts area](images/7-device-bubble-chart.png){width="1000"}
+
+*Bubble chart — bubble size is the parameter's average value in that 20-minute slot, one row per day.*
+
+* **HeatMap de alarmas:** a time bar per sensor, colored by its status against the configured alarm limits — green (within range), orange (below the low limit), red (above the high limit), and gray (no data, or the sensor has no alarms configured).
+
+![HeatMap de alarmas view of the interactive charts area](images/7-device-heatmap-alarmas.png){width="1000"}
+
+*HeatMap de alarmas — each sensor's status against its alarm limits, over time.*
+
+* **Tabla resumen:** per-sensor statistics over the displayed time range — status (Normal, Advertencia, Crítico, or Sin límites if the sensor has no alarms configured), number of values, latest value, average, minimum, maximum, the configured Low/High limits, how many values fell below or above those limits, and the percentage of out-of-range values.
+
+![Tabla resumen view of the interactive charts area](images/7-device-tabla-resumen.png){width="1000"}
+
+*Tabla resumen — per-sensor statistics over the displayed time range.*
 
 ### Registros (Alarms and Events)
 

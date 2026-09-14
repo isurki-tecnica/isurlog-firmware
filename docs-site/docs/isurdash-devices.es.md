@@ -47,13 +47,50 @@ Justo debajo del panel de estado:
 
 * Una tabla con la **lectura más reciente** de cada uno de los sensores conectados.
 * Un mapa que indica la **última ubicación conocida** del dispositivo.
-* Una tarjeta de **Datos SIM** que muestra el consumo de datos frente al plan de la SIM (p. ej. "0,53 / 500 MB") y la calidad de cobertura actual — cobertura celular para dispositivos NB-IoT/LTE-M, o cobertura con el gateway para dispositivos LoRa.
+* Una tarjeta de **Datos SIM**, que muestra:
+    * Una barra de progreso con los **datos consumidos frente al plan de la SIM** (p. ej. "0,77 / 500 MB").
+    * El **nivel de cobertura actual**, como indicador de barras de señal con un porcentaje y una etiqueta cualitativa (p. ej. "60% · Regular") — cobertura celular para dispositivos NB-IoT/LTE-M, o cobertura con el gateway para dispositivos LoRa.
 
 ![Estado, sensores, mapa y datos SIM de un dispositivo en IsurDASH](images/7-device-visualizacion.png){width="1000"}
 
 *Estado del dispositivo, últimas lecturas de sensores, ubicación y datos SIM.*
 
-Debajo, un área de gráficos interactivos permite analizar la evolución de los datos de los sensores y de la batería a lo largo del tiempo, con cuatro vistas: **Gráfico principal** (serie temporal por sensor), **Bubble chart**, **HeatMap de alarmas**, y **Tabla resumen**.
+El botón de gráfica de la tarjeta la expande en dos pestañas:
+
+* **Consumo de datos:** un gráfico de barras con los datos consumidos mes a mes durante los últimos 6 meses, además del estado actual de la SIM (**ONLINE**, **ATTACHED**, u **OFFLINE**) y el operador móvil al que está conectada en ese momento (Telefónica, Orange, Vodafone, etc.).
+* **Cobertura:** un gráfico de la cobertura a lo largo del tiempo. Para dispositivos NB-IoT/LTE-M, requiere tener activado en el dispositivo el parámetro **Registrar calidad de red** (ver [7.2. Parámetros de Comunicaciones Inalámbricas](reference-parameters.md#72-parametros-de-comunicaciones-inalambricas)) — sin él, no hay datos de calidad de señal que representar. Los dispositivos LoRa siempre muestran aquí la cobertura con el gateway, independientemente de ese parámetro.
+
+![Tarjeta de Datos SIM expandida, pestaña Consumo de datos](images/7-device-sim-consumo.png){width="700"}
+
+*La tarjeta de Datos SIM expandida — consumo de datos por mes, estado de la SIM, y operador actual.*
+
+El botón **Reset**, junto al de la gráfica, reinicia la conectividad de la tarjeta SIM.
+
+Debajo, un área de gráficos interactivos permite analizar la evolución de los datos de los sensores y de la batería a lo largo del tiempo, con cuatro vistas:
+
+* **Gráfico principal:** serie temporal por sensor — la vista por defecto.
+
+![Área de gráficos interactivos en IsurDASH, vista de Gráfico principal](images/7-device-grafico-principal.png){width="1000"}
+
+*El área de gráficos interactivos, en la vista de Gráfico principal — serie temporal por sensor.*
+
+* **Bubble chart:** para el sensor o parámetro seleccionado, muestra en qué momentos del día suele tener valores más altos — una fila por cada uno de los últimos días, con una burbuja por cada franja de 20 minutos cuyo tamaño representa el valor medio en esa franja. Útil para detectar patrones horarios (p. ej. un sensor de temperatura de suelo que siempre sube por la tarde).
+
+![Vista Bubble chart del área de gráficos interactivos](images/7-device-bubble-chart.png){width="1000"}
+
+*Bubble chart — el tamaño de cada burbuja es el valor medio del parámetro en esa franja de 20 minutos, una fila por día.*
+
+* **HeatMap de alarmas:** una barra de tiempo por sensor, coloreada según su estado frente a los límites de alarma configurados — verde (dentro de rango), naranja (por debajo del límite bajo), rojo (por encima del límite alto), y gris (sin datos, o sensor sin alarmas configuradas).
+
+![Vista HeatMap de alarmas del área de gráficos interactivos](images/7-device-heatmap-alarmas.png){width="1000"}
+
+*HeatMap de alarmas — estado de cada sensor frente a sus límites de alarma, a lo largo del tiempo.*
+
+* **Tabla resumen:** estadísticas por sensor sobre el periodo visualizado — estado (Normal, Advertencia, Crítico, o Sin límites si el sensor no tiene alarmas configuradas), número de valores, último valor, media, mínimo, máximo, los límites Low/High configurados, cuántos valores cayeron por debajo o por encima de esos límites, y el porcentaje de valores fuera de rango.
+
+![Vista Tabla resumen del área de gráficos interactivos](images/7-device-tabla-resumen.png){width="1000"}
+
+*Tabla resumen — estadísticas por sensor sobre el periodo visualizado.*
 
 ### Registros (Alarmas y Eventos)
 
