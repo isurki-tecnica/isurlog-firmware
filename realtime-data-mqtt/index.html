@@ -2518,11 +2518,25 @@
 <li><strong>Device:</strong> <code>c-866</code>, an NB-IoT device (<code>DEVICE_TYPE = "nb-iot"</code>) — the same public demo device used in <a href="../historical-data-influxdb/#25-reference-implementation">2.5 Reference Implementation</a>, with a Modbus soil probe (S-Soil MTEC-02B) wired to it.</li>
 <li><strong>Topic:</strong> <code>isurlog/datos/c-866</code> — subscription is restricted to this device's own topic only, it cannot receive any other client's data.</li>
 </ul>
-<p>To run it, from inside <code>data_integration/</code>:</p>
+<p>To run it, from inside <code>data_integration/</code>, using a virtual environment (standard practice, and required on newer Debian/Ubuntu-based systems such as WSL, which block system-wide <code>pip install</code>):</p>
+<p><strong>Linux / macOS:</strong></p>
 <div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
 <span class="nb">source</span><span class="w"> </span>venv/bin/activate
 pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 python<span class="w"> </span>isurlog_mqtt_demo.py
+</code></pre></div>
+<p><strong>Windows (PowerShell):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="n">venv</span>
+<span class="p">.\</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">python</span> <span class="n">isurlog_mqtt_demo</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+<p>If <code>Activate.ps1</code> is blocked by PowerShell's execution policy (the default on most systems), allow it for the current session only:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">Set-ExecutionPolicy</span> <span class="n">-Scope</span> <span class="k">Process</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span>
+</code></pre></div>
+<p>or skip activation entirely and call the venv's interpreter directly:</p>
+<div class="highlight"><pre><span></span><code><span class="p">.\</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<span class="p">.\</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">isurlog_mqtt_demo</span><span class="p">.</span><span class="n">py</span>
 </code></pre></div>
 <p>When you're done: <code>deactivate</code>.</p>
 <h3 id="live-dashboard">Live Dashboard</h3>

@@ -2518,11 +2518,25 @@
 <li><strong>Dispositivo:</strong> <code>c-866</code>, un dispositivo NB-IoT (<code>DEVICE_TYPE = "nb-iot"</code>) — el mismo dispositivo de demostración público usado en <a href="../historical-data-influxdb/#25-implementacion-de-referencia">2.5 Implementación de Referencia</a>, con una sonda de suelo Modbus (S-Soil MTEC-02B) conectada.</li>
 <li><strong>Topic:</strong> <code>isurlog/datos/c-866</code> — la suscripción está limitada al topic propio de este dispositivo, no puede recibir datos de ningún otro cliente.</li>
 </ul>
-<p>Para ejecutarlo, desde dentro de <code>data_integration/</code>:</p>
+<p>Para ejecutarlo, desde dentro de <code>data_integration/</code>, usando un entorno virtual (práctica estándar, y obligatoria en sistemas basados en Debian/Ubuntu más recientes, como WSL, que bloquean el <code>pip install</code> a nivel de sistema):</p>
+<p><strong>Linux / macOS:</strong></p>
 <div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
 <span class="nb">source</span><span class="w"> </span>venv/bin/activate
 pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 python<span class="w"> </span>isurlog_mqtt_demo.py
+</code></pre></div>
+<p><strong>Windows (PowerShell):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="n">venv</span>
+<span class="p">.\</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">python</span> <span class="n">isurlog_mqtt_demo</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+<p>Si <code>Activate.ps1</code> queda bloqueado por la política de ejecución de PowerShell (la que viene por defecto en la mayoría de sistemas), permítela solo para la sesión actual:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">Set-ExecutionPolicy</span> <span class="n">-Scope</span> <span class="k">Process</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span>
+</code></pre></div>
+<p>o sáltate la activación por completo llamando directamente al intérprete del entorno virtual:</p>
+<div class="highlight"><pre><span></span><code><span class="p">.\</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<span class="p">.\</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">isurlog_mqtt_demo</span><span class="p">.</span><span class="n">py</span>
 </code></pre></div>
 <p>Al terminar: <code>deactivate</code>.</p>
 <h3 id="dashboard-en-vivo">Dashboard en Vivo</h3>
