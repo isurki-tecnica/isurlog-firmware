@@ -40,7 +40,7 @@ class IsurlogLPPEncoder:
             'setLatencyTime':               {'type': "A0", 'size': 1, 'multipl': 1, 'signed': False, 'min': 1, 'max': 255},
             'setRtcSync':                 {'type': "A1", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setRegisterMode':            {'type': "A2", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
-            'setRegisterAccumulator':     {'type': "A3", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
+            'setRegisterAccumulator':     {'type': "A3", 'size': 2, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1023},
             'setMagnetWakeup':            {'type': "A4", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setDebugLED':                {'type': "A5", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             'setLoRaWANDevEUI':           {'type': "A6", 'size': 8, 'multipl': 1, 'signed': False, 'min': 0, 'max': 0xFFFFFFFFFFFFFFFF},

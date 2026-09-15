@@ -247,6 +247,34 @@ def get_mqtt_settings():
     base_topic = mqtt_config.get("base_topic", "isurlog")
     return mqtt_config, base_topic
 
+# MQTT's CONNECT packet encodes Keep Alive as an unsigned 16-bit field
+# (MQTT 3.1.1/5.0 spec) - 65535 seconds is the hard protocol ceiling,
+# enforced by modules/umqttsimple.py itself (`assert self.keepalive <
+# 65536`) and presumably by the nRF91 modem's own MQTT stack behind
+# AT#XMQTTCFG. latency_time (up to 255 min) * register_acumulator (up to
+# 1023 since the 24LC1025 upgrade) overflows that easily - e.g.
+# latency_time=10, register_acumulator=110 already exceeds it - so this
+# is clamped rather than sent as-is.
+MQTT_MAX_KEEP_ALIVE_S = 65535
+
+def get_mqtt_keep_alive():
+    """
+    Keep-alive (seconds) to hand the MQTT client/modem: long enough to
+    cover one full accumulator cycle plus a margin, clamped to what the
+    MQTT protocol's 16-bit Keep Alive field can actually hold.
+    """
+    latency_time = config_manager.dynamic_config["general"].get("latency_time", 10)
+    register_acumulator = config_manager.dynamic_config["general"].get("register_acumulator", 1)
+    keep_alive = ((latency_time * 60) + 20) * register_acumulator
+    if keep_alive > MQTT_MAX_KEEP_ALIVE_S:
+        utils.log_warning(
+            f"Computed MQTT keep_alive ({keep_alive}s) exceeds the protocol's "
+            f"65535s limit (latency_time={latency_time}, register_acumulator="
+            f"{register_acumulator}) - clamping to {MQTT_MAX_KEEP_ALIVE_S}s."
+        )
+        keep_alive = MQTT_MAX_KEEP_ALIVE_S
+    return keep_alive
+
 def should_resync_rtc():
     """
     True if the RTC should be resynced: it lost power, or it's been more
@@ -1196,8 +1224,9 @@ async def establish_network_connection(force_hard_reset=False, max_retry_connect
             utils.log_error("Failed to connect to NB-IoT cellular cells.")
             return False
 
-        keep_alive = ((config_manager.dynamic_config["general"].get("latency_time", 10) * 60) + 20) * config_manager.dynamic_config["general"].get("register_acumulator", 1)
-        await nb_iot_module.mqtt_configure(ser_num, keep_alive, 0)
+        if not await nb_iot_module.mqtt_configure(ser_num, get_mqtt_keep_alive(), 0):
+            utils.log_error("Failed to configure MQTT keep-alive - aborting before connect.")
+            return False
 
         if not await nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
             utils.log_error("Failed to establish MQTT Broker connection.")
@@ -1613,9 +1642,10 @@ async def _theft_alert_nbiot(nb_iot_module, ser_num):
     if await nb_iot_module.send_at_command_check(f'AT%XSYSTEMMODE=1,1,0,{config_manager.dynamic_config["communications"]["cellular_iot"].get("preference", 0)}'):
         await nb_iot_module.send_at_command_check("AT+CFUN=1")
         await nb_iot_module.wait_for_network_connection(timeout=180000)
-        keep_alive = ((config_manager.dynamic_config["general"].get("latency_time", 10) * 60) + 20) * config_manager.dynamic_config["general"].get("register_acumulator", 1)
-        await nb_iot_module.mqtt_configure(ser_num, keep_alive, 0)
         mqtt_config = config_manager.get_dynamic("communications").get("mqtt")
+        if not await nb_iot_module.mqtt_configure(ser_num, get_mqtt_keep_alive(), 0):
+            utils.log_error("Failed to configure MQTT keep-alive - aborting theft alert publish.")
+            return
         if await nb_iot_module.mqtt_connect(mqtt_config.get("user", ""), mqtt_config.get("passwd", ""), mqtt_config.get("ip", ""), mqtt_config.get("port", 1883)):
             base_topic = mqtt_config.get("base_topic", "isurlog")
             if gps_data != []:
