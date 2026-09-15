@@ -65,7 +65,10 @@
   <text x="715" y="217" text-anchor="middle" font-size="11" fill="#92400e">Transmisor 4-20 mA</text>
 
   <circle cx="665" cy="160" r="4" fill="#334155"/>
+  <text x="665" y="178" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e293b">+</text>
+
   <circle cx="765" cy="160" r="4" fill="#334155"/>
+  <text x="765" y="178" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e293b">−</text>
 
   <circle cx="810" cy="195" r="4" fill="#334155"/>
   <text x="800" y="199" text-anchor="end" font-size="13" font-weight="bold" fill="#1e293b">+</text>
