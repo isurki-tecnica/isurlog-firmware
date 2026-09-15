@@ -1661,6 +1661,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#el-dispositivo-deja-de-transmitir-durante-horas-o-dias-y-luego-se-recupera-solo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El dispositivo deja de transmitir durante horas o días, y luego se recupera solo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#los-cambios-de-configuracion-no-parecen-aplicarse" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2018,6 +2029,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#el-dispositivo-deja-de-transmitir-durante-horas-o-dias-y-luego-se-recupera-solo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El dispositivo deja de transmitir durante horas o días, y luego se recupera solo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#los-cambios-de-configuracion-no-parecen-aplicarse" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2174,6 +2196,11 @@
 <h2 id="faltan-datos-huecos-en-los-datos-recibidos-menos-registros-de-los-esperados">Faltan datos / huecos en los datos recibidos / menos registros de los esperados</h2>
 <p>Esto también suele deberse, en general, a un <strong>firmware desactualizado que gestiona mal las pérdidas de conectividad</strong>. Por ejemplo, cuando la cobertura es temporalmente mala, o el ISURLOG tiene que reconectarse a la red, las versiones de firmware más antiguas no gestionan correctamente los registros ya almacenados en la <strong>RAM del RTC</strong> mientras esto ocurre — y esos registros pendientes se pierden en vez de enviarse una vez recuperada la conexión.</p>
 <p><strong>Solución:</strong> Actualizar el firmware del ESP32 — igual que arriba, <strong>recomendado</strong> mediante IsurDASH (<strong><a href="../isurdash-maintenance/">6.8. Mantenimiento de Dispositivos</a></strong>) o manualmente (<strong><a href="../flashing-application-upload/">3. Grabado del Firmware y Carga de la Aplicación</a></strong>), usando siempre la release marcada como <strong>"Latest"</strong> en vez de una pre-release.</p>
+<hr>
+<h2 id="el-dispositivo-deja-de-transmitir-durante-horas-o-dias-y-luego-se-recupera-solo">El dispositivo deja de transmitir durante horas o días, y luego se recupera solo</h2>
+<p>Esto también suele deberse, en general, a un <strong>firmware desactualizado que no detecta correctamente la pérdida de la conexión MQTT o de la conexión a la red celular</strong>. En vez de darse cuenta de que la conexión ya no existe y reconectar, las versiones de firmware afectadas pueden quedarse "creyendo" que siguen conectadas — fallando en silencio al transmitir hasta que lo que causó la caída original se resuelve por sí solo. Por eso el patrón típico es que el dispositivo deje de transmitir durante un periodo que va de unas pocas horas a varios días, y luego retome la transmisión por su cuenta, sin ninguna intervención.</p>
+<p><strong>Solución (definitiva):</strong> Actualizar el firmware del ESP32 — igual que arriba, <strong>recomendado</strong> mediante IsurDASH (<strong><a href="../isurdash-maintenance/">6.8. Mantenimiento de Dispositivos</a></strong>) o manualmente (<strong><a href="../flashing-application-upload/">3. Grabado del Firmware y Carga de la Aplicación</a></strong>), usando siempre la release marcada como <strong>"Latest"</strong> en vez de una pre-release. Las versiones de firmware actuales detectan y se recuperan correctamente tanto de la pérdida de MQTT como de la pérdida de red celular, así que esto no vuelve a ocurrir.</p>
+<p><strong>Solución temporal, mientras el dispositivo siga con una versión de firmware afectada:</strong> abre el widget de <strong><a href="../isurdash-devices/#visualizacion-de-datos-ubicacion-y-datos-sim">Visualización de Datos, Ubicación y Datos SIM</a></strong> del dispositivo y pulsa el botón <strong>Reset</strong> junto al botón de la gráfica — esto fuerza un reinicio de la conectividad de la tarjeta SIM, lo cual suele ser suficiente para que el dispositivo vuelva a transmitir de inmediato, en vez de esperar a que se recupere por sí solo.</p>
 <hr>
 <h2 id="los-cambios-de-configuracion-no-parecen-aplicarse">Los cambios de configuración no parecen aplicarse</h2>
 <p>Cuando editas la configuración de un dispositivo en IsurDASH y pulsas guardar, los cambios se guardan en la <strong>propia base de datos de IsurDASH</strong> — pero <strong>todavía no se envían al ISURLOG</strong>. Esto es intencionado: permite seguir editando varias secciones de configuración antes de enviar una única transmisión al dispositivo, en vez de enviar un downlink por cada campo.</p>
