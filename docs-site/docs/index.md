@@ -47,9 +47,9 @@ ISURLOG is an actively maintained product with real field deployments, not a pro
 
 | Feature | Type | Status | Available Since |
 | :--- | :--- | :--- | :--- |
-| Asynchronous function architecture for parallel task execution, reducing the time the datalogger is powered on | Firmware | 🧪 Experimental | FW v2.0.1 |
+| Asynchronous function architecture for parallel task execution, reducing the time the datalogger is powered on | Firmware | ✅ Stable | FW v2.0.3 |
 | Non-rechargeable Li-SOCl2 battery support | Hardware | 🧪 Experimental | PCB v3.3 |
-| Larger transmission buffer using external I2C EEPROM (24LC1025), removing the current RTC RAM size limitation | Firmware | 🧪 Experimental | FW v2.0.2 |
+| Larger transmission buffer using external I2C EEPROM (24LC1025), removing the current RTC RAM size limitation | Firmware | ✅ Stable | FW v2.0.3 |
 | Accelerometer alarm → forced immediate transmission | Firmware | 🔜 Planned | — |
 | Automatic NB-IoT/LTE-M connection mode | Firmware | 🔜 Planned | — |
 | DECT NR+ (chip-capable via nRF9151) | Firmware | 🔜 Planned | — |

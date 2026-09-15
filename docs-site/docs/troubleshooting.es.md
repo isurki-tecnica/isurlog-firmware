@@ -42,6 +42,16 @@ Esto también suele deberse, en general, a un **firmware desactualizado que gest
 
 ---
 
+## El dispositivo deja de transmitir durante horas o días, y luego se recupera solo
+
+Esto también suele deberse, en general, a un **firmware desactualizado que no detecta correctamente la pérdida de la conexión MQTT o de la conexión a la red celular**. En vez de darse cuenta de que la conexión ya no existe y reconectar, las versiones de firmware afectadas pueden quedarse "creyendo" que siguen conectadas — fallando en silencio al transmitir hasta que lo que causó la caída original se resuelve por sí solo. Por eso el patrón típico es que el dispositivo deje de transmitir durante un periodo que va de unas pocas horas a varios días, y luego retome la transmisión por su cuenta, sin ninguna intervención.
+
+**Solución (definitiva):** Actualizar el firmware del ESP32 — igual que arriba, **recomendado** mediante IsurDASH (**[6.8. Mantenimiento de Dispositivos](isurdash-maintenance.md)**) o manualmente (**[3. Grabado del Firmware y Carga de la Aplicación](flashing-application-upload.md)**), usando siempre la release marcada como **"Latest"** en vez de una pre-release. Las versiones de firmware actuales detectan y se recuperan correctamente tanto de la pérdida de MQTT como de la pérdida de red celular, así que esto no vuelve a ocurrir.
+
+**Solución temporal, mientras el dispositivo siga con una versión de firmware afectada:** abre el widget de **[Visualización de Datos, Ubicación y Datos SIM](isurdash-devices.es.md#visualizacion-de-datos-ubicacion-y-datos-sim)** del dispositivo y pulsa el botón **Reset** junto al botón de la gráfica — esto fuerza un reinicio de la conectividad de la tarjeta SIM, lo cual suele ser suficiente para que el dispositivo vuelva a transmitir de inmediato, en vez de esperar a que se recupere por sí solo.
+
+---
+
 ## Los cambios de configuración no parecen aplicarse
 
 Cuando editas la configuración de un dispositivo en IsurDASH y pulsas guardar, los cambios se guardan en la **propia base de datos de IsurDASH** — pero **todavía no se envían al ISURLOG**. Esto es intencionado: permite seguir editando varias secciones de configuración antes de enviar una única transmisión al dispositivo, en vez de enviar un downlink por cada campo.

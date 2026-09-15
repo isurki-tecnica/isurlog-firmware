@@ -42,6 +42,16 @@ This is generally also caused by **outdated firmware handling connectivity loss 
 
 ---
 
+## Device stops transmitting for hours or days, then recovers on its own
+
+This is generally also caused by **outdated firmware not correctly detecting a lost MQTT connection or a lost cellular network attachment**. Instead of noticing the connection is actually gone and reconnecting, affected firmware versions can get stuck believing they're still connected — silently failing to transmit until whatever caused the original drop clears up by itself. That's why the typical pattern is the device going quiet for anywhere from a few hours to a few days, then resuming transmission on its own, without any intervention.
+
+**Solution (definitive):** Update the ESP32 firmware — same as above, **recommended** via IsurDASH (**[6.8. Device Maintenance](isurdash-maintenance.md)**) or manually (**[3. Flashing and Application Upload](flashing-application-upload.md)**), always using the **"Latest"** release rather than a pre-release. Current firmware versions detect and recover from both MQTT and cellular connectivity loss correctly, so this doesn't recur.
+
+**Temporary workaround, while still on an affected firmware version:** open the device's **[Data Visualization, Location and SIM Data](isurdash-devices.md#data-visualization-location-and-sim-data)** widget and click the **Reset** button next to the chart button — it forces a reset of the SIM card's connectivity, which is usually enough to bring transmission back right away instead of waiting for the device to recover on its own.
+
+---
+
 ## Configuration changes don't seem to apply
 
 When you edit a device's configuration in IsurDASH and click save, the changes are saved in **IsurDASH's own database** — but they are **not sent to the ISURLOG yet**. This is intentional: it lets you keep editing several configuration sections before triggering a single transmission to the device, instead of sending one downlink per field.
