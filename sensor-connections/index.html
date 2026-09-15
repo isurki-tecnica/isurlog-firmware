@@ -2110,11 +2110,15 @@
 </table>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-analog-input-wiring.png" data-desc-position="bottom"><img alt="Passive and active analog sensor wiring for the AIN0-AIN3 inputs" src="../images/2-analog-input-wiring.png" width="500"></a></p>
 <p><em>Wiring for passive (ISURLOG-powered) vs. active (externally powered) analog sensors.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-analog-input-schematic.svg" data-desc-position="bottom"><img alt="Schematic diagram of passive vs. active 4-20mA sensor wiring" src="../images/2-analog-input-schematic.svg" width="700"></a></p>
+<p><em>Wiring schematic — current loop direction for a passive (ISURLOG-powered) vs. an active (externally powered) 4-20mA sensor.</em></p>
 <h2 id="12-digital-input-state-and-pulse-counter">1.2. Digital Input (State and Pulse Counter)</h2>
 <p>The ISURLOG features a dry contact digital input that can be used either as a status reader (open/closed) or as a pulse counter for devices like flow meters or water meters.</p>
 <p>The connection is made using the following pins: <strong>VIN</strong> and <strong>DIN0</strong>.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-digital-input-wiring.png" data-desc-position="bottom"><img alt="Digital input wiring using the VIN and DIN0 pins" src="../images/2-digital-input-wiring.png" width="300"></a></p>
 <p><em>Digital input wiring — VIN and DIN0 pins.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-digital-input-schematic.svg" data-desc-position="bottom"><img alt="Schematic diagram of the digital input dry contact wiring" src="../images/2-digital-input-schematic.svg" width="600"></a></p>
+<p><em>Wiring schematic — the external switch/contact simply closes the loop between VIN and DIN0.</em></p>
 <h3 id="digital-status-indicator-led-din">Digital Status Indicator (LED DIN)</h3>
 <p>The ISURLOG board includes a dedicated LED (<strong>LED DIN</strong>) that lights up continuously when the input is active (closed state).</p>
 <div class="admonition warning">
@@ -2132,6 +2136,8 @@
 </ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-modbus-rs485-wiring.jpg" data-desc-position="bottom"><img alt="Modbus RS485 wiring using the A and B pins" src="../images/2-modbus-rs485-wiring.jpg" width="300"></a></p>
 <p><em>Modbus RTU (RS485) wiring — A and B pins.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-modbus-rs485-schematic.svg" data-desc-position="bottom"><img alt="Schematic diagram of the Modbus RS485 daisy-chain wiring and termination placement" src="../images/2-modbus-rs485-schematic.svg" width="900"></a></p>
+<p><em>Wiring schematic — the daisy-chain topology and where the 120 Ω termination resistor goes (built into the ISURLOG, external at the last sensor only). See <a href="../troubleshooting/#modbus-sensor-not-responding-timeout">Modbus sensor not responding / timeout</a> if you're chasing an intermittent bus issue.</em></p>
 <h2 id="14-pt100-temperature-sensor-input">1.4. PT100 Temperature Sensor Input</h2>
 <p>The ISURLOG supports PT100 temperature probes configured for 2, 3, or 4 wires.</p>
 <h3 id="dual-configuration-requirement">Dual Configuration Requirement</h3>
@@ -2170,6 +2176,8 @@
 <p><em>Jumper configuration for 2, 3, and 4-wire PT100 probes.</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-pt100-wiring.png" data-desc-position="bottom"><img alt="PT100 wiring to the F+ and F- terminals" src="../images/2-pt100-wiring.png" width="600"></a></p>
 <p><em>PT100 wiring to the F+/F- terminals.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-pt100-schematic.svg" data-desc-position="bottom"><img alt="Schematic diagram of 2-wire, 3-wire, and 4-wire PT100 probe wiring" src="../images/2-pt100-schematic.svg" width="900"></a></p>
+<p><em>Wiring schematic — how the probe's own leads differ between 2/3/4-wire configurations. Remember this is only half of the setup: the PCB jumpers above must also match.</em></p>
 <h2 id="15-digital-output-relay">1.5. Digital Output (Relay)</h2>
 <p>Next to the digital input, the same terminal block also breaks out a <strong>solid-state relay output</strong>, using the following pins:</p>
 <ul>
@@ -2178,6 +2186,8 @@
 </ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-digital-input-wiring.png" data-desc-position="bottom"><img alt="Relay output wiring using the COM0 and NO0 pins" src="../images/2-digital-input-wiring.png" width="300"></a></p>
 <p><em>Relay output wiring — COM0 and NO0 pins, on the same terminal block as the digital input.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-relay-output-schematic.svg" data-desc-position="bottom"><img alt="Schematic diagram of the relay output wiring to an externally-powered load" src="../images/2-relay-output-schematic.svg" width="600"></a></p>
+<p><em>Wiring schematic — the relay is just a switch inside the ISURLOG; the load supplies its own power.</em></p>
 <p>This is a <strong>solid-state relay rated for 2A / 60V</strong>, suitable for switching heavier external loads directly (e.g. pumps, valves, contactors, or other actuators) without needing an intermediate relay.</p>
 <h2 id="16-qwiic-i2c-port">1.6. QWIIC I2C Port</h2>
 <p>The ISURLOG also breaks out its internal I2C bus through a standard <strong>QWIIC</strong> connector, to connect external QWIIC-compatible sensors and expansion boards. The pinout follows the standard QWIIC convention: <strong>GND, 3V3, SDA, SCL</strong>.</p>
@@ -2248,6 +2258,8 @@
 </table>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-aux-io-pinout.png" data-desc-position="bottom"><img alt="AUX-IO connector with pin 1 marked by a triangle" src="../images/2-aux-io-pinout.png" width="300"></a></p>
 <p><em>The AUX-IO connector — pin 1 marked with a triangle on the silkscreen.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-aux-io-pinout-schematic.svg" data-desc-position="bottom"><img alt="Pinout diagram of the AUX-IO connector, grouped by function" src="../images/2-aux-io-pinout-schematic.svg" width="500"></a></p>
+<p><em>Pinout reference — easier to read than the tiny 1mm-pitch connector itself. Note relays 1/2 here are a separate chip from the <a href="#15-digital-output-relay">main relay output</a>.</em></p>
 <h2 id="18-internal-sensors-and-diagnostics">1.8. Internal Sensors and Diagnostics</h2>
 <p>The datalogger includes two onboard components for monitoring and field interaction:</p>
 <ol>

@@ -2110,11 +2110,15 @@
 </table>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-analog-input-wiring.png" data-desc-position="bottom"><img alt="Cableado de sensores analógicos pasivos y activos en las entradas AIN0-AIN3" src="../../images/2-analog-input-wiring.png" width="500"></a></p>
 <p><em>Cableado para sensores pasivos (alimentados por el ISURLOG) frente a activos (alimentación externa).</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-analog-input-schematic-es.svg" data-desc-position="bottom"><img alt="Esquema de cableado de sensores 4-20mA pasivos y activos" src="../../images/2-analog-input-schematic-es.svg" width="700"></a></p>
+<p><em>Esquema de cableado — sentido del bucle de corriente para un sensor pasivo (alimentado por el ISURLOG) frente a uno activo (alimentación externa).</em></p>
 <h2 id="12-entrada-digital-estado-y-contador-de-pulsos">1.2. Entrada Digital (Estado y Contador de Pulsos)</h2>
 <p>El ISURLOG cuenta con una entrada digital de contacto seco, utilizable tanto como lector de estado (abierto/cerrado) como contador de pulsos para dispositivos como caudalímetros o contadores de agua.</p>
 <p>La conexión se realiza mediante los pines <strong>VIN</strong> y <strong>DIN0</strong>.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-digital-input-wiring.png" data-desc-position="bottom"><img alt="Cableado de la entrada digital mediante los pines VIN y DIN0" src="../../images/2-digital-input-wiring.png" width="300"></a></p>
 <p><em>Cableado de la entrada digital — pines VIN y DIN0.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-digital-input-schematic-es.svg" data-desc-position="bottom"><img alt="Esquema de cableado del contacto seco de la entrada digital" src="../../images/2-digital-input-schematic-es.svg" width="600"></a></p>
+<p><em>Esquema de cableado — el interruptor/contacto externo simplemente cierra el bucle entre VIN y DIN0.</em></p>
 <h3 id="indicador-de-estado-digital-led-din">Indicador de Estado Digital (LED DIN)</h3>
 <p>La placa del ISURLOG incluye un LED dedicado (<strong>LED DIN</strong>) que permanece encendido de forma continua cuando la entrada está activa (estado cerrado).</p>
 <div class="admonition warning">
@@ -2132,6 +2136,8 @@
 </ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-modbus-rs485-wiring.jpg" data-desc-position="bottom"><img alt="Cableado Modbus RS485 mediante los pines A y B" src="../../images/2-modbus-rs485-wiring.jpg" width="300"></a></p>
 <p><em>Cableado Modbus RTU (RS485) — pines A y B.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-modbus-rs485-schematic-es.svg" data-desc-position="bottom"><img alt="Esquema de cableado en cadena de Modbus RS485 y ubicación de la terminación" src="../../images/2-modbus-rs485-schematic-es.svg" width="900"></a></p>
+<p><em>Esquema de cableado — la topología en cadena y dónde va la resistencia de terminación de 120 Ω (integrada en el ISURLOG, externa solo en el último sensor). Ver <a href="../troubleshooting/#el-sensor-modbus-no-responde-timeout">El sensor Modbus no responde / timeout</a> si estás persiguiendo un fallo intermitente del bus.</em></p>
 <h2 id="14-entrada-para-sensor-de-temperatura-pt100">1.4. Entrada para Sensor de Temperatura PT100</h2>
 <p>El ISURLOG admite sondas de temperatura PT100 configuradas a 2, 3 o 4 hilos.</p>
 <h3 id="requisito-de-doble-configuracion">Requisito de Doble Configuración</h3>
@@ -2170,6 +2176,8 @@
 <p><em>Configuración de jumpers para sondas PT100 de 2, 3 y 4 hilos.</em></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-pt100-wiring.png" data-desc-position="bottom"><img alt="Cableado PT100 a los terminales F+ y F-" src="../../images/2-pt100-wiring.png" width="600"></a></p>
 <p><em>Cableado PT100 a los terminales F+/F-.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-pt100-schematic-es.svg" data-desc-position="bottom"><img alt="Esquema de cableado PT100 para sondas de 2, 3 y 4 hilos" src="../../images/2-pt100-schematic-es.svg" width="900"></a></p>
+<p><em>Esquema de cableado — cómo difieren los propios hilos de la sonda entre las configuraciones de 2/3/4 hilos. Recuerda que esto es solo la mitad de la configuración: los jumpers de la PCB de arriba también deben coincidir.</em></p>
 <h2 id="15-salida-digital-rele">1.5. Salida Digital (Relé)</h2>
 <p>Junto a la entrada digital, el mismo bloque de terminales también expone una <strong>salida de relé de estado sólido</strong>, mediante los siguientes pines:</p>
 <ul>
@@ -2178,6 +2186,8 @@
 </ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-digital-input-wiring.png" data-desc-position="bottom"><img alt="Cableado de la salida de relé mediante los pines COM0 y NO0" src="../../images/2-digital-input-wiring.png" width="300"></a></p>
 <p><em>Cableado de salida de relé — pines COM0 y NO0, en el mismo bloque de terminales que la entrada digital.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-relay-output-schematic-es.svg" data-desc-position="bottom"><img alt="Esquema de cableado de la salida de relé hacia una carga con alimentación externa" src="../../images/2-relay-output-schematic-es.svg" width="600"></a></p>
+<p><em>Esquema de cableado — el relé es solo un interruptor dentro del ISURLOG; la carga aporta su propia alimentación.</em></p>
 <p>Se trata de un <strong>relé de estado sólido con capacidad de 2A / 60V</strong>, adecuado para conmutar directamente cargas externas de mayor potencia (p. ej. bombas, válvulas, contactores u otros actuadores) sin necesidad de un relé intermedio.</p>
 <h2 id="16-puerto-i2c-qwiic">1.6. Puerto I2C QWIIC</h2>
 <p>El ISURLOG también expone su bus I2C interno a través de un conector <strong>QWIIC</strong> estándar, para conectar sensores externos y placas de expansión compatibles con QWIIC. La distribución de pines sigue la convención estándar QWIIC: <strong>GND, 3V3, SDA, SCL</strong>.</p>
@@ -2248,6 +2258,8 @@
 </table>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-aux-io-pinout.png" data-desc-position="bottom"><img alt="Conector AUX-IO con el pin 1 marcado por un triángulo" src="../../images/2-aux-io-pinout.png" width="300"></a></p>
 <p><em>El conector AUX-IO — pin 1 marcado con un triángulo en la serigrafía.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/2-aux-io-pinout-schematic-es.svg" data-desc-position="bottom"><img alt="Diagrama de pinout del conector AUX-IO, agrupado por función" src="../../images/2-aux-io-pinout-schematic-es.svg" width="500"></a></p>
+<p><em>Referencia de pinout — más fácil de leer que el propio conector de 1mm de paso. Ten en cuenta que los relés 1/2 de aquí son un chip distinto al de la <a href="#15-salida-digital-rele">salida de relé principal</a>.</em></p>
 <h2 id="18-sensores-internos-y-diagnostico">1.8. Sensores Internos y Diagnóstico</h2>
 <p>El datalogger incorpora dos elementos internos para la monitorización y la interacción en campo:</p>
 <ol>
