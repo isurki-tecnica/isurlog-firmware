@@ -17,6 +17,10 @@ Each analog input is protected by an automatic reset fuse.
 
 *Wiring for passive (ISURLOG-powered) vs. active (externally powered) analog sensors.*
 
+![Schematic diagram of passive vs. active 4-20mA sensor wiring](images/2-analog-input-schematic.svg){width="700"}
+
+*Wiring schematic — current loop direction for a passive (ISURLOG-powered) vs. an active (externally powered) 4-20mA sensor.*
+
 ## 1.2. Digital Input (State and Pulse Counter)
 
 The ISURLOG features a dry contact digital input that can be used either as a status reader (open/closed) or as a pulse counter for devices like flow meters or water meters.
@@ -26,6 +30,10 @@ The connection is made using the following pins: **VIN** and **DIN0**.
 ![Digital input wiring using the VIN and DIN0 pins](images/2-digital-input-wiring.png){width="300"}
 
 *Digital input wiring — VIN and DIN0 pins.*
+
+![Schematic diagram of the digital input dry contact wiring](images/2-digital-input-schematic.svg){width="600"}
+
+*Wiring schematic — the external switch/contact simply closes the loop between VIN and DIN0.*
 
 ### Digital Status Indicator (LED DIN)
 
@@ -50,6 +58,10 @@ The connection uses the following pins:
 ![Modbus RS485 wiring using the A and B pins](images/2-modbus-rs485-wiring.jpg){width="300"}
 
 *Modbus RTU (RS485) wiring — A and B pins.*
+
+![Schematic diagram of the Modbus RS485 daisy-chain wiring and termination placement](images/2-modbus-rs485-schematic.svg){width="900"}
+
+*Wiring schematic — the daisy-chain topology and where the 120 Ω termination resistor goes (built into the ISURLOG, external at the last sensor only). See [Modbus sensor not responding / timeout](troubleshooting.md#modbus-sensor-not-responding-timeout) if you're chasing an intermittent bus issue.*
 
 ## 1.4. PT100 Temperature Sensor Input
 
@@ -76,6 +88,10 @@ Achieving an accurate reading requires **two steps** of configuration:
 
 *PT100 wiring to the F+/F- terminals.*
 
+![Schematic diagram of 2-wire, 3-wire, and 4-wire PT100 probe wiring](images/2-pt100-schematic.svg){width="900"}
+
+*Wiring schematic — how the probe's own leads differ between 2/3/4-wire configurations. Remember this is only half of the setup: the PCB jumpers above must also match.*
+
 ## 1.5. Digital Output (Relay)
 
 Next to the digital input, the same terminal block also breaks out a **solid-state relay output**, using the following pins:
@@ -86,6 +102,10 @@ Next to the digital input, the same terminal block also breaks out a **solid-sta
 ![Relay output wiring using the COM0 and NO0 pins](images/2-digital-input-wiring.png){width="300"}
 
 *Relay output wiring — COM0 and NO0 pins, on the same terminal block as the digital input.*
+
+![Schematic diagram of the relay output wiring to an externally-powered load](images/2-relay-output-schematic.svg){width="600"}
+
+*Wiring schematic — the relay is just a switch inside the ISURLOG; the load supplies its own power.*
 
 This is a **solid-state relay rated for 2A / 60V**, suitable for switching heavier external loads directly (e.g. pumps, valves, contactors, or other actuators) without needing an intermediate relay.
 
@@ -121,6 +141,10 @@ The AUX-IO connector is a **1mm-pitch (P=1mm) connector** that breaks out extra 
 ![AUX-IO connector with pin 1 marked by a triangle](images/2-aux-io-pinout.png){width="300"}
 
 *The AUX-IO connector — pin 1 marked with a triangle on the silkscreen.*
+
+![Pinout diagram of the AUX-IO connector, grouped by function](images/2-aux-io-pinout-schematic.svg){width="500"}
+
+*Pinout reference — easier to read than the tiny 1mm-pitch connector itself. Note relays 1/2 here are a separate chip from the [main relay output](#15-digital-output-relay).*
 
 ## 1.8. Internal Sensors and Diagnostics
 

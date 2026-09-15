@@ -1,0 +1,96 @@
+<svg viewBox="0 0 1000 320" width="1000" height="320" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <title>ISURLOG analog input wiring schematic — passive vs. active 4-20mA sensors</title>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="320" fill="#ffffff"/>
+
+  <!-- Panel divider -->
+  <line x1="500" y1="20" x2="500" y2="300" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <!-- ============ PANEL A: PASSIVE SENSOR ============ -->
+  <text x="245" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e293b">Passive Sensor</text>
+  <text x="245" y="50" text-anchor="middle" font-size="12" fill="#64748b" font-style="italic">ISURLOG supplies loop power via VDC</text>
+
+  <!-- ISURLOG box -->
+  <rect x="40" y="90" width="140" height="140" rx="8" fill="#eef2f7" stroke="#334155" stroke-width="1.5"/>
+  <text x="110" y="154" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">ISURLOG</text>
+  <text x="110" y="172" text-anchor="middle" font-size="11" fill="#64748b">Analog Input</text>
+
+  <circle cx="180" cy="120" r="4" fill="#334155"/>
+  <text x="172" y="115" text-anchor="end" font-size="12" font-weight="bold" fill="#1e293b">VDC</text>
+
+  <circle cx="180" cy="200" r="4" fill="#334155"/>
+  <text x="172" y="196" text-anchor="end" font-size="12" font-weight="bold" fill="#1e293b">AINx</text>
+
+  <!-- Sensor box -->
+  <rect x="300" y="95" width="150" height="130" rx="8" fill="#fff7ed" stroke="#b45309" stroke-width="1.5"/>
+  <text x="375" y="150" text-anchor="middle" font-size="13" font-weight="bold" fill="#7c2d12">PASSIVE SENSOR</text>
+  <text x="375" y="167" text-anchor="middle" font-size="11" fill="#92400e">4-20 mA transmitter</text>
+  <text x="375" y="184" text-anchor="middle" font-size="10" fill="#92400e">(2-wire loop)</text>
+
+  <circle cx="300" cy="120" r="4" fill="#334155"/>
+  <text x="308" y="115" text-anchor="start" font-size="13" font-weight="bold" fill="#1e293b">+</text>
+
+  <circle cx="300" cy="200" r="4" fill="#334155"/>
+  <text x="308" y="205" text-anchor="start" font-size="13" font-weight="bold" fill="#1e293b">−</text>
+
+  <!-- Wires: current flows VDC -> sensor(+), sensor(-) -> AINx -->
+  <line x1="180" y1="120" x2="298" y2="120" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="300" y1="200" x2="182" y2="200" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <text x="240" y="108" text-anchor="middle" font-size="11" fill="#1d4ed8" font-style="italic">4-20 mA loop</text>
+
+  <!-- ============ PANEL B: ACTIVE SENSOR ============ -->
+  <text x="755" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e293b">Active Sensor</text>
+  <text x="755" y="50" text-anchor="middle" font-size="12" fill="#64748b" font-style="italic">Sensor is powered by its own external supply</text>
+
+  <!-- External power supply box -->
+  <rect x="610" y="70" width="180" height="55" rx="6" fill="#ecfdf5" stroke="#047857" stroke-width="1.5"/>
+  <text x="700" y="102" text-anchor="middle" font-size="11" font-weight="bold" fill="#065f46">EXTERNAL POWER SUPPLY</text>
+
+  <circle cx="665" cy="125" r="4" fill="#334155"/>
+  <text x="665" y="118" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e293b">+</text>
+
+  <circle cx="765" cy="125" r="4" fill="#334155"/>
+  <text x="765" y="118" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e293b">−</text>
+
+  <!-- Sensor box -->
+  <rect x="620" y="160" width="190" height="130" rx="8" fill="#fff7ed" stroke="#b45309" stroke-width="1.5"/>
+  <text x="715" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#7c2d12">ACTIVE SENSOR</text>
+  <text x="715" y="217" text-anchor="middle" font-size="11" fill="#92400e">4-20 mA transmitter</text>
+
+  <circle cx="665" cy="160" r="4" fill="#334155"/>
+  <circle cx="765" cy="160" r="4" fill="#334155"/>
+
+  <circle cx="810" cy="195" r="4" fill="#334155"/>
+  <text x="800" y="199" text-anchor="end" font-size="13" font-weight="bold" fill="#1e293b">+</text>
+
+  <circle cx="810" cy="255" r="4" fill="#334155"/>
+  <text x="800" y="259" text-anchor="end" font-size="13" font-weight="bold" fill="#1e293b">−</text>
+
+  <!-- ISURLOG box -->
+  <rect x="860" y="170" width="110" height="110" rx="8" fill="#eef2f7" stroke="#334155" stroke-width="1.5"/>
+  <text x="915" y="219" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">ISURLOG</text>
+  <text x="915" y="237" text-anchor="middle" font-size="11" fill="#64748b">Analog Input</text>
+
+  <circle cx="860" cy="195" r="4" fill="#334155"/>
+  <text x="868" y="191" text-anchor="start" font-size="12" font-weight="bold" fill="#1e293b">AINx</text>
+
+  <circle cx="860" cy="255" r="4" fill="#334155"/>
+  <text x="868" y="251" text-anchor="start" font-size="12" font-weight="bold" fill="#1e293b">GND</text>
+
+  <!-- Power wires: supply -> sensor (current out of +, back into -) -->
+  <line x1="665" y1="123" x2="665" y2="162" stroke="#047857" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="765" y1="162" x2="765" y2="123" stroke="#047857" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Signal loop wires: sensor(+) -> AINx, GND -> sensor(-) -->
+  <line x1="812" y1="195" x2="858" y2="195" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="860" y1="255" x2="814" y2="255" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <text x="835" y="183" text-anchor="middle" font-size="11" fill="#1d4ed8" font-style="italic">4-20 mA</text>
+</svg>

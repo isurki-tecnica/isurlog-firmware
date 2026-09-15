@@ -17,6 +17,10 @@ Cada entrada analógica está protegida por un fusible autorrearmable.
 
 *Cableado para sensores pasivos (alimentados por el ISURLOG) frente a activos (alimentación externa).*
 
+![Esquema de cableado de sensores 4-20mA pasivos y activos](images/2-analog-input-schematic-es.svg){width="700"}
+
+*Esquema de cableado — sentido del bucle de corriente para un sensor pasivo (alimentado por el ISURLOG) frente a uno activo (alimentación externa).*
+
 ## 1.2. Entrada Digital (Estado y Contador de Pulsos)
 
 El ISURLOG cuenta con una entrada digital de contacto seco, utilizable tanto como lector de estado (abierto/cerrado) como contador de pulsos para dispositivos como caudalímetros o contadores de agua.
@@ -26,6 +30,10 @@ La conexión se realiza mediante los pines **VIN** y **DIN0**.
 ![Cableado de la entrada digital mediante los pines VIN y DIN0](images/2-digital-input-wiring.png){width="300"}
 
 *Cableado de la entrada digital — pines VIN y DIN0.*
+
+![Esquema de cableado del contacto seco de la entrada digital](images/2-digital-input-schematic-es.svg){width="600"}
+
+*Esquema de cableado — el interruptor/contacto externo simplemente cierra el bucle entre VIN y DIN0.*
 
 ### Indicador de Estado Digital (LED DIN)
 
@@ -50,6 +58,10 @@ La conexión utiliza los siguientes pines:
 ![Cableado Modbus RS485 mediante los pines A y B](images/2-modbus-rs485-wiring.jpg){width="300"}
 
 *Cableado Modbus RTU (RS485) — pines A y B.*
+
+![Esquema de cableado en cadena de Modbus RS485 y ubicación de la terminación](images/2-modbus-rs485-schematic-es.svg){width="900"}
+
+*Esquema de cableado — la topología en cadena y dónde va la resistencia de terminación de 120 Ω (integrada en el ISURLOG, externa solo en el último sensor). Ver [El sensor Modbus no responde / timeout](troubleshooting.es.md#el-sensor-modbus-no-responde-timeout) si estás persiguiendo un fallo intermitente del bus.*
 
 ## 1.4. Entrada para Sensor de Temperatura PT100
 
@@ -76,6 +88,10 @@ Obtener una lectura precisa requiere **dos pasos** de configuración:
 
 *Cableado PT100 a los terminales F+/F-.*
 
+![Esquema de cableado PT100 para sondas de 2, 3 y 4 hilos](images/2-pt100-schematic-es.svg){width="900"}
+
+*Esquema de cableado — cómo difieren los propios hilos de la sonda entre las configuraciones de 2/3/4 hilos. Recuerda que esto es solo la mitad de la configuración: los jumpers de la PCB de arriba también deben coincidir.*
+
 ## 1.5. Salida Digital (Relé)
 
 Junto a la entrada digital, el mismo bloque de terminales también expone una **salida de relé de estado sólido**, mediante los siguientes pines:
@@ -86,6 +102,10 @@ Junto a la entrada digital, el mismo bloque de terminales también expone una **
 ![Cableado de la salida de relé mediante los pines COM0 y NO0](images/2-digital-input-wiring.png){width="300"}
 
 *Cableado de salida de relé — pines COM0 y NO0, en el mismo bloque de terminales que la entrada digital.*
+
+![Esquema de cableado de la salida de relé hacia una carga con alimentación externa](images/2-relay-output-schematic-es.svg){width="600"}
+
+*Esquema de cableado — el relé es solo un interruptor dentro del ISURLOG; la carga aporta su propia alimentación.*
 
 Se trata de un **relé de estado sólido con capacidad de 2A / 60V**, adecuado para conmutar directamente cargas externas de mayor potencia (p. ej. bombas, válvulas, contactores u otros actuadores) sin necesidad de un relé intermedio.
 
@@ -121,6 +141,10 @@ El **pin 1** está marcado con un triángulo en la serigrafía de la PCB; los pi
 ![Conector AUX-IO con el pin 1 marcado por un triángulo](images/2-aux-io-pinout.png){width="300"}
 
 *El conector AUX-IO — pin 1 marcado con un triángulo en la serigrafía.*
+
+![Diagrama de pinout del conector AUX-IO, agrupado por función](images/2-aux-io-pinout-schematic-es.svg){width="500"}
+
+*Referencia de pinout — más fácil de leer que el propio conector de 1mm de paso. Ten en cuenta que los relés 1/2 de aquí son un chip distinto al de la [salida de relé principal](#15-salida-digital-rele).*
 
 ## 1.8. Sensores Internos y Diagnóstico
 
