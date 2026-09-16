@@ -1936,7 +1936,7 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/gh-banner-isurlog.jpg" data-desc-position="bottom"><img alt="ISURLOG — Datalogger Industrial NB-IoT/LoRa" src="../images/gh-banner-isurlog.jpg" width="700"></a></p>
 <p><strong>ISURLOG</strong> es un datalogger industrial basado en ESP32, diseñado para despliegues de campo donde la energía escasea y la conectividad nunca está garantizada. Firmware MicroPython genuino, trabajando con señales industriales reales, y gestionable en remoto desde el primer momento.</p>
 <ul>
-<li><strong>Sensores de grado industrial</strong> — 4-20 mA analógico, Modbus RTU (RS485), PT100/PT1000, conteo de pulsos digital, temperatura y humedad interna/externa, y un acelerómetro integrado para detección de manipulación/vandalismo.</li>
+<li><strong>Un solo dispositivo, todas las entradas</strong> — 4× analógico 4-20 mA, Modbus RTU (RS485, hasta 32 sensores), 1× PT100/PT1000, 4× entradas digitales (estado o conteo de pulsos), temperatura y humedad integradas, un acelerómetro integrado para detección de manipulación/vandalismo, y un puerto QWIIC (I2C) para sensores de expansión enchufables, todo en la misma placa. Sin elegir un modelo distinto según el tipo de sensor — configura lo que necesites por downlink, incluso después de instalado.</li>
 <li><strong>Pensado para baterías</strong> — hasta ~20 µA en reposo (deep sleep). Un cargador de recolección de energía integrado carga celdas Li-Ion recargables desde casi cualquier fuente: un TEG de 0.3V, un panel solar micro, un panel de 5V completo, o un cargador USB convencional. También compatible con baterías Li-SOCl2 no recargables, para máxima duración de batería en emplazamientos de difícil acceso o para minimizar las visitas de mantenimiento.</li>
 <li><strong>Un firmware, múltiples redes</strong> — NB-IoT, LTE-M, DECT NR+, y satélite NTN a través del nRF9151, o LoRaWAN, de forma exclusiva por unidad, además de Wi-Fi y BLE local para la configuración.</li>
 <li><strong>Gestionable en remoto, no solo legible en remoto</strong> — configuración, ajuste de sensores, actualizaciones OTA, y una REPL de MicroPython en vivo, todo desde <a href="https://isurdash.isurki.com">IsurDASH</a>, sin desplazamiento a campo.</li>
@@ -2032,6 +2032,18 @@
 </tr>
 <tr>
 <td style="text-align: left;">Módulo de expansión Modbus Isurnode</td>
+<td style="text-align: left;">Hardware + Firmware</td>
+<td style="text-align: left;">🔜 Planificado</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">4 entradas PT100/PT1000 mediante un único ADC AD7124-8, frente al canal único actual</td>
+<td style="text-align: left;">Hardware + Firmware</td>
+<td style="text-align: left;">🔜 Planificado</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">4 entradas digitales adicionales conectadas directamente a la MCU (estado o conteo de pulsos de bajo consumo), junto a las 3 actuales vía MCP23008/AUX-IO — depende de la migración a ESP32-S3/S31 por presupuesto de GPIOs</td>
 <td style="text-align: left;">Hardware + Firmware</td>
 <td style="text-align: left;">🔜 Planificado</td>
 <td style="text-align: left;">—</td>

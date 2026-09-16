@@ -1936,7 +1936,7 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="images/gh-banner-isurlog.jpg" data-desc-position="bottom"><img alt="ISURLOG — Industrial NB-IoT/LoRa Datalogger" src="images/gh-banner-isurlog.jpg" width="700"></a></p>
 <p><strong>ISURLOG</strong> is an ESP32-based industrial datalogger built for field deployments where power is scarce and connectivity is never guaranteed. Real MicroPython firmware, real industrial signals, remotely managed from day one.</p>
 <ul>
-<li><strong>Industrial-grade sensing</strong> — 4-20 mA analog, Modbus RTU (RS485), PT100/PT1000, digital pulse counting, internal/external temperature &amp; humidity, and an on-board accelerometer for tamper/vandalism detection.</li>
+<li><strong>One device, every input</strong> — 4× 4-20 mA analog, Modbus RTU (RS485, up to 32 sensors), 1× PT100/PT1000, 4× digital inputs (state or pulse counting), onboard temperature &amp; humidity, an on-board accelerometer for tamper/vandalism detection, and a QWIIC (I2C) port for plug-in expansion sensors, all on the same board. No picking a different SKU per sensor type — configure what you need via downlink, even after it's installed.</li>
 <li><strong>Built for batteries</strong> — as low as ~20 µA in deep sleep. An on-board energy-harvesting charger tops up rechargeable Li-Ion cells from almost anything: a 0.3V TEG, a micro solar panel, a full 5V panel, or a plain USB charger. Non-rechargeable Li-SOCl2 packs are also supported, for maximum battery life in hard-to-reach sites or to minimize maintenance visits.</li>
 <li><strong>One firmware, multiple networks</strong> — NB-IoT, LTE-M, DECT NR+, and satellite NTN via the nRF9151, or LoRaWAN, exclusively per unit, plus Wi-Fi and local BLE for setup.</li>
 <li><strong>Remotely manageable, not just remotely readable</strong> — configuration, sensor setup, OTA updates, and a live MicroPython REPL, all from <a href="https://isurdash.isurki.com">IsurDASH</a>, without a truck roll.</li>
@@ -2032,6 +2032,18 @@
 </tr>
 <tr>
 <td style="text-align: left;">Isurnode Modbus expansion module</td>
+<td style="text-align: left;">Hardware + Firmware</td>
+<td style="text-align: left;">🔜 Planned</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">4× PT100/PT1000 inputs via a single AD7124-8 ADC, up from today's 1 channel</td>
+<td style="text-align: left;">Hardware + Firmware</td>
+<td style="text-align: left;">🔜 Planned</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">4 additional digital inputs wired directly to the MCU (state or low-power pulse counting), alongside today's 3 via MCP23008/AUX-IO — depends on the ESP32-S3/S31 migration for GPIO budget</td>
 <td style="text-align: left;">Hardware + Firmware</td>
 <td style="text-align: left;">🔜 Planned</td>
 <td style="text-align: left;">—</td>
