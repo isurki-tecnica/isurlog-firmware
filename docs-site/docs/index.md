@@ -4,7 +4,7 @@
 
 **ISURLOG** is an ESP32-based industrial datalogger built for field deployments where power is scarce and connectivity is never guaranteed. Real MicroPython firmware, real industrial signals, remotely managed from day one.
 
-* **Industrial-grade sensing** — 4-20 mA analog, Modbus RTU (RS485), PT100/PT1000, digital pulse counting, internal/external temperature & humidity, and an on-board accelerometer for tamper/vandalism detection.
+* **One device, every input** — 4× 4-20 mA analog, Modbus RTU (RS485, up to 32 sensors), 1× PT100/PT1000, 4× digital inputs (state or pulse counting), onboard temperature & humidity, an on-board accelerometer for tamper/vandalism detection, and a QWIIC (I2C) port for plug-in expansion sensors, all on the same board. No picking a different SKU per sensor type — configure what you need via downlink, even after it's installed.
 * **Built for batteries** — as low as ~20 µA in deep sleep. An on-board energy-harvesting charger tops up rechargeable Li-Ion cells from almost anything: a 0.3V TEG, a micro solar panel, a full 5V panel, or a plain USB charger. Non-rechargeable Li-SOCl2 packs are also supported, for maximum battery life in hard-to-reach sites or to minimize maintenance visits.
 * **One firmware, multiple networks** — NB-IoT, LTE-M, DECT NR+, and satellite NTN via the nRF9151, or LoRaWAN, exclusively per unit, plus Wi-Fi and local BLE for setup.
 * **Remotely manageable, not just remotely readable** — configuration, sensor setup, OTA updates, and a live MicroPython REPL, all from [IsurDASH](https://isurdash.isurki.com), without a truck roll.
@@ -54,6 +54,8 @@ ISURLOG is an actively maintained product with real field deployments, not a pro
 | Automatic NB-IoT/LTE-M connection mode | Firmware | 🔜 Planned | — |
 | DECT NR+ (chip-capable via nRF9151) | Firmware | 🔜 Planned | — |
 | Isurnode Modbus expansion module | Hardware + Firmware | 🔜 Planned | — |
+| 4× PT100/PT1000 inputs via a single AD7124-8 ADC, up from today's 1 channel | Hardware + Firmware | 🔜 Planned | — |
+| 4 additional digital inputs wired directly to the MCU (state or low-power pulse counting), alongside today's 3 via MCP23008/AUX-IO — depends on the ESP32-S3/S31 migration for GPIO budget | Hardware + Firmware | 🔜 Planned | — |
 | TinyML — on-device inference for lightweight tasks like local anomaly detection or predictive maintenance, without a round trip to the cloud | Firmware | 🔜 Planned | — |
 | RAK3172 firmware updates directly from IsurDASH (currently requires an external web tool) | Firmware | 🔜 Planned | — |
 | 3D-printable enclosure files, published on Printables | Hardware | 💬 In discussion | — |

@@ -4,7 +4,7 @@
 
 **ISURLOG** es un datalogger industrial basado en ESP32, diseñado para despliegues de campo donde la energía escasea y la conectividad nunca está garantizada. Firmware MicroPython genuino, trabajando con señales industriales reales, y gestionable en remoto desde el primer momento.
 
-* **Sensores de grado industrial** — 4-20 mA analógico, Modbus RTU (RS485), PT100/PT1000, conteo de pulsos digital, temperatura y humedad interna/externa, y un acelerómetro integrado para detección de manipulación/vandalismo.
+* **Un solo dispositivo, todas las entradas** — 4× analógico 4-20 mA, Modbus RTU (RS485, hasta 32 sensores), 1× PT100/PT1000, 4× entradas digitales (estado o conteo de pulsos), temperatura y humedad integradas, un acelerómetro integrado para detección de manipulación/vandalismo, y un puerto QWIIC (I2C) para sensores de expansión enchufables, todo en la misma placa. Sin elegir un modelo distinto según el tipo de sensor — configura lo que necesites por downlink, incluso después de instalado.
 * **Pensado para baterías** — hasta ~20 µA en reposo (deep sleep). Un cargador de recolección de energía integrado carga celdas Li-Ion recargables desde casi cualquier fuente: un TEG de 0.3V, un panel solar micro, un panel de 5V completo, o un cargador USB convencional. También compatible con baterías Li-SOCl2 no recargables, para máxima duración de batería en emplazamientos de difícil acceso o para minimizar las visitas de mantenimiento.
 * **Un firmware, múltiples redes** — NB-IoT, LTE-M, DECT NR+, y satélite NTN a través del nRF9151, o LoRaWAN, de forma exclusiva por unidad, además de Wi-Fi y BLE local para la configuración.
 * **Gestionable en remoto, no solo legible en remoto** — configuración, ajuste de sensores, actualizaciones OTA, y una REPL de MicroPython en vivo, todo desde [IsurDASH](https://isurdash.isurki.com), sin desplazamiento a campo.
@@ -54,6 +54,8 @@ ISURLOG es un producto en mantenimiento activo con despliegues reales en campo, 
 | Modo de conexión automática NB-IoT/LTE-M | Firmware | 🔜 Planificado | — |
 | DECT NR+ (compatible a nivel de chip vía nRF9151) | Firmware | 🔜 Planificado | — |
 | Módulo de expansión Modbus Isurnode | Hardware + Firmware | 🔜 Planificado | — |
+| 4 entradas PT100/PT1000 mediante un único ADC AD7124-8, frente al canal único actual | Hardware + Firmware | 🔜 Planificado | — |
+| 4 entradas digitales adicionales conectadas directamente a la MCU (estado o conteo de pulsos de bajo consumo), junto a las 3 actuales vía MCP23008/AUX-IO — depende de la migración a ESP32-S3/S31 por presupuesto de GPIOs | Hardware + Firmware | 🔜 Planificado | — |
 | TinyML — inferencia en el propio dispositivo para tareas ligeras como detección local de anomalías o mantenimiento predictivo, sin ida y vuelta a la nube | Firmware | 🔜 Planificado | — |
 | Actualización de firmware del RAK3172 directamente desde IsurDASH (actualmente requiere una herramienta web externa) | Firmware | 🔜 Planificado | — |
 | Archivos de caja imprimible en 3D, publicados en Printables | Hardware | 💬 En debate | — |
