@@ -120,6 +120,24 @@ def print_data_as_table(data: list):
         print("| " + " | ".join(row_values) + " |")
 
 
+def rsrq_index_to_db(index):
+    """
+    ModemData0 stores the modem's raw 3GPP RSRQ index (0-34), not dB.
+    Returns dB = (index - 40) / 2, or None if the modem reported 255
+    ("not known or not detectable").
+    """
+    return None if index == 255 else (index - 40) / 2
+
+
+def rsrp_index_to_dbm(index):
+    """
+    ModemData1 stores the modem's raw 3GPP RSRP index (0-97), not dBm.
+    Returns dBm = index - 141, or None if the modem reported 255
+    ("not known or not detectable").
+    """
+    return None if index == 255 else index - 141
+
+
 def _plot_dual_axis(ax, data: list, left_field: str, left_label: str, left_color: str,
                      right_field: str = None, right_label: str = None, right_color: str = None,
                      title: str = None):
@@ -215,8 +233,20 @@ def plot_dashboard(data: list, target_device: str):
     )
 
     # 5. NB-IoT network quality: RSRQ vs. RSRP.
+    # ModemData0/1 are stored as the modem's raw 3GPP indices, not dB/dBm -
+    # convert them for plotting only. Readings of 255 ("not detectable")
+    # become None, which _plot_dual_axis skips.
+    signal_data = []
+    for r in data:
+        rec = dict(r)
+        if rec.get("ModemData0") is not None:
+            rec["ModemData0"] = rsrq_index_to_db(rec["ModemData0"])
+        if rec.get("ModemData1") is not None:
+            rec["ModemData1"] = rsrp_index_to_dbm(rec["ModemData1"])
+        signal_data.append(rec)
+
     _plot_dual_axis(
-        fig.add_subplot(gs[1, 4:6]), data,
+        fig.add_subplot(gs[1, 4:6]), signal_data,
         left_field="ModemData0", left_label="RSRQ (dB)", left_color="tab:green",
         right_field="ModemData1", right_label="RSRP (dBm)", right_color="tab:purple",
         title="NB-IoT Network Quality",
