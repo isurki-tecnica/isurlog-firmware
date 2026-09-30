@@ -141,7 +141,7 @@ Esta página complementa **[2. Visión General de la Arquitectura](architecture-
 
 ### Sensores
 
-**`analog_sensor.py`** — envoltorio de entrada 4-20mA/0-10V basado en ADS1115; `read_analog(channel)`, `convert_value(value, zero, full_scale)`. Depende de `lib/ADS1115`. Configuración: `static_config.pinout.i2c.*`, `static_config.ads1115_addr`; el `zero`/`full_scale` de cada canal viene de `dynamic_config.analog_config.inputs[]`.
+**`analog_sensor.py`** — envoltorio de entrada 4-20mA basado en ADS1115; `read_analog(channel)`, `convert_value(value, zero, full_scale)`. Depende de `lib/ADS1115`. Configuración: `static_config.pinout.i2c.*`, `static_config.ads1115_addr`; el `zero`/`full_scale` de cada canal viene de `dynamic_config.analog_config.inputs[]`.
 
 **`digital_sensor.py`** — contador de pulsos de bajo consumo basado en ULP con antirrebote por software (solo GPIO 36/39, pines con capacidad RTC). Depende de `lib/esp32_ulp`. Lee el conteo de flancos de despertar desde `dynamic_config.digital_config.inputs[]` — una lista con una entrada por canal — buscando la entrada donde `channel == 0` y leyendo su clave `wake`.
 

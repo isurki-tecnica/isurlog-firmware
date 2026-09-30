@@ -141,7 +141,7 @@ This page complements **[2. Architecture Overview](architecture-overview.md)**: 
 
 ### Sensors
 
-**`analog_sensor.py`** — ADS1115-based 4-20mA/0-10V wrapper; `read_analog(channel)`, `convert_value(value, zero, full_scale)`. Depends on `lib/ADS1115`. Config: `static_config.pinout.i2c.*`, `static_config.ads1115_addr`; per-channel `zero`/`full_scale` come from `dynamic_config.analog_config.inputs[]`.
+**`analog_sensor.py`** — ADS1115-based 4-20mA wrapper; `read_analog(channel)`, `convert_value(value, zero, full_scale)`. Depends on `lib/ADS1115`. Config: `static_config.pinout.i2c.*`, `static_config.ads1115_addr`; per-channel `zero`/`full_scale` come from `dynamic_config.analog_config.inputs[]`.
 
 **`digital_sensor.py`** — ULP-based low-power pulse counter with software debounce (only GPIO 36/39, RTC-capable pins). Depends on `lib/esp32_ulp`. Reads its wake-up edge count from `dynamic_config.digital_config.inputs[]` — a list with one entry per channel — by finding the entry where `channel == 0` and reading its `wake` key.
 
