@@ -424,6 +424,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Conectividad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modulo-externo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Módulo externo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrado-en-todas-las-unidades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integrado en todas las unidades
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1923,6 +1951,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Conectividad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modulo-externo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Módulo externo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrado-en-todas-las-unidades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integrado en todas las unidades
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2060,7 +2116,8 @@
 </tbody>
 </table>
 <h2 id="conectividad">Conectividad</h2>
-<p>Un módulo de conectividad por unidad, fijado en fábrica:</p>
+<h3 id="modulo-externo">Módulo externo</h3>
+<p>Cada unidad lleva uno de estos dos, fijado en fábrica (son mutuamente excluyentes):</p>
 <table>
 <thead>
 <tr>
@@ -2074,24 +2131,36 @@
 <td style="text-align: left;">NB-IoT / LTE-M, satélite (NTN), y DECT NR+ (compatible a nivel de chip vía el nRF9151; el soporte por firmware está planeado, todavía no disponible — ver la <a href="../#hoja-de-ruta">Hoja de ruta</a>).</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>LoRaWAN</strong></td>
-<td style="text-align: left;">Clase A (Clase B/C soportadas, no recomendadas para uso a batería)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Wi-Fi</strong></td>
-<td style="text-align: left;">802.11 b/g/n, 2.4 GHz (ESP32)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Bluetooth (BLE)</strong></td>
-<td style="text-align: left;">Bluetooth v4.2 BR/EDR + BLE (ESP32). Bajo demanda, activado por imán — ver <a href="../sensor-connections/#18-sensores-internos-y-diagnostico">1.8. Sensores Internos y Diagnóstico</a></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>eSIM</strong></td>
+<td style="text-align: left;"><strong>eSIM</strong> <em>(versión celular)</em></td>
 <td style="text-align: left;">Integrada, 500 MB o 5 años (lo que ocurra antes) — ver <a href="../parts-and-accessories/">1. Piezas y Accesorios</a></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Slot Nano SIM</strong></td>
+<td style="text-align: left;"><strong>Slot Nano SIM</strong> <em>(versión celular)</em></td>
 <td style="text-align: left;">También disponible un slot externo para Nano-SIM (p. ej. para servicio satelital/NTN con una SIM de terceros)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LoRaWAN</strong></td>
+<td style="text-align: left;">Clase A (Clase B/C soportadas, no recomendadas para uso a batería)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="integrado-en-todas-las-unidades">Integrado en todas las unidades</h3>
+<p>Lo proporciona el propio ESP32, en todas las versiones:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Wi-Fi</strong></td>
+<td style="text-align: left;">802.11 b/g/n, 2.4 GHz</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bluetooth (BLE)</strong></td>
+<td style="text-align: left;">Bluetooth v4.2 BR/EDR + BLE. Bajo demanda, activado por imán — ver <a href="../sensor-connections/#18-sensores-internos-y-diagnostico">1.8. Sensores Internos y Diagnóstico</a></td>
 </tr>
 </tbody>
 </table>
