@@ -88,6 +88,8 @@ ISURLOG es un producto en mantenimiento activo con despliegues reales en campo, 
 
 ISURLOG se vende directamente desde ISURKI, configurado según la conectividad y los sensores de cada proyecto. Usa el **[configurador interactivo](configurator.md)** para montar tu configuración exacta, ver el precio de cada opción, y solicitar presupuesto — o consulta antes la referencia completa de **[Piezas y Accesorios](parts-and-accessories.md)**.
 
+La plataforma en la nube **[IsurDASH](https://isurdash.isurki.com)** en sí es gratuita — sin suscripción, sin coste por dispositivo, y sin límite en la cantidad de datos que almacenas.
+
 ---
 
 ## Recursos rápidos

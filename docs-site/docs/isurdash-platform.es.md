@@ -2,7 +2,7 @@
 
 IsurDASH es la plataforma web centralizada desde la que se gestiona toda la flota de dataloggers **ISURLOG**. Está diseñada para ofrecer una interfaz intuitiva y potente que permite a los usuarios no solo visualizar los datos recogidos, sino también configurar y controlar los dispositivos de forma remota.
 
-Todos los datos enviados por el **ISURLOG** se reciben en los servidores seguros de Isurki, donde se almacenan indefinidamente, garantizando que el histórico de mediciones nunca se pierda.
+**IsurDASH en sí es gratuito** — sin suscripción, sin coste por dispositivo, y sin límite en la cantidad de datos que almacenas. Todos los datos enviados por el **ISURLOG** se reciben en los servidores seguros de Isurki, donde se almacenan indefinidamente, garantizando que el histórico de mediciones nunca se pierda.
 
 Para usuarios avanzados, se ofrece **[acceso por API](data-access-overview.md)**, que permite integrar los datos del **ISURLOG** en aplicaciones de terceros o sistemas SCADA. Además, para organizaciones que requieran un control total sobre sus datos, la plataforma IsurDASH puede instalarse en los propios servidores del cliente. Para esta opción de instalación a medida, contactar con Isurki.
 
