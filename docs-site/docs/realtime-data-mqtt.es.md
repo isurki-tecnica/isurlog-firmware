@@ -110,7 +110,7 @@ Todos los valores multibyte se codifican en orden **Big-Endian**. El primer payl
 | **Battery Voltage** | 0 | 0x74 | Entero sin signo de 2 bytes | Valor final = Entero (en mV) |
 | **Unix Timestamp** | 0 | 0x75 | Entero sin signo de 4 bytes | Valor final = Entero (segundos) |
 | **Battery C-Rate** | 0 | 0x77 | Entero con signo de 1 byte | Valor final = Entero / 10.0 (%/h) |
-| **Modem Signal Quality** | 0 (RSRQ) / 1 (RSRP) | 0x78 | Entero sin signo de 1 byte | Valor final = Entero (canal 0: dB · canal 1: dBm). **Solo dispositivos NB-IoT.** |
+| **Modem Signal Quality** | 0 (RSRQ) / 1 (RSRP) | 0x78 | Entero sin signo de 1 byte | Valor final = Entero, el **índice 3GPP en bruto** del módem, no una unidad física. Canal 0 (RSRQ, 0–34): dB = (valor − 40) / 2. Canal 1 (RSRP, 0–97): dBm = valor − 141. 255 = no detectable. **Solo dispositivos NB-IoT.** |
 
 !!! note "Nota sobre la semántica del canal"
     Para la mayoría de los tipos de sensor, el canal identifica de qué entrada física proviene la lectura (p. ej. Analog Input 0-3). Para **Accelerometer**, el mismo fragmento empaqueta los tres ejes juntos (no hay un canal separado por eje). Para **Modem Signal Quality**, el canal se reutiliza para distinguir la *métrica* (0 = RSRQ, 1 = RSRP) en vez de una entrada física.

@@ -51,8 +51,8 @@ Esta sección ofrece la correspondencia entre las entradas físicas y virtuales 
 | **Accelerometer Z-axis** | `AccelerometerZ0` | Aceleración en el eje Z (g). |
 | **Battery Voltage** | `VoltageInput0` | La tensión de batería del dispositivo, en milivoltios (mV). |
 | **Battery C-Rate** | `CRateInput0` | La tasa de carga/descarga de la batería, en %/h. |
-| **Modem Signal Quality** | `ModemData0` | RSRQ (calidad de señal recibida de referencia) reportada por el módem, en **dB**. **Solo dispositivos NB-IoT** — no disponible en dispositivos LoRaWAN. |
-| **Modem Signal Strength** | `ModemData1` | RSRP (potencia de señal recibida de referencia) reportada por el módem, en **dBm**. **Solo dispositivos NB-IoT** — no disponible en dispositivos LoRaWAN. |
+| **Modem Signal Quality** | `ModemData0` | RSRQ (calidad de señal recibida de referencia), guardada como el **índice 3GPP en bruto** del módem (0–34; 255 = no detectable), no en dB. Para convertir: **dB = (valor − 40) / 2**. **Solo dispositivos NB-IoT** — no disponible en dispositivos LoRaWAN. |
+| **Modem Signal Strength** | `ModemData1` | RSRP (potencia de señal recibida de referencia), guardada como el **índice 3GPP en bruto** del módem (0–97; 255 = no detectable), no en dBm. Para convertir: **dBm = valor − 141**. **Solo dispositivos NB-IoT** — no disponible en dispositivos LoRaWAN. |
 
 ## 2.5 Implementación de Referencia
 
@@ -117,7 +117,7 @@ Esto imprime una tabla con las lecturas de los últimos 7 días y abre una **ún
 2. **Soil — Diagnostics** *(grande)* — temperatura del suelo (`ModbusInput0`, eje izquierdo, °C) frente a permitividad dieléctrica en bruto (`ModbusInput3`/Epsilon, eje derecho — sin unidad, ya que es un ratio entre dos permitividades).
 3. **Battery** *(pequeño)* — tensión (`VoltageInput0`, eje izquierdo) frente a tasa de carga (`CRateInput0`, eje derecho).
 4. **Internal Temperature & Humidity** *(pequeño)* — `TemperatureSensor0` (eje izquierdo) frente a `HumiditySensor0` (eje derecho).
-5. **NB-IoT Network Quality** *(pequeño)* — RSRQ en dB (`ModemData0`, eje izquierdo) frente a RSRP en dBm (`ModemData1`, eje derecho).
+5. **NB-IoT Network Quality** *(pequeño)* — RSRQ en dB (`ModemData0`, eje izquierdo) frente a RSRP en dBm (`ModemData1`, eje derecho), ambos convertidos por el script a partir de los índices en bruto guardados en la base de datos.
 
 Cada gráfico representa dos campos con ejes Y independientes (izquierdo/derecho), ya que normalmente están en escalas muy distintas. El helper subyacente `_plot_dual_axis()` puede reutilizarse para construir gráficos adicionales para cualquier otra clave `_field` de la **[2.4 Esquema de Datos: Referencia de Claves de Campo](#24-esquema-de-datos-referencia-de-claves-de-campo)**. Los tamaños desiguales de los paneles se construyen con `GridSpec` de `matplotlib` (en vez de una cuadrícula uniforme de `plt.subplots()`), de forma que los dos paneles grandes puedan ocupar cada uno lo que de otro modo serían 1,5 columnas de una cuadrícula de 3 columnas normal.
 

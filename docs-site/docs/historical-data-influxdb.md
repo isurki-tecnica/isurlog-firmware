@@ -51,8 +51,8 @@ This section provides the mapping between the physical and virtual inputs of the
 | **Accelerometer Z-axis** | `AccelerometerZ0` | Acceleration on the Z axis (g). |
 | **Battery Voltage** | `VoltageInput0` | The device's battery voltage in millivolts (mV). |
 | **Battery C-Rate** | `CRateInput0` | The battery's charge/discharge rate, in %/h. |
-| **Modem Signal Quality** | `ModemData0` | RSRQ (Reference Signal Received Quality) reported by the modem, in **dB**. **NB-IoT devices only** — not available on LoRaWAN devices. |
-| **Modem Signal Strength** | `ModemData1` | RSRP (Reference Signal Received Power) reported by the modem, in **dBm**. **NB-IoT devices only** — not available on LoRaWAN devices. |
+| **Modem Signal Quality** | `ModemData0` | RSRQ (Reference Signal Received Quality), stored as the modem's **raw 3GPP index** (0–34; 255 = not detectable), not in dB. To convert: **dB = (value − 40) / 2**. **NB-IoT devices only** — not available on LoRaWAN devices. |
+| **Modem Signal Strength** | `ModemData1` | RSRP (Reference Signal Received Power), stored as the modem's **raw 3GPP index** (0–97; 255 = not detectable), not in dBm. To convert: **dBm = value − 141**. **NB-IoT devices only** — not available on LoRaWAN devices. |
 
 ## 2.5 Reference Implementation
 
@@ -117,7 +117,7 @@ This prints a table of the last 7 days of readings and opens a **single window w
 2. **Soil — Diagnostics** *(large)* — soil temperature (`ModbusInput0`, left axis, °C) vs. raw dielectric permittivity (`ModbusInput3`/Epsilon, right axis — dimensionless, it's a ratio of two permittivities so it has no unit).
 3. **Battery** *(small)* — voltage (`VoltageInput0`, left axis) vs. C-rate (`CRateInput0`, right axis).
 4. **Internal Temperature & Humidity** *(small)* — `TemperatureSensor0` (left axis) vs. `HumiditySensor0` (right axis).
-5. **NB-IoT Network Quality** *(small)* — RSRQ in dB (`ModemData0`, left axis) vs. RSRP in dBm (`ModemData1`, right axis).
+5. **NB-IoT Network Quality** *(small)* — RSRQ in dB (`ModemData0`, left axis) vs. RSRP in dBm (`ModemData1`, right axis), both converted by the script from the raw indices stored in the database.
 
 Each chart plots two fields with independent Y-axes (left/right), since they're normally on very different scales. The underlying `_plot_dual_axis()` helper can be reused to build additional charts for any other `_field` key from **[2.4 Data Schema: Field Key Reference](#24-data-schema-field-key-reference)**. The uneven panel sizes are built with `matplotlib`'s `GridSpec` (rather than a uniform `plt.subplots()` grid) so the two large panels can each span what would otherwise be 1.5 columns of a plain 3-column layout.
 

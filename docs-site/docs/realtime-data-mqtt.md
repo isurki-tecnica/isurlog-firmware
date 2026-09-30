@@ -110,7 +110,7 @@ All multi-byte values are encoded in **Big-Endian** byte order. The first data p
 | **Battery Voltage** | 0 | 0x74 | 2-byte Unsigned Integer | Final Value = Integer (in mV) |
 | **Unix Timestamp** | 0 | 0x75 | 4-byte Unsigned Integer | Final Value = Integer (seconds) |
 | **Battery C-Rate** | 0 | 0x77 | 1-byte Signed Integer | Final Value = Integer / 10.0 (%/h) |
-| **Modem Signal Quality** | 0 (RSRQ) / 1 (RSRP) | 0x78 | 1-byte Unsigned Integer | Final Value = Integer (channel 0: dB · channel 1: dBm). **NB-IoT devices only.** |
+| **Modem Signal Quality** | 0 (RSRQ) / 1 (RSRP) | 0x78 | 1-byte Unsigned Integer | Final Value = Integer, the modem's **raw 3GPP index**, not a physical unit. Channel 0 (RSRQ, 0–34): dB = (value − 40) / 2. Channel 1 (RSRP, 0–97): dBm = value − 141. 255 = not detectable. **NB-IoT devices only.** |
 
 !!! note "Note on channel semantics"
     for most sensor types, the channel identifies which physical input the reading came from (e.g. Analog Input 0-3). For **Accelerometer**, the same chunk packs all three axes together (there's no separate channel per axis). For **Modem Signal Quality**, the channel is repurposed to distinguish the *metric* (0 = RSRQ, 1 = RSRP) rather than a physical input.
