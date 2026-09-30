@@ -2109,12 +2109,12 @@
 <tr>
 <td style="text-align: left;"><strong>Modem Signal Quality</strong></td>
 <td style="text-align: left;"><code>ModemData0</code></td>
-<td style="text-align: left;">RSRQ (Reference Signal Received Quality) reported by the modem, in <strong>dB</strong>. <strong>NB-IoT devices only</strong> — not available on LoRaWAN devices.</td>
+<td style="text-align: left;">RSRQ (Reference Signal Received Quality), stored as the modem's <strong>raw 3GPP index</strong> (0–34; 255 = not detectable), not in dB. To convert: <strong>dB = (value − 40) / 2</strong>. <strong>NB-IoT devices only</strong> — not available on LoRaWAN devices.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Modem Signal Strength</strong></td>
 <td style="text-align: left;"><code>ModemData1</code></td>
-<td style="text-align: left;">RSRP (Reference Signal Received Power) reported by the modem, in <strong>dBm</strong>. <strong>NB-IoT devices only</strong> — not available on LoRaWAN devices.</td>
+<td style="text-align: left;">RSRP (Reference Signal Received Power), stored as the modem's <strong>raw 3GPP index</strong> (0–97; 255 = not detectable), not in dBm. To convert: <strong>dBm = value − 141</strong>. <strong>NB-IoT devices only</strong> — not available on LoRaWAN devices.</td>
 </tr>
 </tbody>
 </table>
@@ -2159,7 +2159,7 @@ python<span class="w"> </span>isurlog_influx_demo.py
 <li><strong>Soil — Diagnostics</strong> <em>(large)</em> — soil temperature (<code>ModbusInput0</code>, left axis, °C) vs. raw dielectric permittivity (<code>ModbusInput3</code>/Epsilon, right axis — dimensionless, it's a ratio of two permittivities so it has no unit).</li>
 <li><strong>Battery</strong> <em>(small)</em> — voltage (<code>VoltageInput0</code>, left axis) vs. C-rate (<code>CRateInput0</code>, right axis).</li>
 <li><strong>Internal Temperature &amp; Humidity</strong> <em>(small)</em> — <code>TemperatureSensor0</code> (left axis) vs. <code>HumiditySensor0</code> (right axis).</li>
-<li><strong>NB-IoT Network Quality</strong> <em>(small)</em> — RSRQ in dB (<code>ModemData0</code>, left axis) vs. RSRP in dBm (<code>ModemData1</code>, right axis).</li>
+<li><strong>NB-IoT Network Quality</strong> <em>(small)</em> — RSRQ in dB (<code>ModemData0</code>, left axis) vs. RSRP in dBm (<code>ModemData1</code>, right axis), both converted by the script from the raw indices stored in the database.</li>
 </ol>
 <p>Each chart plots two fields with independent Y-axes (left/right), since they're normally on very different scales. The underlying <code>_plot_dual_axis()</code> helper can be reused to build additional charts for any other <code>_field</code> key from <strong><a href="#24-data-schema-field-key-reference">2.4 Data Schema: Field Key Reference</a></strong>. The uneven panel sizes are built with <code>matplotlib</code>'s <code>GridSpec</code> (rather than a uniform <code>plt.subplots()</code> grid) so the two large panels can each span what would otherwise be 1.5 columns of a plain 3-column layout.</p>
 <p>To query your <strong>own</strong> devices, replace <code>URL</code>, <code>TOKEN</code>, and <code>BUCKET</code> at the top of the script with the private credentials Isurki provides you (see <strong><a href="#23-connection-parameters">2.3 Connection Parameters</a></strong>).</p>

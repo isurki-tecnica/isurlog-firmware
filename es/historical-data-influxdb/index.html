@@ -2109,12 +2109,12 @@
 <tr>
 <td style="text-align: left;"><strong>Modem Signal Quality</strong></td>
 <td style="text-align: left;"><code>ModemData0</code></td>
-<td style="text-align: left;">RSRQ (calidad de señal recibida de referencia) reportada por el módem, en <strong>dB</strong>. <strong>Solo dispositivos NB-IoT</strong> — no disponible en dispositivos LoRaWAN.</td>
+<td style="text-align: left;">RSRQ (calidad de señal recibida de referencia), guardada como el <strong>índice 3GPP en bruto</strong> del módem (0–34; 255 = no detectable), no en dB. Para convertir: <strong>dB = (valor − 40) / 2</strong>. <strong>Solo dispositivos NB-IoT</strong> — no disponible en dispositivos LoRaWAN.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Modem Signal Strength</strong></td>
 <td style="text-align: left;"><code>ModemData1</code></td>
-<td style="text-align: left;">RSRP (potencia de señal recibida de referencia) reportada por el módem, en <strong>dBm</strong>. <strong>Solo dispositivos NB-IoT</strong> — no disponible en dispositivos LoRaWAN.</td>
+<td style="text-align: left;">RSRP (potencia de señal recibida de referencia), guardada como el <strong>índice 3GPP en bruto</strong> del módem (0–97; 255 = no detectable), no en dBm. Para convertir: <strong>dBm = valor − 141</strong>. <strong>Solo dispositivos NB-IoT</strong> — no disponible en dispositivos LoRaWAN.</td>
 </tr>
 </tbody>
 </table>
@@ -2159,7 +2159,7 @@ python<span class="w"> </span>isurlog_influx_demo.py
 <li><strong>Soil — Diagnostics</strong> <em>(grande)</em> — temperatura del suelo (<code>ModbusInput0</code>, eje izquierdo, °C) frente a permitividad dieléctrica en bruto (<code>ModbusInput3</code>/Epsilon, eje derecho — sin unidad, ya que es un ratio entre dos permitividades).</li>
 <li><strong>Battery</strong> <em>(pequeño)</em> — tensión (<code>VoltageInput0</code>, eje izquierdo) frente a tasa de carga (<code>CRateInput0</code>, eje derecho).</li>
 <li><strong>Internal Temperature &amp; Humidity</strong> <em>(pequeño)</em> — <code>TemperatureSensor0</code> (eje izquierdo) frente a <code>HumiditySensor0</code> (eje derecho).</li>
-<li><strong>NB-IoT Network Quality</strong> <em>(pequeño)</em> — RSRQ en dB (<code>ModemData0</code>, eje izquierdo) frente a RSRP en dBm (<code>ModemData1</code>, eje derecho).</li>
+<li><strong>NB-IoT Network Quality</strong> <em>(pequeño)</em> — RSRQ en dB (<code>ModemData0</code>, eje izquierdo) frente a RSRP en dBm (<code>ModemData1</code>, eje derecho), ambos convertidos por el script a partir de los índices en bruto guardados en la base de datos.</li>
 </ol>
 <p>Cada gráfico representa dos campos con ejes Y independientes (izquierdo/derecho), ya que normalmente están en escalas muy distintas. El helper subyacente <code>_plot_dual_axis()</code> puede reutilizarse para construir gráficos adicionales para cualquier otra clave <code>_field</code> de la <strong><a href="#24-esquema-de-datos-referencia-de-claves-de-campo">2.4 Esquema de Datos: Referencia de Claves de Campo</a></strong>. Los tamaños desiguales de los paneles se construyen con <code>GridSpec</code> de <code>matplotlib</code> (en vez de una cuadrícula uniforme de <code>plt.subplots()</code>), de forma que los dos paneles grandes puedan ocupar cada uno lo que de otro modo serían 1,5 columnas de una cuadrícula de 3 columnas normal.</p>
 <p>Para consultar tus <strong>propios</strong> dispositivos, sustituye <code>URL</code>, <code>TOKEN</code>, y <code>BUCKET</code> al principio del script por las credenciales privadas que te proporciona Isurki (ver <strong><a href="#23-parametros-de-conexion">2.3 Parámetros de Conexión</a></strong>).</p>

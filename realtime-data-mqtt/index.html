@@ -2485,7 +2485,7 @@
 <td style="text-align: left;">0 (RSRQ) / 1 (RSRP)</td>
 <td style="text-align: left;">0x78</td>
 <td style="text-align: left;">1-byte Unsigned Integer</td>
-<td style="text-align: left;">Final Value = Integer (channel 0: dB · channel 1: dBm). <strong>NB-IoT devices only.</strong></td>
+<td style="text-align: left;">Final Value = Integer, the modem's <strong>raw 3GPP index</strong>, not a physical unit. Channel 0 (RSRQ, 0–34): dB = (value − 40) / 2. Channel 1 (RSRP, 0–97): dBm = value − 141. 255 = not detectable. <strong>NB-IoT devices only.</strong></td>
 </tr>
 </tbody>
 </table>
