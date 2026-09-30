@@ -48,6 +48,7 @@ plugins:
           build: true
           nav_translations:
             Home: Inicio
+            Technical Specifications: Ficha Técnica
             "🛠️ Module A - Use and Hardware": "🛠️ Módulo A - Uso y Hardware"
             "1. Sensor Connections": "1. Conexión de Sensores"
             "2. Power Supply Methods": "2. Métodos de Alimentación"
@@ -90,6 +91,7 @@ plugins:
 
 nav:
   - Home: index.md
+  - Technical Specifications: technical-specifications.md
   - 🛠️ Module A - Use and Hardware:
       - 1. Sensor Connections: sensor-connections.md
       - 2. Power Supply Methods: power-supply.md
