@@ -24,16 +24,25 @@ A single-page reference for the ISURLOG's hardware specifications. For how to wi
 
 ## Connectivity
 
-One connectivity module per unit, fixed at build time:
+### External module
+
+Each unit has one of these two, fixed at build time (they are mutually exclusive):
 
 | | |
 | :--- | :--- |
 | **Cellular** | NB-IoT / LTE-M, satellite (NTN), and DECT NR+ (chip-capable via the nRF9151; firmware support is planned, not yet available — see the [Roadmap](index.md#roadmap)). |
+| **eSIM** *(cellular version)* | Integrated, 500 MB or 5 years (whichever comes first) — see [1. Parts and Accessories](parts-and-accessories.md) |
+| **Nano SIM slot** *(cellular version)* | External Nano-SIM slot also available (e.g. for satellite/NTN service via a third-party SIM) |
 | **LoRaWAN** | Class A (Class B/C supported, not recommended for battery-powered use) |
-| **Wi-Fi** | 802.11 b/g/n, 2.4 GHz (ESP32) |
-| **Bluetooth (BLE)** | Bluetooth v4.2 BR/EDR + BLE (ESP32). On-demand, magnet-activated — see [1.8. Internal Sensors and Diagnostics](sensor-connections.md#18-internal-sensors-and-diagnostics) |
-| **eSIM** | Integrated, 500 MB or 5 years (whichever comes first) — see [1. Parts and Accessories](parts-and-accessories.md) |
-| **Nano SIM slot** | External Nano-SIM slot also available (e.g. for satellite/NTN service via a third-party SIM) |
+
+### Built into every unit
+
+Provided by the ESP32 itself, on every version:
+
+| | |
+| :--- | :--- |
+| **Wi-Fi** | 802.11 b/g/n, 2.4 GHz |
+| **Bluetooth (BLE)** | Bluetooth v4.2 BR/EDR + BLE. On-demand, magnet-activated — see [1.8. Internal Sensors and Diagnostics](sensor-connections.md#18-internal-sensors-and-diagnostics) |
 
 ## Inputs & Outputs
 
