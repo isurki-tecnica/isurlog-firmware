@@ -87,7 +87,7 @@ plugins:
             "1. Troubleshooting": "1. Resolución de Problemas"
             "🧰 Module F - Parts and Accessories": "🧰 Módulo F - Piezas y Accesorios"
             "1. Parts and Accessories": "1. Piezas y Accesorios"
-            "2. Build Your Own ISURLOG": "2. Configura tu ISURLOG"
+            "2. The Enclosure": "2. La Caja"
 
 nav:
   - Home: index.md
@@ -130,7 +130,7 @@ nav:
       - 1. Troubleshooting: troubleshooting.md
   - 🧰 Module F - Parts and Accessories:
       - 1. Parts and Accessories: parts-and-accessories.md
-      - 2. Build Your Own ISURLOG: configurator.md
+      - 2. The Enclosure: enclosure.md
   - 📝 Blog: https://docs.isurlog.isurki.com/blog/
 
 markdown_extensions:

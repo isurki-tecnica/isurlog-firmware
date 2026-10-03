@@ -1,0 +1,130 @@
+.encl {
+  --e-surface: #ffffff;
+  --e-surface-2: #f4f6f5;
+  --e-border: #d7dcda;
+  --e-border-strong: #b9c1be;
+  --e-text: #182322;
+  --e-muted: #55625f;
+  --e-accent: #1b8a45;
+  --e-accent-bg: #e3f3e8;
+  --e-stage-a: #f7f9f8;
+  --e-stage-b: #dde3e1;
+  --e-radius: 10px;
+}
+[data-md-color-scheme="slate"] .encl {
+  --e-surface: #1b201f;
+  --e-surface-2: #222827;
+  --e-border: #333b39;
+  --e-border-strong: #4a5552;
+  --e-text: #e8ece9;
+  --e-muted: #a6b1ad;
+  --e-accent: #5fd08a;
+  --e-accent-bg: #173324;
+  --e-stage-a: #2b3331;
+  --e-stage-b: #151a19;
+}
+.encl, .encl * { box-sizing: border-box; }
+.encl { margin: 1.5rem 0; color: var(--e-text); }
+
+/* stage = a framed 3D viewer */
+.encl-stage {
+  position: relative;
+  border: 1px solid var(--e-border);
+  border-radius: var(--e-radius);
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 38%, var(--e-stage-a), var(--e-stage-b));
+}
+.encl-stage model-viewer {
+  display: block;
+  width: 100%;
+  height: clamp(320px, 62vh, 560px);
+  --poster-color: transparent;
+  background: transparent;
+}
+.encl-stage.is-short model-viewer { height: clamp(280px, 48vh, 420px); }
+.encl-hint {
+  position: absolute; left: .9rem; bottom: .7rem;
+  font-size: .72rem; color: var(--e-muted); pointer-events: none;
+}
+
+/* segmented control */
+.encl-seg {
+  position: absolute; top: .8rem; left: 50%; transform: translateX(-50%);
+  display: inline-flex; gap: 2px; padding: 3px;
+  background: var(--e-surface); border: 1px solid var(--e-border); border-radius: 999px;
+}
+.encl-seg button {
+  border: 0; background: transparent; color: var(--e-muted); cursor: pointer;
+  font: inherit; font-size: .8rem; font-weight: 600;
+  padding: .35rem .95rem; border-radius: 999px;
+}
+.encl-seg button[aria-pressed="true"] { background: var(--e-accent); color: #fff; }
+[data-md-color-scheme="slate"] .encl-seg button[aria-pressed="true"] { color: #0c1a12; }
+.encl-seg button:focus-visible, .encl-part:focus-visible { outline: 2px solid var(--e-accent); outline-offset: 2px; }
+
+/* legend */
+.encl-legend { display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; margin: .8rem 0 0; font-size: .82rem; color: var(--e-muted); }
+.encl-legend i { display: inline-block; width: .8rem; height: .8rem; border-radius: 3px; margin-right: .4rem; vertical-align: -1px; border: 1px solid var(--e-border-strong); }
+
+/* part picker */
+.encl-parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .5rem; margin: .8rem 0; }
+.encl-part {
+  text-align: left; cursor: pointer; font: inherit; color: var(--e-text);
+  background: var(--e-surface); border: 1px solid var(--e-border); border-radius: 8px; padding: .55rem .7rem;
+}
+.encl-part small { display: block; color: var(--e-muted); font-size: .72rem; margin-top: .1rem; }
+.encl-part[aria-pressed="true"] { border-color: var(--e-accent); background: var(--e-accent-bg); }
+.encl-info { border: 1px solid var(--e-border); border-radius: var(--e-radius); background: var(--e-surface); padding: .9rem 1.1rem; margin-top: .8rem; }
+.encl-info[hidden] { display: none; }
+.encl-info h3 { margin: 0 0 .3rem; font-size: 1rem; }
+.encl-info p { margin: .3rem 0; font-size: .88rem; }
+.encl-info dl { display: grid; grid-template-columns: max-content 1fr; gap: .15rem .9rem; margin: .6rem 0 0; font-size: .82rem; }
+.encl-info dt { color: var(--e-muted); }
+.encl-info dd { margin: 0; }
+
+/* videos */
+.encl-videos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.encl-videos figure { margin: 0; border: 1px solid var(--e-border); border-radius: var(--e-radius); overflow: hidden; background: var(--e-surface); }
+.encl-videos video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; background: #e7ebea; }
+.encl-videos figcaption { padding: .55rem .8rem .7rem; font-size: .85rem; color: var(--e-muted); }
+.encl-videos figcaption b { color: var(--e-text); }
+
+@media (prefers-reduced-motion: reduce) { .encl-seg button { transition: none; } }
+
+/* videos open in the lightbox on click */
+.encl-videos a { display: block; cursor: zoom-in; }
+.encl-videos a:focus-visible { outline: 2px solid var(--e-accent); outline-offset: -2px; }
+
+/* hero: canvas + assemble/disassemble slider */
+.encl-canvas { position: relative; }
+.encl-bar {
+  display: flex; align-items: center; gap: .8rem;
+  padding: .55rem 1rem; border-top: 1px solid var(--e-border);
+  background: var(--e-surface); font-size: .8rem; color: var(--e-muted);
+}
+.encl-range { flex: 1; min-width: 0; accent-color: var(--e-accent); cursor: grab; }
+.encl-range:active { cursor: grabbing; }
+.encl-range:focus-visible { outline: 2px solid var(--e-accent); outline-offset: 2px; }
+
+/* battery selector row above the hero viewer */
+.encl-opts {
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .5rem .8rem;
+  padding: .6rem 1rem; border-bottom: 1px solid var(--e-border);
+  background: var(--e-surface); font-size: .8rem; color: var(--e-muted);
+}
+.encl-seg.encl-seg-inline { position: static; transform: none; background: var(--e-surface-2); }
+.encl-note { margin: .7rem 0 0; font-size: .85rem; color: var(--e-muted); }
+.encl-seg-inline button { display: flex; flex-direction: column; align-items: center; line-height: 1.2; padding: .4rem 1.1rem; border-radius: 999px; }
+.encl-seg-inline button small { font-weight: 400; font-size: .7rem; opacity: .85; }
+
+/* colour picker for the hero model */
+.encl-colors { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.4rem; margin: .8rem 0 0; font-size: .82rem; color: var(--e-muted); }
+.encl-colors-label { font-weight: 600; color: var(--e-text); }
+.encl-swatches { display: flex; align-items: center; gap: .4rem; }
+.encl-swatches small { margin-right: .2rem; font-size: .78rem; }
+.encl-sw {
+  width: 1.5rem; height: 1.5rem; padding: 0; border-radius: 50%; cursor: pointer;
+  background: var(--c); border: 1px solid var(--e-border-strong);
+}
+.encl-sw[aria-pressed="true"] { outline: 2px solid var(--e-accent); outline-offset: 2px; }
+.encl-sw:focus-visible { outline: 2px solid var(--e-accent); outline-offset: 2px; }

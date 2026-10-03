@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # 2. Configura tu ISURLOG
 
 Elige tus opciones abajo — el total se actualiza a medida que avanzas. Esto solo incluye elementos disponibles directamente desde Isurki (con precio real); para las alternativas "consíguelo tú mismo", las especificaciones completas, y los enlaces de proveedor de cada elemento, ver **[1. Piezas y Accesorios](parts-and-accessories.md)**. Cuando estés listo, solicita presupuesto y confirmaremos compatibilidad y precio final.

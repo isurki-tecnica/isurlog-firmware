@@ -86,7 +86,7 @@ ISURLOG is an actively maintained product with real field deployments, not a pro
 
 ## Get ISURLOG
 
-ISURLOG is sold directly by ISURKI, configured for your specific connectivity and sensor setup. Use the **[interactive configurator](configurator.md)** to build your exact setup, see live pricing for every option, and request a quote — or browse the full **[Parts and Accessories](parts-and-accessories.md)** reference first.
+ISURLOG is sold directly by ISURKI, configured for your specific connectivity and sensor setup. Browse the full **[Parts and Accessories](parts-and-accessories.md)** reference to see every option and its price.
 
 The [IsurDASH](https://isurdash.isurki.com) cloud platform itself is free — no subscription, no per-device fee, and no cap on how much data you store.
 

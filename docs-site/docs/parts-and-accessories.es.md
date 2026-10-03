@@ -2,8 +2,6 @@
 
 Una referencia completa de todo el hardware que puede acompañar a un ISURLOG — el propio dispositivo, carcasa/montaje, antenas, baterías, alimentación externa/solar, y conectividad. Para cada elemento: qué puedes conseguir directamente **de Isurki**, y qué puedes **conseguir por tu cuenta** si prefieres comprarlo tú o ya lo tienes.
 
-¿Prefieres montar un pedido a medida en vez de leer tablas? Ver **[2. Configura tu ISURLOG](configurator.md)** para un configurador interactivo que va sumando el total a medida que eliges.
-
 *Todos los precios "Desde Isurki" están en EUR y no incluyen IVA.*
 
 !!! note "Trabajo en progreso"

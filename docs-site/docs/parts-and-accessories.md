@@ -2,8 +2,6 @@
 
 A complete reference for every piece of hardware that can go with an ISURLOG — the unit itself, mounting/enclosure, antennas, batteries, external/solar power, and connectivity. For each item: what you can get directly **from Isurki**, and what you can **source yourself** if you'd rather buy or already have it.
 
-Want to build a custom order instead of reading through tables? See **[2. Build Your Own ISURLOG](configurator.md)** for an interactive configurator that adds up the total as you go.
-
 *All "From Isurki" prices are in EUR and exclude VAT.*
 
 !!! note "Work in progress"

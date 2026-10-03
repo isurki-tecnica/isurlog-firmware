@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # 2. Build Your Own ISURLOG
 
 Pick your options below — the total updates as you go. This only includes items available directly from Isurki (with a real price); for the "bring your own" alternatives, full specs, and supplier links for each item, see **[1. Parts and Accessories](parts-and-accessories.md)**. When you're ready, request a quote and we'll confirm compatibility and final pricing.
