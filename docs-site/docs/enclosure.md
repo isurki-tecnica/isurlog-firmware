@@ -104,8 +104,6 @@ Pick a piece to inspect it. Each one can be rotated and zoomed.
   </div>
 </div>
 
-Prices and availability of the mounting accessories are in [Parts and Accessories](parts-and-accessories.md). For how to choose between wall, DIN rail and pole, see [4.2. Physical Mounting](installation-commissioning.md#42-physical-mounting).
-
 ## 2.3 Assembly and use
 
 <div class="encl">
@@ -124,7 +122,7 @@ Click a video to enlarge it.
 
 ## 2.4 Why a printed enclosure
 
-A printed enclosure is not a compromise. It allows things that are hard to do with a moulded box, and it puts the design in your hands.
+A printed enclosure is not a compromise. It allows things that are hard to do with an injection-moulded box, and it puts the design in your hands.
 
 ### 2.4.1 Make it yours
 
@@ -133,7 +131,7 @@ A printed enclosure is not a compromise. It allows things that are hard to do wi
 - **Your colours and your logo.** Print the box, the closures and the mounts in any filament colour: match your brand or colour-code your installations. The lid already has a recess for a label, and with the STL files you can add your logo or an identification number using your slicer or any 3D modelling tool. Try the colours on the model in [2.1](#21-overview).
 - **Your own parts.** The WAGO rail and the battery holder are built on the same frame and use the same anchors in the box, so an interior accessory of your own can use them too.
 - **Your own openings.** The box already has five M12 holes for cable glands on the rear wall (four in the upper row and one in the lower row). If you need more, or other sizes, you can add your own with your slicer or any 3D modelling tool. Every opening has to be sealed, with a cable gland or a blind plug, including the ones you do not use.
-- **Your own material.** The base material is PETG, but you can experiment: ASA, or filaments reinforced with glass or carbon fibre, if your installation needs more. Reinforced filaments are abrasive and need a hardened nozzle. The print-in-place clearance is worth checking again with any new material. Filaments that conduct electricity, such as some carbon-fibre or metal-filled ones, can weaken the signal of the antennas inside the box. Check the signal quality after changing material.
+- **Your own material.** The base material is PETG, but you can experiment: ASA, or filaments reinforced with glass or carbon fibre, if your installation environment is more demanding. Reinforced filaments are abrasive and need a hardened nozzle. The print-in-place clearance is worth checking again with any new material. Filaments that conduct electricity, such as some carbon-fibre or metal-filled ones, can weaken the signal of the antennas inside the box. Check the signal quality after changing material.
 - **Mods and remixes.** You can modify the parts for your own use. If you share a modification, credit ISURKI, say what you changed and use the same license ([2.5.3](#253-license)).
 
 </div>
@@ -172,7 +170,7 @@ The projects are set up for a Bambu Lab P2S with a 0.4 mm nozzle and Sunlu PETG,
     * A magnet, Ø18 × 4 mm, for the housing in the lid.
 * **Print in place.** The closures and the DIN latch are printed already assembled, with a 0.2 mm clearance. Your printer has to hold that clearance without fusing the parts together.
 * **Material.** PETG; the projects are set up for [Sunlu PETG](https://i.refs.cc/uja9Haai){ target="_blank" rel="sponsored nofollow noopener" }. Other materials are possible (see [2.4.1](#241-make-it-yours)); the same brand also makes PETG-CF and ASA. The print settings are already in the projects of [2.5.1](#251-print-projects). *(Referral link: buying through it supports the project.)*
-* **Warranty.** Using an enclosure that ISURKI did not supply does not, by itself, affect the warranty on the ISURLOG electronics. That warranty does not cover damage caused by the enclosure, for example water or dust getting in.
+* **Warranty.** If you fit the ISURLOG in an enclosure that ISURKI did not supply, the warranty on the electronics stays in force. Only failures caused by that enclosure are excluded, for example water or dust getting in and damaging the board.
 
 ### 2.5.3 License
 

@@ -104,8 +104,6 @@ Elige una pieza para inspeccionarla. Todas se pueden girar y ampliar.
   </div>
 </div>
 
-Los precios y la disponibilidad de los accesorios de montaje están en [Piezas y Accesorios](parts-and-accessories.md). Para elegir entre pared, carril DIN y poste, consulta [4.2. Montaje Físico](installation-commissioning.md#42-montaje-fisico).
-
 ## 2.3 Montaje y uso
 
 <div class="encl">
@@ -124,7 +122,7 @@ Haz clic en un vídeo para ampliarlo.
 
 ## 2.4 Por qué una caja impresa
 
-Una caja impresa no es una solución de compromiso. Permite cosas que son difíciles con una caja inyectada, y pone el diseño en tus manos.
+Una caja impresa no es una solución de compromiso. Permite cosas que son difíciles con una caja de inyección, y pone el diseño en tus manos.
 
 ### 2.4.1 Hazla tuya
 
@@ -133,7 +131,7 @@ Una caja impresa no es una solución de compromiso. Permite cosas que son difíc
 - **Tus colores y tu logotipo.** Imprime la caja, los cierres y los soportes del color de filamento que quieras: los de tu marca o uno distinto para cada tipo de instalación. La tapa ya tiene un rebaje para la etiqueta y, con los archivos STL, puedes añadir tu logotipo o un número de identificación con tu laminador o con cualquier herramienta de modelado 3D. Prueba los colores en el modelo de [2.1](#21-vision-general).
 - **Tus propias piezas.** El raíl WAGO y el portapilas están construidos sobre el mismo bastidor y usan los mismos anclajes de la caja, así que un accesorio interior tuyo también puede usarlos.
 - **Tus propias aberturas.** La caja ya trae cinco agujeros M12 para prensaestopas en la pared trasera (cuatro en la fila superior y uno en la inferior). Si necesitas más, o de otros tamaños, puedes añadir los tuyos con tu laminador o con cualquier herramienta de modelado 3D. Toda abertura tiene que sellarse, con un prensaestopas o con un tapón ciego, también las que no uses.
-- **Tu propio material.** De base se imprime en PETG, pero puedes experimentar: ASA, o filamentos reforzados con fibra de vidrio o de carbono, si tu instalación necesita más. Los filamentos reforzados son abrasivos y requieren una boquilla endurecida. Conviene volver a comprobar la holgura del *print in place* con cualquier material nuevo. Los filamentos que conducen la electricidad, como algunos con fibra de carbono o con carga metálica, pueden debilitar la señal de las antenas que van dentro de la caja. Comprueba la calidad de la señal después de cambiar de material.
+- **Tu propio material.** De base se imprime en PETG, pero puedes experimentar: ASA, o filamentos reforzados con fibra de vidrio o de carbono, si tu entorno de instalación es más exigente. Los filamentos reforzados son abrasivos y requieren una boquilla endurecida. Conviene volver a comprobar la holgura del *print in place* con cualquier material nuevo. Los filamentos que conducen la electricidad, como algunos con fibra de carbono o con carga metálica, pueden debilitar la señal de las antenas que van dentro de la caja. Comprueba la calidad de la señal después de cambiar de material.
 - **Mods y remixes.** Puedes modificar las piezas para tu uso. Si compartes una modificación, cita a ISURKI, indica qué has cambiado y usa la misma licencia ([2.5.3](#253-licencia)).
 
 </div>
@@ -172,7 +170,7 @@ Los proyectos están preparados para una Bambu Lab P2S con boquilla de 0,4 mm y 
     * Un imán de Ø18 × 4 mm para el alojamiento de la tapa.
 * **Print in place.** Los cierres y el pestillo del soporte DIN se imprimen ya montados, con una holgura de 0,2 mm. Tu impresora tiene que respetar esa holgura sin soldar las piezas entre sí.
 * **Material.** PETG; los proyectos están preparados para [PETG de Sunlu](https://i.refs.cc/uja9Haai){ target="_blank" rel="sponsored nofollow noopener" }. Son posibles otros materiales (ver [2.4.1](#241-hazla-tuya)); la misma marca también fabrica PETG-CF y ASA. Los ajustes de impresión ya vienen en los proyectos de [2.5.1](#251-proyectos-de-impresion). *(Enlace de referido: comprar a través de él apoya el proyecto.)*
-* **Garantía.** Usar una caja que ISURKI no ha suministrado no afecta, por sí solo, a la garantía de la electrónica del ISURLOG. Esa garantía no cubre los daños causados por la caja, por ejemplo la entrada de agua o de polvo.
+* **Garantía.** Si montas el ISURLOG en una caja que no ha suministrado ISURKI, la garantía de la electrónica sigue en vigor. Solo quedan fuera las averías causadas por esa caja, por ejemplo si entra agua o polvo y estropea la placa.
 
 ### 2.5.3 Licencia
 
