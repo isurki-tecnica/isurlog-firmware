@@ -1,0 +1,2324 @@
+<!DOCTYPE html><html lang="es" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="ISURLOG documentation — hardware, firmware, data integration, and troubleshooting">
+      
+      
+      
+        <link rel="canonical" href="https://docs.isurlog.isurki.com/es/enclosure/">
+      
+      
+        <link rel="prev" href="../parts-and-accessories/">
+      
+      
+      
+        
+          <link rel="alternate" href="../../enclosure/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>2. La Caja - ISURLOG Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-639QHEW68F"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-639QHEW68F",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-639QHEW68F",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-la-caja" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../" title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ISURLOG Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. La Caja
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../enclosure/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    ISURLOG Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical-specifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ficha Técnica
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🛠️ Módulo A - Uso y Hardware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🛠️ Módulo A - Uso y Hardware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensor-connections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Conexión de Sensores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-supply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Métodos de Alimentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../communications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Comunicaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation-commissioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datalogger-operation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Funcionamiento del Datalogger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6">
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Plataforma IsurDASH
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Plataforma IsurDASH
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-access-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1. Acceso e Inicio de Sesión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2. Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.3. Dispositivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-alarms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.4. Alarmas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Usuarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.6. Perfiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.7. Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.8. Mantenimiento de Dispositivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Referencia de Parámetros de Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💻 Módulo B - Desarrollo de Firmware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💻 Módulo B - Desarrollo de Firmware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Configuración del Entorno de Compilación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Visión General de la Arquitectura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module-library-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1. Referencia de Módulos y Librerías
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing-application-upload/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Grabado del Firmware y Carga de la Aplicación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpio-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Mapeo de GPIO (Hardware-Software)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Guía Avanzada del Módem NB-IoT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Guía Avanzada del Módem LoRaWAN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contribution-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Guía de Contribución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ☁️ Módulo C - Integración de Datos y APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ☁️ Módulo C - Integración de Datos y APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-access-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Resumen de Acceso a Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../historical-data-influxdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Datos Históricos (InfluxDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../realtime-data-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Datos en Tiempo Real (MQTT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote-configuration-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. API de Configuración Remota (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚡ Módulo D - Consumo de Energía y Vida de la Batería
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ⚡ Módulo D - Consumo de Energía y Vida de la Batería
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consumption-graphs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Gráficos de Consumo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-budget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Calculadora de Consumo de Energía
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🩺 Módulo E - Resolución de Problemas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🩺 Módulo E - Resolución de Problemas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Resolución de Problemas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧰 Módulo F - Piezas y Accesorios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🧰 Módulo F - Piezas y Accesorios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parts-and-accessories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Piezas y Accesorios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. La Caja
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. La Caja
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#21-vision-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Visión general
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-las-piezas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Las piezas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-montaje-y-uso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Montaje y uso
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-por-que-una-caja-impresa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Por qué una caja impresa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Por qué una caja impresa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241-hazla-tuya" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.1 Hazla tuya
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242-facil-de-mantener" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.2 Fácil de mantener
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-imprimela-tu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Imprímela tú
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5 Imprímela tú">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#251-proyectos-de-impresion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.1 Proyectos de impresión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#252-antes-de-imprimir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.2 Antes de imprimir
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#253-licencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.3 Licencia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://docs.isurlog.isurki.com/blog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#21-vision-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Visión general
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-las-piezas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Las piezas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-montaje-y-uso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Montaje y uso
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-por-que-una-caja-impresa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Por qué una caja impresa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Por qué una caja impresa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241-hazla-tuya" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.1 Hazla tuya
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242-facil-de-mantener" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.2 Fácil de mantener
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-imprimela-tu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Imprímela tú
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5 Imprímela tú">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#251-proyectos-de-impresion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.1 Proyectos de impresión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#252-antes-de-imprimir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.2 Antes de imprimir
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#253-licencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.3 Licencia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="2-la-caja">2. La Caja</h1>
+<p>La caja del ISURLOG está diseñada por ISURKI y se imprime en 3D en PETG. Gírala, acércate y despiézala aquí abajo.</p>
+<h2 id="21-vision-general">2.1 Visión general</h2>
+<div class="encl">
+  <div class="encl-stage">
+    <div class="encl-opts">
+      <span>Batería</span>
+      <div class="encl-seg encl-seg-inline" role="group" aria-label="Batería">
+        <button type="button" aria-pressed="true" data-variant="liion" data-note="Placa principal con portapilas integrados (celdas 18650) y raíl WAGO.">Li-ion<small>recargable</small></button>
+        <button type="button" aria-pressed="false" data-variant="lisocl2" data-note="Placa principal sin portapilas integrados, más el portapilas con dos pilas ER34615.">Li-SOCl₂<small>no recargable</small></button>
+      </div>
+    </div>
+    <div class="encl-canvas">
+      <model-viewer id="encl-hero" src="/enclosure/enclosure-liion.glb" alt="Modelo 3D de la caja del ISURLOG" animation-name="explode" camera-controls="" touch-action="pan-y" auto-rotate="" auto-rotate-delay="3000" rotation-per-second="12deg" camera-orbit="-35deg 68deg 105%" min-camera-orbit="auto auto 0.12m" max-camera-orbit="auto auto 2m" environment-image="neutral" shadow-intensity="0.8" shadow-softness="0.9" exposure="0.7" loading="lazy"></model-viewer>
+      <div class="encl-seg" role="group" aria-label="Vista">
+        <button type="button" aria-pressed="true" data-explode="0">Montada</button>
+        <button type="button" aria-pressed="false" data-explode="1">Despiece</button>
+      </div>
+      <span class="encl-hint">Arrastra para girar · rueda o pellizco para acercar</span>
+    </div>
+    <div class="encl-bar">
+      <span>Montada</span>
+      <input type="range" class="encl-range" id="encl-range" min="0" max="1000" value="0" aria-label="Montar o desmontar la caja">
+      <span>Despiece</span>
+    </div>
+  </div>
+  <p class="encl-note" id="encl-note">Placa principal con portapilas integrados (celdas 18650) y raíl WAGO.</p>
+  <div class="encl-colors">
+    <span class="encl-colors-label">Prueba tus colores</span>
+    <div class="encl-swatches" role="group" aria-label="Caja y tapa"><small>Caja y tapa</small><button type="button" class="encl-sw" data-role="body" data-color="#EDE6CC" style="--c:#EDE6CC" aria-label="Marfil" aria-pressed="true"></button><button type="button" class="encl-sw" data-role="body" data-color="#F2F2F0" style="--c:#F2F2F0" aria-label="Blanco" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#9AA0A6" style="--c:#9AA0A6" aria-label="Gris" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#E8782A" style="--c:#E8782A" aria-label="Naranja" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#2E6DB4" style="--c:#2E6DB4" aria-label="Azul" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#2B2B2E" style="--c:#2B2B2E" aria-label="Negro" aria-pressed="false"></button></div>
+    <div class="encl-swatches" role="group" aria-label="Cierres, llave y accesorios interiores"><small>Cierres, llave y accesorios interiores</small><button type="button" class="encl-sw" data-role="accent" data-color="#00A838" style="--c:#00A838" aria-label="Verde" aria-pressed="true"></button><button type="button" class="encl-sw" data-role="accent" data-color="#F28C28" style="--c:#F28C28" aria-label="Naranja" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#2E6DB4" style="--c:#2E6DB4" aria-label="Azul" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#C8372D" style="--c:#C8372D" aria-label="Rojo" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#E8C21A" style="--c:#E8C21A" aria-label="Amarillo" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#F2F2F0" style="--c:#F2F2F0" aria-label="Blanco" aria-pressed="false"></button></div>
+  </div>
+  <div class="encl-legend">
+    <span><i id="lg-body" style="background:#EDE6CC"></i>Caja, tapa y tornillo de la contratapa</span>
+    <span><i id="lg-accent" style="background:#00A838"></i>Cierres, llave, contratapa y accesorios interiores</span>
+    <span><i style="background:#0F522B"></i>Placa principal</span>
+    <span><i style="background:#2F6FB8"></i>Baterías</span>
+    <span><i style="background:#212124"></i>Soportes de montaje</span>
+  </div>
+</div>
+
+<h2 id="22-las-piezas">2.2 Las piezas</h2>
+<p>Elige una pieza para inspeccionarla. Todas se pueden girar y ampliar.</p>
+<div class="encl">
+  <div class="encl-stage is-short">
+    <model-viewer id="encl-part" src="/enclosure/parts/box.glb" alt="Modelo 3D de la pieza seleccionada de la caja" camera-controls="" touch-action="pan-y" auto-rotate="" rotation-per-second="14deg" camera-orbit="-35deg 68deg auto" environment-image="neutral" shadow-intensity="0.8" shadow-softness="0.9" exposure="0.7" loading="lazy"></model-viewer>
+    <span class="encl-hint">Arrastra para girar · rueda o pellizco para acercar</span>
+  </div>
+  <div class="encl-parts" role="group" aria-label="Piezas">
+    <button type="button" class="encl-part" aria-pressed="true" data-viewer="encl-part" data-src="/enclosure/parts/box.glb" data-panel="p-box">Caja<small>× 1</small></button>
+    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/lid.glb" data-panel="p-lid">Tapa y cierres<small>× 1 + 4</small></button>
+    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/cover.glb" data-panel="p-cover">Contratapa<small>× 1 + tornillo</small></button>
+    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/key.glb" data-panel="p-key">Llave<small>× 1</small></button>
+    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/wago.glb" data-panel="p-wago">Raíl WAGO<small>opcional</small></button>
+    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/battery.glb" data-panel="p-battery">Portapilas<small>opcional</small></button>
+    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/din.glb" data-panel="p-din">Soporte DIN<small>opcional</small></button>
+    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/pole.glb" data-panel="p-pole">Soporte de poste<small>opcional</small></button>
+  </div>
+
+  <div class="encl-info" id="p-box">
+    <h3>Caja</h3>
+    <p>El cuerpo principal. Lleva los anclajes en L que sujetan los accesorios interiores, las torretas para la PCB, el anillo en «C» del frontal donde se guarda la llave y cinco agujeros M12 para prensaestopas en la pared trasera (cuatro en la fila superior y uno en la inferior).</p>
+    <dl><dt>Cantidad</dt><dd>1</dd><dt>Material</dt><dd>PETG</dd></dl>
+  </div>
+  <div class="encl-info" id="p-lid" hidden="">
+    <h3>Tapa y cierres</h3>
+    <p>La tapa tiene la ranura de la junta, un alojamiento para el imán, un marco para el desecante y un rebaje para la etiqueta. Los cuatro cierres de cuarto de vuelta se imprimen ya montados (<em>print in place</em>) y quedan cautivos en la tapa, así que no se pueden perder, por ejemplo dentro de una arqueta.</p>
+    <dl><dt>Cantidad</dt><dd>1 tapa + 4 cierres</dd><dt>Material</dt><dd>PETG</dd><dt>Junta</dt><dd>Cordón de silicona de Ø3 mm (no se imprime)</dd></dl>
+  </div>
+  <div class="encl-info" id="p-cover" hidden="">
+    <h3>Contratapa</h3>
+    <p>Va bajo la tapa y se sujeta al buje central de la tapa con un tornillo de cuarto de vuelta.</p>
+    <dl><dt>Cantidad</dt><dd>1 contratapa + 1 tornillo</dd></dl>
+  </div>
+  <div class="encl-info" id="p-key" hidden="">
+    <h3>Llave</h3>
+    <p>Gira los cierres de cuarto de vuelta. Se guarda encajada en el anillo en «C» del frontal de la caja, así que viaja siempre con ella.</p>
+    <dl><dt>Cantidad</dt><dd>1</dd></dl>
+  </div>
+  <div class="encl-info" id="p-wago" hidden="">
+    <h3>Raíl WAGO</h3>
+    <p>Un raíl para conectores WAGO 221. Se encaja en los anclajes en L de la caja. Usa los mismos agujeros que el portapilas, así que se monta uno u otro.</p>
+    <dl><dt>Cantidad</dt><dd>1 (alternativa al portapilas)</dd></dl>
+  </div>
+  <div class="encl-info" id="p-battery" hidden="">
+    <h3>Portapilas (2 × ER34615)</h3>
+    <p>Una base y una abrazadera con las dos cunas: las patas de la abrazadera pasan por las ranuras de la base y se enganchan encima. Usa los mismos agujeros que el raíl WAGO, así que se monta uno u otro.</p>
+    <dl><dt>Cantidad</dt><dd>1 base + 1 abrazadera (alternativa al raíl WAGO)</dd></dl>
+  </div>
+  <div class="encl-info" id="p-din" hidden="">
+    <h3>Soporte para carril DIN</h3>
+    <p>Una placa con un pestillo de muelle, impresos en una sola pieza (<em>print in place</em>). Se fija a la base de la caja con tornillos y tuercas M6 de acero inoxidable; las tuercas van en cajeras hexagonales del soporte.</p>
+    <dl><dt>Cantidad</dt><dd>1</dd></dl>
+  </div>
+  <div class="encl-info" id="p-pole" hidden="">
+    <h3>Soporte de poste</h3>
+    <p>Se fija a la base de la caja con tornillos y tuercas M6 de acero inoxidable. Se imprimen dos soportes por caja, más cuatro cilindros separadores (dos por soporte). Los cilindros tienen dos posiciones de taladro, la interior para postes finos. El modelo muestra un soporte y un cilindro.</p>
+    <dl><dt>Cantidad</dt><dd>2 soportes + 4 cilindros</dd></dl>
+  </div>
+</div>
+
+<p>Los precios y la disponibilidad de los accesorios de montaje están en <a href="../parts-and-accessories/">Piezas y Accesorios</a>. Para elegir entre pared, carril DIN y poste, consulta <a href="../installation-commissioning/#42-montaje-fisico">4.2. Montaje Físico</a>.</p>
+<h2 id="23-montaje-y-uso">2.3 Montaje y uso</h2>
+<div class="encl">
+  <div class="encl-videos">
+    <figure><a class="glightbox" href="/enclosure/video/01-overview.mp4" data-type="video" data-title="Visión general" data-desc-position="bottom"><video autoplay="" loop="" muted="" playsinline="" preload="metadata"><source src="/enclosure/video/01-overview.mp4" type="video/mp4"></video></a><figcaption><b>Visión general</b></figcaption></figure>
+    <figure><a class="glightbox" href="/enclosure/video/02-open-close.mp4" data-type="video" data-title="Abrir y cerrar" data-desc-position="bottom"><video autoplay="" loop="" muted="" playsinline="" preload="metadata"><source src="/enclosure/video/02-open-close.mp4" type="video/mp4"></video></a><figcaption><b>Abrir y cerrar</b></figcaption></figure>
+    <figure><a class="glightbox" href="/enclosure/video/03-cover.mp4" data-type="video" data-title="Contratapa" data-desc-position="bottom"><video autoplay="" loop="" muted="" playsinline="" preload="metadata"><source src="/enclosure/video/03-cover.mp4" type="video/mp4"></video></a><figcaption><b>Contratapa</b></figcaption></figure>
+    <figure><a class="glightbox" href="/enclosure/video/04-wago.mp4" data-type="video" data-title="Raíl WAGO" data-desc-position="bottom"><video autoplay="" loop="" muted="" playsinline="" preload="metadata"><source src="/enclosure/video/04-wago.mp4" type="video/mp4"></video></a><figcaption><b>Raíl WAGO</b></figcaption></figure>
+    <figure><a class="glightbox" href="/enclosure/video/05-battery.mp4" data-type="video" data-title="Portapilas" data-desc-position="bottom"><video autoplay="" loop="" muted="" playsinline="" preload="metadata"><source src="/enclosure/video/05-battery.mp4" type="video/mp4"></video></a><figcaption><b>Portapilas</b></figcaption></figure>
+    <figure><a class="glightbox" href="/enclosure/video/06-din.mp4" data-type="video" data-title="Soporte para carril DIN" data-desc-position="bottom"><video autoplay="" loop="" muted="" playsinline="" preload="metadata"><source src="/enclosure/video/06-din.mp4" type="video/mp4"></video></a><figcaption><b>Soporte para carril DIN</b></figcaption></figure>
+    <figure><a class="glightbox" href="/enclosure/video/07-pole.mp4" data-type="video" data-title="Soporte de poste" data-desc-position="bottom"><video autoplay="" loop="" muted="" playsinline="" preload="metadata"><source src="/enclosure/video/07-pole.mp4" type="video/mp4"></video></a><figcaption><b>Soporte de poste</b></figcaption></figure>
+  </div>
+</div>
+
+<p>Haz clic en un vídeo para ampliarlo.</p>
+<h2 id="24-por-que-una-caja-impresa">2.4 Por qué una caja impresa</h2>
+<p>Una caja impresa no es una solución de compromiso. Permite cosas que son difíciles con una caja inyectada, y pone el diseño en tus manos.</p>
+<h3 id="241-hazla-tuya">2.4.1 Hazla tuya</h3>
+<div class="grid cards">
+<ul>
+<li><strong>Tus colores y tu logotipo.</strong> Imprime la caja, los cierres y los soportes del color de filamento que quieras: los de tu marca o uno distinto para cada tipo de instalación. La tapa ya tiene un rebaje para la etiqueta y, con los archivos STL, puedes añadir tu logotipo o un número de identificación con tu laminador o con cualquier herramienta de modelado 3D. Prueba los colores en el modelo de <a href="#21-vision-general">2.1</a>.</li>
+<li><strong>Tus propias piezas.</strong> El raíl WAGO y el portapilas están construidos sobre el mismo bastidor y usan los mismos anclajes de la caja, así que un accesorio interior tuyo también puede usarlos.</li>
+<li><strong>Tus propias aberturas.</strong> La caja ya trae cinco agujeros M12 para prensaestopas en la pared trasera (cuatro en la fila superior y uno en la inferior). Si necesitas más, o de otros tamaños, puedes añadir los tuyos con tu laminador o con cualquier herramienta de modelado 3D. Toda abertura tiene que sellarse, con un prensaestopas o con un tapón ciego, también las que no uses.</li>
+<li><strong>Tu propio material.</strong> De base se imprime en PETG, pero puedes experimentar: ASA, o filamentos reforzados con fibra de vidrio o de carbono, si tu instalación necesita más. Los filamentos reforzados son abrasivos y requieren una boquilla endurecida. Conviene volver a comprobar la holgura del <em>print in place</em> con cualquier material nuevo. Los filamentos que conducen la electricidad, como algunos con fibra de carbono o con carga metálica, pueden debilitar la señal de las antenas que van dentro de la caja. Comprueba la calidad de la señal después de cambiar de material.</li>
+<li><strong>Mods y remixes.</strong> Puedes modificar las piezas para tu uso. Si compartes una modificación, cita a ISURKI, indica qué has cambiado y usa la misma licencia (<a href="#253-licencia">2.5.3</a>).</li>
+</ul>
+</div>
+<h3 id="242-facil-de-mantener">2.4.2 Fácil de mantener</h3>
+<div class="grid cards">
+<ul>
+<li><strong>Reparable.</strong> Una pieza rota es un trabajo de impresión, no un pedido de recambios. La reimprimes y la cambias.</li>
+<li><strong>Cierres que no se pierden.</strong> Los cuatro cierres de cuarto de vuelta se imprimen ya montados y quedan cautivos en la tapa.</li>
+<li><strong>Modular.</strong> Pared, carril DIN o poste por fuera; raíl WAGO o portapilas por dentro. La misma caja en todos los casos.</li>
+</ul>
+</div>
+<h2 id="25-imprimela-tu">2.5 Imprímela tú</h2>
+<div class="admonition info">
+<p class="admonition-title">Próximamente</p>
+<p>Los archivos (STL y proyectos de Bambu Studio listos para imprimir) se publicarán en GitHub y MakerWorld bajo la licencia descrita en <a href="#253-licencia">2.5.3</a>.</p>
+</div>
+<h3 id="251-proyectos-de-impresion">2.5.1 Proyectos de impresión</h3>
+<p>Los ajustes de impresión van dentro de proyectos de Bambu Studio, así que no hay una lista de ajustes que copiar. Elige el que corresponda a dónde va a estar la caja:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Dónde va a estar</th>
+<th style="text-align: left;">Proyecto</th>
+<th style="text-align: left;">Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>A resguardo</strong>, por ejemplo dentro de un edificio</td>
+<td style="text-align: left;"><strong>Interior</strong></td>
+<td style="text-align: left;">Listo</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Exterior o clima adverso</strong> (agua, sol)</td>
+<td style="text-align: left;"><strong>Exterior</strong>. La caja, la tapa y los cierres que se imprimen con ella son las piezas que evitan que entren agua y polvo, así que este proyecto las imprime con un perfil más exigente</td>
+<td style="text-align: left;">Listo</td>
+</tr>
+</tbody>
+</table>
+<p>Los proyectos están preparados para una Bambu Lab P2S con boquilla de 0,4 mm y PETG de Sunlu, con una placa por pieza: caja, tapa con cierres, contratapa, tornillo de la contratapa, llave, raíl WAGO, portapilas, soporte DIN y soporte de poste. Con otra impresora u otro filamento, abre el proyecto en Bambu Studio, elige la tuya, vuelve a laminar y revisa cada placa antes de imprimir.</p>
+<h3 id="252-antes-de-imprimir">2.5.2 Antes de imprimir</h3>
+<ul>
+<li><strong>Material que no se imprime.</strong><ul>
+<li>Junta de cordón de silicona de Ø3 mm.</li>
+<li>Tornillos M6 × 15 mm y tuercas de acero inoxidable para los soportes, 4 por soporte.</li>
+<li>Un imán de Ø18 × 4 mm para el alojamiento de la tapa.</li>
+</ul>
+</li>
+<li><strong>Print in place.</strong> Los cierres y el pestillo del soporte DIN se imprimen ya montados, con una holgura de 0,2 mm. Tu impresora tiene que respetar esa holgura sin soldar las piezas entre sí.</li>
+<li><strong>Material.</strong> PETG; los proyectos están preparados para <a href="https://i.refs.cc/uja9Haai" rel="sponsored nofollow noopener" target="_blank">PETG de Sunlu</a>. Son posibles otros materiales (ver <a href="#241-hazla-tuya">2.4.1</a>); la misma marca también fabrica PETG-CF y ASA. Los ajustes de impresión ya vienen en los proyectos de <a href="#251-proyectos-de-impresion">2.5.1</a>. <em>(Enlace de referido: comprar a través de él apoya el proyecto.)</em></li>
+<li><strong>Garantía.</strong> Usar una caja que ISURKI no ha suministrado no afecta, por sí solo, a la garantía de la electrónica del ISURLOG. Esa garantía no cubre los daños causados por la caja, por ejemplo la entrada de agua o de polvo.</li>
+</ul>
+<h3 id="253-licencia">2.5.3 Licencia</h3>
+<p>Los archivos tienen licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">CC BY-NC-SA 4.0</a>. Además, ISURKI permite, sin coste:</p>
+<ul>
+<li>imprimir las piezas para dispositivos ISURLOG que poseas u operes, para uso personal o empresarial;</li>
+<li>que profesionales que dan servicio a dispositivos ISURLOG de sus clientes impriman y monten las piezas y cobren su trabajo, pero no las piezas impresas como producto por separado;</li>
+<li>modificar las piezas para esos usos. Si compartes una modificación, cita a ISURKI, indica qué has cambiado y usa la misma licencia.</li>
+</ul>
+<p>Vender piezas impresas, cajas o kits, o vender los archivos, requiere una licencia comercial: escribe a <a href="mailto:tecnica@isurki.com">tecnica@isurki.com</a>. Los nombres y logotipos ISURKI e ISURLOG no están cubiertos por la licencia.</p>
+<p><link rel="stylesheet" href="/enclosure/enclosure.css"></p>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.3.1/dist/model-viewer.min.js"></script>
+<script src="/enclosure/viewer.js" defer=""></script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
