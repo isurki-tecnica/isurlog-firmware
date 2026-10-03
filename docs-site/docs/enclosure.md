@@ -1,6 +1,6 @@
 # 2. The Enclosure
 
-The ISURLOG enclosure is designed by ISURKI and 3D-printed in PETG. Rotate it, zoom in, and take it apart below.
+The ISURLOG enclosure holds the datalogger, its batteries and the wiring in a single 3D-printed box, designed by ISURKI and printed in PETG. The lid closes with four captive quarter-turn closures, and a groove takes a Ø3 mm silicone cord gasket. Inside, you fit either a WAGO rail for the connections or a holder for two ER34615 cells, depending on the battery type. Outside, it mounts on a wall, on a DIN rail or on a pole. Rotate it, zoom in and take it apart below.
 
 ## 2.1 Overview
 

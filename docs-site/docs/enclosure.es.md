@@ -1,6 +1,6 @@
 # 2. La Caja
 
-La caja del ISURLOG está diseñada por ISURKI y se imprime en 3D en PETG. Gírala, acércate y despiézala aquí abajo.
+La caja del ISURLOG aloja el datalogger, sus baterías y el cableado en una sola caja impresa en 3D, diseñada por ISURKI e impresa en PETG. La tapa se cierra con cuatro cierres de cuarto de vuelta cautivos y lleva una ranura para una junta de cordón de silicona de Ø3 mm. Por dentro se monta un raíl WAGO para las conexiones o un portapilas para dos pilas ER34615, según el tipo de batería. Por fuera se fija a una pared, a un carril DIN o a un poste. Gírala, acércate y despiézala aquí abajo.
 
 ## 2.1 Visión general
 
