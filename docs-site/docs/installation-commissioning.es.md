@@ -35,7 +35,7 @@ Dos accesorios permiten montar y desmontar el ISURLOG sin necesidad de abrir nun
     * Montaje sobre una **pieza de plástico impresa en 3D** independiente, que se fija primero a la pared, y sobre la que después se encaja el ISURLOG.
 2. **Soporte de poste** — fija el ISURLOG a un poste o mástil.
 
-* **Enlace al modelo 3D:** 🚧 Próximamente.
+* **Enlace al modelo 3D:** [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861558)
 
 ## 4.3. Extracción e Inserción de Baterías
 

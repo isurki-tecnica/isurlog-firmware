@@ -13,7 +13,7 @@ Se aceptan contribuciones en las siguientes áreas:
 * **Documentación:** mejorar la calidad, claridad y completitud de esta Wiki o de los comentarios en el código.
 * **Reportes de errores:** enviar reportes claros y detallados a través del rastreador de Issues de GitHub.
 * **Peticiones de funcionalidad:** sugerencias de funcionalidad futura o de integración de hardware, a través de GitHub Discussions.
-* **Hardware (Printables):** aportar accesorios, soportes o carcasas nuevos o mejorados para el datalogger.
+* **Hardware (MakerWorld / Printables):** aportar accesorios, soportes o carcasas nuevos o mejorados para el datalogger.
 
 ## 7.2 Requisitos Previos para Enviar Código
 

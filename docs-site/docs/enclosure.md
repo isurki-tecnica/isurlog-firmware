@@ -148,8 +148,8 @@ A printed enclosure is not a compromise. It allows things that are hard to do wi
 
 ## 2.5 Print it yourself
 
-!!! info "Coming soon"
-    The files (STL and ready-to-print Bambu Studio projects) will be published on GitHub and MakerWorld under the license described in [2.5.3](#253-license).
+!!! success "Available on MakerWorld"
+    The files (STL and ready-to-print Bambu Studio projects) are published on [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861558){ target="_blank" rel="noopener" } under the license described in [2.5.3](#253-license).
 
 ### 2.5.1 Print projects
 

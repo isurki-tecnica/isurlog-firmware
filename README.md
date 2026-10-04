@@ -107,7 +107,7 @@ ISURLOG is an actively maintained product with real field deployments, not a pro
 | Isurnode Modbus expansion module | Hardware + Firmware | 🔜 Planned | — |
 | TinyML — on-device inference for lightweight tasks like local anomaly detection or predictive maintenance, without a round trip to the cloud | Firmware | 🔜 Planned | — |
 | RAK3172 firmware updates directly from IsurDASH (currently requires an external web tool) | Firmware | 🔜 Planned | — |
-| 3D-printable enclosure files, published on Printables | Hardware | 💬 In discussion | — |
+| 3D-printable enclosure files, published on MakerWorld | Hardware | ✅ Stable | 2026-10 |
 | Migration from ESP32 to ESP32-S3 or the newly-announced ESP32-S31 (final choice not yet decided) — native USB and a RISC-V LP core in place of today's ULP FSM coprocessor | Hardware + Firmware | 💬 In discussion | — |
 
 ---
@@ -125,6 +125,7 @@ This project is a derivative work of [MicroPython](https://github.com/micropytho
 ## Quick Links
 
 * **IsurDASH Cloud Platform:** [isurdash.isurki.com/login](https://isurdash.isurki.com/login)
+* **3D-Printable Enclosure:** [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861558)
 * **3D-Printed Accessories:** [Printables @isurki_3854777](https://www.printables.com/@isurki_3854777/models)
 * **Support:** (+34) 943-635437 · tecnica@isurki.com
 

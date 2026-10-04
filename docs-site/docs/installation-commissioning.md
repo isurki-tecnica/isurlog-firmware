@@ -35,7 +35,7 @@ Two accessories allow mounting and dismounting the ISURLOG without ever opening 
     * Mounting onto a separate **3D-printed plastic piece**, which is fixed to the wall first, and the ISURLOG then clips onto it.
 2. **Pole mount** — attaches the ISURLOG to a post or pole.
 
-* **3D Model Link:** 🚧 Coming soon.
+* **3D Model Link:** [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861558)
 
 ## 4.3. Battery Removal and Insertion
 

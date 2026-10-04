@@ -148,8 +148,8 @@ Una caja impresa no es una solución de compromiso. Permite cosas que son difíc
 
 ## 2.5 Imprímela tú
 
-!!! info "Próximamente"
-    Los archivos (STL y proyectos de Bambu Studio listos para imprimir) se publicarán en GitHub y MakerWorld bajo la licencia descrita en [2.5.3](#253-licencia).
+!!! success "Disponible en MakerWorld"
+    Los archivos (STL y proyectos de Bambu Studio listos para imprimir) están publicados en [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861558){ target="_blank" rel="noopener" } bajo la licencia descrita en [2.5.3](#253-licencia).
 
 ### 2.5.1 Proyectos de impresión
 

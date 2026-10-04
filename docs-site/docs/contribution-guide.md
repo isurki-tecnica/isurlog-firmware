@@ -13,7 +13,7 @@ We accept contributions in the following areas:
 * **Documentation:** Improving the quality, clarity, and completeness of this Wiki or inline comments.
 * **Bug Reports:** Submitting clear, detailed reports via the GitHub Issues tracker.
 * **Feature Requests:** Suggestions for future functionality or hardware integration, via GitHub Discussions.
-* **Hardware (Printables):** Providing new or improved accessories, mounts, or enclosures for the datalogger.
+* **Hardware (MakerWorld / Printables):** Providing new or improved accessories, mounts, or enclosures for the datalogger.
 
 ## 7.2 Prerequisites for Code Submission
 
