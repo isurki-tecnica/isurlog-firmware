@@ -156,8 +156,8 @@ Los ajustes de impresión van dentro de proyectos de Bambu Studio, así que no h
 
 | Dónde va a estar | Proyecto | Descarga |
 | :--- | :--- | :--- |
-| **A resguardo**, por ejemplo dentro de un edificio | **Interior** | [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box){ target="_blank" rel="noopener" } |
-| **Exterior o clima adverso** (agua, sol) | **Exterior**. La caja, la tapa y los cierres que se imprimen con ella son las piezas que evitan que entren agua y polvo, así que este proyecto las imprime con un perfil más exigente | [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box){ target="_blank" rel="noopener" } |
+| **A resguardo**, por ejemplo dentro de un edificio | **Interior**. Toda la caja se imprime con un perfil estándar, porque no está expuesta al agua, al polvo ni al sol | [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861558){ target="_blank" rel="noopener" } |
+| **Exterior o clima adverso** (agua, sol) | **Exterior**. La caja, la tapa y los cierres que se imprimen con ella son las piezas que evitan que entren agua y polvo, así que este proyecto las imprime con un perfil más exigente | [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861637){ target="_blank" rel="noopener" } |
 
 Los proyectos están preparados para una Bambu Lab P2S con boquilla de 0,4 mm y PETG de Sunlu, con una placa por pieza: caja, tapa con cierres, contratapa, tornillo de la contratapa, destornillador, raíl WAGO, portapilas, soporte DIN y soporte de poste. Con otra impresora u otro filamento, abre el proyecto en Bambu Studio, elige la tuya, vuelve a laminar y revisa cada placa antes de imprimir.
 

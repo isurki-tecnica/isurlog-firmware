@@ -156,8 +156,8 @@ The print settings come inside Bambu Studio projects, so there is no list of set
 
 | Where it will live | Project | Download |
 | :--- | :--- | :--- |
-| **Sheltered**, for example inside a building | **Indoor** | [MakerWorld](https://makerworld.com/en/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box){ target="_blank" rel="noopener" } |
-| **Outdoors or adverse weather** (water, sun) | **Outdoor**. The box, the lid and the closures printed with it are the parts that keep water and dust out, so this project prints them with a more demanding profile | [MakerWorld](https://makerworld.com/en/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box){ target="_blank" rel="noopener" } |
+| **Sheltered**, for example inside a building | **Indoor**. The whole enclosure prints with a standard profile, since it is not exposed to water, dust or sun | [MakerWorld](https://makerworld.com/en/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861558){ target="_blank" rel="noopener" } |
+| **Outdoors or adverse weather** (water, sun) | **Outdoor**. The box, the lid and the closures printed with it are the parts that keep water and dust out, so this project prints them with a more demanding profile | [MakerWorld](https://makerworld.com/en/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861637){ target="_blank" rel="noopener" } |
 
 The projects are set up for a Bambu Lab P2S with a 0.4 mm nozzle and Sunlu PETG, with one plate per part: box, lid with closures, lid cover, lid cover screw, screwdriver, WAGO rail, battery holder, DIN mount and pole mount. With another printer or filament, open the project in Bambu Studio, choose yours, slice again and check each plate before printing.
 
