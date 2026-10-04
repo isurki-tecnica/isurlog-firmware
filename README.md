@@ -125,7 +125,7 @@ This project is a derivative work of [MicroPython](https://github.com/micropytho
 ## Quick Links
 
 * **IsurDASH Cloud Platform:** [isurdash.isurki.com/login](https://isurdash.isurki.com/login)
-* **3D-Printable Enclosure:** [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861558)
+* **3D-Printable Enclosure:** [MakerWorld](https://makerworld.com/en/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box)
 * **3D-Printed Accessories:** [Printables @isurki_3854777](https://www.printables.com/@isurki_3854777/models)
 * **Support:** (+34) 943-635437 · tecnica@isurki.com
 
