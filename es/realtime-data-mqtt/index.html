@@ -1,0 +1,2643 @@
+<!DOCTYPE html><html lang="es" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="ISURLOG documentation — hardware, firmware, data integration, and troubleshooting">
+      
+      
+      
+        <link rel="canonical" href="https://docs.isurlog.isurki.com/es/realtime-data-mqtt/">
+      
+      
+        <link rel="prev" href="../historical-data-influxdb/">
+      
+      
+        <link rel="next" href="../remote-configuration-api/">
+      
+      
+        
+          <link rel="alternate" href="../../realtime-data-mqtt/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>3. Datos en Tiempo Real (MQTT) - ISURLOG Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-639QHEW68F"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-639QHEW68F",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-639QHEW68F",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3-datos-en-tiempo-real-via-mqtt-metodo-push" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../" title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ISURLOG Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. Datos en Tiempo Real (MQTT)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../realtime-data-mqtt/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    ISURLOG Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical-specifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ficha Técnica
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🛠️ Módulo A - Uso y Hardware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🛠️ Módulo A - Uso y Hardware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensor-connections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Conexión de Sensores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-supply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Métodos de Alimentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../communications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Comunicaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation-commissioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datalogger-operation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Funcionamiento del Datalogger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6">
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Plataforma IsurDASH
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Plataforma IsurDASH
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-access-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1. Acceso e Inicio de Sesión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2. Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.3. Dispositivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-alarms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.4. Alarmas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Usuarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.6. Perfiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.7. Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.8. Mantenimiento de Dispositivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Referencia de Parámetros de Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💻 Módulo B - Desarrollo de Firmware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💻 Módulo B - Desarrollo de Firmware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Configuración del Entorno de Compilación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Visión General de la Arquitectura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module-library-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1. Referencia de Módulos y Librerías
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing-application-upload/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Grabado del Firmware y Carga de la Aplicación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpio-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Mapeo de GPIO (Hardware-Software)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Guía Avanzada del Módem NB-IoT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Guía Avanzada del Módem LoRaWAN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contribution-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Guía de Contribución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ☁️ Módulo C - Integración de Datos y APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ☁️ Módulo C - Integración de Datos y APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-access-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Resumen de Acceso a Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../historical-data-influxdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Datos Históricos (InfluxDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Datos en Tiempo Real (MQTT)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Datos en Tiempo Real (MQTT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#31-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Resumen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Resumen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formato-de-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formato de los Datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-parametros-de-conexion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Parámetros de Conexión
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-estructura-de-topics-y-formato-del-mensaje" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Estructura de Topics y Formato del Mensaje
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Estructura de Topics y Formato del Mensaje">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#331-dispositivos-lorawan-via-chirpstack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3.1 Dispositivos LoRaWAN (vía ChirpStack)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3.1 Dispositivos LoRaWAN (vía ChirpStack)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-payload-json-chirpstack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo de Payload JSON (ChirpStack)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332-dispositivos-nb-iot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3.2 Dispositivos NB-IoT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-decodificacion-del-payload-nb-iotcayenne-lpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Decodificación del Payload (NB-IoT/Cayenne LPP)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 Decodificación del Payload (NB-IoT/Cayenne LPP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estructura-del-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura del Payload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencia-de-tipos-de-dato" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Referencia de Tipos de Dato
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-ejemplo-decodificando-un-payload-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Ejemplo: Decodificando un Payload de Datos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.5 Ejemplo: Decodificando un Payload de Datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fragmento-1-marca-de-tiempo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fragmento 1: Marca de Tiempo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fragmento-2-tension-de-bateria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fragmento 2: Tensión de Batería
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fragmento-3-temperatura-interna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fragmento 3: Temperatura Interna
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fragmento-4-humedad-interna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fragmento 4: Humedad Interna
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fragmento-5-entrada-analogica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fragmento 5: Entrada Analógica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-implementacion-de-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Implementación de Referencia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 Implementación de Referencia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pruebalo-al-instante-sin-necesidad-de-credenciales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruébalo al Instante — Sin Necesidad de Credenciales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-en-vivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard en Vivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote-configuration-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. API de Configuración Remota (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚡ Módulo D - Consumo de Energía y Vida de la Batería
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ⚡ Módulo D - Consumo de Energía y Vida de la Batería
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consumption-graphs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Gráficos de Consumo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-budget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Calculadora de Consumo de Energía
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🩺 Módulo E - Resolución de Problemas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🩺 Módulo E - Resolución de Problemas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Resolución de Problemas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧰 Módulo F - Piezas y Accesorios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🧰 Módulo F - Piezas y Accesorios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parts-and-accessories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Piezas y Accesorios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enclosure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. La Caja
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://docs.isurlog.isurki.com/blog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#31-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Resumen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Resumen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formato-de-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formato de los Datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-parametros-de-conexion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Parámetros de Conexión
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-estructura-de-topics-y-formato-del-mensaje" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Estructura de Topics y Formato del Mensaje
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Estructura de Topics y Formato del Mensaje">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#331-dispositivos-lorawan-via-chirpstack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3.1 Dispositivos LoRaWAN (vía ChirpStack)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3.1 Dispositivos LoRaWAN (vía ChirpStack)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-payload-json-chirpstack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo de Payload JSON (ChirpStack)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332-dispositivos-nb-iot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3.2 Dispositivos NB-IoT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-decodificacion-del-payload-nb-iotcayenne-lpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Decodificación del Payload (NB-IoT/Cayenne LPP)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 Decodificación del Payload (NB-IoT/Cayenne LPP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estructura-del-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura del Payload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencia-de-tipos-de-dato" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Referencia de Tipos de Dato
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-ejemplo-decodificando-un-payload-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Ejemplo: Decodificando un Payload de Datos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.5 Ejemplo: Decodificando un Payload de Datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fragmento-1-marca-de-tiempo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fragmento 1: Marca de Tiempo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fragmento-2-tension-de-bateria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fragmento 2: Tensión de Batería
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fragmento-3-temperatura-interna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fragmento 3: Temperatura Interna
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fragmento-4-humedad-interna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fragmento 4: Humedad Interna
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fragmento-5-entrada-analogica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fragmento 5: Entrada Analógica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-implementacion-de-referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Implementación de Referencia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 Implementación de Referencia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pruebalo-al-instante-sin-necesidad-de-credenciales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruébalo al Instante — Sin Necesidad de Credenciales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-en-vivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard en Vivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="3-datos-en-tiempo-real-via-mqtt-metodo-push">3. Datos en Tiempo Real vía MQTT (Método Push)</h1>
+<h2 id="31-resumen">3.1 Resumen</h2>
+<p>Este método de integración está pensado para aplicaciones que necesitan <strong>acceso inmediato a los datos</strong>, como dashboards de monitorización en vivo, sistemas de alerta en tiempo real, o automatización dirigida por eventos. La plataforma Isurlog envía los datos a un broker MQTT en el instante en que se reciben de un dispositivo.</p>
+<h3 id="formato-de-los-datos">Formato de los Datos</h3>
+<p>Los datos se publican como un <strong>payload binario en bruto</strong> (representado como una cadena hexadecimal) para maximizar la eficiencia y minimizar el consumo de datos en redes celulares. Por ello, la aplicación cliente <strong>debe decodificar este payload</strong> para interpretar los valores de los sensores.</p>
+<hr>
+<h2 id="32-parametros-de-conexion">3.2 Parámetros de Conexión</h2>
+<p>Para recibir el flujo de datos en tiempo real, los clientes deben conectarse al broker MQTT de Isurlog usando los siguientes parámetros seguros:</p>
+<ul>
+<li><strong>Broker URL:</strong> <code>mqttisurdash.isurki.com</code></li>
+<li><strong>Puerto (TLS):</strong> 8883 (la conexión segura mediante TLS es obligatoria)</li>
+<li><strong>Versión MQTT:</strong> el broker soporta clientes MQTT v5.0 y v3.1.1.</li>
+<li><strong>Usuario / Contraseña:</strong> se proporcionará un usuario y contraseña únicos para un acceso seguro.</li>
+</ul>
+<hr>
+<h2 id="33-estructura-de-topics-y-formato-del-mensaje">3.3 Estructura de Topics y Formato del Mensaje</h2>
+<p>La estructura del topic y el formato del mensaje dependen de la tecnología de comunicación usada por el dispositivo (LoRaWAN o NB-IoT).</p>
+<h3 id="331-dispositivos-lorawan-via-chirpstack">3.3.1 Dispositivos LoRaWAN (vía ChirpStack)</h3>
+<p>Los datos LoRaWAN se procesan a través del Network Server ChirpStack.</p>
+<ul>
+<li><strong>Estructura del Topic:</strong> <code>application/{application-id}/device/{device_eui}/event/up</code></li>
+<li><strong>Formato del Mensaje:</strong> <strong>objeto JSON con datos decodificados</strong>. El Network Server ChirpStack decodifica automáticamente el payload en bruto. Los valores de sensores decodificados están disponibles directamente dentro de la clave <code>object</code> del JSON.</li>
+<li><strong>Metadatos:</strong> el JSON también incluye metadatos de red útiles, como RSSI, SNR, ubicación del gateway, y parámetros de transmisión.</li>
+</ul>
+<h4 id="ejemplo-de-payload-json-chirpstack">Ejemplo de Payload JSON (ChirpStack)</h4>
+<p>Este ejemplo muestra la estructura y el contenido clave del campo <code>object</code> con las lecturas decodificadas:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"deviceInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"applicationName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isurlog"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"deviceName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c-123"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"devEui"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxxxxxxxxxxxx"</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"fCnt"</span><span class="p">:</span><span class="w"> </span><span class="mi">61</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"fPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AHVoyD3dAHQP5wAAAABnAPcAaIcAAv+d"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"AnalogInput_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.99</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"DigitalInput_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"HumiditySensor_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">67.5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"TemperatureSensor_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">24.7</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"UnixTime_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">1757953501.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"VoltageInput_0"</span><span class="p">:</span><span class="w"> </span><span class="mf">4071.0</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"rxInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"gatewayId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b827ebfffe70a454"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"rssi"</span><span class="p">:</span><span class="w"> </span><span class="mi">-51</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"snr"</span><span class="p">:</span><span class="w"> </span><span class="mf">6.2</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"txInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"frequency"</span><span class="p">:</span><span class="w"> </span><span class="mi">867500000</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"modulation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"lora"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"spreadingFactor"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="332-dispositivos-nb-iot">3.3.2 Dispositivos NB-IoT</h3>
+<ul>
+<li><strong>Estructura del Topic:</strong> <code>isurlog/datos/{device_id}</code></li>
+<li><strong>Formato del Mensaje:</strong> <strong>payload binario en bruto</strong> (cadena hexadecimal).</li>
+</ul>
+<hr>
+<h2 id="34-decodificacion-del-payload-nb-iotcayenne-lpp">3.4 Decodificación del Payload (NB-IoT/Cayenne LPP)</h2>
+<p>El formato de payload de Isurlog es una variante del <strong>Cayenne Low Power Payload (LPP)</strong>. Este formato es muy eficiente y permite enviar múltiples lecturas de sensores en un único mensaje.</p>
+<h3 id="estructura-del-payload">Estructura del Payload</h3>
+<p>Cada payload consiste en uno o más fragmentos de datos concatenados. Cada fragmento sigue la estructura:</p>
+<p><code>Canal (1 byte) | Tipo de dato (1 byte) | Valor (N bytes)</code></p>
+<ul>
+<li><strong>Canal:</strong> un identificador definido por el usuario para la fuente de datos (0–255), que normalmente corresponde a la entrada física del Isurlog.</li>
+<li><strong>Tipo de dato:</strong> un código de 1 byte que especifica el tipo de dato enviado (p. ej., temperatura, tensión).</li>
+<li><strong>Valor:</strong> la lectura en bruto del sensor, codificada en N bytes.</li>
+</ul>
+<p>Todos los valores multibyte se codifican en orden <strong>Big-Endian</strong>. El primer payload de datos transmitido siempre empieza con un fragmento de Marca de Tiempo Unix (Tipo 0x75).</p>
+<h3 id="referencia-de-tipos-de-dato">Referencia de Tipos de Dato</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Nombre del Sensor</th>
+<th style="text-align: left;">Canal</th>
+<th style="text-align: left;">Tipo (Hex)</th>
+<th style="text-align: left;">Formato de Dato</th>
+<th style="text-align: left;">Cálculo del Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Digital Input</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x00</td>
+<td style="text-align: left;">Entero sin signo de 1 byte</td>
+<td style="text-align: left;">Valor final = Entero</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Analog Input</strong></td>
+<td style="text-align: left;">0-3</td>
+<td style="text-align: left;">0x02</td>
+<td style="text-align: left;">Entero con signo de 2 bytes</td>
+<td style="text-align: left;">Valor final = Entero / 100.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modbus Input</strong></td>
+<td style="text-align: left;">0-3</td>
+<td style="text-align: left;">0x04</td>
+<td style="text-align: left;">Entero con signo de 2 bytes</td>
+<td style="text-align: left;">Valor final = Entero / 100.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PT100 Temperature</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x66</td>
+<td style="text-align: left;">Entero con signo de 2 bytes</td>
+<td style="text-align: left;">Valor final = Entero / 10.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Temperature Sensor</strong></td>
+<td style="text-align: left;">0 (interno) / 1 (externo, QWIIC)</td>
+<td style="text-align: left;">0x67</td>
+<td style="text-align: left;">Entero con signo de 2 bytes</td>
+<td style="text-align: left;">Valor final = Entero / 10.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Humidity Sensor</strong></td>
+<td style="text-align: left;">0 (interno) / 1 (externo, QWIIC)</td>
+<td style="text-align: left;">0x68</td>
+<td style="text-align: left;">Entero sin signo de 1 byte</td>
+<td style="text-align: left;">Valor final = Entero / 2.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Accelerometer</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x71</td>
+<td style="text-align: left;">6 bytes = tres enteros con signo de 2 bytes (X, Y, Z)</td>
+<td style="text-align: left;">Valor final (por eje) = Entero / 1000.0 (g)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Battery Voltage</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x74</td>
+<td style="text-align: left;">Entero sin signo de 2 bytes</td>
+<td style="text-align: left;">Valor final = Entero (en mV)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Unix Timestamp</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x75</td>
+<td style="text-align: left;">Entero sin signo de 4 bytes</td>
+<td style="text-align: left;">Valor final = Entero (segundos)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Battery C-Rate</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x77</td>
+<td style="text-align: left;">Entero con signo de 1 byte</td>
+<td style="text-align: left;">Valor final = Entero / 10.0 (%/h)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modem Signal Quality</strong></td>
+<td style="text-align: left;">0 (RSRQ) / 1 (RSRP)</td>
+<td style="text-align: left;">0x78</td>
+<td style="text-align: left;">Entero sin signo de 1 byte</td>
+<td style="text-align: left;">Valor final = Entero, el <strong>índice 3GPP en bruto</strong> del módem, no una unidad física. Canal 0 (RSRQ, 0–34): dB = (valor − 40) / 2. Canal 1 (RSRP, 0–97): dBm = valor − 141. 255 = no detectable. <strong>Solo dispositivos NB-IoT.</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Nota sobre la semántica del canal</p>
+<p>Para la mayoría de los tipos de sensor, el canal identifica de qué entrada física proviene la lectura (p. ej. Analog Input 0-3). Para <strong>Accelerometer</strong>, el mismo fragmento empaqueta los tres ejes juntos (no hay un canal separado por eje). Para <strong>Modem Signal Quality</strong>, el canal se reutiliza para distinguir la <em>métrica</em> (0 = RSRQ, 1 = RSRP) en vez de una entrada física.</p>
+</div>
+<h2 id="35-ejemplo-decodificando-un-payload-de-datos">3.5 Ejemplo: Decodificando un Payload de Datos</h2>
+<p>Considera el siguiente payload de ejemplo, recibido como cadena hexadecimal:
+<code>007568C7D98100741024006701370068400002021D</code></p>
+<p>Este payload contiene una marca de tiempo seguida de cuatro lecturas de sensores. La aplicación cliente debe procesar el payload en fragmentos concatenados:</p>
+<h3 id="fragmento-1-marca-de-tiempo">Fragmento 1: Marca de Tiempo</h3>
+<ul>
+<li><strong>Bytes:</strong> <code>007568C7D981</code></li>
+<li><strong>Tipo:</strong> <code>0x75</code> (Marca de Tiempo Unix)</li>
+<li><strong>Valor:</strong> <code>0x68C7D981</code> (1757927809 en decimal)</li>
+<li><strong>Resultado:</strong> la hora de referencia de este registro de datos es 1757927809 (correspondiente al 15 de septiembre de 2025, 09:16:49 UTC).</li>
+</ul>
+<h3 id="fragmento-2-tension-de-bateria">Fragmento 2: Tensión de Batería</h3>
+<ul>
+<li><strong>Bytes:</strong> <code>00741024</code></li>
+<li><strong>Tipo:</strong> <code>0x74</code> (Tensión de Batería)</li>
+<li><strong>Valor:</strong> <code>0x1024</code> (4132 en decimal)</li>
+<li><strong>Resultado:</strong> 4132 mV</li>
+</ul>
+<h3 id="fragmento-3-temperatura-interna">Fragmento 3: Temperatura Interna</h3>
+<ul>
+<li><strong>Bytes:</strong> <code>00670137</code></li>
+<li><strong>Tipo:</strong> <code>0x67</code> (Sensor de Temperatura Interna)</li>
+<li><strong>Valor:</strong> <code>0x0137</code> (311 en decimal, con signo)</li>
+<li><strong>Cálculo:</strong> 311 / 10.0 = 31.1 °C</li>
+</ul>
+<h3 id="fragmento-4-humedad-interna">Fragmento 4: Humedad Interna</h3>
+<ul>
+<li><strong>Bytes:</strong> <code>006840</code></li>
+<li><strong>Tipo:</strong> <code>0x68</code> (Sensor de Humedad Interna)</li>
+<li><strong>Valor:</strong> <code>0x40</code> (64 en decimal)</li>
+<li><strong>Cálculo:</strong> 64 / 2.0 = 32.0%</li>
+</ul>
+<h3 id="fragmento-5-entrada-analogica">Fragmento 5: Entrada Analógica</h3>
+<ul>
+<li><strong>Bytes:</strong> <code>0002021D</code></li>
+<li><strong>Tipo:</strong> <code>0x02</code> (Analog Input)</li>
+<li><strong>Valor:</strong> <code>0x021D</code> (541 en decimal, con signo)</li>
+<li><strong>Cálculo:</strong> 541 / 100.0 = 5.41 (en unidades de ingeniería)</li>
+</ul>
+<h2 id="36-implementacion-de-referencia">3.6 Implementación de Referencia</h2>
+<p>En el archivo adjunto <strong><code>isurlog_mqtt_demo.py</code></strong> se ofrece un script completo en Python que muestra la conexión, la suscripción, la decodificación del payload, y un <strong>dashboard actualizado en vivo</strong> — 🚧 enlace disponible próximamente.</p>
+<div class="admonition note">
+<p class="admonition-title">Nota de dependencia</p>
+<p>El script requiere el archivo de librería adjunto, <strong><a href="https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/IsurlogLPP.py">IsurlogLPP.py</a></strong>, para gestionar la decodificación y el cálculo de los valores de sensores a partir del formato de payload Cayenne LPP en bruto. Ambos archivos deben estar en el mismo directorio para que el ejemplo funcione.</p>
+</div>
+<p>Un dispositivo es siempre de <strong>un único</strong> tipo de conectividad, así que el script se suscribe a un único topic según el ajuste <code>DEVICE_TYPE</code> (<code>"nb-iot"</code> o <code>"lorawan"</code>, con los mismos valores usados en el propio <code>static_config.json</code> del ISURLOG) — no a los topics de NB-IoT y LoRaWAN a la vez. Para LoRaWAN, rellena tu propio <code>APPLICATION_ID</code> y <code>DEVICE_EUI</code> en vez de usar un topic comodín, que de lo contrario te suscribiría a todos los dispositivos de todas las aplicaciones que tus credenciales puedan ver.</p>
+<h3 id="pruebalo-al-instante-sin-necesidad-de-credenciales">Pruébalo al Instante — Sin Necesidad de Credenciales</h3>
+<p>Los parámetros de conexión del script vienen precargados con una <strong>demo pública de solo lectura</strong>, para que puedas ejecutarlo de inmediato, antes de contactar con soporte para conseguir tus propias credenciales:</p>
+<ul>
+<li><strong>Dispositivo:</strong> <code>c-866</code>, un dispositivo NB-IoT (<code>DEVICE_TYPE = "nb-iot"</code>) — el mismo dispositivo de demostración público usado en <a href="../historical-data-influxdb/#25-implementacion-de-referencia">2.5 Implementación de Referencia</a>, con una sonda de suelo Modbus (S-Soil MTEC-02B) conectada.</li>
+<li><strong>Topic:</strong> <code>isurlog/datos/c-866</code> — la suscripción está limitada al topic propio de este dispositivo, no puede recibir datos de ningún otro cliente.</li>
+</ul>
+<p>Para ejecutarlo, desde dentro de <code>data_integration/</code>, usando un entorno virtual (práctica estándar, y obligatoria en sistemas basados en Debian/Ubuntu más recientes, como WSL, que bloquean el <code>pip install</code> a nivel de sistema):</p>
+<p><strong>Linux / macOS:</strong></p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+python<span class="w"> </span>isurlog_mqtt_demo.py
+</code></pre></div>
+<p><strong>Windows (PowerShell):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="n">venv</span>
+<span class="p">.\</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">python</span> <span class="n">isurlog_mqtt_demo</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+<p>Si <code>Activate.ps1</code> queda bloqueado por la política de ejecución de PowerShell (la que viene por defecto en la mayoría de sistemas), permítela solo para la sesión actual:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">Set-ExecutionPolicy</span> <span class="n">-Scope</span> <span class="k">Process</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span>
+</code></pre></div>
+<p>o sáltate la activación por completo llamando directamente al intérprete del entorno virtual:</p>
+<div class="highlight"><pre><span></span><code><span class="p">.\</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<span class="p">.\</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">isurlog_mqtt_demo</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+<p>Al terminar: <code>deactivate</code>.</p>
+<h3 id="dashboard-en-vivo">Dashboard en Vivo</h3>
+<p>Además de imprimir cada mensaje decodificado a medida que llega, el script abre el <strong>mismo diseño de dashboard</strong> que la implementación de referencia de InfluxDB — dos paneles grandes arriba para la sonda de suelo (<strong>Soil — Irrigation</strong>: VWC/EC, <strong>Soil — Diagnostics</strong>: Temperatura/Epsilon), tres más pequeños debajo para las métricas propias de mantenimiento del dispositivo (batería, temperatura/humedad interna, calidad de señal NB-IoT) — salvo que aquí se alimenta <strong>en vivo</strong> desde el flujo MQTT en vez de una consulta histórica puntual, con puntos nuevos apareciendo a medida que se reciben (redibujado cada 2 segundos).</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/11-mqtt-live-dashboard.png" data-desc-position="bottom"><img alt="Dashboard MQTT en vivo con paneles de la sonda de suelo y métricas de mantenimiento del dispositivo" src="../../images/11-mqtt-live-dashboard.png" width="800"></a></p>
+<p><em>El dashboard en vivo, alimentado por el flujo MQTT y redibujado cada 2 segundos.</em></p>
+<p>Esto funciona así:</p>
+<ol>
+<li>Se mantiene un pequeño búfer en memoria (los últimos 200 puntos) por campo.</li>
+<li>Se añade al búfer correspondiente dentro del callback <code>on_message</code> de MQTT, a medida que se decodifica cada payload.</li>
+<li>El bucle de red del cliente MQTT corre en un hilo en segundo plano (<code>client.loop_start()</code>), de forma que el hilo principal queda libre para ejecutar el propio bucle de eventos de matplotlib (<code>plt.show()</code>) y redibujar periódicamente desde los búferes mediante <code>matplotlib.animation.FuncAnimation</code>.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Cuidado con los Ejes Gemelos</p>
+<p>La figura, los subplots, y el eje Y gemelo de cada panel (<code>ax.twinx()</code>) se crean <strong>una sola vez</strong>, en <code>build_dashboard()</code>. Solo los datos de la línea se actualizan después, en cada fotograma de la animación (<code>_update_line()</code>, mediante <code>line.set_data()</code> + <code>ax.relim()</code> + <code>ax.autoscale_view()</code>). Recrear los ejes gemelos en cada redibujado (p. ej. llamando a <code>ax.clear()</code> y después <code>ax.twinx()</code> de nuevo en un bucle) deja los ejes gemelos anteriores en su sitio en vez de sustituirlos — se van apilando silenciosamente uno sobre otro fotograma tras fotograma, lo que provoca escalas superpuestas y etiquetas que se salen del gráfico después de que el dashboard lleve un rato funcionando.</p>
+</div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

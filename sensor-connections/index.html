@@ -1,0 +1,2393 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="ISURLOG documentation — hardware, firmware, data integration, and troubleshooting">
+      
+      
+      
+        <link rel="canonical" href="https://docs.isurlog.isurki.com/sensor-connections/">
+      
+      
+        <link rel="prev" href="../technical-specifications/">
+      
+      
+        <link rel="next" href="../power-supply/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../es/sensor-connections/" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>1. Sensor Connections - ISURLOG Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-639QHEW68F"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-639QHEW68F",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-639QHEW68F",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-sensor-connections" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ISURLOG Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Sensor Connections
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../es/sensor-connections/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    ISURLOG Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical-specifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technical Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🛠️ Module A - Use and Hardware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🛠️ Module A - Use and Hardware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Sensor Connections
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Sensor Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#11-analog-inputs-4-20ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Analog Inputs (4-20mA)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-digital-input-state-and-pulse-counter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Digital Input (State and Pulse Counter)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2. Digital Input (State and Pulse Counter)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digital-status-indicator-led-din" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Digital Status Indicator (LED DIN)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-modbus-input-rs485" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Modbus Input (RS485)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-pt100-temperature-sensor-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. PT100 Temperature Sensor Input
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4. PT100 Temperature Sensor Input">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dual-configuration-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dual Configuration Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-digital-output-relay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5. Digital Output (Relay)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-qwiic-i2c-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6. QWIIC I2C Port
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-aux-io-connector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7. AUX-IO Connector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-internal-sensors-and-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8. Internal Sensors and Diagnostics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.8. Internal Sensors and Diagnostics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-supply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Power Supply Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../communications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Communications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation-commissioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Installation and Commissioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datalogger-operation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Datalogger Operation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6">
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. IsurDASH Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. IsurDASH Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-access-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1. Access and Login
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2. Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.3. Devices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-alarms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.4. Alarms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Users
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.6. Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.7. Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.8. Device Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Reference Configuration Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💻 Module B - Firmware Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💻 Module B - Firmware Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Build Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Architecture Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module-library-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1. Module &amp; Library Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing-application-upload/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Flashing and Application Upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpio-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. GPIO Mapping (Hardware-Software)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Advanced NB-IoT Modem Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Advanced LoRaWAN Modem Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contribution-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Contribution Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ☁️ Module C - Data Integration &amp; APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ☁️ Module C - Data Integration &amp; APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-access-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Data Access Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../historical-data-influxdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Historical Data (InfluxDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../realtime-data-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Real-Time Data (MQTT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote-configuration-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Remote Configuration API (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚡ Module D - Power Consumption &amp; Battery Life
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ⚡ Module D - Power Consumption &amp; Battery Life
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consumption-graphs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Consumption Graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-budget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Power Budget Calculator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🩺 Module E - Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🩺 Module E - Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧰 Module F - Parts and Accessories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🧰 Module F - Parts and Accessories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parts-and-accessories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Parts and Accessories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enclosure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. The Enclosure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://docs.isurlog.isurki.com/blog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#11-analog-inputs-4-20ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Analog Inputs (4-20mA)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-digital-input-state-and-pulse-counter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Digital Input (State and Pulse Counter)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2. Digital Input (State and Pulse Counter)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digital-status-indicator-led-din" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Digital Status Indicator (LED DIN)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-modbus-input-rs485" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Modbus Input (RS485)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-pt100-temperature-sensor-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. PT100 Temperature Sensor Input
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4. PT100 Temperature Sensor Input">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dual-configuration-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dual Configuration Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-digital-output-relay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5. Digital Output (Relay)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-qwiic-i2c-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6. QWIIC I2C Port
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-aux-io-connector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7. AUX-IO Connector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-internal-sensors-and-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8. Internal Sensors and Diagnostics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.8. Internal Sensors and Diagnostics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="1-sensor-connections">1. Sensor Connections</h1>
+<p>The ISURLOG device features multiple specialized inputs to integrate seamlessly with various industrial and environmental sensors.</p>
+<h2 id="11-analog-inputs-4-20ma">1.1. Analog Inputs (4-20mA)</h2>
+<p>The ISURLOG is equipped with four protected analog inputs (AIN0 to AIN3). It is compatible with both actively (externally) and passively (ISURLOG-supplied) powered sensors.</p>
+<p>Each analog input is protected by an automatic reset fuse.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Sensor Type</th>
+<th style="text-align: left;">Wiring Diagram</th>
+<th style="text-align: left;">Power Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Passive Sensor</strong> (External current loop)</td>
+<td style="text-align: left;">Sensor (+) connects to <strong>VDC</strong>; Sensor (-) connects to the desired <strong>AINx</strong>.</td>
+<td style="text-align: left;">ISURLOG's internal voltage regulator (VDC).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Active Sensor</strong> (Internal current loop)</td>
+<td style="text-align: left;">Sensor (+) connects to the desired <strong>AINx</strong>; Sensor (-) connects to <strong>GND</strong>.</td>
+<td style="text-align: left;">External power source.</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-analog-input-wiring.png" data-desc-position="bottom"><img alt="Passive and active analog sensor wiring for the AIN0-AIN3 inputs" src="../images/2-analog-input-wiring.png" width="500"></a></p>
+<p><em>Wiring for passive (ISURLOG-powered) vs. active (externally powered) analog sensors.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-analog-input-schematic.svg" data-desc-position="bottom"><img alt="Schematic diagram of passive vs. active 4-20mA sensor wiring" src="../images/2-analog-input-schematic.svg" width="700"></a></p>
+<p><em>Wiring schematic — current loop direction for a passive (ISURLOG-powered) vs. an active (externally powered) 4-20mA sensor.</em></p>
+<h2 id="12-digital-input-state-and-pulse-counter">1.2. Digital Input (State and Pulse Counter)</h2>
+<p>The ISURLOG features a dry contact digital input that can be used either as a status reader (open/closed) or as a pulse counter for devices like flow meters or water meters.</p>
+<p>The connection is made using the following pins: <strong>VIN</strong> and <strong>DIN0</strong>.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-digital-input-wiring.png" data-desc-position="bottom"><img alt="Digital input wiring using the VIN and DIN0 pins" src="../images/2-digital-input-wiring.png" width="300"></a></p>
+<p><em>Digital input wiring — VIN and DIN0 pins.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-digital-input-schematic.svg" data-desc-position="bottom"><img alt="Schematic diagram of the digital input dry contact wiring" src="../images/2-digital-input-schematic.svg" width="600"></a></p>
+<p><em>Wiring schematic — the external switch/contact simply closes the loop between VIN and DIN0.</em></p>
+<h3 id="digital-status-indicator-led-din">Digital Status Indicator (LED DIN)</h3>
+<p>The ISURLOG board includes a dedicated LED (<strong>LED DIN</strong>) that lights up continuously when the input is active (closed state).</p>
+<div class="admonition warning">
+<p class="admonition-title">Power Optimization Warning</p>
+<p>To save energy in battery-powered applications, this LED can be easily disabled by removing the corresponding jumper on the PCB.</p>
+</div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-led-din-jumper.png" data-desc-position="bottom"><img alt="LED DIN jumper location on the underside of the PCB" src="../images/2-led-din-jumper.png" width="400"></a></p>
+<p><em>The LED DIN jumper — remove it to disable the status LED and save power.</em></p>
+<h2 id="13-modbus-input-rs485">1.3. Modbus Input (RS485)</h2>
+<p>The RS485 interface allows communication with up to 32 external sensors using the Modbus protocol. The input includes a built-in <strong>120 Ohm termination resistor</strong>.</p>
+<p>The connection uses the following pins:</p>
+<ul>
+<li><strong>Communication:</strong> <strong>A</strong> and <strong>B</strong> pins.</li>
+<li><strong>Power:</strong> Sensor power can be connected to the <strong>5V</strong> pin or the <strong>VDC</strong> pin (for the 6 to 24V range). Sensor negative should connect to <strong>GND</strong>.</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-modbus-rs485-wiring.jpg" data-desc-position="bottom"><img alt="Modbus RS485 wiring using the A and B pins" src="../images/2-modbus-rs485-wiring.jpg" width="300"></a></p>
+<p><em>Modbus RTU (RS485) wiring — A and B pins.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-modbus-rs485-schematic.svg" data-desc-position="bottom"><img alt="Schematic diagram of the Modbus RS485 daisy-chain wiring and termination placement" src="../images/2-modbus-rs485-schematic.svg" width="900"></a></p>
+<p><em>Wiring schematic — the daisy-chain topology and where the 120 Ω termination resistor goes (built into the ISURLOG, external at the last sensor only). See <a href="../troubleshooting/#modbus-sensor-not-responding-timeout">Modbus sensor not responding / timeout</a> if you're chasing an intermittent bus issue.</em></p>
+<h2 id="14-pt100-temperature-sensor-input">1.4. PT100 Temperature Sensor Input</h2>
+<p>The ISURLOG supports PT100 temperature probes configured for 2, 3, or 4 wires.</p>
+<h3 id="dual-configuration-requirement">Dual Configuration Requirement</h3>
+<p>Achieving an accurate reading requires <strong>two steps</strong> of configuration:</p>
+<ol>
+<li><strong>Hardware (Jumpers):</strong> Soldering or removing the appropriate jumpers on the underside of the PCB.</li>
+<li><strong>Software (Parameter):</strong> Setting the correct wire count in the Isurlog's configuration via IsurDASH.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Wire Configuration</th>
+<th style="text-align: left;">Required Jumpers</th>
+<th style="text-align: left;">Connection to F+/F-</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2-Wire</strong></td>
+<td style="text-align: left;">Join the <strong>2 WIRE</strong>, <strong>2/3 WIRE</strong>, and <strong>2/4 WIRE</strong> jumpers.</td>
+<td style="text-align: left;">The two sensor wires connect to F+ and F-.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3-Wire</strong></td>
+<td style="text-align: left;">Join the <strong>2/3 WIRE</strong> and <strong>3 WIRE</strong> jumpers; leave the rest open.</td>
+<td style="text-align: left;">Connect the two common wires (typically ≈2Ω) to <strong>F+</strong>. Connect the third wire (typically 100Ω) to <strong>F-</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4-Wire</strong></td>
+<td style="text-align: left;">Join the <strong>2/4 WIRE</strong> jumper; leave the rest open.</td>
+<td style="text-align: left;">Connect the pairs of common wires (typically ≈2Ω) together to <strong>F+</strong> and <strong>F-</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-pt100-jumpers.png" data-desc-position="bottom"><img alt="PT100 jumper configuration for 2, 3, and 4-wire probes" src="../images/2-pt100-jumpers.png" width="300"></a></p>
+<p><em>Jumper configuration for 2, 3, and 4-wire PT100 probes.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-pt100-wiring.png" data-desc-position="bottom"><img alt="PT100 wiring to the F+ and F- terminals" src="../images/2-pt100-wiring.png" width="600"></a></p>
+<p><em>PT100 wiring to the F+/F- terminals.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-pt100-schematic.svg" data-desc-position="bottom"><img alt="Schematic diagram of 2-wire, 3-wire, and 4-wire PT100 probe wiring" src="../images/2-pt100-schematic.svg" width="900"></a></p>
+<p><em>Wiring schematic — how the probe's own leads differ between 2/3/4-wire configurations. Remember this is only half of the setup: the PCB jumpers above must also match.</em></p>
+<h2 id="15-digital-output-relay">1.5. Digital Output (Relay)</h2>
+<p>Next to the digital input, the same terminal block also breaks out a <strong>solid-state relay output</strong>, using the following pins:</p>
+<ul>
+<li><strong>COM0:</strong> Common contact.</li>
+<li><strong>NO0:</strong> Normally-open contact.</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-digital-input-wiring.png" data-desc-position="bottom"><img alt="Relay output wiring using the COM0 and NO0 pins" src="../images/2-digital-input-wiring.png" width="300"></a></p>
+<p><em>Relay output wiring — COM0 and NO0 pins, on the same terminal block as the digital input.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-relay-output-schematic.svg" data-desc-position="bottom"><img alt="Schematic diagram of the relay output wiring to an externally-powered load" src="../images/2-relay-output-schematic.svg" width="600"></a></p>
+<p><em>Wiring schematic — the relay is just a switch inside the ISURLOG; the load supplies its own power.</em></p>
+<p>This is a <strong>solid-state relay rated for 2A / 60V</strong>, suitable for switching heavier external loads directly (e.g. pumps, valves, contactors, or other actuators) without needing an intermediate relay.</p>
+<h2 id="16-qwiic-i2c-port">1.6. QWIIC I2C Port</h2>
+<p>The ISURLOG also breaks out its internal I2C bus through a standard <strong>QWIIC</strong> connector, to connect external QWIIC-compatible sensors and expansion boards. The pinout follows the standard QWIIC convention: <strong>GND, 3V3, SDA, SCL</strong>.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-qwiic-connector.png" data-desc-position="bottom"><img alt="QWIIC connector pinout: GND, 3V3, SDA, SCL" src="../images/2-qwiic-connector.png" width="300"></a></p>
+<p><em>The QWIIC connector — GND, 3V3, SDA, SCL.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Power Note</p>
+<p>The <strong>3V3</strong> rail on this connector is the datalogger's own main 3.3V supply — it <strong>cannot be switched off</strong> by firmware. If your application needs low power consumption, make sure the connected QWIIC sensor has its own proper sleep mode, or account for its idle/standby current draw in your power budget.</p>
+</div>
+<h2 id="17-aux-io-connector">1.7. AUX-IO Connector</h2>
+<p>The AUX-IO connector is a <strong>1mm-pitch (P=1mm) connector</strong> that breaks out extra signals from the ISURLOG's MCP23008 I/O expander — see <a href="../gpio-mapping/#45-mcp23008-io-expander-pinout">4.5 MCP23008 I/O Expander Pinout</a>.</p>
+<p><strong>Pin 1</strong> is marked with a triangle on the PCB silkscreen; pins are numbered from there, starting at the bottom of the connector in the image below.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Pin</th>
+<th style="text-align: left;">Signal</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1</strong></td>
+<td style="text-align: left;">3V3</td>
+<td style="text-align: left;">Main 3.3V supply (same rail as the QWIIC connector).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2</strong></td>
+<td style="text-align: left;">NO2</td>
+<td style="text-align: left;">Normally-open contact, relay 2 of the on-board dual solid-state relay (<strong>GAQW212GEH</strong>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3</strong></td>
+<td style="text-align: left;">COM2</td>
+<td style="text-align: left;">Common contact, relay 2 (<strong>GAQW212GEH</strong>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4</strong></td>
+<td style="text-align: left;">NO1</td>
+<td style="text-align: left;">Normally-open contact, relay 1 (<strong>GAQW212GEH</strong>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5</strong></td>
+<td style="text-align: left;">COM1</td>
+<td style="text-align: left;">Common contact, relay 1 (<strong>GAQW212GEH</strong>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>6</strong></td>
+<td style="text-align: left;">GP3</td>
+<td style="text-align: left;">MCP23008 GP3 — general-purpose I/O.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7</strong></td>
+<td style="text-align: left;">GP4</td>
+<td style="text-align: left;">MCP23008 GP4 — general-purpose I/O.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>8</strong></td>
+<td style="text-align: left;">GP5</td>
+<td style="text-align: left;">MCP23008 GP5 — general-purpose I/O.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9</strong></td>
+<td style="text-align: left;">GND</td>
+<td style="text-align: left;">Ground.</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-aux-io-pinout.png" data-desc-position="bottom"><img alt="AUX-IO connector with pin 1 marked by a triangle" src="../images/2-aux-io-pinout.png" width="300"></a></p>
+<p><em>The AUX-IO connector — pin 1 marked with a triangle on the silkscreen.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-aux-io-pinout-schematic.svg" data-desc-position="bottom"><img alt="Pinout diagram of the AUX-IO connector, grouped by function" src="../images/2-aux-io-pinout-schematic.svg" width="500"></a></p>
+<p><em>Pinout reference — easier to read than the tiny 1mm-pitch connector itself. Note relays 1/2 here are a separate chip from the <a href="#15-digital-output-relay">main relay output</a>.</em></p>
+<h2 id="18-internal-sensors-and-diagnostics">1.8. Internal Sensors and Diagnostics</h2>
+<p>The datalogger includes two onboard components for monitoring and field interaction:</p>
+<ol>
+<li>
+<p><strong>SHT30 Sensor</strong>
+    This sensor measures ambient <strong>temperature and humidity</strong> <em>inside</em> the enclosure. This acts as an <strong>early warning system</strong> for potential water ingress or component overheating, allowing for preventive maintenance.</p>
+</li>
+<li>
+<p><strong>Hall Effect Switch (On-Demand Wake-up)</strong>
+    The ISURLOG is equipped with a digital Hall effect switch that allows for <strong>manual, instantaneous interaction</strong> with the device using a magnet. This "on-demand wake-up" function offers two operational modes:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Mode</th>
+<th style="text-align: left;">Magnet Interaction</th>
+<th style="text-align: left;">Datalogger Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Immediate Read &amp; Send</strong></td>
+<td style="text-align: left;">Hold the magnet near the sensor for approximately <strong>one second</strong>.</td>
+<td style="text-align: left;">The datalogger exits low-power mode, performs a <strong>complete cycle of sensor reading</strong>, and <strong>immediately transmits</strong> the data to the platform, without waiting for the next scheduled interval.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bluetooth Diagnostics Mode</strong></td>
+<td style="text-align: left;">Hold the magnet near the sensor for <strong>more than five seconds</strong>.</td>
+<td style="text-align: left;">The ISURLOG activates its <strong>Bluetooth interface</strong> and enters pairing mode. This allows field personnel to connect directly for configurations and real-time sensor viewing.</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h4 id="location">Location</h4>
+<p>The magnetic sensor is positioned on the <strong>lower left corner</strong> of the PCB board, adjacent to the analog input connector and the first battery compartment (counting from the left).</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-hall-sensor-location.png" data-desc-position="bottom"><img alt="Hall effect sensor location, lower left corner of the PCB" height="642" src="../images/2-hall-sensor-location.png" width="468"></a></p>
+<p><em>The Hall effect sensor, lower left corner of the PCB.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Note for IP66 Enclosure</p>
+<p>For ISURLOG dataloggers equipped with the IP66 enclosure, it is <strong>not necessary to open the casing</strong> for activation. The sensor is designed to be operated from the exterior by approaching a magnet to the <strong>lower part of the left side panel</strong> of the enclosure.</p>
+</div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/2-ip67-magnet-activation.jpg" data-desc-position="bottom"><img alt="Activating Bluetooth mode with a magnet from outside an IP66 enclosure" height="270" src="../images/2-ip67-magnet-activation.jpg" width="238"></a></p>
+<p><em>Activating the Hall sensor from outside an IP66 enclosure.</em></p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tracking", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

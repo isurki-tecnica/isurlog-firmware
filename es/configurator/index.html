@@ -1,0 +1,2138 @@
+<!DOCTYPE html><html lang="es" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="ISURLOG documentation — hardware, firmware, data integration, and troubleshooting">
+      
+      
+      
+        <link rel="canonical" href="https://docs.isurlog.isurki.com/es/configurator/">
+      
+      
+      
+      
+        
+          <link rel="alternate" href="../../configurator/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>2. Configura tu ISURLOG - ISURLOG Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-639QHEW68F"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-639QHEW68F",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-639QHEW68F",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-configura-tu-isurlog" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../" title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ISURLOG Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Configura tu ISURLOG
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../configurator/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    ISURLOG Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical-specifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ficha Técnica
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🛠️ Módulo A - Uso y Hardware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🛠️ Módulo A - Uso y Hardware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensor-connections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Conexión de Sensores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-supply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Métodos de Alimentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../communications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Comunicaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation-commissioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datalogger-operation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Funcionamiento del Datalogger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6">
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Plataforma IsurDASH
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Plataforma IsurDASH
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-access-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1. Acceso e Inicio de Sesión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2. Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.3. Dispositivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-alarms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.4. Alarmas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Usuarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.6. Perfiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.7. Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.8. Mantenimiento de Dispositivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Referencia de Parámetros de Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💻 Módulo B - Desarrollo de Firmware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💻 Módulo B - Desarrollo de Firmware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Configuración del Entorno de Compilación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Visión General de la Arquitectura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module-library-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1. Referencia de Módulos y Librerías
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing-application-upload/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Grabado del Firmware y Carga de la Aplicación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpio-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Mapeo de GPIO (Hardware-Software)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Guía Avanzada del Módem NB-IoT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Guía Avanzada del Módem LoRaWAN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contribution-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Guía de Contribución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ☁️ Módulo C - Integración de Datos y APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ☁️ Módulo C - Integración de Datos y APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-access-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Resumen de Acceso a Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../historical-data-influxdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Datos Históricos (InfluxDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../realtime-data-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Datos en Tiempo Real (MQTT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote-configuration-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. API de Configuración Remota (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚡ Módulo D - Consumo de Energía y Vida de la Batería
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ⚡ Módulo D - Consumo de Energía y Vida de la Batería
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consumption-graphs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Gráficos de Consumo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-budget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Calculadora de Consumo de Energía
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🩺 Módulo E - Resolución de Problemas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🩺 Módulo E - Resolución de Problemas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Resolución de Problemas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧰 Módulo F - Piezas y Accesorios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🧰 Módulo F - Piezas y Accesorios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parts-and-accessories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Piezas y Accesorios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enclosure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. La Caja
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://docs.isurlog.isurki.com/blog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="2-configura-tu-isurlog">2. Configura tu ISURLOG</h1>
+<p>Elige tus opciones abajo — el total se actualiza a medida que avanzas. Esto solo incluye elementos disponibles directamente desde Isurki (con precio real); para las alternativas "consíguelo tú mismo", las especificaciones completas, y los enlaces de proveedor de cada elemento, ver <strong><a href="../parts-and-accessories/">1. Piezas y Accesorios</a></strong>. Cuando estés listo, solicita presupuesto y confirmaremos compatibilidad y precio final.</p>
+<p><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"></p>
+<style>
+  .cfg-wrap{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#f6f8f7;
+    --border:#d7dcda; --border-strong:#b9c1be;
+    --text:#182322; --text-2:#4d5957; --text-3:#7c8886;
+    --accent:#b8721e; --accent-ink:#5c3810; --accent-bg:#f7e8d4;
+    --warn-bg:#f8e4e1; --warn-ink:#7a2b1c;
+    --radius:10px;
+    --font-ui: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+  }
+  [data-md-color-scheme="slate"] .cfg-wrap{
+    --bg:#121615; --surface:#1b201f; --surface-2:#212726;
+    --border:#333b39; --border-strong:#454f4c;
+    --text:#e8ece9; --text-2:#aab5b1; --text-3:#78827f;
+    --accent:#e5a355; --accent-ink:#ffe4bd; --accent-bg:#3a2a15;
+    --warn-bg:#3a201a; --warn-ink:#f0b3a3;
+  }
+  .cfg-wrap, .cfg-wrap *{box-sizing:border-box;}
+  .cfg-wrap{max-width:900px;margin:0 auto;padding:1.5rem 0 2rem;font-family:var(--font-ui);color:var(--text);}
+  .cfg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1.1rem;}
+  .cfg-card h3{font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin:0 0 .9rem;color:var(--text-2);}
+  .cfg-seg{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem;}
+  .cfg-seg-btn{flex:1;min-width:140px;text-align:left;padding:.6rem .8rem;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-2);cursor:pointer;}
+  .cfg-seg-btn[data-active="true"]{background:var(--accent-bg);color:var(--accent-ink);border-color:var(--accent);}
+  .cfg-seg-btn .lbl{display:block;font-size:.85rem;font-weight:600;}
+  .cfg-seg-btn .pr{display:block;font-size:.78rem;font-family:var(--font-mono);margin-top:.15rem;color:var(--text-3);}
+  .cfg-seg-btn[data-active="true"] .pr{color:var(--accent-ink);}
+  .cfg-row{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem 0;border-top:1px solid var(--border);}
+  .cfg-row:first-of-type{border-top:none;}
+  .cfg-row input{margin-top:.25rem;accent-color:var(--accent);width:16px;height:16px;flex:none;}
+  .cfg-row label{flex:1;font-size:.85rem;cursor:pointer;}
+  .cfg-row .pr{font-family:var(--font-mono);font-size:.85rem;font-weight:600;white-space:nowrap;padding-left:.5rem;}
+  .cfg-row .sub{display:block;font-size:.76rem;color:var(--text-3);margin-top:.1rem;font-weight:400;}
+  .cfg-warn{margin-top:.7rem;padding:.6rem .8rem;border-radius:8px;background:var(--warn-bg);color:var(--warn-ink);font-size:.8rem;display:none;}
+  .cfg-warn.show{display:block;}
+  .cfg-warn p{margin:0 0 .3rem;}
+  .cfg-warn p:last-child{margin-bottom:0;}
+  .cfg-summary{background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--radius);padding:1.25rem;}
+  .cfg-summary h3{font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin:0 0 .8rem;color:var(--text-2);}
+  .cfg-line{display:flex;justify-content:space-between;font-size:.82rem;padding:.3rem 0;color:var(--text-2);}
+  .cfg-line span:last-child{font-family:var(--font-mono);color:var(--text);}
+  .cfg-empty{font-size:.8rem;color:var(--text-3);padding:.3rem 0;}
+  .cfg-total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--border-strong);margin-top:.6rem;padding-top:.8rem;}
+  .cfg-total .label{font-size:.85rem;font-weight:600;}
+  .cfg-total .num{font-family:var(--font-mono);font-size:1.8rem;font-weight:600;color:var(--accent-ink);}
+  .cfg-cta{display:block;text-align:center;margin-top:1.1rem;padding:.75rem 1rem;border-radius:8px;background:var(--accent);color:#fff;font-weight:600;text-decoration:none;font-size:.9rem;}
+  .cfg-cta:hover{opacity:.92;}
+  .cfg-note{font-size:.74rem;color:var(--text-3);margin-top:.6rem;line-height:1.5;}
+</style>
+
+<div class="cfg-wrap">
+
+  <div class="cfg-card">
+    <h3>Conectividad</h3>
+    <div class="cfg-seg" id="cfg-variant">
+      <div class="cfg-seg-btn" data-key="nbiot" data-active="true"><span class="lbl">NB-IoT / LTE-M</span><span class="pr">€387</span></div>
+      <div class="cfg-seg-btn" data-key="lora" data-active="false"><span class="lbl">LoRaWAN</span><span class="pr">€330</span></div>
+      <div class="cfg-seg-btn" data-key="wifi" data-active="false"><span class="lbl">Solo Wi-Fi</span><span class="pr">€310</span></div>
+    </div>
+    <p class="cfg-note" id="cfg-antenna-note"></p>
+    <div class="cfg-row" id="cfg-extantenna-row">
+      <input type="checkbox" id="cfg-extantenna">
+      <label for="cfg-extantenna">Antena externa (mayor ganancia / montaje remoto)<span class="sub" id="cfg-extantenna-sub">Incluye pigtail U.FL a SMA + antena externa</span></label>
+      <span class="pr" id="cfg-extantenna-price">€18</span>
+    </div>
+    <div class="cfg-warn" id="cfg-warn-antenna"></div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Firmware</h3>
+    <div class="cfg-seg" id="cfg-firmware" style="flex-direction:column;">
+      <div class="cfg-seg-btn" data-key="standard" data-active="true"><span class="lbl">Firmware estándar, conectado a IsurDASH</span><span class="pr">€0</span></div>
+      <div class="cfg-seg-btn" data-key="byo" data-active="false"><span class="lbl">Graba tu propio firmware</span><span class="pr">€0</span></div>
+    </div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Recubrimiento Protector</h3>
+    <div class="cfg-seg" id="cfg-coating" style="flex-direction:column;">
+      <div class="cfg-seg-btn" data-key="standard" data-active="true"><span class="lbl">Barniz de protección estándar</span><span class="pr">Incluido</span></div>
+      <div class="cfg-seg-btn" data-key="extra" data-active="false"><span class="lbl">Capa extra de barniz de protección</span><span class="pr">+€15</span></div>
+      <div class="cfg-seg-btn" data-key="resin" data-active="false"><span class="lbl">Encapsulado en resina (solo Li-SOCl2)</span><span class="pr">+€80</span></div>
+    </div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Carcasa y Montaje</h3>
+    <div class="cfg-row"><input type="checkbox" id="cfg-enclosure"><label for="cfg-enclosure">Carcasa impresa en 3D (PETG, IP66)</label><span class="pr">€35</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-dinrail"><label for="cfg-dinrail">Soporte de carril DIN</label><span class="pr">€28</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-pole"><label for="cfg-pole">Soporte de poste</label><span class="pr">€18</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-er34615holder"><label for="cfg-er34615holder">Soporte/adaptador de baterías ER34615<span class="sub">Necesario para usar baterías Li-SOCl2</span></label><span class="pr">€20</span></div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Baterías</h3>
+    <div class="cfg-row"><input type="checkbox" id="cfg-liion"><label for="cfg-liion">18650 Li-Ion, set de 5 (recargables)</label><span class="pr">€30</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-lisocl2"><label for="cfg-lisocl2">Li-SOCl2, set de 2 (no recargables, v3.3+)</label><span class="pr">€40</span></div>
+    <div class="cfg-warn" id="cfg-warn-battery"></div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Alimentación Externa / Solar</h3>
+    <div class="cfg-row"><input type="checkbox" id="cfg-solar5v"><label for="cfg-solar5v">Panel solar regulado de 5V</label><span class="pr">€34</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-walladapter"><label for="cfg-walladapter">Alimentador de pared 5V/1A</label><span class="pr">€20</span></div>
+    <div class="cfg-row"><input type="checkbox" id="cfg-usbcable"><label for="cfg-usbcable">Cable USB-A a Micro-USB (para alimentación por terminales PIN)</label><span class="pr">€10</span></div>
+  </div>
+
+  <div class="cfg-card">
+    <h3>Plan de Conectividad</h3>
+    <div class="cfg-row"><input type="checkbox" id="cfg-esim"><label for="cfg-esim">eSIM integrada + plan de datos<span class="sub">500 MB o 5 años, lo que ocurra antes</span></label><span class="pr">€36</span></div>
+  </div>
+
+  <div class="cfg-summary">
+    <h3>Tu Configuración</h3>
+    <div id="cfg-lines"><div class="cfg-empty">Todavía no hay accesorios seleccionados — solo la unidad base.</div></div>
+    <div class="cfg-total"><span class="label">Total (sin IVA)</span><span class="num" id="cfg-total-num">€387</span></div>
+    <a class="cfg-cta" id="cfg-quote-btn" href="#">Solicitar Presupuesto para Esta Configuración</a>
+    <p class="cfg-note">Esto es una estimación, no un precio final — confirmaremos compatibilidad y coste exacto al solicitar presupuesto. Los precios mostrados no incluyen IVA. Al pulsar el botón se abre tu cliente de correo con todo ya rellenado.</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var VARIANTS = {
+    nbiot: {label:"ISURLOG — variante NB-IoT/LTE-M", price:387, antenna:"Incluye la antena NB-IoT/LTE-M (compartida con la recepción GPS)."},
+    lora:  {label:"ISURLOG — variante LoRaWAN", price:330, antenna:"Incluye la antena LoRaWAN (868 MHz)."},
+    wifi:  {label:"ISURLOG — solo Wi-Fi", price:310, antenna:"Usa la antena integrada en la PCB — no necesita antena externa."}
+  };
+  var COATINGS = {
+    standard: {label:"Barniz de protección estándar", price:0},
+    extra:    {label:"Capa extra de barniz de protección", price:15},
+    resin:    {label:"Encapsulado en resina", price:80}
+  };
+  var ADDONS = [
+    {id:"cfg-enclosure", label:"Carcasa impresa en 3D (PETG, IP66)", price:35},
+    {id:"cfg-dinrail", label:"Soporte de carril DIN", price:28},
+    {id:"cfg-pole", label:"Soporte de poste", price:18},
+    {id:"cfg-er34615holder", label:"Soporte/adaptador de baterías ER34615", price:20},
+    {id:"cfg-liion", label:"Baterías 18650 Li-Ion, set de 5", price:30},
+    {id:"cfg-lisocl2", label:"Baterías Li-SOCl2, set de 2", price:40},
+    {id:"cfg-solar5v", label:"Panel solar regulado de 5V", price:34},
+    {id:"cfg-walladapter", label:"Alimentador de pared 5V/1A", price:20},
+    {id:"cfg-usbcable", label:"Cable USB-A a Micro-USB", price:10},
+    {id:"cfg-esim", label:"eSIM integrada + plan de datos", price:36}
+  ];
+  var FIRMWARE = {
+    standard: {label:"Firmware estándar, conectado a IsurDASH", price:0},
+    byo:      {label:"Graba tu propio firmware", price:0}
+  };
+  var EXT_ANTENNA = {
+    nbiot: {price:18, label:"Antena externa + pigtail U.FL a SMA (NB-IoT/LTE-M)"},
+    lora:  {price:22, label:"Antena externa + pigtail U.FL a SMA (LoRaWAN)"}
+  };
+
+  var variant = "nbiot";
+  var firmware = "standard";
+  var coating = "standard";
+
+  function fmt(n){ return "€" + n; }
+
+  function selectSeg(container, key){
+    container.querySelectorAll(".cfg-seg-btn").forEach(function(btn){
+      btn.dataset.active = (btn.dataset.key === key) ? "true" : "false";
+    });
+  }
+
+  var variantEl = document.getElementById("cfg-variant");
+  variantEl.querySelectorAll(".cfg-seg-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      variant = btn.dataset.key;
+      selectSeg(variantEl, variant);
+      update();
+    });
+  });
+
+  var firmwareEl = document.getElementById("cfg-firmware");
+  firmwareEl.querySelectorAll(".cfg-seg-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      firmware = btn.dataset.key;
+      selectSeg(firmwareEl, firmware);
+      update();
+    });
+  });
+
+  var coatingEl = document.getElementById("cfg-coating");
+  coatingEl.querySelectorAll(".cfg-seg-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      coating = btn.dataset.key;
+      selectSeg(coatingEl, coating);
+      update();
+    });
+  });
+
+  ADDONS.forEach(function(a){
+    document.getElementById(a.id).addEventListener("change", update);
+  });
+  document.getElementById("cfg-extantenna").addEventListener("change", update);
+
+  function update(){
+    var v = VARIANTS[variant];
+    var f = FIRMWARE[firmware];
+    var c = COATINGS[coating];
+    var total = v.price + f.price + c.price;
+    var lines = [];
+
+    document.getElementById("cfg-antenna-note").textContent = v.antenna;
+
+    var extRow = document.getElementById("cfg-extantenna-row");
+    var extCheckbox = document.getElementById("cfg-extantenna");
+    var extPriceEl = document.getElementById("cfg-extantenna-price");
+    var extSubEl = document.getElementById("cfg-extantenna-sub");
+    var extLine = null;
+    if (variant === "wifi"){
+      extCheckbox.checked = false;
+      extCheckbox.disabled = true;
+      extRow.style.opacity = "0.45";
+      extPriceEl.textContent = "—";
+      extSubEl.textContent = "No aplica — el Wi-Fi usa la antena integrada en la placa";
+    } else {
+      extCheckbox.disabled = false;
+      extRow.style.opacity = "1";
+      var ext = EXT_ANTENNA[variant];
+      extPriceEl.textContent = fmt(ext.price);
+      extSubEl.textContent = "Incluye pigtail U.FL a SMA + antena externa";
+      if (extCheckbox.checked){
+        total += ext.price;
+        extLine = {label: ext.label, price: ext.price};
+      }
+    }
+
+    var warnAntennaEl = document.getElementById("cfg-warn-antenna");
+    if (extCheckbox.checked && document.getElementById("cfg-enclosure").checked){
+      warnAntennaEl.innerHTML = "<p>⚠️ Montar la antena fuera de la carcasa impresa en 3D implica taladrarla — esto rompe su protección IP66 a menos que el paso quede correctamente sellado.</p>";
+      warnAntennaEl.classList.add("show");
+    } else {
+      warnAntennaEl.classList.remove("show");
+      warnAntennaEl.innerHTML = "";
+    }
+
+    lines.push({label: v.label, price: v.price});
+    lines.push({label: f.label, price: f.price});
+    if (c.price > 0) lines.push({label: c.label, price: c.price});
+    if (extLine) lines.push(extLine);
+
+    var selectedIds = {};
+    ADDONS.forEach(function(a){
+      var checked = document.getElementById(a.id).checked;
+      selectedIds[a.id] = checked;
+      if (checked){
+        total += a.price;
+        lines.push({label: a.label, price: a.price});
+      }
+    });
+
+    var linesEl = document.getElementById("cfg-lines");
+    if (lines.length === 2){
+      linesEl.innerHTML = '<div class="cfg-empty">Todavía no hay accesorios seleccionados — solo la unidad base.</div>';
+    } else {
+      linesEl.innerHTML = lines.map(function(l){
+        return '<div class="cfg-line"><span>' + l.label + '</span><span>' + fmt(l.price) + '</span></div>';
+      }).join("");
+    }
+    document.getElementById("cfg-total-num").textContent = fmt(total);
+
+    // Soft warnings only — nothing is blocked
+    var warnEl = document.getElementById("cfg-warn-battery");
+    var warnings = [];
+    if (coating === "resin" && !selectedIds["cfg-lisocl2"]){
+      warnings.push("El encapsulado en resina solo es compatible con baterías Li-SOCl2 — añádelas abajo, o cambia el recubrimiento.");
+    }
+    if (selectedIds["cfg-lisocl2"] && !selectedIds["cfg-er34615holder"]){
+      warnings.push("Las baterías Li-SOCl2 necesitan el soporte/adaptador ER34615 (en Carcasa y Montaje) — añádelo arriba.");
+    }
+    if (warnings.length){
+      warnEl.innerHTML = warnings.map(function(w){ return "<p>⚠️ " + w + "</p>"; }).join("");
+      warnEl.classList.add("show");
+    } else {
+      warnEl.classList.remove("show");
+      warnEl.innerHTML = "";
+    }
+
+    // Build the quote request mailto
+    var subject = "ISURLOG - Solicitud de Presupuesto (Configurador)";
+    var body = "Hola equipo de ISURKI,\n\nMe gustaria solicitar presupuesto para la siguiente configuracion de ISURLOG:\n\n";
+    lines.forEach(function(l){
+      body += "- " + l.label + " (" + fmt(l.price) + ")\n";
+    });
+    body += "\nTotal estimado (sin IVA): " + fmt(total) + "\n\nGracias!";
+    var mailto = "mailto:tecnica@isurki.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    document.getElementById("cfg-quote-btn").setAttribute("href", mailto);
+  }
+
+  update();
+})();
+</script>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

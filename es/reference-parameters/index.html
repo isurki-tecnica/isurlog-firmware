@@ -1,0 +1,3253 @@
+<!DOCTYPE html><html lang="es" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="ISURLOG documentation — hardware, firmware, data integration, and troubleshooting">
+      
+      
+      
+        <link rel="canonical" href="https://docs.isurlog.isurki.com/es/reference-parameters/">
+      
+      
+        <link rel="prev" href="../isurdash-maintenance/">
+      
+      
+        <link rel="next" href="../build-environment/">
+      
+      
+        
+          <link rel="alternate" href="../../reference-parameters/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>7. Referencia de Parámetros de Configuración - ISURLOG Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-639QHEW68F"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-639QHEW68F",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-639QHEW68F",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#7-referencia-de-parametros-de-configuracion" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../" title="ISURLOG Docs" class="md-header__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ISURLOG Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. Referencia de Parámetros de Configuración
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../reference-parameters/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="ISURLOG Docs" class="md-nav__button md-logo" aria-label="ISURLOG Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    ISURLOG Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/isurki-tecnica/isurlog-firmware" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    isurki-tecnica/isurlog-firmware
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical-specifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ficha Técnica
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🛠️ Módulo A - Uso y Hardware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🛠️ Módulo A - Uso y Hardware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sensor-connections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Conexión de Sensores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-supply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Métodos de Alimentación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../communications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Comunicaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation-commissioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Instalación y Puesta en Marcha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datalogger-operation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Funcionamiento del Datalogger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6">
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Plataforma IsurDASH
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6. Plataforma IsurDASH
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-access-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.1. Acceso e Inicio de Sesión
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.2. Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.3. Dispositivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-alarms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.4. Alarmas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Usuarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.6. Perfiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.7. Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isurdash-maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.8. Mantenimiento de Dispositivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Referencia de Parámetros de Configuración
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Referencia de Parámetros de Configuración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#71-parametros-generales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1. Parámetros Generales
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1. Parámetros Generales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tiempo-de-latencia-min" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tiempo de latencia (min)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tension-de-alimentacion-sensores-voltios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tensión de alimentación sensores (Voltios)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modo-de-registro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modo de registro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tamano-del-payload-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tamaño del payload (bytes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acumulador-de-registros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acumulador de registros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#latitud-y-longitud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Latitud y longitud
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sincronizacion-rtc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sincronización RTC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alarmas-por-vandalismo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alarmas por vandalismo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-parametros-de-comunicaciones-inalambricas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2. Parámetros de Comunicaciones Inalámbricas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2. Parámetros de Comunicaciones Inalámbricas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mqtt-nb-iotlte-m-y-wi-fi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MQTT (NB-IoT/LTE-M y Wi-Fi)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nb-iotlte-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NB-IoT/LTE-M
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lorawan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LoRaWAN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wi-fi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wi-Fi
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-parametros-de-configuracion-de-bateria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3. Parámetros de Configuración de Batería
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-parametros-de-sensores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4. Parámetros de Sensores
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4. Parámetros de Sensores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensor-analogico-entradas-4-20ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor Analógico (Entradas 4-20mA)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensor Analógico (Entradas 4-20mA)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-de-entrada-analogica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros de Entrada Analógica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-digital" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor Digital
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensor Digital">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-del-sensor-digital" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros del Sensor Digital
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entradas-modbus-rs485" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entradas Modbus (RS485)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Entradas Modbus (RS485)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-modbus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros Modbus
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-de-temperatura-pt100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor de Temperatura PT100
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensor de Temperatura PT100">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-pt100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros PT100
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-de-temperatura-y-humedad-interno-sht30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor de Temperatura y Humedad Interno (SHT30)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensor de Temperatura y Humedad Interno (SHT30)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-de-temperatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros de Temperatura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros-de-humedad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros de Humedad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-de-temperatura-y-humedad-externo-bme280" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor de Temperatura y Humedad Externo (BME280)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensor de Temperatura y Humedad Externo (BME280)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-de-temperatura_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros de Temperatura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros-de-humedad_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros de Humedad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acelerometro-interno-lis2dh12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acelerómetro Interno (LIS2DH12)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💻 Módulo B - Desarrollo de Firmware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💻 Módulo B - Desarrollo de Firmware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Configuración del Entorno de Compilación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Visión General de la Arquitectura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module-library-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2.1. Referencia de Módulos y Librerías
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing-application-upload/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Grabado del Firmware y Carga de la Aplicación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpio-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Mapeo de GPIO (Hardware-Software)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nbiot-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Guía Avanzada del Módem NB-IoT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lorawan-modem-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Guía Avanzada del Módem LoRaWAN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contribution-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Guía de Contribución
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ☁️ Módulo C - Integración de Datos y APIs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ☁️ Módulo C - Integración de Datos y APIs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-access-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Resumen de Acceso a Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../historical-data-influxdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Datos Históricos (InfluxDB)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../realtime-data-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Datos en Tiempo Real (MQTT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote-configuration-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. API de Configuración Remota (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚡ Módulo D - Consumo de Energía y Vida de la Batería
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ⚡ Módulo D - Consumo de Energía y Vida de la Batería
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consumption-graphs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Gráficos de Consumo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-budget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Calculadora de Consumo de Energía
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🩺 Módulo E - Resolución de Problemas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🩺 Módulo E - Resolución de Problemas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Resolución de Problemas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧰 Módulo F - Piezas y Accesorios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🧰 Módulo F - Piezas y Accesorios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parts-and-accessories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Piezas y Accesorios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enclosure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. La Caja
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://docs.isurlog.isurki.com/blog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#71-parametros-generales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1. Parámetros Generales
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1. Parámetros Generales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tiempo-de-latencia-min" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tiempo de latencia (min)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tension-de-alimentacion-sensores-voltios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tensión de alimentación sensores (Voltios)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modo-de-registro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modo de registro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tamano-del-payload-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tamaño del payload (bytes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acumulador-de-registros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acumulador de registros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#latitud-y-longitud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Latitud y longitud
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sincronizacion-rtc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sincronización RTC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alarmas-por-vandalismo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alarmas por vandalismo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-parametros-de-comunicaciones-inalambricas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2. Parámetros de Comunicaciones Inalámbricas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2. Parámetros de Comunicaciones Inalámbricas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mqtt-nb-iotlte-m-y-wi-fi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MQTT (NB-IoT/LTE-M y Wi-Fi)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nb-iotlte-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NB-IoT/LTE-M
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lorawan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LoRaWAN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wi-fi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wi-Fi
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-parametros-de-configuracion-de-bateria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3. Parámetros de Configuración de Batería
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-parametros-de-sensores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4. Parámetros de Sensores
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4. Parámetros de Sensores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensor-analogico-entradas-4-20ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor Analógico (Entradas 4-20mA)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensor Analógico (Entradas 4-20mA)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-de-entrada-analogica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros de Entrada Analógica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-digital" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor Digital
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensor Digital">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-del-sensor-digital" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros del Sensor Digital
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entradas-modbus-rs485" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entradas Modbus (RS485)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Entradas Modbus (RS485)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-modbus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros Modbus
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-de-temperatura-pt100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor de Temperatura PT100
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensor de Temperatura PT100">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-pt100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros PT100
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-de-temperatura-y-humedad-interno-sht30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor de Temperatura y Humedad Interno (SHT30)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensor de Temperatura y Humedad Interno (SHT30)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-de-temperatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros de Temperatura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros-de-humedad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros de Humedad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-de-temperatura-y-humedad-externo-bme280" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor de Temperatura y Humedad Externo (BME280)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensor de Temperatura y Humedad Externo (BME280)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametros-de-temperatura_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros de Temperatura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parametros-de-humedad_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parámetros de Humedad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acelerometro-interno-lis2dh12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acelerómetro Interno (LIS2DH12)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="7-referencia-de-parametros-de-configuracion">7. Referencia de Parámetros de Configuración</h1>
+<p>Esta sección detalla el significado de cada parámetro configurable en un <strong>ISURLOG</strong> a través de la plataforma IsurDASH.</p>
+<h2 id="71-parametros-generales">7.1. Parámetros Generales</h2>
+<p>Estos parámetros afectan al comportamiento global del datalogger.</p>
+<h3 id="tiempo-de-latencia-min">Tiempo de latencia (min)</h3>
+<ul>
+<li><strong>Descripción:</strong> define la frecuencia con la que el <strong>ISURLOG</strong> sale del modo de reposo profundo para realizar un ciclo completo de lectura de sensores.</li>
+<li><strong>Valores:</strong> actualmente configurable en intervalos predefinidos de 5, 10, 15, 30, 60 o 120 minutos. (El propio firmware admite hasta 255 minutos — el rango de IsurDASH se actualizará para igualarlo en una futura versión.)</li>
+<li><strong>Ejemplo:</strong> un valor de <strong>60</strong> hace que el dispositivo tome una muestra de datos cada hora.</li>
+</ul>
+<h3 id="tension-de-alimentacion-sensores-voltios">Tensión de alimentación sensores (Voltios)</h3>
+<div class="admonition note">
+<p class="admonition-title">Nota de hardware</p>
+<p>Disponible solo en <strong>ISURLOG v3.0 y posteriores</strong>.</p>
+</div>
+<ul>
+<li><strong>Descripción:</strong> configura la tensión de alimentación entregada a los sensores a través de los terminales de presión marcados como <strong>VDC</strong>.</li>
+<li><strong>Valores:</strong> 9, 12, 18 o 24 V.</li>
+</ul>
+<h3 id="modo-de-registro">Modo de registro</h3>
+<ul>
+<li><strong>Descripción:</strong> determina la lógica que usa el <strong>ISURLOG</strong> para decidir cuándo debe transmitir los datos acumulados. Este parámetro es fundamental para la gestión de alarmas.</li>
+<li><strong>Opciones:</strong><ul>
+<li><strong>Fijo:</strong> en este modo, el <strong>ISURLOG</strong> transmite datos únicamente cuando se completa el número de ciclos definido en el <strong>Acumulador de registros</strong>. Las alarmas que puedan generarse se guardan en el registro, pero no fuerzan un envío inmediato.</li>
+<li><strong>Condicional:</strong> en este modo, el <strong>ISURLOG</strong> transmite si se cumple cualquiera de estas dos condiciones: 1) se ha completado el recuento de ciclos del <strong>Acumulador de registros</strong>, o 2) se ha detectado una condición de alarma en alguno de los sensores. Este modo garantiza que los eventos críticos se notifiquen al instante.</li>
+</ul>
+</li>
+</ul>
+<h3 id="tamano-del-payload-bytes">Tamaño del payload (bytes)</h3>
+<ul>
+<li><strong>Descripción:</strong> define el tamaño del paquete de datos (payload) que transmite el ISURLOG. Este valor debe ajustarse para asegurar que sea lo bastante grande como para acomodar todos los sensores activados actualmente. Elegir un tamaño de payload menor es más eficiente, ya que permite al dispositivo acumular un mayor número de registros en su RAM interna antes de subirlos a la nube. Actualmente se puede elegir entre 32, 64 o 128 bytes. Para optimizar el tamaño del payload, consultar la siguiente tabla:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Nombre del Sensor</th>
+<th style="text-align: left;">Tamaño (caracteres hex)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Entrada Digital</strong></td>
+<td style="text-align: left;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entrada Analógica</strong></td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Entrada Modbus</strong></td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Temperatura PT100</strong></td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Temperatura Interna</strong></td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Humedad Interna</strong></td>
+<td style="text-align: left;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Tensión de Batería</strong></td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Marca de Tiempo Unix</strong></td>
+<td style="text-align: left;">12</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Ejemplo:</strong> si el datalogger está configurado con 2 entradas analógicas (2<em>8), 2 entradas modbus (2</em>8), la tensión de batería (1<em>8) y la marca de tiempo Unix, siempre obligatoria (1</em>12), el total es 52. En este caso, el tamaño de payload óptimo a configurar sería 64 bytes.</li>
+</ul>
+<h3 id="acumulador-de-registros">Acumulador de registros</h3>
+<ul>
+<li><strong>Descripción:</strong> controla cuántos ciclos de lectura (registros) debe almacenar el <strong>ISURLOG</strong> en su memoria interna antes de realizar una transmisión de datos a la plataforma IsurDASH.</li>
+<li><strong>Ejemplo:</strong> si el Tiempo de latencia es de <strong>10 minutos</strong> y el Acumulador es <strong>6</strong>, el <strong>ISURLOG</strong> se despertará cada 10 minutos para leer, pero solo se conectará a la red y enviará los 6 registros acumulados cada <strong>60 minutos</strong>, optimizando así el consumo de batería.</li>
+</ul>
+<h3 id="latitud-y-longitud">Latitud y longitud</h3>
+<ul>
+<li><strong>Descripción:</strong> permite establecer las coordenadas geográficas (en grados decimales) donde está instalado el dispositivo. Esta información se usa para posicionar correctamente el <strong>ISURLOG</strong> en el mapa del Dashboard.</li>
+</ul>
+<h3 id="sincronizacion-rtc">Sincronización RTC</h3>
+<ul>
+<li><strong>Descripción:</strong> este parámetro (activado/desactivado) controla si las lecturas de sensores se realizan en intervalos de tiempo fijos y predecibles (sincronizados con el reloj) o en intervalos relativos al momento de encendido del dispositivo.</li>
+<li><strong>Opciones:</strong><ul>
+<li><strong>Activado (Recomendado):</strong> con esta opción activada, el <strong>ISURLOG</strong> ajusta su ciclo de trabajo para realizar las lecturas en múltiplos exactos del tiempo de latencia.<ul>
+<li><strong>Ejemplo:</strong> si el Tiempo de latencia es de 5 minutos, el dispositivo programará sus lecturas para que ocurran en la hora en punto, y cinco, y diez, etc. (p. ej. 14:00, 14:05, 14:10).</li>
+</ul>
+</li>
+<li><strong>Desactivado:</strong> si la sincronización está desactivada, el <strong>ISURLOG</strong> realizará la primera lectura en el momento en que se enciende, y las lecturas siguientes ocurrirán en intervalos relativos a ese momento de inicio.<ul>
+<li><strong>Ejemplo:</strong> si el Tiempo de latencia es de 5 minutos y el dispositivo se enciende a las 14:12, las siguientes lecturas ocurrirán a las 14:17, 14:22, 14:27, y así sucesivamente.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="alarmas-por-vandalismo">Alarmas por vandalismo</h3>
+<div class="admonition note">
+<p class="admonition-title">Nota de hardware/firmware</p>
+<p>Disponible solo en <strong>ISURLOG v3.0 y posteriores</strong>, con firmware <strong>1.1.6 o posterior</strong>.</p>
+</div>
+<ul>
+<li><strong>Descripción:</strong> activa el envío de alarmas de vandalismo. El dispositivo usa su acelerómetro interno para detectar movimiento, y el módem NB-IoT (NRF9151) para obtener coordenadas GPS. Cada vez que se detecta movimiento, envía las coordenadas actuales a través de los canales de notificación configurados por el usuario.</li>
+<li><strong>Nota de consumo:</strong> dado que el acelerómetro LIS2DH12 debe permanecer en modo activo (de bajo consumo) para que esta función opere, añade un pequeño consumo extra. Esto sigue siendo compatible con el funcionamiento a batería, pero conviene tenerlo en cuenta al dimensionar la duración de la batería.</li>
+</ul>
+<h2 id="72-parametros-de-comunicaciones-inalambricas">7.2. Parámetros de Comunicaciones Inalámbricas</h2>
+<p>Estos parámetros configuran el método inalámbrico que usa el <strong>ISURLOG</strong> para comunicarse con la plataforma (broker MQTT, ajustes celulares NB-IoT/LTE-M, credenciales LoRaWAN, o credenciales Wi-Fi, según el módem instalado).</p>
+<div class="admonition note">
+<p class="admonition-title">Importante</p>
+<p>A diferencia del resto de parámetros de esta página, los parámetros de comunicación inalámbrica <strong>no son editables de forma remota por downlink</strong> — dado que un valor incorrecto podría cortar la conectividad por completo, solo pueden editarse <strong>localmente por Bluetooth</strong> (ver <strong><a href="../datalogger-operation/#51-modo-de-diagnostico-por-bluetooth-activado-por-iman">5.1 Modo de Diagnóstico por Bluetooth</a></strong>). Disponible desde el firmware <strong>1.0.8 o posterior</strong>.</p>
+</div>
+<p>Los campos mostrados dependen de qué módulo de comunicación esté instalado — NB-IoT/LTE-M, LoRaWAN o Wi-Fi.</p>
+<h3 id="mqtt-nb-iotlte-m-y-wi-fi">MQTT (NB-IoT/LTE-M y Wi-Fi)</h3>
+<ul>
+<li><strong>Servidor:</strong> dirección IP o nombre de host del broker MQTT.</li>
+<li><strong>Puerto:</strong> puerto del broker MQTT.</li>
+<li><strong>Usuario:</strong> nombre de usuario para la autenticación MQTT.</li>
+<li><strong>Contraseña:</strong> contraseña para la autenticación MQTT.</li>
+<li><strong>Topic:</strong> topic base de MQTT en el que publica el dispositivo.</li>
+<li><strong>Registrar calidad de red:</strong> casilla, <strong>solo NB-IoT, firmware 1.1.6 o posterior</strong>. Si se activa, el dispositivo añade la lectura de calidad de señal NB-IoT (RSRQ/RSRP) al último payload de cada lote de transmisión — ver <strong><a href="../realtime-data-mqtt/#34-decodificacion-del-payload-nb-iotcayenne-lpp">3.4 Decodificación del Payload (NB-IoT/Cayenne LPP)</a></strong>.</li>
+</ul>
+<h3 id="nb-iotlte-m">NB-IoT/LTE-M</h3>
+<ul>
+<li><strong>APN:</strong> nombre del punto de acceso para la conexión de datos celular.</li>
+<li><strong>SIM externa:</strong> casilla. Alterna entre la eSIM integrada y una Nano-SIM externa — ver <strong><a href="../communications/#flexibilidad-en-la-gestion-de-la-sim">3.2 Flexibilidad en la Gestión de la SIM</a></strong>.</li>
+<li><strong>Preferencia de conexión:</strong> desplegable — <strong>Automático</strong>, <strong>LTE-M</strong>, o <strong>NB-IoT</strong>. Selecciona con qué tecnología celular debe conectarse el módem.<ul>
+<li><strong>Nota:</strong> <strong>Automático</strong> todavía no está totalmente soportado por el firmware — al seleccionarlo, el dispositivo recurre por defecto a NB-IoT.</li>
+</ul>
+</li>
+</ul>
+<h3 id="lorawan">LoRaWAN</h3>
+<ul>
+<li><strong>DEV EUI:</strong> EUI de dispositivo LoRaWAN.</li>
+<li><strong>APP EUI:</strong> EUI de aplicación LoRaWAN.</li>
+<li><strong>APP KEY:</strong> clave de aplicación LoRaWAN (OTAA).</li>
+<li><strong>Clase LoRaWAN:</strong> desplegable — clase de dispositivo (A, B o C).</li>
+<li><strong>Downlinks confirmados:</strong> casilla. Si se activa, el dispositivo solicita confirmación de la red para los mensajes downlink.</li>
+</ul>
+<h3 id="wi-fi">Wi-Fi</h3>
+<ul>
+<li><strong>Wifi SSID:</strong> nombre de la red Wi-Fi a la que conectarse.</li>
+<li><strong>Wifi Pass:</strong> contraseña de la red Wi-Fi.</li>
+<li>Además de los mismos parámetros de <strong>MQTT</strong> descritos arriba.</li>
+</ul>
+<h2 id="73-parametros-de-configuracion-de-bateria">7.3. Parámetros de Configuración de Batería</h2>
+<div class="admonition note">
+<p class="admonition-title">Nota de hardware/firmware</p>
+<p>Disponible solo en <strong>ISURLOG v3.0 y posteriores</strong>, con firmware <strong>1.1.9 o posterior</strong>.</p>
+</div>
+<p>Estos parámetros configuran cómo se informa y monitoriza la batería del <strong>ISURLOG</strong>.</p>
+<ul>
+<li><strong>Tipo de batería:</strong> desplegable — <strong>Recargable (Li-Ion)</strong> o <strong>No recargable (Li-SOCl2)</strong> — ver <strong><a href="../power-supply/#214-baterias-no-recargables-li-socl2">2.1.4 Baterías No Recargables (Li-SOCl2)</a></strong> para la configuración de hardware correspondiente.<ul>
+<li><strong>Importante:</strong> este parámetro <strong>no</strong> afecta al comportamiento del propio firmware del ISURLOG. Lo usa exclusivamente <strong>IsurDASH</strong> para convertir correctamente la tensión de batería reportada en un porcentaje, y aplicar los umbrales de batería baja adecuados según la química de batería seleccionada.</li>
+</ul>
+</li>
+<li><strong>Registrar variación de batería:</strong> casilla. Activa el registro de la tasa de carga/descarga de la batería (<strong>C-Rate</strong>).</li>
+<li><strong>Activar alarmas de batería baja:</strong> casilla. Activa o desactiva las notificaciones de alarma de batería baja.</li>
+</ul>
+<h2 id="74-parametros-de-sensores">7.4. Parámetros de Sensores</h2>
+<p>Estos parámetros se configuran al añadir o editar un sensor concreto desde el "Listado de Sensores" en la pestaña de configuración del dispositivo.</p>
+<h3 id="sensor-analogico-entradas-4-20ma">Sensor Analógico (Entradas 4-20mA)</h3>
+<p>Esta sección permite configurar cualquiera de las <strong>cuatro entradas analógicas</strong> del <strong>ISURLOG</strong> para leer sensores con salida de corriente 4-20mA, ya sean activos (alimentación externa) o pasivos (alimentados por el <strong>ISURLOG</strong>).</p>
+<div class="admonition note">
+<p class="admonition-title">Ver También</p>
+<p>Para el esquema de conexión física de los sensores a los terminales, consultar la sección <strong><a href="../sensor-connections/">1. Conexión de Sensores</a></strong>.</p>
+</div>
+<h4 id="parametros-de-entrada-analogica">Parámetros de Entrada Analógica</h4>
+<ul>
+<li><strong>Número de entrada analógica:</strong><ul>
+<li><strong>Descripción:</strong> selecciona el terminal físico de la placa <strong>ISURLOG</strong> (numerado del <strong>0 al 3</strong>) al que está conectado el sensor.</li>
+</ul>
+</li>
+<li><strong>Tiempo preadquisición (ms):</strong><ul>
+<li><strong>Descripción:</strong> define un tiempo de espera en milisegundos (ms) desde que el <strong>ISURLOG</strong> alimenta la salida de 12V hasta que realiza la lectura. Es útil para sensores que necesitan tiempo para estabilizarse tras encenderse.</li>
+</ul>
+</li>
+<li><strong>Descripción:</strong><ul>
+<li><strong>Descripción:</strong> un nombre o texto descriptivo para identificar esta entrada en la plataforma IsurDASH (p. ej. "Nivel Depósito Norte", "Presión Bomba 2").</li>
+</ul>
+</li>
+<li><strong>Unidad:</strong><ul>
+<li><strong>Descripción:</strong> las unidades de ingeniería en las que se mostrará el valor medido tras la conversión (p. ej. "m", "bar", "pH").</li>
+</ul>
+</li>
+<li><strong>Cero:</strong><ul>
+<li><strong>Descripción:</strong> el valor de ingeniería que corresponde a la lectura de <strong>4mA</strong> del sensor.</li>
+<li><strong>Ejemplo:</strong> si un sensor de nivel de 0 a 5 metros mide 4mA cuando el depósito está vacío, el valor de "Cero" sería <strong>0</strong>.</li>
+</ul>
+</li>
+<li><strong>Fondo de escala:</strong><ul>
+<li><strong>Descripción:</strong> el valor de ingeniería que corresponde a la lectura de <strong>20mA</strong> del sensor.</li>
+<li><strong>Ejemplo:</strong> para ese mismo sensor de nivel de 0 a 5 metros, el "Fondo de escala" sería <strong>5</strong>, ya que corresponde a la lectura de 20mA cuando el depósito está lleno.</li>
+</ul>
+</li>
+<li><strong>Alarma de bajo:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral numérico inferior para esta entrada. Si el valor medido (en sus unidades de ingeniería) cae por debajo de este umbral, se registra una alarma.</li>
+</ul>
+</li>
+<li><strong>Alarma de alto:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral numérico superior. Si el valor medido supera este umbral, se registra una alarma.</li>
+</ul>
+</li>
+<li><strong>Activar alarma de bajo:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar alarma de alto:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de bajo:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una <strong>transmisión de datos inmediata</strong> cuando el Modo de registro está configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de alto:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una <strong>transmisión inmediata</strong> cuando el Modo de registro está configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+</ul>
+<h3 id="sensor-digital">Sensor Digital</h3>
+<p>Esta sección detalla la configuración de la entrada digital del <strong>ISURLOG</strong>. La entrada puede funcionar como detector de estado (abierto/cerrado) o como contador de pulsos.</p>
+<div class="admonition note">
+<p class="admonition-title">Ver También</p>
+<p>Para el esquema de conexión física del sensor a los terminales, consultar la sección <strong><a href="../sensor-connections/">1. Conexión de Sensores</a></strong>.</p>
+</div>
+<h4 id="parametros-del-sensor-digital">Parámetros del Sensor Digital</h4>
+<ul>
+<li><strong>Descripción:</strong><ul>
+<li><strong>Descripción:</strong> un nombre o texto descriptivo para identificar esta entrada en la plataforma IsurDASH (p. ej. "Contador de Agua Finca", "Alarma Escotilla Barco").</li>
+</ul>
+</li>
+<li><strong>Unidad:</strong><ul>
+<li><strong>Descripción:</strong> la unidad de medida del valor registrado. En modo "Contador", puede ser "pulsos", "litros", "m³", "kW", etc.</li>
+</ul>
+</li>
+<li><strong>Modo:</strong><ul>
+<li><strong>Descripción:</strong> define el comportamiento de la entrada digital.</li>
+<li><strong>Opciones:</strong><ul>
+<li><strong>Estado:</strong> en este modo, el <strong>ISURLOG</strong> lee y registra el estado binario de la entrada en cada ciclo: <strong>1</strong> (activo/cerrado) o <strong>0</strong> (inactivo/abierto).</li>
+<li><strong>Contador:</strong> en este modo, el <strong>ISURLOG</strong> utiliza su procesador de ultra bajo consumo para contar los pulsos recibidos, incluso mientras el dispositivo está en reposo profundo. En cada ciclo de lectura se registra el número total de pulsos contados desde el último reinicio del contador.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Valor impulso:</strong><ul>
+<li><strong>Descripción:</strong> parámetro aplicable solo en modo "Contador". Permite asignar un peso o valor a cada pulso contado para convertirlo a unidades de ingeniería. El valor final registrado será (Número de Pulsos) x (Valor impulso).</li>
+<li><strong>Ejemplo:</strong> si un contador de agua emite un pulso por cada 10 litros, el "Valor impulso" debería configurarse a <strong>10</strong>.</li>
+</ul>
+</li>
+<li><strong>Pulsos para despertar:</strong><ul>
+<li><strong>Descripción:</strong> parámetro aplicable solo en modo "Contador". Define un número de pulsos que, al alcanzarse, despierta de inmediato al <strong>ISURLOG</strong> y fuerza una transmisión de datos, sin esperar al siguiente Tiempo de latencia.</li>
+</ul>
+</li>
+<li><strong>Alarma de bajo:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral numérico inferior. Si el valor final medido (el estado, o los pulsos multiplicados por su valor) cae por debajo de este umbral, se registra una alarma.</li>
+</ul>
+</li>
+<li><strong>Alarma de alto:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral numérico superior. Si el valor final medido supera este umbral, se registra una alarma.</li>
+</ul>
+</li>
+<li><strong>Activar alarma de bajo:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar alarma de alto:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de bajo:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una <strong>transmisión de datos inmediata</strong> cuando el Modo de registro está configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de alto:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una <strong>transmisión inmediata</strong> cuando el Modo de registro está configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+</ul>
+<h3 id="entradas-modbus-rs485">Entradas Modbus (RS485)</h3>
+<p>Esta sección permite configurar lecturas de dispositivos externos que utilizan el protocolo Modbus RTU a través de la interfaz RS485 del <strong>ISURLOG</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Ver También</p>
+<p>Para el esquema de cableado físico de los sensores al bus RS485, consultar la sección <strong><a href="../sensor-connections/">1. Conexión de Sensores</a></strong>.</p>
+</div>
+<h4 id="parametros-modbus">Parámetros Modbus</h4>
+<ul>
+<li><strong>Número de entrada modbus:</strong><ul>
+<li><strong>Descripción:</strong> un identificador virtual para una lectura Modbus (el <strong>ISURLOG</strong> admite hasta 4). Es importante señalar que, aunque se pueden configurar varias entradas, todos los sensores Modbus están conectados físicamente al mismo bus RS485.</li>
+</ul>
+</li>
+<li><strong>Baudrate:</strong><ul>
+<li><strong>Descripción:</strong> define la velocidad de transmisión para la comunicación modbus.</li>
+</ul>
+</li>
+<li><strong>Data bits:</strong><ul>
+<li><strong>Descripción:</strong> define los bits de datos para la comunicación modbus.</li>
+</ul>
+</li>
+<li><strong>Stop bits:</strong><ul>
+<li><strong>Descripción:</strong> define los bits de parada para la comunicación modbus.</li>
+</ul>
+</li>
+<li><strong>Parity:</strong><ul>
+<li><strong>Descripción:</strong> define la paridad para la comunicación modbus.</li>
+</ul>
+</li>
+<li><strong>Tiempo preadquisición (ms):</strong><ul>
+<li><strong>Descripción:</strong> define un tiempo de espera en milisegundos (ms) desde que el <strong>ISURLOG</strong> alimenta los sensores externos hasta que inicia la comunicación Modbus. Es útil para dar tiempo a los esclavos Modbus a arrancar y estabilizarse.</li>
+</ul>
+</li>
+<li><strong>Descripción:</strong><ul>
+<li><strong>Descripción:</strong> un nombre o texto descriptivo para identificar esta lectura en la plataforma (p. ej. "Estado Bomba 1", "Analizador de Cloro").</li>
+</ul>
+</li>
+<li><strong>Unidad:</strong><ul>
+<li><strong>Descripción:</strong> las unidades en las que se mostrará el valor leído (p. ej. "RPM", "mg/L", "Estado").</li>
+</ul>
+</li>
+<li><strong>Dirección esclavo:</strong><ul>
+<li><strong>Descripción:</strong> la dirección ID del dispositivo esclavo Modbus en el bus RS485, típicamente un valor entre 1 y 247.</li>
+</ul>
+</li>
+<li><strong>Dirección registro:</strong><ul>
+<li><strong>Descripción:</strong> la dirección del registro concreto a leer dentro del dispositivo esclavo.</li>
+</ul>
+</li>
+<li><strong>Function code:</strong><ul>
+<li><strong>Descripción:</strong> el código de función Modbus que se usará para la lectura. Los valores posibles son 1 (Read Coils), 2 (Read Discrete Inputs), 3 (Read Holding Registers), o 4 (Read Input Registers).</li>
+</ul>
+</li>
+<li><strong>Registro IEEE 754:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Debe activarse si el valor a leer ocupa dos registros consecutivos y está codificado en formato de coma flotante IEEE 754 de 32 bits.</li>
+</ul>
+</li>
+<li><strong>Número de decimales:</strong><ul>
+<li><strong>Descripción:</strong> aplica un factor de división a los valores numéricos leídos para posicionar el punto decimal. El valor leído se divide entre 10 elevado a este número.</li>
+<li><strong>Ejemplo:</strong> si el dispositivo devuelve 2530 y se configuran 2 decimales, el valor final será 25.30 (porque 2530 / 10² = 25.30).</li>
+</ul>
+</li>
+<li><strong>Offset:</strong><ul>
+<li><strong>Descripción:</strong> un valor numérico que se suma o resta al valor leído (ya ajustado por los decimales) para realizar un ajuste o calibración final.</li>
+</ul>
+</li>
+<li><strong>Modo:</strong><ul>
+<li><strong>Descripción:</strong> define cómo se aplica el Offset al valor.</li>
+<li><strong>Opciones:</strong><ul>
+<li><strong>Directo:</strong> el valor final se calcula como: (Valor Leído) - Offset.</li>
+<li><strong>Inverso:</strong> el valor final se calcula como: Offset - (Valor Leído).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Alarma de bajo:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral numérico inferior. Si el valor final medido (el estado, o los pulsos multiplicados por su valor) cae por debajo de este umbral, se registra una alarma.</li>
+</ul>
+</li>
+<li><strong>Alarma de alto:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral numérico superior. Si el valor final medido supera este umbral, se registra una alarma.</li>
+</ul>
+</li>
+<li><strong>Activar alarma de bajo:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar alarma de alto:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de bajo:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una <strong>transmisión de datos inmediata</strong> cuando el Modo de registro está configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de alto:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una <strong>transmisión inmediata</strong> cuando el Modo de registro está configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+</ul>
+<h3 id="sensor-de-temperatura-pt100">Sensor de Temperatura PT100</h3>
+<p>Esta sección detalla los parámetros de configuración de la entrada para sondas de temperatura PT100.</p>
+<div class="admonition note">
+<p class="admonition-title">Ver También</p>
+<p>Para el esquema de conexión física y la configuración de hardware de la sonda, consultar la sección <strong><a href="../sensor-connections/">1. Conexión de Sensores</a></strong> (concretamente el apartado de PT100).</p>
+</div>
+<h4 id="parametros-pt100">Parámetros PT100</h4>
+<ul>
+<li><strong>Número de hilos:</strong><ul>
+<li><strong>Descripción:</strong> permite seleccionar la configuración de la sonda de temperatura PT100 según el número de hilos que utiliza.</li>
+<li><strong>Opciones:</strong> 2, 3 o 4 hilos.</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Nota importante</p>
+<p>La configuración del número de hilos debe realizarse tanto en <strong>software</strong> (mediante este parámetro) como en <strong>hardware</strong> (soldando jumpers en la placa PCB). Ambos ajustes deben coincidir para garantizar una lectura precisa.</p>
+</div>
+<ul>
+<li><strong>Alarma de bajo:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral mínimo de temperatura. Si la temperatura medida cae por debajo de este valor, se registra una alarma.</li>
+<li><strong>Unidades:</strong> grados Celsius (ºC).</li>
+</ul>
+</li>
+<li>
+<p><strong>Alarma de alto:</strong></p>
+<ul>
+<li><strong>Descripción:</strong> define el umbral máximo de temperatura. Si la temperatura medida supera este valor, se registra una alarma.</li>
+<li><strong>Unidades:</strong> grados Celsius (ºC).</li>
+</ul>
+</li>
+<li>
+<p><strong>Activar alarma de bajo:</strong></p>
+<ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar alarma de alto:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de bajo:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una <strong>transmisión de datos inmediata</strong> cuando el Modo de registro está configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de alto:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una <strong>transmisión inmediata</strong> cuando el Modo de registro está configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+</ul>
+<h3 id="sensor-de-temperatura-y-humedad-interno-sht30">Sensor de Temperatura y Humedad Interno (SHT30)</h3>
+<p>Estos parámetros configuran las alarmas para el sensor de temperatura y humedad integrado en la propia placa del <strong>ISURLOG</strong>.</p>
+<h4 id="parametros-de-temperatura">Parámetros de Temperatura</h4>
+<ul>
+<li><strong>Alarma de bajo de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral mínimo de temperatura. Si la temperatura medida por el sensor interno cae por debajo de este valor, se registra un evento de alarma.</li>
+<li><strong>Unidades:</strong> grados Celsius (ºC).</li>
+</ul>
+</li>
+<li><strong>Alarma de alto de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral máximo de temperatura. Si la temperatura medida supera este valor, se registra un evento de alarma.</li>
+<li><strong>Unidades:</strong> grados Celsius (ºC).</li>
+</ul>
+</li>
+<li><strong>Activar alarma de bajo de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar alarma de alto de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de bajo de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla (activado/desactivado). Si se activa, una alarma de baja temperatura contribuye a la condición general de alarma que fuerza una <strong>transmisión inmediata</strong> cuando el Modo de registro está configurado como "<strong>Condicional</strong>". Si está desactivada, el evento de alarma es solo informativo.</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de alto de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, una alarma de alta temperatura fuerza una <strong>transmisión inmediata</strong> con el Modo de registro configurado como "<strong>Condicional</strong>". Si está desactivada, la alarma es solo informativa.</li>
+</ul>
+</li>
+</ul>
+<h4 id="parametros-de-humedad">Parámetros de Humedad</h4>
+<ul>
+<li><strong>Alarma de bajo de humedad:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral mínimo de humedad relativa. Si la humedad medida cae por debajo de este valor, se registra un evento de alarma.</li>
+<li><strong>Unidades:</strong> porcentaje de humedad relativa (%RH).</li>
+</ul>
+</li>
+<li><strong>Alarma de alto de humedad:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral máximo de humedad relativa. Si la humedad medida supera este valor, se registra un evento de alarma.</li>
+<li><strong>Unidades:</strong> porcentaje de humedad relativa (%RH).</li>
+</ul>
+</li>
+<li><strong>Activar alarma de bajo de humedad:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar alarma de alto de humedad:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de bajo de humedad:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Cuando se activa, una alarma de humedad baja fuerza una <strong>transmisión inmediata</strong> con el Modo de registro configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de alto de humedad:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Cuando se activa, una alarma de humedad alta fuerza una <strong>transmisión inmediata</strong> con el Modo de registro configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+</ul>
+<h3 id="sensor-de-temperatura-y-humedad-externo-bme280">Sensor de Temperatura y Humedad Externo (BME280)</h3>
+<p>Estos parámetros configuran las alarmas para el sensor de temperatura y humedad externo conectado por I2C al <strong>ISURLOG</strong>.</p>
+<h4 id="parametros-de-temperatura_1">Parámetros de Temperatura</h4>
+<ul>
+<li><strong>Alarma de bajo de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral mínimo de temperatura. Si la temperatura medida por el sensor interno cae por debajo de este valor, se registra un evento de alarma.</li>
+<li><strong>Unidades:</strong> grados Celsius (ºC).</li>
+</ul>
+</li>
+<li><strong>Alarma de alto de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral máximo de temperatura. Si la temperatura medida supera este valor, se registra un evento de alarma.</li>
+<li><strong>Unidades:</strong> grados Celsius (ºC).</li>
+</ul>
+</li>
+<li><strong>Activar alarma de bajo de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar alarma de alto de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de bajo de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla (activado/desactivado). Si se activa, una alarma de baja temperatura contribuye a la condición general de alarma que fuerza una <strong>transmisión inmediata</strong> cuando el Modo de registro está configurado como "<strong>Condicional</strong>". Si está desactivada, el evento de alarma es solo informativo.</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de alto de temperatura:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, una alarma de alta temperatura fuerza una <strong>transmisión inmediata</strong> con el Modo de registro configurado como "<strong>Condicional</strong>". Si está desactivada, la alarma es solo informativa.</li>
+</ul>
+</li>
+</ul>
+<h4 id="parametros-de-humedad_1">Parámetros de Humedad</h4>
+<ul>
+<li><strong>Alarma de bajo de humedad:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral mínimo de humedad relativa. Si la humedad medida cae por debajo de este valor, se registra un evento de alarma.</li>
+<li><strong>Unidades:</strong> porcentaje de humedad relativa (%RH).</li>
+</ul>
+</li>
+<li><strong>Alarma de alto de humedad:</strong><ul>
+<li><strong>Descripción:</strong> define el umbral máximo de humedad relativa. Si la humedad medida supera este valor, se registra un evento de alarma.</li>
+<li><strong>Unidades:</strong> porcentaje de humedad relativa (%RH).</li>
+</ul>
+</li>
+<li><strong>Activar alarma de bajo de humedad:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar alarma de alto de humedad:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de bajo de humedad:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Cuando se activa, una alarma de humedad baja fuerza una <strong>transmisión inmediata</strong> con el Modo de registro configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+<li><strong>Activar condición de alarmas de alto de humedad:</strong><ul>
+<li><strong>Descripción:</strong> campo de tipo casilla. Cuando se activa, una alarma de humedad alta fuerza una <strong>transmisión inmediata</strong> con el Modo de registro configurado como "<strong>Condicional</strong>".</li>
+</ul>
+</li>
+</ul>
+<h3 id="acelerometro-interno-lis2dh12">Acelerómetro Interno (LIS2DH12)</h3>
+<div class="admonition note">
+<p class="admonition-title">Nota de hardware/firmware</p>
+<p>Disponible solo en <strong>ISURLOG v3.0 y posteriores</strong>, con firmware <strong>1.1.6 o posterior</strong>.</p>
+</div>
+<p>Esta sección configura umbrales de alarma independientes para cada uno de los tres ejes de aceleración (X, Y, Z) medidos por el acelerómetro integrado <strong>LIS2DH12</strong>.</p>
+<p>Los mismos cuatro parámetros se repiten por eje (<strong>X</strong>, <strong>Y</strong>, <strong>Z</strong>):</p>
+<ul>
+<li><strong>Alarma de bajo eje X/Y/Z:</strong> define el umbral inferior de aceleración (en g) para ese eje. Si el valor medido cae por debajo de este umbral, se registra una alarma.</li>
+<li><strong>Activar alarma de bajo eje X/Y/Z:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+<li><strong>Alarma de alto eje X/Y/Z:</strong> define el umbral superior de aceleración (en g) para ese eje. Si el valor medido supera este umbral, se registra una alarma.</li>
+<li><strong>Activar alarma de alto eje X/Y/Z:</strong> campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">🚧 Próximamente</p>
+<p>El firmware ya soporta forzar una transmisión inmediata a partir de una alarma de eje cuando el Modo de registro está en "Condicional" (el mismo comportamiento de <strong>Activar Condición de Alarma</strong> disponible para el resto de sensores), pero esta opción <strong>todavía no está expuesta en IsurDASH</strong> para los ejes del acelerómetro. Estará disponible en una futura actualización de la plataforma.</p>
+</div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
