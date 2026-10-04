@@ -148,17 +148,16 @@ Una caja impresa no es una solución de compromiso. Permite cosas que son difíc
 
 ## 2.5 Imprímela tú
 
-!!! success "Disponible en MakerWorld"
-    Los archivos (STL y proyectos de Bambu Studio listos para imprimir) están publicados en [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861558){ target="_blank" rel="noopener" } bajo la licencia descrita en [2.5.3](#253-licencia).
+Los archivos (STL y proyectos de Bambu Studio listos para imprimir) están publicados en [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box){ target="_blank" rel="noopener" } bajo la licencia descrita en [2.5.3](#253-licencia).
 
 ### 2.5.1 Proyectos de impresión
 
 Los ajustes de impresión van dentro de proyectos de Bambu Studio, así que no hay una lista de ajustes que copiar. Elige el que corresponda a dónde va a estar la caja:
 
-| Dónde va a estar | Proyecto | Estado |
+| Dónde va a estar | Proyecto | Descarga |
 | :--- | :--- | :--- |
-| **A resguardo**, por ejemplo dentro de un edificio | **Interior** | Listo |
-| **Exterior o clima adverso** (agua, sol) | **Exterior**. La caja, la tapa y los cierres que se imprimen con ella son las piezas que evitan que entren agua y polvo, así que este proyecto las imprime con un perfil más exigente | Listo |
+| **A resguardo**, por ejemplo dentro de un edificio | **Interior** | [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box){ target="_blank" rel="noopener" } |
+| **Exterior o clima adverso** (agua, sol) | **Exterior**. La caja, la tapa y los cierres que se imprimen con ella son las piezas que evitan que entren agua y polvo, así que este proyecto las imprime con un perfil más exigente | [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box){ target="_blank" rel="noopener" } |
 
 Los proyectos están preparados para una Bambu Lab P2S con boquilla de 0,4 mm y PETG de Sunlu, con una placa por pieza: caja, tapa con cierres, contratapa, tornillo de la contratapa, destornillador, raíl WAGO, portapilas, soporte DIN y soporte de poste. Con otra impresora u otro filamento, abre el proyecto en Bambu Studio, elige la tuya, vuelve a laminar y revisa cada placa antes de imprimir.
 

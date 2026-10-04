@@ -148,17 +148,16 @@ A printed enclosure is not a compromise. It allows things that are hard to do wi
 
 ## 2.5 Print it yourself
 
-!!! success "Available on MakerWorld"
-    The files (STL and ready-to-print Bambu Studio projects) are published on [MakerWorld](https://makerworld.com/es/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box#profileId-3861558){ target="_blank" rel="noopener" } under the license described in [2.5.3](#253-license).
+The files (STL and ready-to-print Bambu Studio projects) are published on [MakerWorld](https://makerworld.com/en/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box){ target="_blank" rel="noopener" } under the license described in [2.5.3](#253-license).
 
 ### 2.5.1 Print projects
 
 The print settings come inside Bambu Studio projects, so there is no list of settings to copy. Choose the one that matches where the enclosure will live:
 
-| Where it will live | Project | Status |
+| Where it will live | Project | Download |
 | :--- | :--- | :--- |
-| **Sheltered**, for example inside a building | **Indoor** | Ready |
-| **Outdoors or adverse weather** (water, sun) | **Outdoor**. The box, the lid and the closures printed with it are the parts that keep water and dust out, so this project prints them with a more demanding profile | Ready |
+| **Sheltered**, for example inside a building | **Indoor** | [MakerWorld](https://makerworld.com/en/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box){ target="_blank" rel="noopener" } |
+| **Outdoors or adverse weather** (water, sun) | **Outdoor**. The box, the lid and the closures printed with it are the parts that keep water and dust out, so this project prints them with a more demanding profile | [MakerWorld](https://makerworld.com/en/models/3392577-isurlog-enclosure-iot-datalogger-ip66-box){ target="_blank" rel="noopener" } |
 
 The projects are set up for a Bambu Lab P2S with a 0.4 mm nozzle and Sunlu PETG, with one plate per part: box, lid with closures, lid cover, lid cover screw, screwdriver, WAGO rail, battery holder, DIN mount and pole mount. With another printer or filament, open the project in Bambu Studio, choose yours, slice again and check each plate before printing.
 
