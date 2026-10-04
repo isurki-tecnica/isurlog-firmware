@@ -31,11 +31,11 @@ La caja del ISURLOG aloja el datalogger, sus baterías y el cableado en una sola
   <div class="encl-colors">
     <span class="encl-colors-label">Prueba tus colores</span>
     <div class="encl-swatches" role="group" aria-label="Caja y tapa"><small>Caja y tapa</small><button type="button" class="encl-sw" data-role="body" data-color="#EDE6CC" style="--c:#EDE6CC" aria-label="Marfil" aria-pressed="true"></button><button type="button" class="encl-sw" data-role="body" data-color="#F2F2F0" style="--c:#F2F2F0" aria-label="Blanco" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#9AA0A6" style="--c:#9AA0A6" aria-label="Gris" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#E8782A" style="--c:#E8782A" aria-label="Naranja" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#2E6DB4" style="--c:#2E6DB4" aria-label="Azul" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#2B2B2E" style="--c:#2B2B2E" aria-label="Negro" aria-pressed="false"></button></div>
-    <div class="encl-swatches" role="group" aria-label="Cierres, llave y accesorios interiores"><small>Cierres, llave y accesorios interiores</small><button type="button" class="encl-sw" data-role="accent" data-color="#00A838" style="--c:#00A838" aria-label="Verde" aria-pressed="true"></button><button type="button" class="encl-sw" data-role="accent" data-color="#F28C28" style="--c:#F28C28" aria-label="Naranja" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#2E6DB4" style="--c:#2E6DB4" aria-label="Azul" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#C8372D" style="--c:#C8372D" aria-label="Rojo" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#E8C21A" style="--c:#E8C21A" aria-label="Amarillo" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#F2F2F0" style="--c:#F2F2F0" aria-label="Blanco" aria-pressed="false"></button></div>
+    <div class="encl-swatches" role="group" aria-label="Cierres, destornillador y accesorios interiores"><small>Cierres, destornillador y accesorios interiores</small><button type="button" class="encl-sw" data-role="accent" data-color="#00A838" style="--c:#00A838" aria-label="Verde" aria-pressed="true"></button><button type="button" class="encl-sw" data-role="accent" data-color="#F28C28" style="--c:#F28C28" aria-label="Naranja" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#2E6DB4" style="--c:#2E6DB4" aria-label="Azul" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#C8372D" style="--c:#C8372D" aria-label="Rojo" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#E8C21A" style="--c:#E8C21A" aria-label="Amarillo" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#F2F2F0" style="--c:#F2F2F0" aria-label="Blanco" aria-pressed="false"></button></div>
   </div>
   <div class="encl-legend">
     <span><i id="lg-body" style="background:#EDE6CC"></i>Caja, tapa y tornillo de la contratapa</span>
-    <span><i id="lg-accent" style="background:#00A838"></i>Cierres, llave, contratapa y accesorios interiores</span>
+    <span><i id="lg-accent" style="background:#00A838"></i>Cierres, destornillador, contratapa y accesorios interiores</span>
     <span><i style="background:#0F522B"></i>Placa principal</span>
     <span><i style="background:#2F6FB8"></i>Baterías</span>
     <span><i style="background:#212124"></i>Soportes de montaje</span>
@@ -55,7 +55,7 @@ Elige una pieza para inspeccionarla. Todas se pueden girar y ampliar.
     <button type="button" class="encl-part" aria-pressed="true" data-viewer="encl-part" data-src="/enclosure/parts/box.glb" data-panel="p-box">Caja<small>× 1</small></button>
     <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/lid.glb" data-panel="p-lid">Tapa y cierres<small>× 1 + 4</small></button>
     <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/cover.glb" data-panel="p-cover">Contratapa<small>× 1 + tornillo</small></button>
-    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/key.glb" data-panel="p-key">Llave<small>× 1</small></button>
+    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/key.glb" data-panel="p-key">Destornillador<small>× 1</small></button>
     <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/wago.glb" data-panel="p-wago">Raíl WAGO<small>opcional</small></button>
     <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/battery.glb" data-panel="p-battery">Portapilas<small>opcional</small></button>
     <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/din.glb" data-panel="p-din">Soporte DIN<small>opcional</small></button>
@@ -64,7 +64,7 @@ Elige una pieza para inspeccionarla. Todas se pueden girar y ampliar.
 
   <div class="encl-info" id="p-box">
     <h3>Caja</h3>
-    <p>El cuerpo principal. Lleva los anclajes en L que sujetan los accesorios interiores, las torretas para la PCB, el anillo en «C» del frontal donde se guarda la llave y cinco agujeros M12 para prensaestopas en la pared trasera (cuatro en la fila superior y uno en la inferior).</p>
+    <p>El cuerpo principal. Lleva los anclajes en L que sujetan los accesorios interiores, las torretas para la PCB, el anillo en «C» del frontal donde se guarda el destornillador y cinco agujeros M12 para prensaestopas en la pared trasera (cuatro en la fila superior y uno en la inferior).</p>
     <dl><dt>Cantidad</dt><dd>1</dd><dt>Material</dt><dd>PETG</dd></dl>
   </div>
   <div class="encl-info" id="p-lid" hidden>
@@ -78,8 +78,8 @@ Elige una pieza para inspeccionarla. Todas se pueden girar y ampliar.
     <dl><dt>Cantidad</dt><dd>1 contratapa + 1 tornillo</dd></dl>
   </div>
   <div class="encl-info" id="p-key" hidden>
-    <h3>Llave</h3>
-    <p>Gira los cierres de cuarto de vuelta. Se guarda encajada en el anillo en «C» del frontal de la caja, así que viaja siempre con ella.</p>
+    <h3>Destornillador</h3>
+    <p>Gira los cierres de cuarto de vuelta. Se guarda encajado en el anillo en «C» del frontal de la caja, así que viaja siempre con ella.</p>
     <dl><dt>Cantidad</dt><dd>1</dd></dl>
   </div>
   <div class="encl-info" id="p-wago" hidden>
@@ -160,7 +160,7 @@ Los ajustes de impresión van dentro de proyectos de Bambu Studio, así que no h
 | **A resguardo**, por ejemplo dentro de un edificio | **Interior** | Listo |
 | **Exterior o clima adverso** (agua, sol) | **Exterior**. La caja, la tapa y los cierres que se imprimen con ella son las piezas que evitan que entren agua y polvo, así que este proyecto las imprime con un perfil más exigente | Listo |
 
-Los proyectos están preparados para una Bambu Lab P2S con boquilla de 0,4 mm y PETG de Sunlu, con una placa por pieza: caja, tapa con cierres, contratapa, tornillo de la contratapa, llave, raíl WAGO, portapilas, soporte DIN y soporte de poste. Con otra impresora u otro filamento, abre el proyecto en Bambu Studio, elige la tuya, vuelve a laminar y revisa cada placa antes de imprimir.
+Los proyectos están preparados para una Bambu Lab P2S con boquilla de 0,4 mm y PETG de Sunlu, con una placa por pieza: caja, tapa con cierres, contratapa, tornillo de la contratapa, destornillador, raíl WAGO, portapilas, soporte DIN y soporte de poste. Con otra impresora u otro filamento, abre el proyecto en Bambu Studio, elige la tuya, vuelve a laminar y revisa cada placa antes de imprimir.
 
 ### 2.5.2 Antes de imprimir
 

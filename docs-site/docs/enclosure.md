@@ -31,11 +31,11 @@ The ISURLOG enclosure holds the datalogger, its batteries and the wiring in a si
   <div class="encl-colors">
     <span class="encl-colors-label">Try your colours</span>
     <div class="encl-swatches" role="group" aria-label="Box and lid"><small>Box and lid</small><button type="button" class="encl-sw" data-role="body" data-color="#EDE6CC" style="--c:#EDE6CC" aria-label="Ivory" aria-pressed="true"></button><button type="button" class="encl-sw" data-role="body" data-color="#F2F2F0" style="--c:#F2F2F0" aria-label="White" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#9AA0A6" style="--c:#9AA0A6" aria-label="Grey" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#E8782A" style="--c:#E8782A" aria-label="Orange" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#2E6DB4" style="--c:#2E6DB4" aria-label="Blue" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="body" data-color="#2B2B2E" style="--c:#2B2B2E" aria-label="Black" aria-pressed="false"></button></div>
-    <div class="encl-swatches" role="group" aria-label="Closures, key and inner accessories"><small>Closures, key and inner accessories</small><button type="button" class="encl-sw" data-role="accent" data-color="#00A838" style="--c:#00A838" aria-label="Green" aria-pressed="true"></button><button type="button" class="encl-sw" data-role="accent" data-color="#F28C28" style="--c:#F28C28" aria-label="Orange" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#2E6DB4" style="--c:#2E6DB4" aria-label="Blue" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#C8372D" style="--c:#C8372D" aria-label="Red" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#E8C21A" style="--c:#E8C21A" aria-label="Yellow" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#F2F2F0" style="--c:#F2F2F0" aria-label="White" aria-pressed="false"></button></div>
+    <div class="encl-swatches" role="group" aria-label="Closures, screwdriver and inner accessories"><small>Closures, screwdriver and inner accessories</small><button type="button" class="encl-sw" data-role="accent" data-color="#00A838" style="--c:#00A838" aria-label="Green" aria-pressed="true"></button><button type="button" class="encl-sw" data-role="accent" data-color="#F28C28" style="--c:#F28C28" aria-label="Orange" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#2E6DB4" style="--c:#2E6DB4" aria-label="Blue" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#C8372D" style="--c:#C8372D" aria-label="Red" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#E8C21A" style="--c:#E8C21A" aria-label="Yellow" aria-pressed="false"></button><button type="button" class="encl-sw" data-role="accent" data-color="#F2F2F0" style="--c:#F2F2F0" aria-label="White" aria-pressed="false"></button></div>
   </div>
   <div class="encl-legend">
     <span><i id="lg-body" style="background:#EDE6CC"></i>Box, lid and cover screw</span>
-    <span><i id="lg-accent" style="background:#00A838"></i>Closures, key, inner cover and interior accessories</span>
+    <span><i id="lg-accent" style="background:#00A838"></i>Closures, screwdriver, lid cover and interior accessories</span>
     <span><i style="background:#0F522B"></i>Main PCB</span>
     <span><i style="background:#2F6FB8"></i>Batteries</span>
     <span><i style="background:#212124"></i>Mounting brackets</span>
@@ -54,8 +54,8 @@ Pick a piece to inspect it. Each one can be rotated and zoomed.
   <div class="encl-parts" role="group" aria-label="Pieces">
     <button type="button" class="encl-part" aria-pressed="true" data-viewer="encl-part" data-src="/enclosure/parts/box.glb" data-panel="p-box">Box<small>× 1</small></button>
     <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/lid.glb" data-panel="p-lid">Lid and closures<small>× 1 + 4</small></button>
-    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/cover.glb" data-panel="p-cover">Inner cover<small>× 1 + screw</small></button>
-    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/key.glb" data-panel="p-key">Key<small>× 1</small></button>
+    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/cover.glb" data-panel="p-cover">Lid cover<small>× 1 + screw</small></button>
+    <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/key.glb" data-panel="p-key">Screwdriver<small>× 1</small></button>
     <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/wago.glb" data-panel="p-wago">WAGO rail<small>optional</small></button>
     <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/battery.glb" data-panel="p-battery">Battery holder<small>optional</small></button>
     <button type="button" class="encl-part" aria-pressed="false" data-viewer="encl-part" data-src="/enclosure/parts/din.glb" data-panel="p-din">DIN rail mount<small>optional</small></button>
@@ -64,7 +64,7 @@ Pick a piece to inspect it. Each one can be rotated and zoomed.
 
   <div class="encl-info" id="p-box">
     <h3>Box</h3>
-    <p>The main body. It carries the L-shaped anchors that hold the interior accessories, the PCB standoffs, the C-ring on the front where the key is stored, and five M12 holes for cable glands on the rear wall (four in the upper row and one in the lower row).</p>
+    <p>The main body. It carries the L-shaped anchors that hold the interior accessories, the PCB standoffs, the C-ring on the front where the screwdriver is stored, and five M12 holes for cable glands on the rear wall (four in the upper row and one in the lower row).</p>
     <dl><dt>Quantity</dt><dd>1</dd><dt>Material</dt><dd>PETG</dd></dl>
   </div>
   <div class="encl-info" id="p-lid" hidden>
@@ -73,12 +73,12 @@ Pick a piece to inspect it. Each one can be rotated and zoomed.
     <dl><dt>Quantity</dt><dd>1 lid + 4 closures</dd><dt>Material</dt><dd>PETG</dd><dt>Gasket</dt><dd>Ø3 mm silicone cord (not printed)</dd></dl>
   </div>
   <div class="encl-info" id="p-cover" hidden>
-    <h3>Inner cover</h3>
+    <h3>Lid cover</h3>
     <p>It sits under the lid and is held to the lid's central bushing by a quarter-turn screw.</p>
     <dl><dt>Quantity</dt><dd>1 cover + 1 screw</dd></dl>
   </div>
   <div class="encl-info" id="p-key" hidden>
-    <h3>Key</h3>
+    <h3>Screwdriver</h3>
     <p>It turns the quarter-turn closures. It is stored snapped into the C-ring on the front of the box, so it always travels with the enclosure.</p>
     <dl><dt>Quantity</dt><dd>1</dd></dl>
   </div>
@@ -110,7 +110,7 @@ Pick a piece to inspect it. Each one can be rotated and zoomed.
   <div class="encl-videos">
     <figure><a class="glightbox" href="/enclosure/video/01-overview.mp4" data-type="video" data-title="Overview" data-desc-position="bottom"><video autoplay loop muted playsinline preload="metadata"><source src="/enclosure/video/01-overview.mp4" type="video/mp4"></video></a><figcaption><b>Overview</b></figcaption></figure>
     <figure><a class="glightbox" href="/enclosure/video/02-open-close.mp4" data-type="video" data-title="Opening and closing" data-desc-position="bottom"><video autoplay loop muted playsinline preload="metadata"><source src="/enclosure/video/02-open-close.mp4" type="video/mp4"></video></a><figcaption><b>Opening and closing</b></figcaption></figure>
-    <figure><a class="glightbox" href="/enclosure/video/03-cover.mp4" data-type="video" data-title="Inner cover" data-desc-position="bottom"><video autoplay loop muted playsinline preload="metadata"><source src="/enclosure/video/03-cover.mp4" type="video/mp4"></video></a><figcaption><b>Inner cover</b></figcaption></figure>
+    <figure><a class="glightbox" href="/enclosure/video/03-cover.mp4" data-type="video" data-title="Lid cover" data-desc-position="bottom"><video autoplay loop muted playsinline preload="metadata"><source src="/enclosure/video/03-cover.mp4" type="video/mp4"></video></a><figcaption><b>Lid cover</b></figcaption></figure>
     <figure><a class="glightbox" href="/enclosure/video/04-wago.mp4" data-type="video" data-title="WAGO rail" data-desc-position="bottom"><video autoplay loop muted playsinline preload="metadata"><source src="/enclosure/video/04-wago.mp4" type="video/mp4"></video></a><figcaption><b>WAGO rail</b></figcaption></figure>
     <figure><a class="glightbox" href="/enclosure/video/05-battery.mp4" data-type="video" data-title="Battery holder" data-desc-position="bottom"><video autoplay loop muted playsinline preload="metadata"><source src="/enclosure/video/05-battery.mp4" type="video/mp4"></video></a><figcaption><b>Battery holder</b></figcaption></figure>
     <figure><a class="glightbox" href="/enclosure/video/06-din.mp4" data-type="video" data-title="DIN rail mount" data-desc-position="bottom"><video autoplay loop muted playsinline preload="metadata"><source src="/enclosure/video/06-din.mp4" type="video/mp4"></video></a><figcaption><b>DIN rail mount</b></figcaption></figure>
@@ -160,7 +160,7 @@ The print settings come inside Bambu Studio projects, so there is no list of set
 | **Sheltered**, for example inside a building | **Indoor** | Ready |
 | **Outdoors or adverse weather** (water, sun) | **Outdoor**. The box, the lid and the closures printed with it are the parts that keep water and dust out, so this project prints them with a more demanding profile | Ready |
 
-The projects are set up for a Bambu Lab P2S with a 0.4 mm nozzle and Sunlu PETG, with one plate per part: box, lid with closures, inner cover, inner cover screw, key, WAGO rail, battery holder, DIN mount and pole mount. With another printer or filament, open the project in Bambu Studio, choose yours, slice again and check each plate before printing.
+The projects are set up for a Bambu Lab P2S with a 0.4 mm nozzle and Sunlu PETG, with one plate per part: box, lid with closures, lid cover, lid cover screw, screwdriver, WAGO rail, battery holder, DIN mount and pole mount. With another printer or filament, open the project in Bambu Studio, choose yours, slice again and check each plate before printing.
 
 ### 2.5.2 Before you print
 
