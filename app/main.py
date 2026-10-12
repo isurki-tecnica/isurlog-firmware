@@ -612,13 +612,13 @@ async def read_all_sensors(upload_mode, ble = False, n_loop = 1, n_seconds = 10,
                 register_addr = channel_config.get("register_address")
                 fc = channel_config.get("fc")
                 is_fp = channel_config.get("is_FP", False)
-                byte_order = channel_config.get("byte_order", "big") # Ensure default if not specified
+                byte_order = channel_config.get("byte_order", "ABCD")
                 number_of_decimals = 10**channel_config.get("number_of_decimals", 0)
                 offset = channel_config.get("offset", 0.0)
                 invert = channel_config.get("invert", False)
                 long_int = channel_config.get("long_int", False)
                 
-                value = modbus_module.read_modbus_data(slave_addr, fc, register_addr, is_fp)
+                value = modbus_module.read_modbus_data(slave_addr, fc, register_addr, is_fp, byte_order)
                 await asyncio.sleep_ms(100)
 
                 if value is not None:
@@ -1422,6 +1422,17 @@ async def run_telemetry_cycle():
                         if not mqtt_connected:
                             await asyncio.sleep(15)
 
+                    # Attached with an IP but the broker is unreachable: the data session can be stale
+                    # (modem still believes it's valid), and sleep() keeps it across wake-ups, so it
+                    # never self-heals. Re-attach, then escalate to a modem hard reset.
+                    for hard_reset in (False, True):
+                        if mqtt_connected:
+                            break
+                        utils.log_warning(f"[TASK: TELEMETRY] MQTT unreachable while attached. Re-attaching to the network (hard_reset={hard_reset}).")
+                        if wdt:
+                            wdt.feed()  # Each re-attach is bounded by its AT timeouts but can exceed the WDT window on its own.
+                        mqtt_connected = await establish_network_connection(force_hard_reset=hard_reset)
+
                     if mqtt_connected:
                         connection_ok.set()
                         print("[TASK: TELEMETRY] Connected. Processing downlink and uploading telemetry...")
@@ -1455,7 +1466,7 @@ async def run_telemetry_cycle():
                     
                     else:
                         connection_ok.clear()
-                        utils.log_error(f"[TASK: TELEMETRY] No MQTT connection after {max_retry_connection} retries. Will retry on the next wake-up.")                    
+                        utils.log_error(f"[TASK: TELEMETRY] No MQTT connection after {max_retry_connection} retries, a network re-attach and a modem hard reset. Will retry on the next wake-up.")
 
                 else:
                     connection_ok.clear()

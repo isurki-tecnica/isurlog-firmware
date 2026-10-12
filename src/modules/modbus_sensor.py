@@ -169,37 +169,47 @@ class ModbusSensor:
             utils.log_error(f"Error reading Modbus discrete inputs: {e}")
             return None
         
-    def _registers_to_float(self, registers, byte_order="big"):
+    # Wire layout of the 4 float bytes (A = MSB) -> (swap registers, swap bytes inside each register)
+    _FLOAT_ORDERS = {
+        "ABCD": (False, False),  # Big-endian, the Modbus default
+        "CDAB": (True, False),   # Word swap
+        "BADC": (False, True),   # Byte swap
+        "DCBA": (True, True),    # Little-endian
+    }
+
+    def _registers_to_float(self, registers, byte_order="ABCD"):
         """
         Converts two Modbus registers (16-bit) to a 32-bit float (IEEE 754).
 
         Args:
             registers: A list or tuple containing two 16-bit register values.
-            byte_order:  'big' (default) or 'little' endian.
+            byte_order: 'ABCD' (default), 'CDAB', 'BADC' or 'DCBA'.
 
         Returns:
             The converted float value.
         Raises:
-            ValueError: if registers list does not contains two values
+            ValueError: if registers list does not contains two values or byte_order is unknown.
         """
         if len(registers) != 2:
             raise ValueError("Exactly two registers are required to convert to a float.")
 
-        # Determine the byte order for packing
-        if byte_order == "big":
-            # Big-endian:  Most Significant Byte (MSB) first
-            byte_string = registers[0].to_bytes(2, 'big') + registers[1].to_bytes(2, 'big')
-        elif byte_order == "little":
-            # Little-endian: Least Significant Byte (LSB) first
-             byte_string = registers[1].to_bytes(2, 'little') + registers[0].to_bytes(2, 'little')
-        else:
-             raise ValueError("byte_order must be 'big' or 'little'")
+        order = self._FLOAT_ORDERS.get(str(byte_order).upper())
+        if order is None:
+            raise ValueError(f"byte_order must be one of {list(self._FLOAT_ORDERS)}, got '{byte_order}'")
+        swap_words, swap_bytes = order
 
-        # Unpack the bytes as a float
-        return struct.unpack('f', byte_string)[0]
+        r0, r1 = registers
+        if swap_words:
+            r0, r1 = r1, r0
+        if swap_bytes:
+            r0 = ((r0 & 0xFF) << 8) | (r0 >> 8)
+            r1 = ((r1 & 0xFF) << 8) | (r1 >> 8)
+
+        # Explicit '>' so the result doesn't depend on the CPU's native byte order.
+        return struct.unpack('>f', r0.to_bytes(2, 'big') + r1.to_bytes(2, 'big'))[0]
 
 
-    def read_modbus_data(self, slave_addr, function_code, starting_addr, is_fp=False, byte_order="little"):
+    def read_modbus_data(self, slave_addr, function_code, starting_addr, is_fp=False, byte_order="ABCD"):
         """
         Reads Modbus data from a slave device based on the function code.
 
@@ -209,7 +219,7 @@ class ModbusSensor:
             starting_addr: The starting address of the registers/coils/inputs to read.
             quantity: The number of registers/coils/inputs to read.
             is_fp: True if the data should be interpreted as a 32-bit float, False otherwise.
-            byte_order: 'big' (default) or 'little' endian.  Only used if is_fp is True.
+            byte_order: 'ABCD' (default), 'CDAB', 'BADC' or 'DCBA'. Only used if is_fp is True.
 
         Returns:
             A list of values (integers or booleans), a single float (if is_fp is True),

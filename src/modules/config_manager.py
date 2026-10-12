@@ -12,6 +12,9 @@
 import json
 from modules import utils
 
+# setModbusInputByteOrder downlink value -> byte_order string understood by modbus_sensor.py
+MODBUS_BYTE_ORDERS = ("ABCD", "CDAB", "BADC", "DCBA")
+
 # Mapa que relaciona el nombre del tipo de configuración LPP con su ruta en el JSON.
 # '{channel}' se reemplaza por el índice del canal.
 CONFIG_MAP = {
@@ -76,6 +79,7 @@ CONFIG_MAP = {
     'setModbusInputLowCond': ('modbus_config', 'inputs', '{channel}', 'low_cond', bool),
     'setModbusInputHighCond': ('modbus_config', 'inputs', '{channel}', 'high_cond', bool),
     'setModbusInputLongInt': ('modbus_config', 'inputs', '{channel}', 'long_int', bool),
+    'setModbusInputByteOrder': ('modbus_config', 'inputs', '{channel}', 'byte_order', lambda v: MODBUS_BYTE_ORDERS[v]),
     # PT100
     'setPT100Enable': ('pt100_config', 'enable', bool),
     'setPT100Wires': ('pt100_config', 'wires'),
@@ -287,7 +291,11 @@ class ConfigManager:
             path = path_info
 
         # Apply the converter to the value if it exists
-        final_value = converter(value) if converter else value
+        try:
+            final_value = converter(value) if converter else value
+        except (ValueError, IndexError, TypeError) as e:
+            utils.log_error(f"Invalid value {value} for {config_type}: {e}")
+            return None
 
         # Use a copy to avoid modifying the config directly before success
         # Note: deepcopy is not standard in MicroPython, so we serialize/deserialize

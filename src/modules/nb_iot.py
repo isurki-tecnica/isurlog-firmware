@@ -26,6 +26,14 @@ except NameError:
     class ConnectionAbortedError(Exception):
         pass
 
+def _mask_credentials(command):
+    # AT#XMQTTCON=1,"<user>","<passwd>","<url>",<port>: url/port are split from the right so commas inside user/passwd can't leak.
+    if command.startswith("AT#XMQTTCON=1,"):
+        head = command.split(",", 1)[0]
+        tail = command.rsplit(",", 2)[-2:]
+        return head + ',"***","***",' + ",".join(tail)
+    return command
+
 class NBIoT:
     def __init__(self, uart_id, tx_pin, rx_pin, baudrate=9600, timeout=1000):
         """
@@ -66,14 +74,14 @@ class NBIoT:
             The response string from the module, or None if a timeout occurs.
         """
         self.uart.write(command + "\r\n")
-        utils.log_debug(f"Sent AT command: {command}")
+        utils.log_debug(f"Sent AT command: {_mask_credentials(command)}")
 
         response = await self._wait_for_response(expected_response, timeout)
 
         if response:
             utils.log_debug(f"Received response: {response}")
         else:
-            utils.log_error(f"Timeout waiting for response to AT command: {command}")
+            utils.log_error(f"Timeout waiting for response to AT command: {_mask_credentials(command)}")
         return response
     
     async def send_at_command_check(self, command, expected_response="OK", timeout=2000, retries=3, retry_delay=1000):
@@ -97,7 +105,7 @@ class NBIoT:
             
             await asyncio.sleep_ms(retry_delay)  # Wait before retrying
             
-        utils.log_error(f"AT command '{command}' failed after {retries} retries.")
+        utils.log_error(f"AT command '{_mask_credentials(command)}' failed after {retries} retries.")
         return False
     
     def _parse_mqtt_msg_urc(self, urc_line):

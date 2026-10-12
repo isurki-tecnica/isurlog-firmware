@@ -191,7 +191,9 @@ class IsurlogLPPEncoder:
             #New addtion to enable user scripts.
             'setUserScriptEnable':    {'type': "05", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 1},
             # DOWNLINK ID
-            'setDownlinkID':      {'type': "06", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255}
+            'setDownlinkID':      {'type': "06", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 255},
+            # Modbus 32-bit float word/byte order: 0=ABCD, 1=CDAB, 2=BADC, 3=DCBA
+            'setModbusInputByteOrder': {'type': "07", 'size': 1, 'multipl': 1, 'signed': False, 'min': 0, 'max': 3}
         }
         
     def encode(self, lpp):
