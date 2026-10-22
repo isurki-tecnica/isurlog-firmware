@@ -12,9 +12,6 @@
 import json
 from modules import utils
 
-# setModbusInputByteOrder downlink value -> byte_order string understood by modbus_sensor.py
-MODBUS_BYTE_ORDERS = ("ABCD", "CDAB", "BADC", "DCBA")
-
 # Mapa que relaciona el nombre del tipo de configuración LPP con su ruta en el JSON.
 # '{channel}' se reemplaza por el índice del canal.
 CONFIG_MAP = {
@@ -79,7 +76,7 @@ CONFIG_MAP = {
     'setModbusInputLowCond': ('modbus_config', 'inputs', '{channel}', 'low_cond', bool),
     'setModbusInputHighCond': ('modbus_config', 'inputs', '{channel}', 'high_cond', bool),
     'setModbusInputLongInt': ('modbus_config', 'inputs', '{channel}', 'long_int', bool),
-    'setModbusInputByteOrder': ('modbus_config', 'inputs', '{channel}', 'byte_order', lambda v: MODBUS_BYTE_ORDERS[v]),
+    'setModbusInputByteOrder': ('modbus_config', 'inputs', '{channel}', 'byte_order'),
     # PT100
     'setPT100Enable': ('pt100_config', 'enable', bool),
     'setPT100Wires': ('pt100_config', 'wires'),

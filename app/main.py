@@ -603,6 +603,7 @@ async def read_all_sensors(upload_mode, ble = False, n_loop = 1, n_seconds = 10,
 
         # --- Modbus Inputs ---
         if num_modbus_enabled > 0 and modbus_module:
+            byte_order_map = {0: "ABCD", 1: "CDAB", 2: "BADC", 3: "DCBA"}
             for channel_config in modbus_config["inputs"]:
                 if not channel_config.get("enable", False):
                     continue # Skip disabled channels
@@ -612,7 +613,9 @@ async def read_all_sensors(upload_mode, ble = False, n_loop = 1, n_seconds = 10,
                 register_addr = channel_config.get("register_address")
                 fc = channel_config.get("fc")
                 is_fp = channel_config.get("is_FP", False)
-                byte_order = channel_config.get("byte_order", "ABCD")
+                byte_order_index = channel_config.get("byte_order", 0)
+                # An unknown index is passed through as-is: modbus_sensor logs it and skips only this channel.
+                byte_order = byte_order_map.get(byte_order_index, byte_order_index)
                 number_of_decimals = 10**channel_config.get("number_of_decimals", 0)
                 offset = channel_config.get("offset", 0.0)
                 invert = channel_config.get("invert", False)
