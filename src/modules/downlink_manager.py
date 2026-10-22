@@ -214,7 +214,7 @@ async def process_wifi_downlinks(mqtt_client, rtc_memory, wdt, ser_num, base_top
             pass
 
         elif msg == "REPL":
-            if not mqtt_client.publish(f"{base_topic}/repl_out/{ser_num}", "Connected"):
+            if mqtt_client.publish(f"{base_topic}/repl_out/{ser_num}", "Connected"):
                 mqtt_client.subscribe(f"{base_topic}/repl_in/{ser_num}")
                 from modules.remote_repl import handle_remote_repl_wifi
                 handle_remote_repl_wifi(ser_num, base_topic, wdt, mqtt_client)
@@ -269,10 +269,12 @@ async def process_nbiot_downlinks(nb_iot_module, rtc_memory, wdt, ser_num, base_
             await _handle_ota_update(msg, nb_iot_module, wdt, ser_num, base_topic)
 
         else:
-            downlink_IDs.append(apply_config(msg))
-            
+            downlink_ID = apply_config(msg)
+            if downlink_ID is not None:
+                downlink_IDs.append(downlink_ID)
+
     for downlink_ID in downlink_IDs:
-        if not nb_iot_module.mqtt_publish(f"{base_topic}/config_ack/{ser_num}", f"{downlink_ID}:OK"):
+        if not await nb_iot_module.mqtt_publish(f"{base_topic}/config_ack/{ser_num}", f"{downlink_ID}:OK"):
             utils.log_error("Failed to publish payload through cellular MQTT client.")
         await asyncio.sleep_ms(250)
         
