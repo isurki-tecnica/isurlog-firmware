@@ -14,7 +14,7 @@ Las versiones de firmware más antiguas estaban significativamente menos optimiz
 
 **Solución:** Actualizar el firmware.
 
-* **Recomendado:** actualizar el firmware del ESP32 directamente desde IsurDASH — ver **[6.8. Mantenimiento de Dispositivos](isurdash-maintenance.md)**.
+* **Recomendado:** actualizar el firmware del ESP32 directamente desde IsurDASH — ver **[6.9. Mantenimiento de Dispositivos](isurdash-maintenance.md)**.
 * **Alternativa manual:** grabarlo tú mismo — ver **[3. Grabado del Firmware y Carga de la Aplicación](flashing-application-upload.md)**.
 
 Usa siempre la release marcada como **"Latest"** en la [página de Releases de GitHub](https://github.com/isurki-tecnica/isurlog-firmware/releases) — las versiones **pre-release** pueden contener errores que *aumenten* el consumo de energía en vez de reducirlo.
@@ -38,7 +38,7 @@ Para unidades ISURLOG con **LoRaWAN** en concreto, hay otros dos factores adicio
 
 Esto también suele deberse, en general, a un **firmware desactualizado que gestiona mal las pérdidas de conectividad**. Por ejemplo, cuando la cobertura es temporalmente mala, o el ISURLOG tiene que reconectarse a la red, las versiones de firmware más antiguas no gestionan correctamente los registros ya almacenados en la **RAM del RTC** mientras esto ocurre — y esos registros pendientes se pierden en vez de enviarse una vez recuperada la conexión.
 
-**Solución:** Actualizar el firmware del ESP32 — igual que arriba, **recomendado** mediante IsurDASH (**[6.8. Mantenimiento de Dispositivos](isurdash-maintenance.md)**) o manualmente (**[3. Grabado del Firmware y Carga de la Aplicación](flashing-application-upload.md)**), usando siempre la release marcada como **"Latest"** en vez de una pre-release.
+**Solución:** Actualizar el firmware del ESP32 — igual que arriba, **recomendado** mediante IsurDASH (**[6.9. Mantenimiento de Dispositivos](isurdash-maintenance.md)**) o manualmente (**[3. Grabado del Firmware y Carga de la Aplicación](flashing-application-upload.md)**), usando siempre la release marcada como **"Latest"** en vez de una pre-release.
 
 ---
 
@@ -46,7 +46,7 @@ Esto también suele deberse, en general, a un **firmware desactualizado que gest
 
 Esto también suele deberse, en general, a un **firmware desactualizado que no detecta correctamente la pérdida de la conexión MQTT o de la conexión a la red celular**. En vez de darse cuenta de que la conexión ya no existe y reconectar, las versiones de firmware afectadas pueden quedarse "creyendo" que siguen conectadas — fallando en silencio al transmitir hasta que lo que causó la caída original se resuelve por sí solo. Por eso el patrón típico es que el dispositivo deje de transmitir durante un periodo que va de unas pocas horas a varios días, y luego retome la transmisión por su cuenta, sin ninguna intervención.
 
-**Solución (definitiva):** Actualizar el firmware del ESP32 — igual que arriba, **recomendado** mediante IsurDASH (**[6.8. Mantenimiento de Dispositivos](isurdash-maintenance.md)**) o manualmente (**[3. Grabado del Firmware y Carga de la Aplicación](flashing-application-upload.md)**), usando siempre la release marcada como **"Latest"** en vez de una pre-release. Las versiones de firmware actuales detectan y se recuperan correctamente tanto de la pérdida de MQTT como de la pérdida de red celular, así que esto no vuelve a ocurrir.
+**Solución (definitiva):** Actualizar el firmware del ESP32 — igual que arriba, **recomendado** mediante IsurDASH (**[6.9. Mantenimiento de Dispositivos](isurdash-maintenance.md)**) o manualmente (**[3. Grabado del Firmware y Carga de la Aplicación](flashing-application-upload.md)**), usando siempre la release marcada como **"Latest"** en vez de una pre-release. Las versiones de firmware actuales detectan y se recuperan correctamente tanto de la pérdida de MQTT como de la pérdida de red celular, así que esto no vuelve a ocurrir.
 
 **Solución temporal, mientras el dispositivo siga con una versión de firmware afectada:** abre el widget de **[Visualización de Datos, Ubicación y Datos SIM](isurdash-devices.es.md#visualizacion-de-datos-ubicacion-y-datos-sim)** del dispositivo y pulsa el botón **Reset** junto al botón de la gráfica — esto fuerza un reinicio de la conectividad de la tarjeta SIM, lo cual suele ser suficiente para que el dispositivo vuelva a transmitir de inmediato, en vez de esperar a que se recupere por sí solo.
 
@@ -130,7 +130,7 @@ El ESP32 del ISURLOG usa la antena integrada directamente en la PCB en vez de un
 Para cualquier otro problema no listado arriba, o uno que la solución sugerida no llegó a resolver, la vía más rápida es capturar un registro en directo del problema ocurriendo de verdad, en vez de describirlo de memoria:
 
 1. Conecta un cable UART a USB entre el ISURLOG y tu ordenador.
-2. En IsurDASH, ve a **Mantenimiento de dispositivos → MicroPython REPL** (ver **[6.8. Mantenimiento de Dispositivos](isurdash-maintenance.md#micropython-repl)**), y abre la REPL mediante **Serial port (USB)**.
+2. En IsurDASH, ve a **Mantenimiento de dispositivos → MicroPython REPL** (ver **[6.9. Mantenimiento de Dispositivos](isurdash-maintenance.md#micropython-repl)**), y abre la REPL mediante **Serial port (USB)**.
 3. Con la REPL conectada, espera a que el ISURLOG reproduzca el problema. Si el dispositivo está en reposo profundo, mantener el imán cerca durante aproximadamente **un segundo** activa el modo **Lectura y Envío Inmediato**, forzando un ciclo completo de lectura de sensores y transmisión al momento, sin esperar al siguiente intervalo programado — ver **[1.8. Sensores Internos y Diagnóstico](sensor-connections.md#18-sensores-internos-y-diagnostico)** para ambos modos del imán uno junto al otro (mantenerlo más de cinco segundos activa el Modo de Diagnóstico por Bluetooth en su lugar).
 4. En cuanto ocurra, exporta la sesión con el botón **Exportar**.
 

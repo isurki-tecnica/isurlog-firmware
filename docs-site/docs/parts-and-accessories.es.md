@@ -29,12 +29,14 @@ Para más detalles sobre el encapsulado en resina, [contacta con Isurki](mailto:
 
 | Elemento | Desde Isurki | Consíguelo tú mismo |
 | :--- | :--- | :--- |
-| **Carcasa impresa en 3D** (PETG, IP66) | **€35** | 💬 En debate |
-| **Soporte de carril DIN** — directo, o mediante una pieza impresa en 3D independiente fijada a la pared | **€28** | 💬 En debate |
-| **Soporte de poste** | **€18** | 💬 En debate |
+| **Carcasa impresa en 3D** (PETG, IP66) | **€35** | [Imprímela tú](enclosure.md#25-imprimela-tu) |
+| **Soporte de carril DIN** — directo, o mediante una pieza impresa en 3D independiente fijada a la pared | **€28** | [Imprímelo tú](enclosure.md#25-imprimela-tu) |
+| **Soporte de poste** | **€18** | [Imprímelo tú](enclosure.md#25-imprimela-tu) |
 | **Soporte/adaptador de baterías ER34615** — pequeña PCB que toma la alimentación de hasta 2 celdas ER34615 y la combina en una única salida que alimenta al ISURLOG. Necesario para usar [baterías Li-SOCl2](#14-baterias). | **€20** | 💬 En debate |
 
-💬 **Todavía no hay una vía de autofabricación/DIY disponible para estas piezas (carcasa, montaje) — la dirección sigue en debate.** [Avísanos](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) si te resultaría útil.
+La carcasa y los soportes se pueden imprimir en casa: los archivos están publicados en MakerWorld (ver [2. La Caja](enclosure.md)).
+
+💬 **Todavía no hay una vía de autofabricación/DIY disponible para el soporte/adaptador de baterías ER34615 — la dirección sigue en debate.** [Avísanos](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) si te resultaría útil.
 
 Ver [4.2 Montaje Físico](installation-commissioning.md#42-montaje-fisico) para las dimensiones estándar de los orificios de montaje, si prefieres diseñar tu propio soporte.
 

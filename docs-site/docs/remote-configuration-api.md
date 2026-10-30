@@ -14,7 +14,7 @@ This comprehensive table defines all available remote configuration functions, t
 | **Global Parameters** | | | | | | |
 | `setLatencyTime` | `A0` | 1 | 1 | 1-255 | [Yes](reference-parameters.md#latency-time-tiempo-de-latencia-min) | Sets the time (minutes) between reading cycles. |
 | `setRtcSync` | `A1` | 1 | 1 | 0-1 | [Yes](reference-parameters.md#rtc-synchronization-sincronizacion-rtc) | Sets whether readings occur at fixed clock-synchronized intervals (1, e.g. 14:00, 14:05, 14:10 for a 5-min latency) or at intervals relative to power-on time instead (0). |
-| `setRegisterMode` | `A2` | 1 | 1 | 0-1 | [Yes](reference-parameters.md#logging-mode-modo-de-registro) | Sets Logging Mode (0=Fixed, 1=Conditional). |
+| `setRegisterMode` | `A2` | 1 | 1 | 0-1 | [Yes](reference-parameters.md#sending-mode-modo-de-envio) | Sets Sending Mode (0=Fixed, 1=Conditional). |
 | `setRegisterAccumulator` | `A3` | 1 | 1 | 0-255 | [Yes](reference-parameters.md#record-accumulator-acumulador-de-registros) | Sets the number of records to accumulate before sending. |
 | `setMagnetWakeup` | `A4` | 1 | 1 | 0-1 | No | Enables/Disables the magnetic switch wake-up feature. |
 | `setDebugLED` | `A5` | 1 | 1 | 0-1 | No | Enables/Disables the STATUS LED on the PCB. |

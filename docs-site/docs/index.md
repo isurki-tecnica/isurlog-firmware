@@ -57,7 +57,7 @@ ISURLOG is an actively maintained product with real field deployments, not a pro
 | 4× PT100/PT1000 inputs via a single AD7124-8 ADC, up from today's 1 channel | Hardware + Firmware | 🔜 Planned | — |
 | 4 additional digital inputs wired directly to the MCU (state or low-power pulse counting), alongside today's 3 via MCP23008/AUX-IO — depends on the ESP32-S3/S31 migration for GPIO budget | Hardware + Firmware | 🔜 Planned | — |
 | TinyML — on-device inference for lightweight tasks like local anomaly detection or predictive maintenance, without a round trip to the cloud | Firmware | 🔜 Planned | — |
-| RAK3172 firmware updates directly from IsurDASH (currently requires an external web tool) | Firmware | 🔜 Planned | — |
+| RAK3172 firmware updates directly from IsurDASH | Firmware | ✅ Stable | IsurDASH v2.2.0 |
 | 3D-printable enclosure files, published on MakerWorld | Hardware | ✅ Stable | 2026-10 |
 | Migration from ESP32 to ESP32-S3 or the newly-announced ESP32-S31 (final choice not yet decided) — native USB and a RISC-V LP core in place of today's ULP FSM coprocessor. An i.MX RT1064-based version is also under consideration | Hardware + Firmware | 💬 In discussion | — |
 

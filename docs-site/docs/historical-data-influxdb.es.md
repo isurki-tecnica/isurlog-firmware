@@ -37,6 +37,9 @@ Esta sección ofrece la correspondencia entre las entradas físicas y virtuales 
 | **Analog Input 2** | `AnalogInput2` | La medición en unidades de ingeniería, tal como se configuró en IsurDASH. |
 | **Analog Input 3** | `AnalogInput3` | La medición en unidades de ingeniería, tal como se configuró en IsurDASH. |
 | **Digital Input 0** | `DigitalInput0` | Depende de la configuración en IsurDASH: un valor numérico para conteo de pulsos, o un estado binario (0 abierto, 1 cerrado). |
+| **Digital Input 1** | `DigitalInput1` | Solo estado binario: 0 abierto, 1 cerrado. |
+| **Digital Input 2** | `DigitalInput2` | Solo estado binario: 0 abierto, 1 cerrado. |
+| **Digital Input 3** | `DigitalInput3` | Solo estado binario: 0 abierto, 1 cerrado. |
 | **Modbus Virtual 0** | `ModbusInput0` | La medición en unidades de ingeniería, tal como se configuró en IsurDASH. |
 | **Modbus Virtual 1** | `ModbusInput1` | La medición en unidades de ingeniería, tal como se configuró en IsurDASH. |
 | **Modbus Virtual 2** | `ModbusInput2` | La medición en unidades de ingeniería, tal como se configuró en IsurDASH. |

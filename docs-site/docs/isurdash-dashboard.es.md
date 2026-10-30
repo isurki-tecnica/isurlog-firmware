@@ -22,7 +22,7 @@ Junto al mapa, un panel con tres pestañas da acceso rápido a lo que requiere a
 
 ## Resumen y Gráficos de la Flota
 
-Debajo del mapa, tres pestañas dan acceso a distinta información: **Resumen**, **Novedades** y **Soporte**.
+Debajo del mapa, cuatro pestañas dan acceso a distinta información: **Resumen**, **Novedades IsurDash**, **Novedades Isurlog** y **Soporte**.
 
 La pestaña **Resumen** muestra un resumen instantáneo del estado de la flota:
 
@@ -40,4 +40,10 @@ Debajo del resumen numérico, se muestran dos gráficos:
 
 *La pestaña Resumen — números y gráficos de la flota.*
 
-La pestaña **Novedades** enumera las novedades de IsurDASH, versión a versión.
+La pestaña **Novedades IsurDash** enumera las novedades de la plataforma IsurDASH, versión a versión.
+
+La pestaña **Novedades Isurlog** hace lo mismo con el firmware del ISURLOG. Cada versión publicada aparece con sus mejoras y cambios, y marcada como **Actual** (la versión vigente) o **Pre-release**. Las versiones más antiguas están en **Mostrar versiones anteriores**.
+
+![Pestaña Novedades Isurlog del Dashboard de IsurDASH: versiones publicadas del firmware con sus cambios](images/7-dashboard-novedades-isurlog.png){width="1000"}
+
+*La pestaña Novedades Isurlog — todas las versiones publicadas del firmware, con sus cambios.*

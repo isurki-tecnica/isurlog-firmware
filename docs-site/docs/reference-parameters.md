@@ -20,7 +20,7 @@ These parameters affect the global behavior of the datalogger.
 * **Description:** Configures the supply voltage delivered to sensors through the pressure terminals marked **VDC**.
 * **Values:** 9, 12, 18, or 24 V.
 
-### Logging Mode (**Modo de registro**)
+### Sending Mode (**Modo de envío**)
 
 * **Description:** Determines the logic that the **ISURLOG** uses to decide when it must transmit the accumulated data. This parameter is fundamental for alarm management.
 * **Options:**
@@ -153,13 +153,13 @@ This section allows configuring any of the **four analog inputs** of the **ISURL
 * **High Alarm (Alarma de alto):**
     * **Description:** Defines the upper numerical threshold. If the measured value exceeds this threshold, an alarm will be recorded.
 * **Activate Low Alarm (Activar alarma de bajo):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.".
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.".
 * **Activate High Alarm (Activar alarma de alto):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.
 * **Activate Low Alarm Condition (Activar condición de alarmas de bajo):**
-    * **Description:** This is a checkbox field. If activated, a low-value alarm will force an **immediate data transmission** when the Logging Mode is set to "**Conditional**".
+    * **Description:** This is a checkbox field. If activated, a low-value alarm will force an **immediate data transmission** when the Sending Mode is set to "**Conditional**".
 * **Activate High Alarm Condition (Activar condición de alarmas de alto):**
-    * **Description:** This is a checkbox field. If activated, a high-value alarm will force an **immediate transmission** when the Logging Mode is set to "**Conditional**".
+    * **Description:** This is a checkbox field. If activated, a high-value alarm will force an **immediate transmission** when the Sending Mode is set to "**Conditional**".
 
 ### Digital Sensor
 
@@ -189,13 +189,13 @@ This section details the configuration of the digital input on the **ISURLOG**. 
 * **High Alarm (Alarma de alto):**
     * **Description:** Defines the upper numerical threshold. If the final measured value exceeds this threshold, an alarm will be recorded.
 * **Activate Low Alarm (Activar alarma de bajo):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.".
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.".
 * **Activate High Alarm (Activar alarma de alto):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.
 * **Activate Low Alarm Condition (Activar condición de alarmas de bajo):**
-    * **Description:** This is a checkbox field. If activated, a low-value alarm will force an **immediate data transmission** when the Logging Mode is set to "**Conditional**".
+    * **Description:** This is a checkbox field. If activated, a low-value alarm will force an **immediate data transmission** when the Sending Mode is set to "**Conditional**".
 * **Activate High Alarm Condition (Activar condición de alarmas de alto):**
-    * **Description:** This is a checkbox field. If activated, a high-value alarm will force an **immediate transmission** when the Logging Mode is set to "**Conditional**".
+    * **Description:** This is a checkbox field. If activated, a high-value alarm will force an **immediate transmission** when the Sending Mode is set to "**Conditional**".
 
 ### Modbus Inputs (RS485)
 
@@ -245,13 +245,13 @@ This section allows configuring readings from external devices that utilize the 
 * **High Alarm (Alarma de alto):**
     * **Description:** Defines the upper numerical threshold. If the final measured value exceeds this threshold, an alarm will be recorded.
 * **Activate Low Alarm (Activar alarma de bajo):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.".
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.".
 * **Activate High Alarm (Activar alarma de alto):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.
 * **Activate Low Alarm Condition (Activar condición de alarmas de bajo):**
-    * **Description:** This is a checkbox field. If activated, a low-value alarm will force an **immediate data transmission** when the Logging Mode is set to "**Conditional**".
+    * **Description:** This is a checkbox field. If activated, a low-value alarm will force an **immediate data transmission** when the Sending Mode is set to "**Conditional**".
 * **Activate High Alarm Condition (Activar condición de alarmas de alto):**
-    * **Description:** This is a checkbox field. If activated, a high-value alarm will force an **immediate transmission** when the Logging Mode is set to "**Conditional**".
+    * **Description:** This is a checkbox field. If activated, a high-value alarm will force an **immediate transmission** when the Sending Mode is set to "**Conditional**".
 
 ### PT100 Temperature Sensor
 
@@ -277,13 +277,13 @@ This section details the parameters for configuring the input for PT100 temperat
     * **Units:** Degrees Celsius (ºC).
 
 * **Activate Low Alarm (Activar alarma de bajo):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.".
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.".
 * **Activate High Alarm (Activar alarma de alto):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.
 * **Activate Low Alarm Condition (Activar condición de alarmas de bajo):**
-    * **Description:** This is a checkbox field. If activated, a low-value alarm will force an **immediate data transmission** when the Logging Mode is set to "**Conditional**".
+    * **Description:** This is a checkbox field. If activated, a low-value alarm will force an **immediate data transmission** when the Sending Mode is set to "**Conditional**".
 * **Activate High Alarm Condition (Activar condición de alarmas de alto):**
-    * **Description:** This is a checkbox field. If activated, a high-value alarm will force an **immediate transmission** when the Logging Mode is set to "**Conditional**".
+    * **Description:** This is a checkbox field. If activated, a high-value alarm will force an **immediate transmission** when the Sending Mode is set to "**Conditional**".
 
 ### Internal Temperature and Humidity Sensor (SHT30)
 
@@ -298,13 +298,13 @@ These parameters configure the alarms for the temperature and humidity sensor in
     * **Description:** Defines the maximum temperature threshold. If the temperature measured exceeds this value, an alarm event will be recorded.
     * **Units:** Degrees Celsius (ºC).
 * **Activate Low Temperature Alarm (Activar alarma de bajo de temperatura):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.".
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.".
 * **Activate High Temperature Alarm (Activar alarma de alto de temperatura):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.
 * **Activate Low Temperature Alarm Condition (Activar condición de alarmas de bajo de temperatura):**
-    * **Description:** This is a checkbox field (activated/deactivated). If activated, a low temperature alarm will contribute to the general alarm condition that forces an **immediate transmission** when the Logging Mode is set to "**Conditional**". If deactivated, the alarm event will only be informative.
+    * **Description:** This is a checkbox field (activated/deactivated). If activated, a low temperature alarm will contribute to the general alarm condition that forces an **immediate transmission** when the Sending Mode is set to "**Conditional**". If deactivated, the alarm event will only be informative.
 * **Activate High Temperature Alarm Condition (Activar condición de alarmas de alto de temperatura):**
-    * **Description:** This is a checkbox field. If activated, a high temperature alarm will force an **immediate transmission** in the Logging Mode set to "**Conditional**". If deactivated, the alarm will only be informative.
+    * **Description:** This is a checkbox field. If activated, a high temperature alarm will force an **immediate transmission** in the Sending Mode set to "**Conditional**". If deactivated, the alarm will only be informative.
 
 #### Humidity Parameters
 
@@ -315,13 +315,13 @@ These parameters configure the alarms for the temperature and humidity sensor in
     * **Description:** Defines the maximum relative humidity threshold. If the measured humidity exceeds this value, an alarm event will be recorded.
     * **Units:** Relative Humidity Percentage (%RH).
 * **Activate Low Humidity Alarm (Activar alarma de bajo de humedad):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.".
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.".
 * **Activate High Humidity Alarm (Activar alarma de alto de humedad):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.
 * **Activate Low Humidity Alarm Condition (Activar condición de alarmas de bajo de humedad):**
-    * **Description:** This is a checkbox field. When activated, a low humidity alarm will force an **immediate transmission** in the Logging Mode set to "**Conditional**".
+    * **Description:** This is a checkbox field. When activated, a low humidity alarm will force an **immediate transmission** in the Sending Mode set to "**Conditional**".
 * **Activate High Humidity Alarm Condition (Activar condición de alarmas de alto de humedad):**
-    * **Description:** This is a checkbox field. When activated, a high humidity alarm will force an **immediate transmission** in the Logging Mode set to "**Conditional**".
+    * **Description:** This is a checkbox field. When activated, a high humidity alarm will force an **immediate transmission** in the Sending Mode set to "**Conditional**".
 
 ### External Temperature and Humidity Sensor (BME280)
 
@@ -336,13 +336,13 @@ These parameters configure the alarms for the external temperature and humidity 
     * **Description:** Defines the maximum temperature threshold. If the temperature measured exceeds this value, an alarm event will be recorded.
     * **Units:** Degrees Celsius (ºC).
 * **Activate Low Temperature Alarm (Activar alarma de bajo de temperatura):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.".
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.".
 * **Activate High Temperature Alarm (Activar alarma de alto de temperatura):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.
 * **Activate Low Temperature Alarm Condition (Activar condición de alarmas de bajo de temperatura):**
-    * **Description:** This is a checkbox field (activated/deactivated). If activated, a low temperature alarm will contribute to the general alarm condition that forces an **immediate transmission** when the Logging Mode is set to "**Conditional**". If deactivated, the alarm event will only be informative.
+    * **Description:** This is a checkbox field (activated/deactivated). If activated, a low temperature alarm will contribute to the general alarm condition that forces an **immediate transmission** when the Sending Mode is set to "**Conditional**". If deactivated, the alarm event will only be informative.
 * **Activate High Temperature Alarm Condition (Activar condición de alarmas de alto de temperatura):**
-    * **Description:** This is a checkbox field. If activated, a high temperature alarm will force an **immediate transmission** in the Logging Mode set to "**Conditional**". If deactivated, the alarm will only be informative.
+    * **Description:** This is a checkbox field. If activated, a high temperature alarm will force an **immediate transmission** in the Sending Mode set to "**Conditional**". If deactivated, the alarm will only be informative.
 
 #### Humidity Parameters
 
@@ -353,13 +353,13 @@ These parameters configure the alarms for the external temperature and humidity 
     * **Description:** Defines the maximum relative humidity threshold. If the measured humidity exceeds this value, an alarm event will be recorded.
     * **Units:** Relative Humidity Percentage (%RH).
 * **Activate Low Humidity Alarm (Activar alarma de bajo de humedad):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.".
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.".
 * **Activate High Humidity Alarm (Activar alarma de alto de humedad):**
-    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
+    * **Description:** This is a checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.
 * **Activate Low Humidity Alarm Condition (Activar condición de alarmas de bajo de humedad):**
-    * **Description:** This is a checkbox field. When activated, a low humidity alarm will force an **immediate transmission** in the Logging Mode set to "**Conditional**".
+    * **Description:** This is a checkbox field. When activated, a low humidity alarm will force an **immediate transmission** in the Sending Mode set to "**Conditional**".
 * **Activate High Humidity Alarm Condition (Activar condición de alarmas de alto de humedad):**
-    * **Description:** This is a checkbox field. When activated, a high humidity alarm will force an **immediate transmission** in the Logging Mode set to "**Conditional**".
+    * **Description:** This is a checkbox field. When activated, a high humidity alarm will force an **immediate transmission** in the Sending Mode set to "**Conditional**".
 
 ### Internal Accelerometer (LIS2DH12)
 
@@ -371,9 +371,9 @@ This section configures independent alarm thresholds for each of the three accel
 The same four parameters repeat per axis (**X**, **Y**, **Z**):
 
 * **Low Alarm (Alarma de bajo eje X/Y/Z):** Defines the lower acceleration threshold (in g) for that axis. If the measured value falls below this threshold, an alarm will be recorded.
-* **Activate Low Alarm (Activar alarma de bajo eje X/Y/Z):** Checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
+* **Activate Low Alarm (Activar alarma de bajo eje X/Y/Z):** Checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.
 * **High Alarm (Alarma de alto eje X/Y/Z):** Defines the upper acceleration threshold (in g) for that axis. If the measured value exceeds this threshold, an alarm will be recorded.
-* **Activate High Alarm (Activar alarma de alto eje X/Y/Z):** Checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Logging Mode transmission.
+* **Activate High Alarm (Activar alarma de alto eje X/Y/Z):** Checkbox field. If activated, the system will send an alarm notification via the configured text/messaging options (SMS, Telegram, Email) *in addition* to recording the alarm on the platform. This is independent of the "Conditional" Sending Mode transmission.
 
 !!! note "🚧 Coming Soon"
-    The firmware already supports forcing an immediate transmission from an axis alarm when the Logging Mode is set to "Conditional" (the same **Activate Alarm Condition** behavior available for the other sensors), but this option is **not yet exposed in IsurDASH** for the accelerometer axes. It will be made available in an upcoming platform update.
+    The firmware already supports forcing an immediate transmission from an axis alarm when the Sending Mode is set to "Conditional" (the same **Activate Alarm Condition** behavior available for the other sensors), but this option is **not yet exposed in IsurDASH** for the accelerometer axes. It will be made available in an upcoming platform update.

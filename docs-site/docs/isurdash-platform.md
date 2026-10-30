@@ -18,9 +18,9 @@ A toolbar is present at the top of **every** page in IsurDASH — not just the D
 * **Filtros de Tags:** restrict the data shown to devices carrying specific [Tags](isurdash-tags.md).
 * **Light/dark mode switch:** toggles the theme; saved per user.
 * **Notification bell:** all notifications (alarms, low battery, etc.) across the fleet.
-* **User button:** shows your username; opens a menu to edit your profile, configure notifications, manage access keys, and log out. *(Covered in detail in section 6.9, coming soon.)*
+* **User button:** shows your username; opens a menu to edit your profile, configure notifications, manage access keys, and log out. *(Covered in detail in section 6.10, coming soon.)*
 
-The two filters apply **globally**: once set, they affect what you see across [6.2. Dashboard](isurdash-dashboard.md) (the map only shows Isurlogs matching the selected tags, alarm counts adjust to the selected time window), [6.3. Devices](isurdash-devices.md) (Isurlogs list), [6.4. Alarms](isurdash-alarms.md), and Registro de eventos — every page reflects the same active filters until you change them.
+The two filters apply **globally**: once set, they affect what you see across [6.2. Dashboard](isurdash-dashboard.md) (the map only shows Isurlogs matching the selected tags, alarm counts adjust to the selected time window), [6.3. Devices](isurdash-devices.md) (Isurlogs list), [6.4. Alarms](isurdash-alarms.md), and [6.5. Event Log](isurdash-events.md) — every page reflects the same active filters until you change them.
 
 ## Contents
 
@@ -28,8 +28,9 @@ The two filters apply **globally**: once set, they affect what you see across [6
 * **[6.2. Main Control Panel (Dashboard)](isurdash-dashboard.md)** — the fleet map, alarms panel, and summary charts.
 * **[6.3. Devices](isurdash-devices.md)** — the Isurlogs list, adding a device, per-device visualization and configuration, and local Bluetooth connection.
 * **[6.4. Alarms](isurdash-alarms.md)** — fleet-wide alarm analytics and the full alarm history.
-* **[6.5. Users](isurdash-users.md)** — user roles, creating users, and assigning devices.
-* **[6.6. Profiles](isurdash-profiles.md)** — configuration templates you can apply to multiple devices at once.
-* **[6.7. Tags](isurdash-tags.md)** — organizing and filtering the fleet with custom labels.
-* **[6.8. Device Maintenance](isurdash-maintenance.md)** — firmware updates, remote REPL, factory reset, and other maintenance actions.
-* **6.9. Account Settings** 🚧 — editing your profile, notification preferences, and access keys from the user menu. *(Coming soon.)*
+* **[6.5. Event Log](isurdash-events.md)** — the history of what happens to the fleet besides alarms: synchronizations, configuration changes, sensors, firmware updates and manual maintenance.
+* **[6.6. Users](isurdash-users.md)** — user roles, creating users, and assigning devices.
+* **[6.7. Profiles](isurdash-profiles.md)** — configuration templates you can apply to multiple devices at once.
+* **[6.8. Tags](isurdash-tags.md)** — organizing and filtering the fleet with custom labels.
+* **[6.9. Device Maintenance](isurdash-maintenance.md)** — firmware updates, remote REPL, factory reset, and other maintenance actions.
+* **6.10. Account Settings** 🚧 — editing your profile, notification preferences, and access keys from the user menu. *(Coming soon.)*

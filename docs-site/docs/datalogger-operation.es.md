@@ -48,7 +48,7 @@ Todos los datos recogidos en el ciclo se empaquetan en un formato compacto y se 
 
 ### 4. Decisión: ¿Transmitir o Dormir?
 
-Tras almacenar los datos, el **ISURLOG** decide si activar el módem para transmitir los datos a la nube, o si debe volver a dormir para seguir acumulando registros. Esta decisión depende directamente del "**Modo de registro**" seleccionado en la configuración:
+Tras almacenar los datos, el **ISURLOG** decide si activar el módem para transmitir los datos a la nube, o si debe volver a dormir para seguir acumulando registros. Esta decisión depende directamente del "**Modo de envío**" seleccionado en la configuración:
 
 * **Modo Fijo (Normal):** el dispositivo prioriza el ahorro de energía y la agrupación de datos. La transmisión ocurre **únicamente** cuando se alcanza el número de registros definido en el "**Acumulador de registros**". Las condiciones de alarma quedan registradas en los datos, pero no fuerzan un envío inmediato.
 * **Modo Condicional:** el dispositivo prioriza la notificación de eventos importantes. La transmisión ocurre si se cumple **cualquiera** de las siguientes condiciones:

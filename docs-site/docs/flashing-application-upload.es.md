@@ -3,7 +3,7 @@
 Esta guía cubre los dos pasos diferenciados necesarios para configurar el entorno de desarrollo del ISURLOG: primero, grabar el binario de MicroPython, y segundo, subir la lógica de la aplicación.
 
 !!! note "¿Solo instalas una release oficial, no desarrollas firmware?"
-    IsurDASH dispone de una herramienta guiada de actualización de firmware (método **Serial port (USB)**) que te lleva por esta misma secuencia RST/BOOT con una interfaz más amigable — ver **[6.8. Mantenimiento de Dispositivos](isurdash-maintenance.md)**. Esta página está pensada para desarrolladores que graban un `firmware.bin` personalizado o compilado localmente, que no es una release publicada.
+    IsurDASH dispone de una herramienta guiada de actualización de firmware (método **Serial port (USB)**) que te lleva por esta misma secuencia RST/BOOT con una interfaz más amigable — ver **[6.9. Mantenimiento de Dispositivos](isurdash-maintenance.md)**. Esta página está pensada para desarrolladores que graban un `firmware.bin` personalizado o compilado localmente, que no es una release publicada.
 
 ## 3.1 Hardware Externo Necesario
 

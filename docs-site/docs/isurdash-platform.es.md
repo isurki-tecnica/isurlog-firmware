@@ -18,9 +18,9 @@ En la parte superior de **todas** las páginas de IsurDASH hay presente una barr
 * **Filtros de Tags:** restringe los datos mostrados a dispositivos que tengan asignadas ciertas [Tags](isurdash-tags.md).
 * **Interruptor de modo claro/oscuro:** alterna el tema visual; se guarda por usuario.
 * **Campana de notificaciones:** todas las notificaciones (alarmas, batería baja, etc.) de toda la flota.
-* **Botón de usuario:** muestra tu nombre de usuario; abre un menú para editar tu perfil, configurar notificaciones, gestionar claves de acceso, y cerrar sesión. *(Se detalla en la sección 6.9, próximamente.)*
+* **Botón de usuario:** muestra tu nombre de usuario; abre un menú para editar tu perfil, configurar notificaciones, gestionar claves de acceso, y cerrar sesión. *(Se detalla en la sección 6.10, próximamente.)*
 
-Ambos filtros se aplican de forma **global**: una vez configurados, afectan a lo que se ve en [6.2. Dashboard](isurdash-dashboard.md) (el mapa solo muestra los Isurlogs que coinciden con las tags seleccionadas, y el recuento de alarmas se ajusta a la ventana temporal seleccionada), [6.3. Dispositivos](isurdash-devices.md) (listado de Isurlogs), [6.4. Alarmas](isurdash-alarms.md), y el Registro de eventos — todas las páginas reflejan los mismos filtros activos hasta que se cambien.
+Ambos filtros se aplican de forma **global**: una vez configurados, afectan a lo que se ve en [6.2. Dashboard](isurdash-dashboard.md) (el mapa solo muestra los Isurlogs que coinciden con las tags seleccionadas, y el recuento de alarmas se ajusta a la ventana temporal seleccionada), [6.3. Dispositivos](isurdash-devices.md) (listado de Isurlogs), [6.4. Alarmas](isurdash-alarms.md), y el [6.5. Registro de Eventos](isurdash-events.md) — todas las páginas reflejan los mismos filtros activos hasta que se cambien.
 
 ## Contenido
 
@@ -28,8 +28,9 @@ Ambos filtros se aplican de forma **global**: una vez configurados, afectan a lo
 * **[6.2. Panel Principal de Control (Dashboard)](isurdash-dashboard.md)** — el mapa de la flota, el panel de alarmas y los gráficos resumen.
 * **[6.3. Dispositivos](isurdash-devices.md)** — el listado de Isurlogs, añadir un dispositivo, visualización y configuración por dispositivo, y conexión local por Bluetooth.
 * **[6.4. Alarmas](isurdash-alarms.md)** — analítica de alarmas de toda la flota e histórico completo de alarmas.
-* **[6.5. Usuarios](isurdash-users.md)** — roles de usuario, creación de usuarios y asignación de dispositivos.
-* **[6.6. Perfiles](isurdash-profiles.md)** — plantillas de configuración que se pueden aplicar a varios dispositivos a la vez.
-* **[6.7. Tags](isurdash-tags.md)** — organizar y filtrar la flota mediante etiquetas personalizadas.
-* **[6.8. Mantenimiento de Dispositivos](isurdash-maintenance.md)** — actualizaciones de firmware, REPL remoto, restablecimiento de fábrica y otras acciones de mantenimiento.
-* **6.9. Account Settings** 🚧 — edición del perfil, preferencias de notificación y claves de acceso desde el menú de usuario. *(Próximamente.)*
+* **[6.5. Registro de Eventos](isurdash-events.md)** — el historial de lo que le ocurre a la flota además de las alarmas: sincronizaciones, cambios de configuración, sensores, actualizaciones de firmware y mantenimiento manual.
+* **[6.6. Usuarios](isurdash-users.md)** — roles de usuario, creación de usuarios y asignación de dispositivos.
+* **[6.7. Perfiles](isurdash-profiles.md)** — plantillas de configuración que se pueden aplicar a varios dispositivos a la vez.
+* **[6.8. Tags](isurdash-tags.md)** — organizar y filtrar la flota mediante etiquetas personalizadas.
+* **[6.9. Mantenimiento de Dispositivos](isurdash-maintenance.md)** — actualizaciones de firmware, REPL remoto, restablecimiento de fábrica y otras acciones de mantenimiento.
+* **6.10. Account Settings** 🚧 — edición del perfil, preferencias de notificación y claves de acceso desde el menú de usuario. *(Próximamente.)*

@@ -14,7 +14,7 @@ Older firmware versions were significantly less optimized for power consumption.
 
 **Solution:** Update the firmware.
 
-* **Recommended:** update the ESP32 firmware directly from IsurDASH — see **[6.8. Device Maintenance](isurdash-maintenance.md)**.
+* **Recommended:** update the ESP32 firmware directly from IsurDASH — see **[6.9. Device Maintenance](isurdash-maintenance.md)**.
 * **Manual alternative:** flash it yourself — see **[3. Flashing and Application Upload](flashing-application-upload.md)**.
 
 Always use the **"Latest"** release from the [GitHub Releases page](https://github.com/isurki-tecnica/isurlog-firmware/releases) — **pre-release** versions may contain bugs that can *increase* power consumption rather than reduce it.
@@ -38,7 +38,7 @@ For **LoRaWAN** ISURLOG units specifically, two additional factors commonly caus
 
 This is generally also caused by **outdated firmware handling connectivity loss poorly**. For example, when coverage is temporarily bad, or the ISURLOG has to reconnect to the network, older firmware versions don't correctly manage the records already stored in **RTC RAM** while this happens — and those pending records get lost instead of being sent once the connection is recovered.
 
-**Solution:** Update the ESP32 firmware — same as above, **recommended** via IsurDASH (**[6.8. Device Maintenance](isurdash-maintenance.md)**) or manually (**[3. Flashing and Application Upload](flashing-application-upload.md)**), always using the **"Latest"** release rather than a pre-release.
+**Solution:** Update the ESP32 firmware — same as above, **recommended** via IsurDASH (**[6.9. Device Maintenance](isurdash-maintenance.md)**) or manually (**[3. Flashing and Application Upload](flashing-application-upload.md)**), always using the **"Latest"** release rather than a pre-release.
 
 ---
 
@@ -46,7 +46,7 @@ This is generally also caused by **outdated firmware handling connectivity loss 
 
 This is generally also caused by **outdated firmware not correctly detecting a lost MQTT connection or a lost cellular network attachment**. Instead of noticing the connection is actually gone and reconnecting, affected firmware versions can get stuck believing they're still connected — silently failing to transmit until whatever caused the original drop clears up by itself. That's why the typical pattern is the device going quiet for anywhere from a few hours to a few days, then resuming transmission on its own, without any intervention.
 
-**Solution (definitive):** Update the ESP32 firmware — same as above, **recommended** via IsurDASH (**[6.8. Device Maintenance](isurdash-maintenance.md)**) or manually (**[3. Flashing and Application Upload](flashing-application-upload.md)**), always using the **"Latest"** release rather than a pre-release. Current firmware versions detect and recover from both MQTT and cellular connectivity loss correctly, so this doesn't recur.
+**Solution (definitive):** Update the ESP32 firmware — same as above, **recommended** via IsurDASH (**[6.9. Device Maintenance](isurdash-maintenance.md)**) or manually (**[3. Flashing and Application Upload](flashing-application-upload.md)**), always using the **"Latest"** release rather than a pre-release. Current firmware versions detect and recover from both MQTT and cellular connectivity loss correctly, so this doesn't recur.
 
 **Temporary workaround, while still on an affected firmware version:** open the device's **[Data Visualization, Location and SIM Data](isurdash-devices.md#data-visualization-location-and-sim-data)** widget and click the **Reset** button next to the chart button — it forces a reset of the SIM card's connectivity, which is usually enough to bring transmission back right away instead of waiting for the device to recover on its own.
 
@@ -130,7 +130,7 @@ The ISURLOG's ESP32 uses the antenna embedded directly on the PCB rather than an
 For any other issue not listed above, or one that the suggested fix didn't actually resolve, the fastest way forward is to capture a live log of the problem actually happening, rather than describing it from memory:
 
 1. Connect a UART-to-USB cable between the ISURLOG and your computer.
-2. In IsurDASH, go to **Mantenimiento de dispositivos → MicroPython REPL** (see **[6.8. Device Maintenance](isurdash-maintenance.md#micropython-repl)**), and open the REPL via **Serial port (USB)**.
+2. In IsurDASH, go to **Mantenimiento de dispositivos → MicroPython REPL** (see **[6.9. Device Maintenance](isurdash-maintenance.md#micropython-repl)**), and open the REPL via **Serial port (USB)**.
 3. With the REPL connected, wait for the ISURLOG to reproduce the problem. If the device is in deep sleep, holding the magnet near it for about **one second** triggers **Immediate Read & Send** mode, forcing a full sensor-reading-and-transmission cycle right away instead of waiting for the next scheduled interval — see **[1.8. Internal Sensors and Diagnostics](sensor-connections.md#18-internal-sensors-and-diagnostics)** for both magnet modes side by side (holding it past five seconds triggers Bluetooth Diagnostics Mode instead).
 4. Once it does, export the session with the **Exportar** button.
 

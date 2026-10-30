@@ -1,12 +1,12 @@
 *Parte de [6. Plataforma IsurDASH](isurdash-platform.md).*
 
-# 6.7. Tags
+# 6.8. Tags
 
 Las Tags (o Etiquetas) son marcadores personalizables diseñados para organizar, agrupar y filtrar la flota de dataloggers **ISURLOG** de forma más eficiente. Resultan especialmente útiles cuando se gestiona un gran número de dispositivos.
 
 Un usuario puede crear tags basándose en cualquier criterio, como la ubicación geográfica (p. ej., "Zona Norte"), el tipo de instalación (p. ej., "Mareógrafos"), el proyecto al que pertenecen, o el cliente final. Una vez asignadas, estas tags permiten localizar y visualizar rápidamente grupos concretos de dispositivos en las distintas secciones de la plataforma.
 
-## 6.7.1. Listado de Tags
+## 6.8.1. Listado de Tags
 
 El menú "**Tags**" presenta una tabla con todas las tags creadas dentro del grupo de usuario. El listado muestra las siguientes columnas:
 
@@ -20,14 +20,14 @@ El menú "**Tags**" presenta una tabla con todas las tags creadas dentro del gru
 
 *El listado de Tags.*
 
-## 6.7.2. Crear una Nueva Tag
+## 6.8.2. Crear una Nueva Tag
 
 Para crear una nueva tag que pueda asignarse a los dispositivos, el usuario debe seguir estos pasos:
 
 1.  **Iniciar la creación:** pulsar el botón azul con el símbolo de añadir (**+**), situado en la esquina superior derecha.
 2.  **Rellenar el formulario:** completar el formulario introduciendo el **Nombre de la Tag** y seleccionando el **Grupo de Usuario** al que pertenecerá.
 
-## 6.7.3. Asignar Tags a Dispositivos
+## 6.8.3. Asignar Tags a Dispositivos
 
 Una vez creada una tag, el siguiente paso es asignarla a los dispositivos correspondientes:
 

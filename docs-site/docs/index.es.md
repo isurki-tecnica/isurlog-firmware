@@ -57,7 +57,7 @@ ISURLOG es un producto en mantenimiento activo con despliegues reales en campo, 
 | 4 entradas PT100/PT1000 mediante un único ADC AD7124-8, frente al canal único actual | Hardware + Firmware | 🔜 Planificado | — |
 | 4 entradas digitales adicionales conectadas directamente a la MCU (estado o conteo de pulsos de bajo consumo), junto a las 3 actuales vía MCP23008/AUX-IO — depende de la migración a ESP32-S3/S31 por presupuesto de GPIOs | Hardware + Firmware | 🔜 Planificado | — |
 | TinyML — inferencia en el propio dispositivo para tareas ligeras como detección local de anomalías o mantenimiento predictivo, sin ida y vuelta a la nube | Firmware | 🔜 Planificado | — |
-| Actualización de firmware del RAK3172 directamente desde IsurDASH (actualmente requiere una herramienta web externa) | Firmware | 🔜 Planificado | — |
+| Actualización de firmware del RAK3172 directamente desde IsurDASH | Firmware | ✅ Estable | IsurDASH v2.2.0 |
 | Archivos de caja imprimible en 3D, publicados en MakerWorld | Hardware | ✅ Estable | 2026-10 |
 | Migración de ESP32 a ESP32-S3 o al recién anunciado ESP32-S31 (elección final aún sin decidir) — USB nativo y un núcleo RISC-V LP en lugar del actual coprocesador ULP FSM. También se está considerando una versión basada en i.MX RT1064 | Hardware + Firmware | 💬 En debate | — |
 

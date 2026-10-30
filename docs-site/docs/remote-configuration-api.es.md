@@ -14,7 +14,7 @@ Esta tabla completa define todas las funciones de configuración remota disponib
 | **Parámetros Globales** | | | | | | |
 | `setLatencyTime` | `A0` | 1 | 1 | 1-255 | [Sí](reference-parameters.md#tiempo-de-latencia-min) | Define el tiempo (en minutos) entre ciclos de lectura. |
 | `setRtcSync` | `A1` | 1 | 1 | 0-1 | [Sí](reference-parameters.md#sincronizacion-rtc) | Define si las lecturas ocurren en intervalos fijos sincronizados con el reloj (1, p. ej. 14:00, 14:05, 14:10 para una latencia de 5 min), o en intervalos relativos al momento de encendido (0). |
-| `setRegisterMode` | `A2` | 1 | 1 | 0-1 | [Sí](reference-parameters.md#modo-de-registro) | Define el Modo de registro (0=Fijo, 1=Condicional). |
+| `setRegisterMode` | `A2` | 1 | 1 | 0-1 | [Sí](reference-parameters.md#modo-de-envio) | Define el Modo de envío (0=Fijo, 1=Condicional). |
 | `setRegisterAccumulator` | `A3` | 1 | 1 | 0-255 | [Sí](reference-parameters.md#acumulador-de-registros) | Define el número de registros a acumular antes de enviar. |
 | `setMagnetWakeup` | `A4` | 1 | 1 | 0-1 | No | Activa/Desactiva la función de despertar por interruptor magnético. |
 | `setDebugLED` | `A5` | 1 | 1 | 0-1 | No | Activa/Desactiva el LED STATUS de la PCB. |

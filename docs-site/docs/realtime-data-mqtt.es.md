@@ -48,12 +48,12 @@ Este ejemplo muestra la estructura y el contenido clave del campo `object` con l
   "fPort": 2,
   "data": "AHVoyD3dAHQP5wAAAABnAPcAaIcAAv+d",
   "object": {
-    "AnalogInput_0": -0.99,
-    "DigitalInput_0": 0.0,
-    "HumiditySensor_0": 67.5,
-    "TemperatureSensor_0": 24.7,
-    "UnixTime_0": 1757953501.0,
-    "VoltageInput_0": 4071.0
+    "AnalogInput0": -0.99,
+    "DigitalInput0": 0.0,
+    "HumiditySensor0": 67.5,
+    "TemperatureSensor0": 24.7,
+    "UnixTime0": 1757953501.0,
+    "VoltageInput0": 4071.0
   },
   "rxInfo": [
     {
@@ -100,7 +100,7 @@ Todos los valores multibyte se codifican en orden **Big-Endian**. El primer payl
 
 | Nombre del Sensor | Canal | Tipo (Hex) | Formato de Dato | Cálculo del Valor |
 | :--- | :--- | :--- | :--- | :--- |
-| **Digital Input** | 0 | 0x00 | Entero sin signo de 1 byte | Valor final = Entero |
+| **Digital Input** | 0-3 | 0x00 | Entero sin signo de 1 byte | Valor final = Entero. Canal 0: conteo de pulsos o estado binario, según la configuración en IsurDASH. Canales 1-3: solo estado binario (0 = abierto, 1 = cerrado) |
 | **Analog Input** | 0-3 | 0x02 | Entero con signo de 2 bytes | Valor final = Entero / 100.0 |
 | **Modbus Input** | 0-3 | 0x04 | Entero con signo de 2 bytes | Valor final = Entero / 100.0 |
 | **PT100 Temperature** | 0 | 0x66 | Entero con signo de 2 bytes | Valor final = Entero / 10.0 |

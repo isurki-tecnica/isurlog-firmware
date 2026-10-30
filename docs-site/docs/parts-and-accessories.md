@@ -29,12 +29,14 @@ For more details on resin potting, [contact Isurki](mailto:tecnica@isurki.com).
 
 | Item | From Isurki | Bring your own |
 | :--- | :--- | :--- |
-| **3D-printed enclosure** (PETG, IP66) | **€35** | 💬 In discussion |
-| **DIN rail mount** — direct, or via a separate 3D-printed piece fixed to the wall | **€28** | 💬 In discussion |
-| **Pole mount** | **€18** | 💬 In discussion |
+| **3D-printed enclosure** (PETG, IP66) | **€35** | [Print it yourself](enclosure.md#25-print-it-yourself) |
+| **DIN rail mount** — direct, or via a separate 3D-printed piece fixed to the wall | **€28** | [Print it yourself](enclosure.md#25-print-it-yourself) |
+| **Pole mount** | **€18** | [Print it yourself](enclosure.md#25-print-it-yourself) |
 | **ER34615 battery holder/adapter** — small PCB that takes power from up to 2 ER34615 cells and combines it into a single output feeding the ISURLOG. Required to use [Li-SOCl2 batteries](#14-batteries). | **€20** | 💬 In discussion |
 
-💬 **A self-sourced/DIY path for these parts (enclosure, mounting) isn't available yet — direction still in discussion.** [Let us know](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) if you'd find this useful.
+The enclosure and the mounts can be printed at home: the files are published on MakerWorld (see [2. The Enclosure](enclosure.md)).
+
+💬 **A self-sourced/DIY path for the ER34615 battery holder/adapter isn't available yet — direction still in discussion.** [Let us know](https://github.com/isurki-tecnica/isurlog-firmware/discussions/new?category=ideas) if you'd find this useful.
 
 See [4.2 Physical Mounting](installation-commissioning.md#42-physical-mounting) for the standard mounting-hole dimensions if you're designing your own bracket instead.
 

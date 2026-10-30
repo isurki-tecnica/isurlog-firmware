@@ -48,12 +48,12 @@ This example shows the key structure and content of the `object` field with the 
   "fPort": 2,
   "data": "AHVoyD3dAHQP5wAAAABnAPcAaIcAAv+d",
   "object": {
-    "AnalogInput_0": -0.99,
-    "DigitalInput_0": 0.0,
-    "HumiditySensor_0": 67.5,
-    "TemperatureSensor_0": 24.7,
-    "UnixTime_0": 1757953501.0,
-    "VoltageInput_0": 4071.0
+    "AnalogInput0": -0.99,
+    "DigitalInput0": 0.0,
+    "HumiditySensor0": 67.5,
+    "TemperatureSensor0": 24.7,
+    "UnixTime0": 1757953501.0,
+    "VoltageInput0": 4071.0
   },
   "rxInfo": [
     {
@@ -100,7 +100,7 @@ All multi-byte values are encoded in **Big-Endian** byte order. The first data p
 
 | Sensor Name | Channel | Type (Hex) | Data Format | Value Calculation |
 | :--- | :--- | :--- | :--- | :--- |
-| **Digital Input** | 0 | 0x00 | 1-byte Unsigned Integer | Final Value = Integer |
+| **Digital Input** | 0-3 | 0x00 | 1-byte Unsigned Integer | Final Value = Integer. Channel 0: pulse count or binary state, depending on the IsurDASH configuration. Channels 1-3: binary state only (0 = open, 1 = closed) |
 | **Analog Input** | 0-3 | 0x02 | 2-byte Signed Integer | Final Value = Integer / 100.0 |
 | **Modbus Input** | 0-3 | 0x04 | 2-byte Signed Integer | Final Value = Integer / 100.0 |
 | **PT100 Temperature** | 0 | 0x66 | 2-byte Signed Integer | Final Value = Integer / 10.0 |

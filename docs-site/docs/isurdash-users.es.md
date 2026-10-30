@@ -1,10 +1,10 @@
 *Parte de [6. Plataforma IsurDASH](isurdash-platform.md).*
 
-# 6.5. Usuarios
+# 6.6. Usuarios
 
 La plataforma IsurDASH permite la gestión multiusuario, asignando distintos roles y permisos para controlar el acceso a los datos y a la configuración. Los usuarios se organizan en "**Grupos**", y cada usuario solo podrá ver y gestionar a los demás miembros de su mismo grupo, garantizando así la privacidad entre distintos equipos o clientes.
 
-## 6.5.1. Listado de Usuarios
+## 6.6.1. Listado de Usuarios
 
 La pantalla "**Usuarios**" muestra una tabla con todos los usuarios activos que pertenecen al mismo grupo que el usuario que ha iniciado sesión. Las acciones principales, como crear, editar o eliminar usuarios, se realizan desde esta interfaz.
 
@@ -21,7 +21,7 @@ La tabla ofrece la siguiente información:
 
 *El listado de Usuarios.*
 
-## 6.5.2. Roles y Permisos de Usuario
+## 6.6.2. Roles y Permisos de Usuario
 
 IsurDASH define dos roles de cara al cliente, con distintos niveles de acceso:
 
@@ -36,7 +36,7 @@ Tiene todo lo que tiene un Operador de planta, además de la capacidad de **edit
 !!! note "Rol Admin"
     Existe un tercer rol, superior (**admin**), con acceso al Panel de administrador (Servicios, Registro de dispositivos, File Scheduler, Grupos de usuario) — se trata de un rol interno de Isurki, no algo que pueda asignarse o crearse desde una cuenta de cliente, por lo que queda fuera del alcance de esta guía.
 
-## 6.5.3. Crear y Asignar un Nuevo Usuario
+## 6.6.3. Crear y Asignar un Nuevo Usuario
 
 El proceso para dar de alta a un nuevo usuario en la plataforma y asignarle los dispositivos correspondientes es sencillo y se realiza en dos fases. Solo los usuarios con el rol **Ingeniero** pueden crear cuentas nuevas.
 
@@ -57,7 +57,7 @@ Por defecto, una cuenta recién creada no tiene ningún **ISURLOG** asociado. Au
 Para ello, el Ingeniero debe pulsar sobre el usuario recién creado en el listado. Se abrirá una interfaz que permite seleccionar y asignar los **ISURLOG** de dos formas:
 
 * **"Añadir dispositivo individual":** permite seleccionar y asignar **ISURLOG** concretos de una lista.
-* **"Añadir dispositivos por tag":** permite asignar simultáneamente todos los dispositivos que compartan una misma tag. Las tags son marcadores personalizables que se usan para agrupar y organizar la flota de **ISURLOG** (ver [6.7. Tags](isurdash-tags.md)).
+* **"Añadir dispositivos por tag":** permite asignar simultáneamente todos los dispositivos que compartan una misma tag. Las tags son marcadores personalizables que se usan para agrupar y organizar la flota de **ISURLOG** (ver [6.8. Tags](isurdash-tags.md)).
 
 La gran ventaja de este sistema es que esta asignación puede hacerse **inmediatamente después de crear la cuenta**, sin necesidad de esperar a que el nuevo usuario la active a través del correo de invitación.
 

@@ -48,7 +48,7 @@ All data collected in the cycle are packaged in a compact format and are securel
 
 ### 4. Decision: Transmit or Sleep?
 
-After storing the data, the **ISURLOG** decides whether to activate the modem to transmit the data to the cloud or whether it should return to sleep to continue accumulating records. This decision directly depends on the "**Logging Mode**" selected in the configuration:
+After storing the data, the **ISURLOG** decides whether to activate the modem to transmit the data to the cloud or whether it should return to sleep to continue accumulating records. This decision directly depends on the "**Sending Mode**" selected in the configuration:
 
 * **Fixed Mode (Normal):** The device prioritizes energy saving and data grouping. Transmission occurs **only** when the number of records defined in the "**Record Accumulator**" is reached. Alarm conditions are recorded in the data but do not force an immediate send.
 * **Conditional Mode:** The device prioritizes the notification of important events. Transmission occurs if **either** of the following conditions is met:

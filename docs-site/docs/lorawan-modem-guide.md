@@ -94,14 +94,13 @@ Each [ISURLOG firmware release](https://github.com/isurki-tecnica/isurlog-firmwa
 
 * **`System_Custom_ATCMD.ino.bin`**
 
-!!! note "🚧 Coming soon"
-    IsurDASH will support updating the RAK3172 directly, the same way the [6.8 Device Maintenance](isurdash-maintenance.md) flow already updates the **ESP32**. Until then, use the tool below.
+### Update from IsurDASH
 
-### Update Tool
+The recommended way to update the RAK3172 is from **IsurDASH**, in the **Device Maintenance** section (see [6.9 Device Maintenance](isurdash-maintenance.md)), the same place used to update the **ESP32**. Available since IsurDASH v2.2.0.
 
-The current recommended way to update the RAK3172's firmware is the web-based tool at **[firmwareupgrade.fencyboy.com](https://firmwareupgrade.fencyboy.com/)**.
+### Alternative: Web-Based Tool
 
-### Update Procedure
+There is also an alternative way to update the RAK3172 without IsurDASH, using the web-based tool at **[firmwareupgrade.fencyboy.com](https://firmwareupgrade.fencyboy.com/)**. The procedure is:
 
 1.  Connect the UART-to-USB converter to the ISURLOG's "**RAK**" port.
 2.  Power on the ISURLOG in **BOOT** mode.

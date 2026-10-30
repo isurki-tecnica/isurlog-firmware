@@ -29,7 +29,7 @@ Para registrar un nuevo datalogger **ISURLOG** en la plataforma, el usuario debe
 
 ## 6.3.3. Visualización y Estado del Dispositivo
 
-Al seleccionar un dispositivo, el usuario accede a su página dedicada, con el nombre e ID del dispositivo como título de página, y botones de acceso rápido para **Conectar BLE** (ver [6.3.5](#635-conexion-local-por-bluetooth)) y **REPL** (abre una consola de MicroPython en modo **Remoto** o **Puerto serie (USB)** — ver [6.8. Mantenimiento de Dispositivos](isurdash-maintenance.md) para más detalles; nótese que esto nunca está disponible por Bluetooth). La página tiene tres pestañas: **Visualización**, **Configuración** (ver [6.3.4](#634-pestana-de-configuracion)), y **Registros**.
+Al seleccionar un dispositivo, el usuario accede a su página dedicada, con el nombre e ID del dispositivo como título de página y un menú con forma de **engranaje** en la esquina superior derecha (ver [Acciones del Dispositivo](#acciones-del-dispositivo-menu-del-engranaje)). La página tiene tres pestañas: **Visualización**, **Configuración** (ver [6.3.4](#634-pestana-de-configuracion)), y **Registros** (ver [6.3.5](#635-registros-alarmas-y-eventos)).
 
 ### Panel de Estado (Vista Rápida)
 
@@ -41,9 +41,19 @@ En la parte superior de la pestaña Visualización, un conjunto de indicadores o
 * **Batería:** nivel de batería en milivoltios (mV) y porcentaje estimado (%), además de una estimación de los días de vida de batería restantes.
 * **Alarmas:** número de alarmas activas o recientes de ese dispositivo.
 
+### Acciones del Dispositivo (Menú del Engranaje)
+
+El menú del **engranaje**, en la esquina superior derecha de la página del dispositivo, ofrece tres acciones:
+
+* **Conectar BLE:** conecta con el ISURLOG por Bluetooth local (ver [6.3.6](#636-conexion-local-por-bluetooth)).
+* **REPL:** abre una consola de MicroPython en modo **Remoto** o **Puerto serie (USB)** — ver [6.9. Mantenimiento de Dispositivos](isurdash-maintenance.md) para más detalles; nótese que esto nunca está disponible por Bluetooth.
+* **Despertar Isurlog:** envía un comando para despertar al datalogger de su modo de bajo consumo y forzar un ciclo de lectura y transmisión inmediato. Solo disponible para versiones de **ISURLOG** con tecnología **NB-IoT**, gracias al eDRX (recepción discontinua extendida).
+
+![Menú del engranaje en la página de un dispositivo: Conectar BLE, REPL y Despertar Isurlog](images/7-device-gear-menu.png){width="250"}
+
 ### Visualización de Datos, Ubicación y Datos SIM
 
-Justo debajo del panel de estado:
+Debajo del panel de estado:
 
 * Una tabla con la **lectura más reciente** de cada uno de los sensores conectados.
 * Un mapa que indica la **última ubicación conocida** del dispositivo.
@@ -92,27 +102,13 @@ Debajo, un área de gráficos interactivos permite analizar la evolución de los
 
 *Tabla resumen — estadísticas por sensor sobre el periodo visualizado.*
 
-### Registros (Alarmas y Eventos)
-
-La pestaña **Registros** tiene dos subsecciones:
-
-* **Alarmas:** una lista de todos los eventos de alarma generados por ese **ISURLOG** en concreto (tipo, detalle, valor, fecha, estado leído/no leído).
-* **Eventos:** un registro de actividad del propio dispositivo — cambios de configuración, sensores añadidos/eliminados, conexiones REPL, cambios manuales de batería, etc. — con un botón **"Registrar evento manual"** para anotar algo a mano (p. ej. un cambio de batería durante una visita de campo).
-
-![Pestaña Registros de un dispositivo en IsurDASH: subsección Alarmas](images/7-device-registros-alarmas.png){width="1000"}
-
-*La pestaña Registros — subsección Alarmas.*
-
 ## 6.3.4. Pestaña de Configuración
 
 La pestaña **Configuración** se organiza como un submenú lateral con cinco categorías: **Configuración general**, **Comunicaciones inalámbricas**, **Sensores**, **Variables virtuales**, y **Sensores Isurnode**.
 
 ### Configuración general
 
-Muestra los parámetros generales del ISURLOG: nombre, tipo de módem, versión de hardware/firmware, intervalos de lectura y transmisión, modo de registro, tamaño de payload, coordenadas GPS, sincronización RTC, alarma de vandalismo, Tags asignadas, y la opción de aplicar un Perfil guardado. En la parte inferior:
-
-* **Botón "Editar":** habilita los campos para edición y poder realizar cambios.
-* **Botón "Despertar Isurlog":** envía un comando para despertar al datalogger de su modo de bajo consumo y forzar un ciclo de lectura y transmisión inmediato. Solo disponible para versiones de **ISURLOG** con tecnología **NB-IoT**, gracias al eDRX (recepción discontinua extendida).
+Muestra los parámetros generales del ISURLOG: nombre, tipo de módem, versión de hardware/firmware, intervalos de lectura y transmisión, modo de envío, tamaño de payload, coordenadas GPS, sincronización RTC, alarma de vandalismo, Tags asignadas, y la opción de aplicar un Perfil guardado. En la parte inferior, el botón **"Editar"** habilita los campos para edición y poder realizar cambios.
 
 ![Configuración general en IsurDASH](images/7-device-config-general.png){width="1000"}
 
@@ -126,7 +122,7 @@ Muestra los parámetros generales del ISURLOG: nombre, tipo de módem, versión 
 Muestra los parámetros de conectividad de este ISURLOG: broker MQTT (servidor, puerto, usuario, contraseña, topic), y los ajustes específicos del módem — APN y preferencia de SIM para dispositivos NB-IoT/LTE-M, o los parámetros LoRaWAN equivalentes para dispositivos LoRa.
 
 !!! warning "Importante"
-    esta sección solo puede editarse **localmente, a través de la conexión Bluetooth** (ver [6.3.5](#635-conexion-local-por-bluetooth)) — no puede modificarse de forma remota, a diferencia del resto de la configuración.
+    esta sección solo puede editarse **localmente, a través de la conexión Bluetooth** (ver [6.3.6](#636-conexion-local-por-bluetooth)) — no puede modificarse de forma remota, a diferencia del resto de la configuración.
 
 ### Sensores
 
@@ -140,7 +136,18 @@ La plataforma permite crear **variables virtuales** además del listado de senso
 
 Enumera los sensores/salidas conectados a través de una unidad de expansión Isurnode, cuando esta está emparejada con el ISURLOG.
 
-## 6.3.5. Conexión Local por Bluetooth
+## 6.3.5. Registros (Alarmas y Eventos)
+
+La pestaña **Registros** tiene dos subsecciones:
+
+* **Alarmas:** una lista de todos los eventos de alarma generados por ese **ISURLOG** en concreto (tipo, detalle, valor, fecha, estado leído/no leído).
+* **Eventos:** un registro de actividad del propio dispositivo — cambios de configuración, sensores añadidos/eliminados, conexiones REPL, cambios manuales de batería, etc. — con un botón **"Registrar evento manual"** para anotar algo a mano (p. ej. un cambio de batería durante una visita de campo).
+
+![Pestaña Registros de un dispositivo en IsurDASH: subsección Alarmas](images/7-device-registros-alarmas.png){width="1000"}
+
+*La pestaña Registros — subsección Alarmas.*
+
+## 6.3.6. Conexión Local por Bluetooth
 
 Además de la comunicación estándar por NB-IoT o LoRaWAN, el ISURLOG dispone de un modo de conexión local por **Bluetooth Low Energy (BLE)**. Esta funcionalidad resulta muy útil para tareas como la instalación, el mantenimiento o la calibración de sensores, ya que permite una interacción continua y en tiempo real con el dispositivo.
 
@@ -162,7 +169,7 @@ Para que el ISURLOG sea visible y se pueda conectar, el usuario debe activarlo m
 
 ### Paso 2: Iniciar la Conexión en IsurDASH
 
-1.  Desde la página de "**Visualización**" del dispositivo deseado, el usuario debe pulsar el botón "**Conectar BLE**", situado en la esquina superior derecha.
+1.  Desde la página de "**Visualización**" del dispositivo deseado, el usuario debe abrir el menú del **engranaje**, situado en la esquina superior derecha, y pulsar "**Conectar BLE**".
 2.  IsurDASH comenzará a buscar el ISURLOG con el número de serie correspondiente.
 3.  Una vez encontrado, aparece el propio aviso de emparejamiento Bluetooth del navegador (p. ej. "Isurlog-c-1178"); el usuario debe pulsar "**Emparejar**" para establecer la conexión.
 
@@ -184,4 +191,4 @@ Debajo, el área de gráficos (ahora etiquetada como **"Bluetooth Mode"**) repre
 
 *Gráfico de sensores en tiempo real en Bluetooth Mode, actualizándose cada pocos segundos.*
 
-Para finalizar la sesión, el usuario debe pulsar el botón "**Desconectar BLE**", que aparece en el mismo lugar que el botón de conexión. Al desconectarse, el ISURLOG apaga su radio Bluetooth y vuelve a su ciclo de funcionamiento normal programado.
+Para finalizar la sesión, el usuario debe pulsar "**Desconectar BLE**", que aparece en el mismo lugar que la opción de conexión. Al desconectarse, el ISURLOG apaga su radio Bluetooth y vuelve a su ciclo de funcionamiento normal programado.

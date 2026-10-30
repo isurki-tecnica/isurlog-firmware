@@ -20,7 +20,7 @@ Estos parámetros afectan al comportamiento global del datalogger.
 * **Descripción:** configura la tensión de alimentación entregada a los sensores a través de los terminales de presión marcados como **VDC**.
 * **Valores:** 9, 12, 18 o 24 V.
 
-### Modo de registro
+### Modo de envío
 
 * **Descripción:** determina la lógica que usa el **ISURLOG** para decidir cuándo debe transmitir los datos acumulados. Este parámetro es fundamental para la gestión de alarmas.
 * **Opciones:**
@@ -153,13 +153,13 @@ Esta sección permite configurar cualquiera de las **cuatro entradas analógicas
 * **Alarma de alto:**
     * **Descripción:** define el umbral numérico superior. Si el valor medido supera este umbral, se registra una alarma.
 * **Activar alarma de bajo:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar alarma de alto:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar condición de alarmas de bajo:**
-    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una **transmisión de datos inmediata** cuando el Modo de registro está configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una **transmisión de datos inmediata** cuando el Modo de envío está configurado como "**Condicional**".
 * **Activar condición de alarmas de alto:**
-    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una **transmisión inmediata** cuando el Modo de registro está configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una **transmisión inmediata** cuando el Modo de envío está configurado como "**Condicional**".
 
 ### Sensor Digital
 
@@ -189,13 +189,13 @@ Esta sección detalla la configuración de la entrada digital del **ISURLOG**. L
 * **Alarma de alto:**
     * **Descripción:** define el umbral numérico superior. Si el valor final medido supera este umbral, se registra una alarma.
 * **Activar alarma de bajo:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar alarma de alto:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar condición de alarmas de bajo:**
-    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una **transmisión de datos inmediata** cuando el Modo de registro está configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una **transmisión de datos inmediata** cuando el Modo de envío está configurado como "**Condicional**".
 * **Activar condición de alarmas de alto:**
-    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una **transmisión inmediata** cuando el Modo de registro está configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una **transmisión inmediata** cuando el Modo de envío está configurado como "**Condicional**".
 
 ### Entradas Modbus (RS485)
 
@@ -245,13 +245,13 @@ Esta sección permite configurar lecturas de dispositivos externos que utilizan 
 * **Alarma de alto:**
     * **Descripción:** define el umbral numérico superior. Si el valor final medido supera este umbral, se registra una alarma.
 * **Activar alarma de bajo:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar alarma de alto:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar condición de alarmas de bajo:**
-    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una **transmisión de datos inmediata** cuando el Modo de registro está configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una **transmisión de datos inmediata** cuando el Modo de envío está configurado como "**Condicional**".
 * **Activar condición de alarmas de alto:**
-    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una **transmisión inmediata** cuando el Modo de registro está configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una **transmisión inmediata** cuando el Modo de envío está configurado como "**Condicional**".
 
 ### Sensor de Temperatura PT100
 
@@ -277,13 +277,13 @@ Esta sección detalla los parámetros de configuración de la entrada para sonda
     * **Unidades:** grados Celsius (ºC).
 
 * **Activar alarma de bajo:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar alarma de alto:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar condición de alarmas de bajo:**
-    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una **transmisión de datos inmediata** cuando el Modo de registro está configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor bajo fuerza una **transmisión de datos inmediata** cuando el Modo de envío está configurado como "**Condicional**".
 * **Activar condición de alarmas de alto:**
-    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una **transmisión inmediata** cuando el Modo de registro está configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de valor alto fuerza una **transmisión inmediata** cuando el Modo de envío está configurado como "**Condicional**".
 
 ### Sensor de Temperatura y Humedad Interno (SHT30)
 
@@ -298,13 +298,13 @@ Estos parámetros configuran las alarmas para el sensor de temperatura y humedad
     * **Descripción:** define el umbral máximo de temperatura. Si la temperatura medida supera este valor, se registra un evento de alarma.
     * **Unidades:** grados Celsius (ºC).
 * **Activar alarma de bajo de temperatura:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar alarma de alto de temperatura:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar condición de alarmas de bajo de temperatura:**
-    * **Descripción:** campo de tipo casilla (activado/desactivado). Si se activa, una alarma de baja temperatura contribuye a la condición general de alarma que fuerza una **transmisión inmediata** cuando el Modo de registro está configurado como "**Condicional**". Si está desactivada, el evento de alarma es solo informativo.
+    * **Descripción:** campo de tipo casilla (activado/desactivado). Si se activa, una alarma de baja temperatura contribuye a la condición general de alarma que fuerza una **transmisión inmediata** cuando el Modo de envío está configurado como "**Condicional**". Si está desactivada, el evento de alarma es solo informativo.
 * **Activar condición de alarmas de alto de temperatura:**
-    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de alta temperatura fuerza una **transmisión inmediata** con el Modo de registro configurado como "**Condicional**". Si está desactivada, la alarma es solo informativa.
+    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de alta temperatura fuerza una **transmisión inmediata** con el Modo de envío configurado como "**Condicional**". Si está desactivada, la alarma es solo informativa.
 
 #### Parámetros de Humedad
 
@@ -315,13 +315,13 @@ Estos parámetros configuran las alarmas para el sensor de temperatura y humedad
     * **Descripción:** define el umbral máximo de humedad relativa. Si la humedad medida supera este valor, se registra un evento de alarma.
     * **Unidades:** porcentaje de humedad relativa (%RH).
 * **Activar alarma de bajo de humedad:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar alarma de alto de humedad:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar condición de alarmas de bajo de humedad:**
-    * **Descripción:** campo de tipo casilla. Cuando se activa, una alarma de humedad baja fuerza una **transmisión inmediata** con el Modo de registro configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Cuando se activa, una alarma de humedad baja fuerza una **transmisión inmediata** con el Modo de envío configurado como "**Condicional**".
 * **Activar condición de alarmas de alto de humedad:**
-    * **Descripción:** campo de tipo casilla. Cuando se activa, una alarma de humedad alta fuerza una **transmisión inmediata** con el Modo de registro configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Cuando se activa, una alarma de humedad alta fuerza una **transmisión inmediata** con el Modo de envío configurado como "**Condicional**".
 
 ### Sensor de Temperatura y Humedad Externo (BME280)
 
@@ -336,13 +336,13 @@ Estos parámetros configuran las alarmas para el sensor de temperatura y humedad
     * **Descripción:** define el umbral máximo de temperatura. Si la temperatura medida supera este valor, se registra un evento de alarma.
     * **Unidades:** grados Celsius (ºC).
 * **Activar alarma de bajo de temperatura:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar alarma de alto de temperatura:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar condición de alarmas de bajo de temperatura:**
-    * **Descripción:** campo de tipo casilla (activado/desactivado). Si se activa, una alarma de baja temperatura contribuye a la condición general de alarma que fuerza una **transmisión inmediata** cuando el Modo de registro está configurado como "**Condicional**". Si está desactivada, el evento de alarma es solo informativo.
+    * **Descripción:** campo de tipo casilla (activado/desactivado). Si se activa, una alarma de baja temperatura contribuye a la condición general de alarma que fuerza una **transmisión inmediata** cuando el Modo de envío está configurado como "**Condicional**". Si está desactivada, el evento de alarma es solo informativo.
 * **Activar condición de alarmas de alto de temperatura:**
-    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de alta temperatura fuerza una **transmisión inmediata** con el Modo de registro configurado como "**Condicional**". Si está desactivada, la alarma es solo informativa.
+    * **Descripción:** campo de tipo casilla. Si se activa, una alarma de alta temperatura fuerza una **transmisión inmediata** con el Modo de envío configurado como "**Condicional**". Si está desactivada, la alarma es solo informativa.
 
 #### Parámetros de Humedad
 
@@ -353,13 +353,13 @@ Estos parámetros configuran las alarmas para el sensor de temperatura y humedad
     * **Descripción:** define el umbral máximo de humedad relativa. Si la humedad medida supera este valor, se registra un evento de alarma.
     * **Unidades:** porcentaje de humedad relativa (%RH).
 * **Activar alarma de bajo de humedad:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar alarma de alto de humedad:**
-    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+    * **Descripción:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Activar condición de alarmas de bajo de humedad:**
-    * **Descripción:** campo de tipo casilla. Cuando se activa, una alarma de humedad baja fuerza una **transmisión inmediata** con el Modo de registro configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Cuando se activa, una alarma de humedad baja fuerza una **transmisión inmediata** con el Modo de envío configurado como "**Condicional**".
 * **Activar condición de alarmas de alto de humedad:**
-    * **Descripción:** campo de tipo casilla. Cuando se activa, una alarma de humedad alta fuerza una **transmisión inmediata** con el Modo de registro configurado como "**Condicional**".
+    * **Descripción:** campo de tipo casilla. Cuando se activa, una alarma de humedad alta fuerza una **transmisión inmediata** con el Modo de envío configurado como "**Condicional**".
 
 ### Acelerómetro Interno (LIS2DH12)
 
@@ -371,9 +371,9 @@ Esta sección configura umbrales de alarma independientes para cada uno de los t
 Los mismos cuatro parámetros se repiten por eje (**X**, **Y**, **Z**):
 
 * **Alarma de bajo eje X/Y/Z:** define el umbral inferior de aceleración (en g) para ese eje. Si el valor medido cae por debajo de este umbral, se registra una alarma.
-* **Activar alarma de bajo eje X/Y/Z:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+* **Activar alarma de bajo eje X/Y/Z:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 * **Alarma de alto eje X/Y/Z:** define el umbral superior de aceleración (en g) para ese eje. Si el valor medido supera este umbral, se registra una alarma.
-* **Activar alarma de alto eje X/Y/Z:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de registro "Condicional".
+* **Activar alarma de alto eje X/Y/Z:** campo de tipo casilla. Si se activa, el sistema envía una notificación de alarma a través de las opciones de mensajería configuradas (SMS, Telegram, Email), además de registrar la alarma en la plataforma. Esto es independiente de la transmisión por Modo de envío "Condicional".
 
 !!! note "🚧 Próximamente"
-    El firmware ya soporta forzar una transmisión inmediata a partir de una alarma de eje cuando el Modo de registro está en "Condicional" (el mismo comportamiento de **Activar Condición de Alarma** disponible para el resto de sensores), pero esta opción **todavía no está expuesta en IsurDASH** para los ejes del acelerómetro. Estará disponible en una futura actualización de la plataforma.
+    El firmware ya soporta forzar una transmisión inmediata a partir de una alarma de eje cuando el Modo de envío está en "Condicional" (el mismo comportamiento de **Activar Condición de Alarma** disponible para el resto de sensores), pero esta opción **todavía no está expuesta en IsurDASH** para los ejes del acelerómetro. Estará disponible en una futura actualización de la plataforma.

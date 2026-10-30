@@ -37,6 +37,9 @@ This section provides the mapping between the physical and virtual inputs of the
 | **Analog Input 2** | `AnalogInput2` | The measurement in engineering units as configured in IsurDASH. |
 | **Analog Input 3** | `AnalogInput3` | The measurement in engineering units as configured in IsurDASH. |
 | **Digital Input 0** | `DigitalInput0` | Depends on IsurDASH configuration: a numeric value for pulse counting or a binary state (0 for open, 1 for closed). |
+| **Digital Input 1** | `DigitalInput1` | Binary state only: 0 for open, 1 for closed. |
+| **Digital Input 2** | `DigitalInput2` | Binary state only: 0 for open, 1 for closed. |
+| **Digital Input 3** | `DigitalInput3` | Binary state only: 0 for open, 1 for closed. |
 | **Modbus Virtual 0** | `ModbusInput0` | The measurement in engineering units as configured in IsurDASH. |
 | **Modbus Virtual 1** | `ModbusInput1` | The measurement in engineering units as configured in IsurDASH. |
 | **Modbus Virtual 2** | `ModbusInput2` | The measurement in engineering units as configured in IsurDASH. |

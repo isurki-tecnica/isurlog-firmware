@@ -61,10 +61,11 @@ plugins:
             "6.2. Dashboard": "6.2. Dashboard"
             "6.3. Devices": "6.3. Dispositivos"
             "6.4. Alarms": "6.4. Alarmas"
-            "6.5. Users": "6.5. Usuarios"
-            "6.6. Profiles": "6.6. Perfiles"
-            "6.7. Tags": "6.7. Tags"
-            "6.8. Device Maintenance": "6.8. Mantenimiento de Dispositivos"
+            "6.5. Event Log": "6.5. Registro de Eventos"
+            "6.6. Users": "6.6. Usuarios"
+            "6.7. Profiles": "6.7. Perfiles"
+            "6.8. Tags": "6.8. Tags"
+            "6.9. Device Maintenance": "6.9. Mantenimiento de Dispositivos"
             "7. Reference Configuration Parameters": "7. Referencia de Parámetros de Configuración"
             "💻 Module B - Firmware Development": "💻 Módulo B - Desarrollo de Firmware"
             "1. Build Environment Setup": "1. Configuración del Entorno de Compilación"
@@ -104,10 +105,11 @@ nav:
           - 6.2. Dashboard: isurdash-dashboard.md
           - 6.3. Devices: isurdash-devices.md
           - 6.4. Alarms: isurdash-alarms.md
-          - 6.5. Users: isurdash-users.md
-          - 6.6. Profiles: isurdash-profiles.md
-          - 6.7. Tags: isurdash-tags.md
-          - 6.8. Device Maintenance: isurdash-maintenance.md
+          - 6.5. Event Log: isurdash-events.md
+          - 6.6. Users: isurdash-users.md
+          - 6.7. Profiles: isurdash-profiles.md
+          - 6.8. Tags: isurdash-tags.md
+          - 6.9. Device Maintenance: isurdash-maintenance.md
       - 7. Reference Configuration Parameters: reference-parameters.md
   - 💻 Module B - Firmware Development:
       - 1. Build Environment Setup: build-environment.md

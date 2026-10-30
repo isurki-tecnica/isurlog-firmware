@@ -22,7 +22,7 @@ Next to the map, a panel with three tabs gives quick access to what needs attent
 
 ## Fleet Summary and Charts
 
-Below the map, three tabs give access to different information: **Resumen**, **Novedades**, and **Soporte**.
+Below the map, four tabs give access to different information: **Resumen**, **Novedades IsurDash**, **Novedades Isurlog**, and **Soporte**.
 
 The **Resumen** tab shows an instant summary of the fleet's status:
 
@@ -40,4 +40,10 @@ Below the numeric summary, two charts are shown:
 
 *The Resumen tab — fleet numbers and charts.*
 
-The **Novedades** tab lists what's new in IsurDASH, release by release.
+The **Novedades IsurDash** tab lists what's new in the IsurDASH platform, release by release.
+
+The **Novedades Isurlog** tab does the same for the ISURLOG firmware. Every published version is listed with its improvements and changes, and marked **Actual** (the current release) or **Pre-release**. Older versions are under **Mostrar versiones anteriores**.
+
+![IsurDASH Dashboard Novedades Isurlog tab: published firmware versions with their changes](images/7-dashboard-novedades-isurlog.png){width="1000"}
+
+*The Novedades Isurlog tab — every published firmware version, with its changes.*

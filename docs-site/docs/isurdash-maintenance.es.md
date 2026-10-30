@@ -1,6 +1,6 @@
 *Parte de [6. Plataforma IsurDASH](isurdash-platform.md).*
 
-# 6.8. Mantenimiento de Dispositivos
+# 6.9. Mantenimiento de Dispositivos
 
 El menú "**Mantenimiento de dispositivos**" enumera todos los ISURLOG (ID, nombre, versión de firmware actual) junto con una fila de acciones de mantenimiento para cada dispositivo:
 
@@ -38,9 +38,9 @@ Tras elegir un método, se selecciona qué versión de firmware instalar. El lis
 
 ## MicroPython REPL
 
-Al pulsar **MicroPython REPL** se conecta con la consola de MicroPython en vivo del dispositivo (ver `remote_repl.py` en el firmware) para ejecutar comandos, inspeccionar el estado, o depurar. Es el mismo botón **REPL** disponible en la propia página de un dispositivo (ver [6.3.3](isurdash-devices.md#633-visualizacion-y-estado-del-dispositivo)) — este apartado describe qué hace.
+Al pulsar **MicroPython REPL** se conecta con la consola de MicroPython en vivo del dispositivo (ver `remote_repl.py` en el firmware) para ejecutar comandos, inspeccionar el estado, o depurar. Es la misma opción **REPL** disponible en el menú del engranaje de la propia página de un dispositivo (ver [6.3.3](isurdash-devices.md#633-visualizacion-y-estado-del-dispositivo)) — este apartado describe qué hace.
 
-Al igual que con las actualizaciones de firmware, hay dos métodos de conexión — **el REPL nunca está disponible por Bluetooth**; la conexión Bluetooth (ver [6.3.5](isurdash-devices.md#635-conexion-local-por-bluetooth)) es solo para visualización de sensores en tiempo real y configuración local, no para el REPL:
+Al igual que con las actualizaciones de firmware, hay dos métodos de conexión — **el REPL nunca está disponible por Bluetooth**; la conexión Bluetooth (ver [6.3.6](isurdash-devices.md#636-conexion-local-por-bluetooth)) es solo para visualización de sensores en tiempo real y configuración local, no para el REPL:
 
 * **Remoto:** disponible en **cualquier** versión de ISURLOG, pero solo para dispositivos con módem **NB-IoT o Wi-Fi** — los dispositivos LoRa no soportan REPL remoto.
 * **Serial port (USB):** disponible para **todos** los dispositivos, independientemente del módem, mediante una conexión por cable.
