@@ -28,7 +28,7 @@
     
     
       
-        <title>6.8. Mantenimiento de Dispositivos - ISURLOG Docs</title>
+        <title>6.9. Mantenimiento de Dispositivos - ISURLOG Docs</title>
       
     
     
@@ -99,7 +99,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#68-mantenimiento-de-dispositivos" class="md-skip">
+        <a href="#69-mantenimiento-de-dispositivos" class="md-skip">
           Saltar a contenido
         </a>
       
@@ -135,7 +135,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              6.8. Mantenimiento de Dispositivos
+              6.9. Mantenimiento de Dispositivos
             
           </span>
         </div>
@@ -588,6 +588,8 @@
       
         
       
+        
+      
     
     
     
@@ -775,6 +777,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../isurdash-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Registro de Eventos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../isurdash-users/" class="md-nav__link">
         
   
@@ -782,7 +812,7 @@
   <span class="md-ellipsis">
     
   
-    6.5. Usuarios
+    6.6. Usuarios
   
 
     
@@ -810,7 +840,7 @@
   <span class="md-ellipsis">
     
   
-    6.6. Perfiles
+    6.7. Perfiles
   
 
     
@@ -838,7 +868,7 @@
   <span class="md-ellipsis">
     
   
-    6.7. Tags
+    6.8. Tags
   
 
     
@@ -875,7 +905,7 @@
   <span class="md-ellipsis">
     
   
-    6.8. Mantenimiento de Dispositivos
+    6.9. Mantenimiento de Dispositivos
   
 
     
@@ -893,7 +923,7 @@
   <span class="md-ellipsis">
     
   
-    6.8. Mantenimiento de Dispositivos
+    6.9. Mantenimiento de Dispositivos
   
 
     
@@ -1878,7 +1908,7 @@
 
 
 <p><em>Parte de <a href="../isurdash-platform/">6. Plataforma IsurDASH</a>.</em></p>
-<h1 id="68-mantenimiento-de-dispositivos">6.8. Mantenimiento de Dispositivos</h1>
+<h1 id="69-mantenimiento-de-dispositivos">6.9. Mantenimiento de Dispositivos</h1>
 <p>El menú "<strong>Mantenimiento de dispositivos</strong>" enumera todos los ISURLOG (ID, nombre, versión de firmware actual) junto con una fila de acciones de mantenimiento para cada dispositivo:</p>
 <ul>
 <li><strong>Actualización de firmware:</strong> actualiza el firmware del dispositivo (ver más abajo).</li>
@@ -1911,8 +1941,8 @@
 <p>Este flujo solo instala releases oficiales publicadas en GitHub. Si eres desarrollador de firmware y trabajas con un <code>firmware.bin</code> compilado localmente que (todavía) no es una release publicada, usa en su lugar el procedimiento de flasheo manual — ver <strong><a href="../flashing-application-upload/">3. Grabado del Firmware y Carga de la Aplicación</a></strong>.</p>
 </div>
 <h2 id="micropython-repl">MicroPython REPL</h2>
-<p>Al pulsar <strong>MicroPython REPL</strong> se conecta con la consola de MicroPython en vivo del dispositivo (ver <code>remote_repl.py</code> en el firmware) para ejecutar comandos, inspeccionar el estado, o depurar. Es el mismo botón <strong>REPL</strong> disponible en la propia página de un dispositivo (ver <a href="../isurdash-devices/#633-visualizacion-y-estado-del-dispositivo">6.3.3</a>) — este apartado describe qué hace.</p>
-<p>Al igual que con las actualizaciones de firmware, hay dos métodos de conexión — <strong>el REPL nunca está disponible por Bluetooth</strong>; la conexión Bluetooth (ver <a href="../isurdash-devices/#635-conexion-local-por-bluetooth">6.3.5</a>) es solo para visualización de sensores en tiempo real y configuración local, no para el REPL:</p>
+<p>Al pulsar <strong>MicroPython REPL</strong> se conecta con la consola de MicroPython en vivo del dispositivo (ver <code>remote_repl.py</code> en el firmware) para ejecutar comandos, inspeccionar el estado, o depurar. Es la misma opción <strong>REPL</strong> disponible en el menú del engranaje de la propia página de un dispositivo (ver <a href="../isurdash-devices/#633-visualizacion-y-estado-del-dispositivo">6.3.3</a>) — este apartado describe qué hace.</p>
+<p>Al igual que con las actualizaciones de firmware, hay dos métodos de conexión — <strong>el REPL nunca está disponible por Bluetooth</strong>; la conexión Bluetooth (ver <a href="../isurdash-devices/#636-conexion-local-por-bluetooth">6.3.6</a>) es solo para visualización de sensores en tiempo real y configuración local, no para el REPL:</p>
 <ul>
 <li><strong>Remoto:</strong> disponible en <strong>cualquier</strong> versión de ISURLOG, pero solo para dispositivos con módem <strong>NB-IoT o Wi-Fi</strong> — los dispositivos LoRa no soportan REPL remoto.</li>
 <li><strong>Serial port (USB):</strong> disponible para <strong>todos</strong> los dispositivos, independientemente del módem, mediante una conexión por cable.</li>

@@ -794,6 +794,8 @@
       
         
       
+        
+      
     
     
     
@@ -981,6 +983,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../isurdash-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Event Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../isurdash-users/" class="md-nav__link">
         
   
@@ -988,7 +1018,7 @@
   <span class="md-ellipsis">
     
   
-    6.5. Users
+    6.6. Users
   
 
     
@@ -1016,7 +1046,7 @@
   <span class="md-ellipsis">
     
   
-    6.6. Profiles
+    6.7. Profiles
   
 
     
@@ -1044,7 +1074,7 @@
   <span class="md-ellipsis">
     
   
-    6.7. Tags
+    6.8. Tags
   
 
     
@@ -1072,7 +1102,7 @@
   <span class="md-ellipsis">
     
   
-    6.8. Device Maintenance
+    6.9. Device Maintenance
   
 
     
@@ -2184,7 +2214,7 @@ The ISURLOG will wait for a maximum of <strong>2 minutes (120 seconds)</strong> 
 <h3 id="3-package-and-storage">3. Package and Storage</h3>
 <p>All data collected in the cycle are packaged in a compact format and are securely stored in the device's <strong>RAM memory</strong>. The <strong>ISURLOG</strong> keeps a count of how many records have been accumulated.</p>
 <h3 id="4-decision-transmit-or-sleep">4. Decision: Transmit or Sleep?</h3>
-<p>After storing the data, the <strong>ISURLOG</strong> decides whether to activate the modem to transmit the data to the cloud or whether it should return to sleep to continue accumulating records. This decision directly depends on the "<strong>Logging Mode</strong>" selected in the configuration:</p>
+<p>After storing the data, the <strong>ISURLOG</strong> decides whether to activate the modem to transmit the data to the cloud or whether it should return to sleep to continue accumulating records. This decision directly depends on the "<strong>Sending Mode</strong>" selected in the configuration:</p>
 <ul>
 <li><strong>Fixed Mode (Normal):</strong> The device prioritizes energy saving and data grouping. Transmission occurs <strong>only</strong> when the number of records defined in the "<strong>Record Accumulator</strong>" is reached. Alarm conditions are recorded in the data but do not force an immediate send.</li>
 <li><strong>Conditional Mode:</strong> The device prioritizes the notification of important events. Transmission occurs if <strong>either</strong> of the following conditions is met:<ol>

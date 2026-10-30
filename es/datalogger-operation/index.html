@@ -794,6 +794,8 @@
       
         
       
+        
+      
     
     
     
@@ -981,6 +983,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../isurdash-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Registro de Eventos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../isurdash-users/" class="md-nav__link">
         
   
@@ -988,7 +1018,7 @@
   <span class="md-ellipsis">
     
   
-    6.5. Usuarios
+    6.6. Usuarios
   
 
     
@@ -1016,7 +1046,7 @@
   <span class="md-ellipsis">
     
   
-    6.6. Perfiles
+    6.7. Perfiles
   
 
     
@@ -1044,7 +1074,7 @@
   <span class="md-ellipsis">
     
   
-    6.7. Tags
+    6.8. Tags
   
 
     
@@ -1072,7 +1102,7 @@
   <span class="md-ellipsis">
     
   
-    6.8. Mantenimiento de Dispositivos
+    6.9. Mantenimiento de Dispositivos
   
 
     
@@ -2184,7 +2214,7 @@ El ISURLOG esperará como máximo <strong>2 minutos (120 segundos)</strong> por 
 <h3 id="3-empaquetado-y-almacenamiento">3. Empaquetado y Almacenamiento</h3>
 <p>Todos los datos recogidos en el ciclo se empaquetan en un formato compacto y se almacenan de forma segura en la <strong>memoria RAM</strong> del dispositivo. El <strong>ISURLOG</strong> lleva un recuento de cuántos registros se han acumulado.</p>
 <h3 id="4-decision-transmitir-o-dormir">4. Decisión: ¿Transmitir o Dormir?</h3>
-<p>Tras almacenar los datos, el <strong>ISURLOG</strong> decide si activar el módem para transmitir los datos a la nube, o si debe volver a dormir para seguir acumulando registros. Esta decisión depende directamente del "<strong>Modo de registro</strong>" seleccionado en la configuración:</p>
+<p>Tras almacenar los datos, el <strong>ISURLOG</strong> decide si activar el módem para transmitir los datos a la nube, o si debe volver a dormir para seguir acumulando registros. Esta decisión depende directamente del "<strong>Modo de envío</strong>" seleccionado en la configuración:</p>
 <ul>
 <li><strong>Modo Fijo (Normal):</strong> el dispositivo prioriza el ahorro de energía y la agrupación de datos. La transmisión ocurre <strong>únicamente</strong> cuando se alcanza el número de registros definido en el "<strong>Acumulador de registros</strong>". Las condiciones de alarma quedan registradas en los datos, pero no fuerzan un envío inmediato.</li>
 <li><strong>Modo Condicional:</strong> el dispositivo prioriza la notificación de eventos importantes. La transmisión ocurre si se cumple <strong>cualquiera</strong> de las siguientes condiciones:<ol>

@@ -584,6 +584,8 @@
       
         
       
+        
+      
     
     
     
@@ -771,6 +773,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../isurdash-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Event Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../isurdash-users/" class="md-nav__link">
         
   
@@ -778,7 +808,7 @@
   <span class="md-ellipsis">
     
   
-    6.5. Users
+    6.6. Users
   
 
     
@@ -806,7 +836,7 @@
   <span class="md-ellipsis">
     
   
-    6.6. Profiles
+    6.7. Profiles
   
 
     
@@ -834,7 +864,7 @@
   <span class="md-ellipsis">
     
   
-    6.7. Tags
+    6.8. Tags
   
 
     
@@ -862,7 +892,7 @@
   <span class="md-ellipsis">
     
   
-    6.8. Device Maintenance
+    6.9. Device Maintenance
   
 
     
@@ -2255,7 +2285,7 @@ python<span class="w"> </span>-m<span class="w"> </span>esptool<span class="w"> 
 <p>This repository also contains the <code>app/</code> folder.</p>
 <div class="admonition note">
 <p class="admonition-title">app/ is not part of the firmware</p>
-<p>The contents of this folder (<code>main.py</code>, <code>config/</code>, etc.) are <strong>not</strong> compiled or frozen into the firmware binary — unlike <code>src/modules/</code> and <code>src/lib/</code>, which are. These files are the Python application logic, and get deployed onto the device's filesystem separately, after flashing the firmware: either through <strong>IsurDASH's own guided updater</strong> (the recommended path — see <a href="../isurdash-maintenance/#firmware-update">6.8 Device Maintenance</a>), or manually with a tool like Thonny or rshell. This split is what lets the application logic be updated in the field without ever needing to reflash the firmware itself.</p>
+<p>The contents of this folder (<code>main.py</code>, <code>config/</code>, etc.) are <strong>not</strong> compiled or frozen into the firmware binary — unlike <code>src/modules/</code> and <code>src/lib/</code>, which are. These files are the Python application logic, and get deployed onto the device's filesystem separately, after flashing the firmware: either through <strong>IsurDASH's own guided updater</strong> (the recommended path — see <a href="../isurdash-maintenance/#firmware-update">6.9 Device Maintenance</a>), or manually with a tool like Thonny or rshell. This split is what lets the application logic be updated in the field without ever needing to reflash the firmware itself.</p>
 </div>
 
 

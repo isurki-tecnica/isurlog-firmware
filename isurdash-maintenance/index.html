@@ -28,7 +28,7 @@
     
     
       
-        <title>6.8. Device Maintenance - ISURLOG Docs</title>
+        <title>6.9. Device Maintenance - ISURLOG Docs</title>
       
     
     
@@ -99,7 +99,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#68-device-maintenance" class="md-skip">
+        <a href="#69-device-maintenance" class="md-skip">
           Skip to content
         </a>
       
@@ -135,7 +135,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              6.8. Device Maintenance
+              6.9. Device Maintenance
             
           </span>
         </div>
@@ -588,6 +588,8 @@
       
         
       
+        
+      
     
     
     
@@ -775,6 +777,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../isurdash-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Event Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../isurdash-users/" class="md-nav__link">
         
   
@@ -782,7 +812,7 @@
   <span class="md-ellipsis">
     
   
-    6.5. Users
+    6.6. Users
   
 
     
@@ -810,7 +840,7 @@
   <span class="md-ellipsis">
     
   
-    6.6. Profiles
+    6.7. Profiles
   
 
     
@@ -838,7 +868,7 @@
   <span class="md-ellipsis">
     
   
-    6.7. Tags
+    6.8. Tags
   
 
     
@@ -875,7 +905,7 @@
   <span class="md-ellipsis">
     
   
-    6.8. Device Maintenance
+    6.9. Device Maintenance
   
 
     
@@ -893,7 +923,7 @@
   <span class="md-ellipsis">
     
   
-    6.8. Device Maintenance
+    6.9. Device Maintenance
   
 
     
@@ -1878,7 +1908,7 @@
 
 
 <p><em>Part of <a href="../isurdash-platform/">6. IsurDASH Platform</a>.</em></p>
-<h1 id="68-device-maintenance">6.8. Device Maintenance</h1>
+<h1 id="69-device-maintenance">6.9. Device Maintenance</h1>
 <p>The "<strong>Mantenimiento de dispositivos</strong>" menu lists every ISURLOG (ID, name, current firmware version) alongside a row of maintenance actions for each device:</p>
 <ul>
 <li><strong>Actualización de firmware:</strong> update the device's firmware (see below).</li>
@@ -1911,8 +1941,8 @@
 <p>This flow only installs official releases published on GitHub. If you're a firmware developer working from a locally-built <code>firmware.bin</code> that isn't (yet) a published release, use the manual flashing procedure instead — see <strong><a href="../flashing-application-upload/">3. Flashing and Application Upload</a></strong>.</p>
 </div>
 <h2 id="micropython-repl">MicroPython REPL</h2>
-<p>Clicking <strong>MicroPython REPL</strong> connects you to the device's live MicroPython console (see <code>remote_repl.py</code> in the firmware) to run commands, inspect state, or debug. It's the same <strong>REPL</strong> button available on a device's own page (see <a href="../isurdash-devices/#633-device-visualization-and-status">6.3.3</a>) — this section describes what it does.</p>
-<p>As with firmware updates, there are two connection methods — <strong>the REPL is never available over Bluetooth</strong>; the Bluetooth connection (see <a href="../isurdash-devices/#635-local-bluetooth-connection">6.3.5</a>) is only for real-time sensor visualization and local configuration, not for the REPL:</p>
+<p>Clicking <strong>MicroPython REPL</strong> connects you to the device's live MicroPython console (see <code>remote_repl.py</code> in the firmware) to run commands, inspect state, or debug. It's the same <strong>REPL</strong> option available in the gear menu on a device's own page (see <a href="../isurdash-devices/#633-device-visualization-and-status">6.3.3</a>) — this section describes what it does.</p>
+<p>As with firmware updates, there are two connection methods — <strong>the REPL is never available over Bluetooth</strong>; the Bluetooth connection (see <a href="../isurdash-devices/#636-local-bluetooth-connection">6.3.6</a>) is only for real-time sensor visualization and local configuration, not for the REPL:</p>
 <ul>
 <li><strong>Remoto:</strong> available on <strong>any</strong> ISURLOG version, but only for devices with an <strong>NB-IoT or Wi-Fi</strong> modem — LoRa devices don't support remote REPL.</li>
 <li><strong>Serial port (USB):</strong> available for <strong>all</strong> devices regardless of modem, over a wired connection.</li>

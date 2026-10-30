@@ -28,7 +28,7 @@
     
     
       
-        <title>6.6. Profiles - ISURLOG Docs</title>
+        <title>6.7. Profiles - ISURLOG Docs</title>
       
     
     
@@ -99,7 +99,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#66-profiles" class="md-skip">
+        <a href="#67-profiles" class="md-skip">
           Skip to content
         </a>
       
@@ -135,7 +135,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              6.6. Profiles
+              6.7. Profiles
             
           </span>
         </div>
@@ -588,6 +588,8 @@
       
         
       
+        
+      
     
     
     
@@ -775,6 +777,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../isurdash-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6.5. Event Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../isurdash-users/" class="md-nav__link">
         
   
@@ -782,7 +812,7 @@
   <span class="md-ellipsis">
     
   
-    6.5. Users
+    6.6. Users
   
 
     
@@ -819,7 +849,7 @@
   <span class="md-ellipsis">
     
   
-    6.6. Profiles
+    6.7. Profiles
   
 
     
@@ -837,7 +867,7 @@
   <span class="md-ellipsis">
     
   
-    6.6. Profiles
+    6.7. Profiles
   
 
     
@@ -863,10 +893,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#661-profile-list" class="md-nav__link">
+  <a href="#671-profile-list" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.6.1. Profile List
+        6.7.1. Profile List
       
     </span>
   </a>
@@ -874,10 +904,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#662-create-a-new-profile" class="md-nav__link">
+  <a href="#672-create-a-new-profile" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.6.2. Create a New Profile
+        6.7.2. Create a New Profile
       
     </span>
   </a>
@@ -885,10 +915,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#663-manage-and-apply-a-profile" class="md-nav__link">
+  <a href="#673-manage-and-apply-a-profile" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.6.3. Manage and Apply a Profile
+        6.7.3. Manage and Apply a Profile
       
     </span>
   </a>
@@ -918,7 +948,7 @@
   <span class="md-ellipsis">
     
   
-    6.7. Tags
+    6.8. Tags
   
 
     
@@ -946,7 +976,7 @@
   <span class="md-ellipsis">
     
   
-    6.8. Device Maintenance
+    6.9. Device Maintenance
   
 
     
@@ -1847,10 +1877,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#661-profile-list" class="md-nav__link">
+  <a href="#671-profile-list" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.6.1. Profile List
+        6.7.1. Profile List
       
     </span>
   </a>
@@ -1858,10 +1888,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#662-create-a-new-profile" class="md-nav__link">
+  <a href="#672-create-a-new-profile" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.6.2. Create a New Profile
+        6.7.2. Create a New Profile
       
     </span>
   </a>
@@ -1869,10 +1899,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#663-manage-and-apply-a-profile" class="md-nav__link">
+  <a href="#673-manage-and-apply-a-profile" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.6.3. Manage and Apply a Profile
+        6.7.3. Manage and Apply a Profile
       
     </span>
   </a>
@@ -1900,7 +1930,7 @@
 
 
 <p><em>Part of <a href="../isurdash-platform/">6. IsurDASH Platform</a>.</em></p>
-<h1 id="66-profiles">6.6. Profiles</h1>
+<h1 id="67-profiles">6.7. Profiles</h1>
 <p>To facilitate the management and configuration of multiple <strong>ISURLOG</strong> dataloggers, the IsurDASH platform incorporates a powerful <strong>Profiles</strong> functionality.</p>
 <p>A profile is a configuration template that groups a set of parameters and sensors. This way, if the user needs to deploy several <strong>ISURLOGs</strong> with an identical or very similar configuration (for example, to measure temperature at different points or for a group of tide gauges), it is not necessary to configure each device individually. A single profile can be created and applied to multiple <strong>ISURLOGs</strong> in a single action.</p>
 <p>Furthermore, a profile can be used as a base configuration. It is possible to apply a profile to a device and subsequently access the configuration of that specific <strong>ISURLOG</strong> to make small individual adjustments.</p>
@@ -1908,7 +1938,7 @@
 <p class="admonition-title">Note on firmware compatibility</p>
 <p>IsurDASH shows the configurable parameters for the <strong>latest</strong> ISURLOG firmware version. When a profile is applied to a specific datalogger, some of those parameters may not be supported by that device's actual firmware version — in that case, the unsupported parameter is simply <strong>discarded</strong> for that device, while the rest of the profile is applied normally.</p>
 </div>
-<h2 id="661-profile-list">6.6.1. Profile List</h2>
+<h2 id="671-profile-list">6.7.1. Profile List</h2>
 <p>Upon accessing the "<strong>Profiles</strong>" menu, a list of all configuration templates that have been created is presented. The table displays the following information:</p>
 <table>
 <thead>
@@ -1923,8 +1953,8 @@
 <td style="text-align: left;">The identifying name of the template.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Modo de registro</strong></td>
-<td style="text-align: left;">The device's logging mode for this profile (e.g. "Fijo").</td>
+<td style="text-align: left;"><strong>Modo de envío</strong></td>
+<td style="text-align: left;">The device's sending mode for this profile (e.g. "Fijo").</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Número de sensores del perfil</strong></td>
@@ -1938,7 +1968,7 @@
 </table>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/7-profiles-list.png" data-desc-position="bottom"><img alt="IsurDASH Profiles list" src="../images/7-profiles-list.png" width="1000"></a></p>
 <p><em>The Profiles list.</em></p>
-<h2 id="662-create-a-new-profile">6.6.2. Create a New Profile</h2>
+<h2 id="672-create-a-new-profile">6.7.2. Create a New Profile</h2>
 <p>To create a new configuration template, the user (with the <strong>Ingeniero</strong> role) must follow these steps:</p>
 <ol>
 <li><strong>Initiate Creation:</strong> Click on the blue button with the add symbol (<strong>+</strong>), located in the upper right corner.</li>
@@ -1947,16 +1977,16 @@
 <li><strong>Nombre de perfil</strong></li>
 <li><strong>Tiempo de latencia</strong></li>
 <li><strong>Sincronización RTC</strong></li>
-<li><strong>Modo de registro</strong></li>
+<li><strong>Modo de envío</strong></li>
 <li><strong>Acumulador de registros</strong></li>
 </ul>
 </li>
 </ol>
 <p>Upon saving, a base profile will be created which, initially, contains <strong>no sensor configuration</strong>.</p>
-<h2 id="663-manage-and-apply-a-profile">6.6.3. Manage and Apply a Profile</h2>
+<h2 id="673-manage-and-apply-a-profile">6.7.3. Manage and Apply a Profile</h2>
 <p>By clicking on a profile already created in the list, the user accesses its detailed management screen — organized the same way as a device's Configuration tab, with <strong>Configuración general</strong> and <strong>Sensores</strong> in a left-hand sub-menu. From here, two main actions can be performed:</p>
 <ol>
-<li><strong>Configure the profile itself:</strong> edit its general parameters (latency, sensor power voltage, logging mode, payload size, record accumulator, RTC sync, vandalism alarm) and add the sensors (digital, analog, Modbus inputs, etc.) that devices using this profile should read.</li>
+<li><strong>Configure the profile itself:</strong> edit its general parameters (latency, sensor power voltage, sending mode, payload size, record accumulator, RTC sync, vandalism alarm) and add the sensors (digital, analog, Modbus inputs, etc.) that devices using this profile should read.</li>
 <li><strong>"Aplicar perfil a varios dispositivos":</strong> selects one or more <strong>ISURLOGs</strong> from the fleet to massively apply this complete configuration template.</li>
 </ol>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/7-profile-manage.png" data-desc-position="bottom"><img alt="IsurDASH Profile management screen" src="../images/7-profile-manage.png" width="1000"></a></p>
