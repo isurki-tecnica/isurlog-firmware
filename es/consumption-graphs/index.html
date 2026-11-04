@@ -1587,6 +1587,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#reposo-profundo-wi-fi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reposo Profundo — Wi-Fi
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1936,6 +1947,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#reposo-profundo-wi-fi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reposo Profundo — Wi-Fi
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1964,7 +1986,7 @@
 <h1 id="1-graficos-de-consumo">1. Gráficos de Consumo</h1>
 <p>Capturas reales de corriente frente a tiempo que muestran lo que cuesta realmente cada parte del ciclo de trabajo — un complemento a la <a href="../power-budget/">Calculadora de Consumo de Energía y Vida de la Batería</a>, basada en mediciones reales en vez de estimaciones. Esta página crece con el tiempo, a medida que hay nuevas capturas disponibles.</p>
 <h2 id="11-metodo-de-medicion">1.1 Método de Medición</h2>
-<p><strong>Equipo.</strong> El consumo de corriente del ISURLOG abarca un rango muy amplio — desde unos 20µA en reposo profundo hasta más de 0,5A durante una ráfaga de transmisión — así que un multímetro normal no puede seguir con precisión ambos extremos de ese rango. Se necesita un medidor con <strong>autorrango</strong>. Las capturas de esta página usan el <strong>Nordic Power Profiler Kit II (PPK2)</strong>, con su aplicación <strong>Power Profiler</strong> para nRF Connect for Desktop, pero cualquier medidor de corriente con autorrango es válido — la elección se deja al lector.</p>
+<p><strong>Equipo.</strong> El consumo de corriente del ISURLOG abarca un rango muy amplio — desde unos 30µA en reposo profundo (según la variante del modelo) hasta más de 0,5A durante una ráfaga de transmisión — así que un multímetro normal no puede seguir con precisión ambos extremos de ese rango. Se necesita un medidor con <strong>autorrango</strong>. Las capturas de esta página usan el <strong>Nordic Power Profiler Kit II (PPK2)</strong>, con su aplicación <strong>Power Profiler</strong> para nRF Connect for Desktop, pero cualquier medidor de corriente con autorrango es válido — la elección se deja al lector.</p>
 <p><strong>Cableado — el jumper I_SENSE.</strong> Toda la corriente de la batería pasa por el jumper <strong>I_SENSE</strong> (ver <a href="../power-supply/">2.2. Configuración de Jumpers para los Modos de Alimentación</a>). En funcionamiento normal permanece <strong>cerrado</strong> (en cortocircuito). Para medir el consumo:</p>
 <ol>
 <li>Abrir/retirar el jumper I_SENSE.</li>
@@ -2022,9 +2044,18 @@
 <p class="admonition-title">Los picos periódicos</p>
 <p>Misma causa que en la captura de NB-IoT de arriba: el propio regulador de alimentación de la placa pasando a un modo de funcionamiento pulsado de bajo consumo con carga muy ligera, disparando pulsos breves de corriente para recargar su condensador de salida. No es algo que hagan el ESP32 o el módem.</p>
 </div>
+<h3 id="reposo-profundo-wi-fi">Reposo Profundo — Wi-Fi</h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../images/deep-sleep-wifi.png" data-desc-position="bottom"><img alt="Corriente en reposo profundo — Wi-Fi" src="../../images/deep-sleep-wifi.png"></a></p>
+<p><em>Consumo de corriente en reposo profundo, Wi-Fi, ventana de 10 segundos.</em></p>
+<p>Capturado con el PPK2 en modo amperímetro, 1000 muestras/segundo, en una ventana de 10 segundos:</p>
+<ul>
+<li><strong>Media:</strong> 31,88 µA</li>
+<li><strong>Pico:</strong> 720,51 µA (picos cortos periódicos visibles en la traza)</li>
+<li><strong>Ventana:</strong> 10,00 s · <strong>Carga:</strong> 318,84 µC</li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">🚧 Próximamente</p>
-<p>Reposo Profundo — Wi-Fi, Despertar + Lectura de Sensores, y una captura del ciclo de transmisión para cada opción de conectividad.</p>
+<p>Despertar + Lectura de Sensores, y una captura del ciclo de transmisión para cada opción de conectividad.</p>
 </div>
 
 

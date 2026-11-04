@@ -1587,6 +1587,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#deep-sleep-wi-fi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Sleep — Wi-Fi
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1936,6 +1947,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#deep-sleep-wi-fi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Sleep — Wi-Fi
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1964,7 +1986,7 @@
 <h1 id="1-consumption-graphs">1. Consumption Graphs</h1>
 <p>Real current-vs-time captures showing what each part of the duty cycle actually costs — a companion to the <a href="../power-budget/">Power Budget &amp; Battery Life Calculator</a>, grounded in measurement instead of estimates. This page grows over time as new captures become available.</p>
 <h2 id="11-measurement-method">1.1 Measurement Method</h2>
-<p><strong>Equipment.</strong> ISURLOG's current draw spans a very wide range — roughly 20µA in deep sleep up to 0.5A+ during a transmit burst — so a regular multimeter can't track both ends of that swing accurately. A meter with <strong>autoranging</strong> is required. Captures on this page use the <strong>Nordic Power Profiler Kit II (PPK2)</strong>, with its <strong>Power Profiler</strong> app for nRF Connect for Desktop, but any autoranging current meter is valid — the choice is left to the reader.</p>
+<p><strong>Equipment.</strong> ISURLOG's current draw spans a very wide range — from roughly 30µA in deep sleep (depending on the model variant) up to 0.5A+ during a transmit burst — so a regular multimeter can't track both ends of that swing accurately. A meter with <strong>autoranging</strong> is required. Captures on this page use the <strong>Nordic Power Profiler Kit II (PPK2)</strong>, with its <strong>Power Profiler</strong> app for nRF Connect for Desktop, but any autoranging current meter is valid — the choice is left to the reader.</p>
 <p><strong>Wiring — the I_SENSE jumper.</strong> All battery current passes through the <strong>I_SENSE</strong> jumper (see <a href="../power-supply/">2.2. Jumper Configuration for Power Modes</a>). In normal operation it stays <strong>closed</strong> (shorted). To measure consumption:</p>
 <ol>
 <li>Open/remove the I_SENSE jumper.</li>
@@ -2022,9 +2044,18 @@
 <p class="admonition-title">The periodic spikes</p>
 <p>Same cause as the NB-IoT capture above: the board's own power regulator switching into a pulsed low-power operating mode at very light load, firing brief current pulses to top up its output capacitor. Not the ESP32 or modem doing anything.</p>
 </div>
+<h3 id="deep-sleep-wi-fi">Deep Sleep — Wi-Fi</h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/deep-sleep-wifi.png" data-desc-position="bottom"><img alt="Deep sleep current — Wi-Fi" src="../images/deep-sleep-wifi.png"></a></p>
+<p><em>Deep sleep current draw, Wi-Fi, 10-second window.</em></p>
+<p>Captured with the PPK2 in Ampere meter mode, 1,000 samples/second, over a 10-second window:</p>
+<ul>
+<li><strong>Average:</strong> 31.88 µA</li>
+<li><strong>Peak:</strong> 720.51 µA (periodic short spikes visible in the trace)</li>
+<li><strong>Window:</strong> 10.00 s · <strong>Charge:</strong> 318.84 µC</li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">🚧 Coming soon</p>
-<p>Deep Sleep — Wi-Fi, Wake + Sensor Read, and a transmission-cycle capture for each connectivity option.</p>
+<p>Wake + Sensor Read, and a transmission-cycle capture for each connectivity option.</p>
 </div>
 
 
