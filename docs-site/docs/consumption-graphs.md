@@ -4,7 +4,7 @@ Real current-vs-time captures showing what each part of the duty cycle actually 
 
 ## 1.1 Measurement Method
 
-**Equipment.** ISURLOG's current draw spans a very wide range — roughly 20µA in deep sleep up to 0.5A+ during a transmit burst — so a regular multimeter can't track both ends of that swing accurately. A meter with **autoranging** is required. Captures on this page use the **Nordic Power Profiler Kit II (PPK2)**, with its **Power Profiler** app for nRF Connect for Desktop, but any autoranging current meter is valid — the choice is left to the reader.
+**Equipment.** ISURLOG's current draw spans a very wide range — from roughly 30µA in deep sleep (depending on the model variant) up to 0.5A+ during a transmit burst — so a regular multimeter can't track both ends of that swing accurately. A meter with **autoranging** is required. Captures on this page use the **Nordic Power Profiler Kit II (PPK2)**, with its **Power Profiler** app for nRF Connect for Desktop, but any autoranging current meter is valid — the choice is left to the reader.
 
 **Wiring — the I_SENSE jumper.** All battery current passes through the **I_SENSE** jumper (see [2.2. Jumper Configuration for Power Modes](power-supply.md)). In normal operation it stays **closed** (shorted). To measure consumption:
 
@@ -72,5 +72,17 @@ Captured with the PPK2 in Ampere meter mode, 1,000 samples/second, over a 10-sec
 !!! note "The periodic spikes"
     Same cause as the NB-IoT capture above: the board's own power regulator switching into a pulsed low-power operating mode at very light load, firing brief current pulses to top up its output capacitor. Not the ESP32 or modem doing anything.
 
+### Deep Sleep — Wi-Fi
+
+![Deep sleep current — Wi-Fi](images/deep-sleep-wifi.png)
+
+*Deep sleep current draw, Wi-Fi, 10-second window.*
+
+Captured with the PPK2 in Ampere meter mode, 1,000 samples/second, over a 10-second window:
+
+* **Average:** 31.88 µA
+* **Peak:** 720.51 µA (periodic short spikes visible in the trace)
+* **Window:** 10.00 s · **Charge:** 318.84 µC
+
 !!! note "🚧 Coming soon"
-    Deep Sleep — Wi-Fi, Wake + Sensor Read, and a transmission-cycle capture for each connectivity option.
+    Wake + Sensor Read, and a transmission-cycle capture for each connectivity option.

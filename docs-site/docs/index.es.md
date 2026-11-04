@@ -5,7 +5,7 @@
 **ISURLOG** es un datalogger industrial basado en ESP32, diseñado para despliegues de campo donde la energía escasea y la conectividad nunca está garantizada. Firmware MicroPython genuino, trabajando con señales industriales reales, y gestionable en remoto desde el primer momento.
 
 * **Un solo dispositivo, todas las entradas** — 4× analógico 4-20 mA, Modbus RTU (RS485, hasta 32 sensores), 1× PT100/PT1000, 4× entradas digitales (estado o conteo de pulsos), temperatura y humedad integradas, un acelerómetro integrado para detección de manipulación/vandalismo, y un puerto QWIIC (I2C) para sensores de expansión enchufables, todo en la misma placa. Sin elegir un modelo distinto según el tipo de sensor — configura lo que necesites por downlink, incluso después de instalado.
-* **Pensado para baterías** — hasta ~20 µA en reposo (deep sleep). Un cargador de recolección de energía integrado carga celdas Li-Ion recargables desde casi cualquier fuente: un TEG de 0.3V, un panel solar micro, un panel de 5V completo, o un cargador USB convencional. También compatible con baterías Li-SOCl2 no recargables, para máxima duración de batería en emplazamientos de difícil acceso o para minimizar las visitas de mantenimiento.
+* **Pensado para baterías** — desde ~30 µA en reposo (deep sleep), según la variante del modelo. Un cargador de recolección de energía integrado carga celdas Li-Ion recargables desde casi cualquier fuente: un TEG de 0.3V, un panel solar micro, un panel de 5V completo, o un cargador USB convencional. También compatible con baterías Li-SOCl2 no recargables, para máxima duración de batería en emplazamientos de difícil acceso o para minimizar las visitas de mantenimiento.
 * **Un firmware, múltiples redes** — NB-IoT, LTE-M, DECT NR+, y satélite NTN a través del nRF9151, o LoRaWAN, de forma exclusiva por unidad, además de Wi-Fi y BLE local para la configuración.
 * **Gestionable en remoto, no solo legible en remoto** — configuración, ajuste de sensores, actualizaciones OTA, y una REPL de MicroPython en vivo, todo desde [IsurDASH](https://isurdash.isurki.com), sin desplazamiento a campo.
 * **MicroPython real, no una caja negra** — construido sobre MicroPython original, sin modificar, más un único parche pequeño y versionado, legible y modificable en cada capa.
@@ -36,7 +36,7 @@ La mejor forma de comprobarlo es usar la plataforma real y extraer datos reales,
 
 * **Cuenta demo de IsurDASH** — acceder en [isurdash.isurki.com/login](https://isurdash.isurki.com/login) para explorar el dashboard, la lista de dispositivos, las alarmas, y las pantallas de configuración:
     * **Email:** `isurdash.demo@gmail.com`
-    * **Contraseña:** `TEST123456`
+    * **Contraseña:** `DEMO_2026`
 * **Ejemplos de integración de datos** — dos scripts de Python listos para ejecutar, ya rellenados con las credenciales demo públicas, en la carpeta [`data_integration/`](https://github.com/isurki-tecnica/isurlog-firmware/tree/main/data_integration) del repositorio de firmware — permiten extraer datos históricos de InfluxDB, o suscribirse a un flujo MQTT en vivo.
 
 ---
@@ -97,4 +97,5 @@ La plataforma en la nube **[IsurDASH](https://isurdash.isurki.com)** en sí es g
 * **Repositorio en GitHub:** [isurki-tecnica/isurlog-firmware](https://github.com/isurki-tecnica/isurlog-firmware)
 * **Versiones del firmware:** [Página de Releases](https://github.com/isurki-tecnica/isurlog-firmware/releases)
 * **Acceso a la plataforma cloud IsurDASH:** [isurdash.isurki.com/login](https://isurdash.isurki.com/login)
+* **Web de ISURKI:** [www.isurki.com](https://www.isurki.com)
 * **Soporte técnico:** (+34) 943-635437 · tecnica@isurki.com

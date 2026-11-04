@@ -4,7 +4,7 @@ Capturas reales de corriente frente a tiempo que muestran lo que cuesta realment
 
 ## 1.1 Método de Medición
 
-**Equipo.** El consumo de corriente del ISURLOG abarca un rango muy amplio — desde unos 20µA en reposo profundo hasta más de 0,5A durante una ráfaga de transmisión — así que un multímetro normal no puede seguir con precisión ambos extremos de ese rango. Se necesita un medidor con **autorrango**. Las capturas de esta página usan el **Nordic Power Profiler Kit II (PPK2)**, con su aplicación **Power Profiler** para nRF Connect for Desktop, pero cualquier medidor de corriente con autorrango es válido — la elección se deja al lector.
+**Equipo.** El consumo de corriente del ISURLOG abarca un rango muy amplio — desde unos 30µA en reposo profundo (según la variante del modelo) hasta más de 0,5A durante una ráfaga de transmisión — así que un multímetro normal no puede seguir con precisión ambos extremos de ese rango. Se necesita un medidor con **autorrango**. Las capturas de esta página usan el **Nordic Power Profiler Kit II (PPK2)**, con su aplicación **Power Profiler** para nRF Connect for Desktop, pero cualquier medidor de corriente con autorrango es válido — la elección se deja al lector.
 
 **Cableado — el jumper I_SENSE.** Toda la corriente de la batería pasa por el jumper **I_SENSE** (ver [2.2. Configuración de Jumpers para los Modos de Alimentación](power-supply.md)). En funcionamiento normal permanece **cerrado** (en cortocircuito). Para medir el consumo:
 
@@ -72,5 +72,17 @@ Capturado con el PPK2 en modo amperímetro, 1000 muestras/segundo, en una ventan
 !!! note "Los picos periódicos"
     Misma causa que en la captura de NB-IoT de arriba: el propio regulador de alimentación de la placa pasando a un modo de funcionamiento pulsado de bajo consumo con carga muy ligera, disparando pulsos breves de corriente para recargar su condensador de salida. No es algo que hagan el ESP32 o el módem.
 
+### Reposo Profundo — Wi-Fi
+
+![Corriente en reposo profundo — Wi-Fi](images/deep-sleep-wifi.png)
+
+*Consumo de corriente en reposo profundo, Wi-Fi, ventana de 10 segundos.*
+
+Capturado con el PPK2 en modo amperímetro, 1000 muestras/segundo, en una ventana de 10 segundos:
+
+* **Media:** 31,88 µA
+* **Pico:** 720,51 µA (picos cortos periódicos visibles en la traza)
+* **Ventana:** 10,00 s · **Carga:** 318,84 µC
+
 !!! note "🚧 Próximamente"
-    Reposo Profundo — Wi-Fi, Despertar + Lectura de Sensores, y una captura del ciclo de transmisión para cada opción de conectividad.
+    Despertar + Lectura de Sensores, y una captura del ciclo de transmisión para cada opción de conectividad.

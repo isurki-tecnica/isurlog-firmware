@@ -17,7 +17,7 @@ A single-page reference for the ISURLOG's hardware specifications. For how to wi
 
 | | |
 | :--- | :--- |
-| **Deep sleep current** | As low as ~20 µA (full system, modem included and network-attached) — see [1. Consumption Graphs](consumption-graphs.md) |
+| **Deep sleep current** | Measured on the full system: ~32 µA (Wi-Fi), ~43 µA (LoRaWAN, joined), ~77 µA (NB-IoT/LTE-M, attached; ~173 µA averaged over an eDRX paging cycle) — see [1. Consumption Graphs](consumption-graphs.md) |
 | **Batteries** | 1–5× Li-Ion 18650 (rechargeable, up to 17000 mAh total), or up to 2× non-rechargeable Li-SOCl2 (up to 38000 mAh total, requires PCB v3.3+) |
 | **Charging inputs** | 0.3V TEG, micro solar panel, full 5V solar panel, or USB charger — energy-harvesting charger built in (Li-Ion only; not used with Li-SOCl2) |
 | **Sensor power outputs** | Software-configurable regulator, 9–24 V; plus a separate fixed 5 V regulator |

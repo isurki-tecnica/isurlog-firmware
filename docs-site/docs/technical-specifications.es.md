@@ -17,7 +17,7 @@ Referencia de una sola página con las especificaciones de hardware del ISURLOG.
 
 | | |
 | :--- | :--- |
-| **Corriente en reposo profundo** | Hasta ~20 µA (sistema completo, módem incluido y conectado a red) — ver [1. Gráficos de Consumo](consumption-graphs.md) |
+| **Corriente en reposo profundo** | Medida en el sistema completo: ~32 µA (Wi-Fi), ~43 µA (LoRaWAN, unido a la red), ~77 µA (NB-IoT/LTE-M, conectado; ~173 µA de media en un ciclo de paginación eDRX) — ver [1. Gráficos de Consumo](consumption-graphs.md) |
 | **Baterías** | 1–5× Li-Ion 18650 (recargables, hasta 17000 mAh en total), o hasta 2× Li-SOCl2 no recargables (hasta 38000 mAh en total, requiere PCB v3.3+) |
 | **Entradas de carga** | TEG de 0.3V, panel solar micro, panel solar de 5V completo, o cargador USB — cargador de recolección de energía integrado (solo con Li-Ion; no se usa con Li-SOCl2) |
 | **Salidas de alimentación para sensores** | Regulador configurable por software, 9–24 V; más un regulador fijo de 5 V independiente |

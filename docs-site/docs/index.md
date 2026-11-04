@@ -5,7 +5,7 @@
 **ISURLOG** is an ESP32-based industrial datalogger built for field deployments where power is scarce and connectivity is never guaranteed. Real MicroPython firmware, real industrial signals, remotely managed from day one.
 
 * **One device, every input** — 4× 4-20 mA analog, Modbus RTU (RS485, up to 32 sensors), 1× PT100/PT1000, 4× digital inputs (state or pulse counting), onboard temperature & humidity, an on-board accelerometer for tamper/vandalism detection, and a QWIIC (I2C) port for plug-in expansion sensors, all on the same board. No picking a different SKU per sensor type — configure what you need via downlink, even after it's installed.
-* **Built for batteries** — as low as ~20 µA in deep sleep. An on-board energy-harvesting charger tops up rechargeable Li-Ion cells from almost anything: a 0.3V TEG, a micro solar panel, a full 5V panel, or a plain USB charger. Non-rechargeable Li-SOCl2 packs are also supported, for maximum battery life in hard-to-reach sites or to minimize maintenance visits.
+* **Built for batteries** — as low as ~30 µA in deep sleep, depending on the model variant. An on-board energy-harvesting charger tops up rechargeable Li-Ion cells from almost anything: a 0.3V TEG, a micro solar panel, a full 5V panel, or a plain USB charger. Non-rechargeable Li-SOCl2 packs are also supported, for maximum battery life in hard-to-reach sites or to minimize maintenance visits.
 * **One firmware, multiple networks** — NB-IoT, LTE-M, DECT NR+, and satellite NTN via the nRF9151, or LoRaWAN, exclusively per unit, plus Wi-Fi and local BLE for setup.
 * **Remotely manageable, not just remotely readable** — configuration, sensor setup, OTA updates, and a live MicroPython REPL, all from [IsurDASH](https://isurdash.isurki.com), without a truck roll.
 * **Real MicroPython, not a black box** — built on plain, unmodified [MicroPython](https://micropython.org) plus one small tracked patch, readable and hackable at every layer.
@@ -36,7 +36,7 @@ Don't just take our word for it — try the real platform and pull real data you
 
 * **IsurDASH demo account** — log in at [isurdash.isurki.com/login](https://isurdash.isurki.com/login) and explore the dashboard, device list, alarms, and configuration screens for yourself:
     * **Email:** `isurdash.demo@gmail.com`
-    * **Password:** `TEST123456`
+    * **Password:** `DEMO_2026`
 * **Data integration examples** — two ready-to-run Python scripts, pre-filled with public demo credentials, in the [`data_integration/`](https://github.com/isurki-tecnica/isurlog-firmware/tree/main/data_integration) folder of the firmware repo — pull historical data from InfluxDB, or subscribe to a live MQTT stream.
 
 ---
@@ -97,4 +97,5 @@ The [IsurDASH](https://isurdash.isurki.com) cloud platform itself is free — no
 * **GitHub Repository:** [isurki-tecnica/isurlog-firmware](https://github.com/isurki-tecnica/isurlog-firmware)
 * **Firmware Releases:** [Releases page](https://github.com/isurki-tecnica/isurlog-firmware/releases)
 * **IsurDASH Cloud Platform Login:** [isurdash.isurki.com/login](https://isurdash.isurki.com/login)
+* **ISURKI Website:** [www.isurki.com](https://www.isurki.com)
 * **Technical Support:** (+34) 943-635437 · tecnica@isurki.com
