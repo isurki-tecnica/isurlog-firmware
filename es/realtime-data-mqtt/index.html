@@ -1264,6 +1264,8 @@
       
         
       
+        
+      
     
     
     
@@ -1695,6 +1697,34 @@
     
   
     4. API de Configuración Remota (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chirpstack-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. LoRaWAN con tu Propio Servidor ChirpStack
   
 
     
@@ -2372,7 +2402,7 @@
 <p>Los datos LoRaWAN se procesan a través del Network Server ChirpStack.</p>
 <ul>
 <li><strong>Estructura del Topic:</strong> <code>application/{application-id}/device/{device_eui}/event/up</code></li>
-<li><strong>Formato del Mensaje:</strong> <strong>objeto JSON con datos decodificados</strong>. El Network Server ChirpStack decodifica automáticamente el payload en bruto. Los valores de sensores decodificados están disponibles directamente dentro de la clave <code>object</code> del JSON.</li>
+<li><strong>Formato del Mensaje:</strong> <strong>objeto JSON con datos decodificados</strong>. El Network Server ChirpStack decodifica el payload en bruto con el decodificador del ISURLOG (ver <a href="../chirpstack-integration/">5. LoRaWAN con tu Propio Servidor ChirpStack</a> si usas tu propio servidor). Los valores de sensores decodificados están disponibles directamente dentro de la clave <code>object</code> del JSON.</li>
 <li><strong>Metadatos:</strong> el JSON también incluye metadatos de red útiles, como RSSI, SNR, ubicación del gateway, y parámetros de transmisión.</li>
 </ul>
 <h4 id="ejemplo-de-payload-json-chirpstack">Ejemplo de Payload JSON (ChirpStack)</h4>
@@ -2504,6 +2534,13 @@
 <td style="text-align: left;">Valor final = Entero (segundos)</td>
 </tr>
 <tr>
+<td style="text-align: left;"><strong>Battery State of Charge</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x76</td>
+<td style="text-align: left;">Entero sin signo de 2 bytes</td>
+<td style="text-align: left;">Valor final = Entero / 10.0 (%)</td>
+</tr>
+<tr>
 <td style="text-align: left;"><strong>Battery C-Rate</strong></td>
 <td style="text-align: left;">0</td>
 <td style="text-align: left;">0x77</td>
@@ -2516,6 +2553,20 @@
 <td style="text-align: left;">0x78</td>
 <td style="text-align: left;">Entero sin signo de 1 byte</td>
 <td style="text-align: left;">Valor final = Entero, el <strong>índice 3GPP en bruto</strong> del módem, no una unidad física. Canal 0 (RSRQ, 0–34): dB = (valor − 40) / 2. Canal 1 (RSRP, 0–97): dBm = valor − 141. 255 = no detectable. <strong>Solo dispositivos NB-IoT.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Script Error</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x79</td>
+<td style="text-align: left;">Entero sin signo de 1 byte</td>
+<td style="text-align: left;">Valor final = Entero (0 o 1, un indicador de error)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPS Data</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x88</td>
+<td style="text-align: left;">9 bytes = tres enteros con signo de 3 bytes (latitud, longitud, altitud)</td>
+<td style="text-align: left;">Valor final (por componente) = Entero / 10000.0</td>
 </tr>
 </tbody>
 </table>

@@ -1262,6 +1262,8 @@
       
         
       
+        
+      
     
     
     
@@ -1401,6 +1403,34 @@
     
   
     4. Remote Configuration API (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chirpstack-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. LoRaWAN with Your Own ChirpStack Server
   
 
     
@@ -2246,7 +2276,7 @@
 <h3 id="3-lorawan-specific-device-class-and-adr">3. LoRaWAN-specific: device class and ADR</h3>
 <p>For <strong>LoRaWAN</strong> ISURLOG units specifically, two additional factors commonly cause excessive consumption:</p>
 <ul>
-<li><strong>Wrong device class.</strong> Configuring <strong>Class B or Class C</strong> instead of <strong>Class A</strong> when the application doesn't actually need low-latency downlinks and the device is meant to run on batteries. Class B and C keep the radio listening far more often than Class A, which is by far the most power-efficient class.</li>
+<li><strong>A device class that uses more power than needed.</strong> <strong>Class A</strong> is by far the most power-efficient class and gives the maximum battery life. <strong>Class B</strong> is also suitable for battery-powered devices (ISURKI has not tested it), but it keeps the radio listening more often, so it is not optimal for maximum battery life. <strong>Class C</strong> keeps the radio listening all the time and is only recommended where the ISURLOG has external power. If the application doesn't need low-latency downlinks, use Class A.</li>
 <li><strong>ADR (Adaptive Data Rate) not enabled</strong> on the LoRaWAN network server. Without ADR, the device may keep transmitting at a higher power / lower data rate than its actual link conditions require, wasting energy on every uplink.</li>
 </ul>
 <hr>

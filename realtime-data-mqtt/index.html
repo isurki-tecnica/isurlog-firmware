@@ -1264,6 +1264,8 @@
       
         
       
+        
+      
     
     
     
@@ -1695,6 +1697,34 @@
     
   
     4. Remote Configuration API (Downlink)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chirpstack-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. LoRaWAN with Your Own ChirpStack Server
   
 
     
@@ -2372,7 +2402,7 @@
 <p>LoRaWAN data is processed via the ChirpStack Network Server.</p>
 <ul>
 <li><strong>Topic Structure:</strong> <code>application/{application-id}/device/{device_eui}/event/up</code></li>
-<li><strong>Message Format:</strong> <strong>JSON Object with Decoded Data</strong>. The ChirpStack Network Server automatically decodes the raw payload. Decoded sensor values are available directly within the <code>object</code> key of the JSON.</li>
+<li><strong>Message Format:</strong> <strong>JSON Object with Decoded Data</strong>. The ChirpStack Network Server decodes the raw payload with the ISURLOG decoder (see <a href="../chirpstack-integration/">5. LoRaWAN with Your Own ChirpStack Server</a> if you run your own server). Decoded sensor values are available directly within the <code>object</code> key of the JSON.</li>
 <li><strong>Metadata:</strong> The JSON also includes valuable network metadata such as RSSI, SNR, gateway location, and transmission parameters.</li>
 </ul>
 <h4 id="example-of-payload-json-chirpstack">Example of Payload JSON (ChirpStack)</h4>
@@ -2504,6 +2534,13 @@
 <td style="text-align: left;">Final Value = Integer (seconds)</td>
 </tr>
 <tr>
+<td style="text-align: left;"><strong>Battery State of Charge</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x76</td>
+<td style="text-align: left;">2-byte Unsigned Integer</td>
+<td style="text-align: left;">Final Value = Integer / 10.0 (%)</td>
+</tr>
+<tr>
 <td style="text-align: left;"><strong>Battery C-Rate</strong></td>
 <td style="text-align: left;">0</td>
 <td style="text-align: left;">0x77</td>
@@ -2516,6 +2553,20 @@
 <td style="text-align: left;">0x78</td>
 <td style="text-align: left;">1-byte Unsigned Integer</td>
 <td style="text-align: left;">Final Value = Integer, the modem's <strong>raw 3GPP index</strong>, not a physical unit. Channel 0 (RSRQ, 0–34): dB = (value − 40) / 2. Channel 1 (RSRP, 0–97): dBm = value − 141. 255 = not detectable. <strong>NB-IoT devices only.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Script Error</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x79</td>
+<td style="text-align: left;">1-byte Unsigned Integer</td>
+<td style="text-align: left;">Final Value = Integer (0 or 1, an error flag)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPS Data</strong></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0x88</td>
+<td style="text-align: left;">9 bytes = three 3-byte Signed Integers (latitude, longitude, altitude)</td>
+<td style="text-align: left;">Final Value (per component) = Integer / 10000.0</td>
 </tr>
 </tbody>
 </table>
