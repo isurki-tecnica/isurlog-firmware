@@ -81,6 +81,7 @@ plugins:
             "2. Historical Data (InfluxDB)": "2. Datos Históricos (InfluxDB)"
             "3. Real-Time Data (MQTT)": "3. Datos en Tiempo Real (MQTT)"
             "4. Remote Configuration API (Downlink)": "4. API de Configuración Remota (Downlink)"
+            "5. LoRaWAN with Your Own ChirpStack Server": "5. LoRaWAN con tu Propio Servidor ChirpStack"
             "⚡ Module D - Power Consumption & Battery Life": "⚡ Módulo D - Consumo de Energía y Vida de la Batería"
             "1. Consumption Graphs": "1. Gráficos de Consumo"
             "2. Power Budget Calculator": "2. Calculadora de Consumo de Energía"
@@ -125,6 +126,7 @@ nav:
       - 2. Historical Data (InfluxDB): historical-data-influxdb.md
       - 3. Real-Time Data (MQTT): realtime-data-mqtt.md
       - 4. Remote Configuration API (Downlink): remote-configuration-api.md
+      - 5. LoRaWAN with Your Own ChirpStack Server: chirpstack-integration.md
   - ⚡ Module D - Power Consumption & Battery Life:
       - 1. Consumption Graphs: consumption-graphs.md
       - 2. Power Budget Calculator: power-budget.md

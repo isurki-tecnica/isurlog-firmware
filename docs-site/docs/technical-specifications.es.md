@@ -31,9 +31,16 @@ Cada unidad lleva uno de estos dos, fijado en fábrica (son mutuamente excluyent
 | | |
 | :--- | :--- |
 | **Celular** | NB-IoT / LTE-M, satélite (NTN), y DECT NR+ (compatible a nivel de chip vía el nRF9151; el soporte por firmware está planeado, todavía no disponible — ver la [Hoja de ruta](index.md#hoja-de-ruta)). |
-| **eSIM** *(versión celular)* | Integrada, 500 MB o 5 años (lo que ocurra antes) — ver [1. Piezas y Accesorios](parts-and-accessories.md) |
-| **Slot Nano SIM** *(versión celular)* | También disponible un slot externo para Nano-SIM (p. ej. para servicio satelital/NTN con una SIM de terceros) |
-| **LoRaWAN** | Clase A (Clase B/C soportadas, no recomendadas para uso a batería) |
+| **LoRaWAN** | Clase A (recomendada para uso a batería, para la máxima autonomía). La clase B también es apta para baterías, pero no es lo óptimo para la máxima autonomía y ISURKI no la ha probado. La clase C está soportada, solo recomendada con alimentación externa. |
+
+### SIM
+
+Solo en la versión celular:
+
+| | |
+| :--- | :--- |
+| **eSIM** | Integrada, 500 MB o 5 años (lo que ocurra antes) — ver [1. Piezas y Accesorios](parts-and-accessories.md) |
+| **Slot Nano SIM** | También disponible un slot externo para Nano-SIM (p. ej. para servicio satelital/NTN con una SIM de terceros) |
 
 ### Integrado en todas las unidades
 

@@ -30,7 +30,7 @@ The topic structure and message format depend on the communication technology us
 LoRaWAN data is processed via the ChirpStack Network Server.
 
 * **Topic Structure:** `application/{application-id}/device/{device_eui}/event/up`
-* **Message Format:** **JSON Object with Decoded Data**. The ChirpStack Network Server automatically decodes the raw payload. Decoded sensor values are available directly within the `object` key of the JSON.
+* **Message Format:** **JSON Object with Decoded Data**. The ChirpStack Network Server decodes the raw payload with the ISURLOG decoder (see [5. LoRaWAN with Your Own ChirpStack Server](chirpstack-integration.md) if you run your own server). Decoded sensor values are available directly within the `object` key of the JSON.
 * **Metadata:** The JSON also includes valuable network metadata such as RSSI, SNR, gateway location, and transmission parameters.
 
 #### Example of Payload JSON (ChirpStack)
@@ -109,8 +109,11 @@ All multi-byte values are encoded in **Big-Endian** byte order. The first data p
 | **Accelerometer** | 0 | 0x71 | 6 bytes = three 2-byte Signed Integers (X, Y, Z) | Final Value (per axis) = Integer / 1000.0 (g) |
 | **Battery Voltage** | 0 | 0x74 | 2-byte Unsigned Integer | Final Value = Integer (in mV) |
 | **Unix Timestamp** | 0 | 0x75 | 4-byte Unsigned Integer | Final Value = Integer (seconds) |
+| **Battery State of Charge** | 0 | 0x76 | 2-byte Unsigned Integer | Final Value = Integer / 10.0 (%) |
 | **Battery C-Rate** | 0 | 0x77 | 1-byte Signed Integer | Final Value = Integer / 10.0 (%/h) |
 | **Modem Signal Quality** | 0 (RSRQ) / 1 (RSRP) | 0x78 | 1-byte Unsigned Integer | Final Value = Integer, the modem's **raw 3GPP index**, not a physical unit. Channel 0 (RSRQ, 0–34): dB = (value − 40) / 2. Channel 1 (RSRP, 0–97): dBm = value − 141. 255 = not detectable. **NB-IoT devices only.** |
+| **Script Error** | 0 | 0x79 | 1-byte Unsigned Integer | Final Value = Integer (0 or 1, an error flag) |
+| **GPS Data** | 0 | 0x88 | 9 bytes = three 3-byte Signed Integers (latitude, longitude, altitude) | Final Value (per component) = Integer / 10000.0 |
 
 !!! note "Note on channel semantics"
     for most sensor types, the channel identifies which physical input the reading came from (e.g. Analog Input 0-3). For **Accelerometer**, the same chunk packs all three axes together (there's no separate channel per axis). For **Modem Signal Quality**, the channel is repurposed to distinguish the *metric* (0 = RSRQ, 1 = RSRP) rather than a physical input.

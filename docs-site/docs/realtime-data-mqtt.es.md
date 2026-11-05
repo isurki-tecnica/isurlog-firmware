@@ -30,7 +30,7 @@ La estructura del topic y el formato del mensaje dependen de la tecnología de c
 Los datos LoRaWAN se procesan a través del Network Server ChirpStack.
 
 * **Estructura del Topic:** `application/{application-id}/device/{device_eui}/event/up`
-* **Formato del Mensaje:** **objeto JSON con datos decodificados**. El Network Server ChirpStack decodifica automáticamente el payload en bruto. Los valores de sensores decodificados están disponibles directamente dentro de la clave `object` del JSON.
+* **Formato del Mensaje:** **objeto JSON con datos decodificados**. El Network Server ChirpStack decodifica el payload en bruto con el decodificador del ISURLOG (ver [5. LoRaWAN con tu Propio Servidor ChirpStack](chirpstack-integration.md) si usas tu propio servidor). Los valores de sensores decodificados están disponibles directamente dentro de la clave `object` del JSON.
 * **Metadatos:** el JSON también incluye metadatos de red útiles, como RSSI, SNR, ubicación del gateway, y parámetros de transmisión.
 
 #### Ejemplo de Payload JSON (ChirpStack)
@@ -109,8 +109,11 @@ Todos los valores multibyte se codifican en orden **Big-Endian**. El primer payl
 | **Accelerometer** | 0 | 0x71 | 6 bytes = tres enteros con signo de 2 bytes (X, Y, Z) | Valor final (por eje) = Entero / 1000.0 (g) |
 | **Battery Voltage** | 0 | 0x74 | Entero sin signo de 2 bytes | Valor final = Entero (en mV) |
 | **Unix Timestamp** | 0 | 0x75 | Entero sin signo de 4 bytes | Valor final = Entero (segundos) |
+| **Battery State of Charge** | 0 | 0x76 | Entero sin signo de 2 bytes | Valor final = Entero / 10.0 (%) |
 | **Battery C-Rate** | 0 | 0x77 | Entero con signo de 1 byte | Valor final = Entero / 10.0 (%/h) |
 | **Modem Signal Quality** | 0 (RSRQ) / 1 (RSRP) | 0x78 | Entero sin signo de 1 byte | Valor final = Entero, el **índice 3GPP en bruto** del módem, no una unidad física. Canal 0 (RSRQ, 0–34): dB = (valor − 40) / 2. Canal 1 (RSRP, 0–97): dBm = valor − 141. 255 = no detectable. **Solo dispositivos NB-IoT.** |
+| **Script Error** | 0 | 0x79 | Entero sin signo de 1 byte | Valor final = Entero (0 o 1, un indicador de error) |
+| **GPS Data** | 0 | 0x88 | 9 bytes = tres enteros con signo de 3 bytes (latitud, longitud, altitud) | Valor final (por componente) = Entero / 10000.0 |
 
 !!! note "Nota sobre la semántica del canal"
     Para la mayoría de los tipos de sensor, el canal identifica de qué entrada física proviene la lectura (p. ej. Analog Input 0-3). Para **Accelerometer**, el mismo fragmento empaqueta los tres ejes juntos (no hay un canal separado por eje). Para **Modem Signal Quality**, el canal se reutiliza para distinguir la *métrica* (0 = RSRQ, 1 = RSRP) en vez de una entrada física.

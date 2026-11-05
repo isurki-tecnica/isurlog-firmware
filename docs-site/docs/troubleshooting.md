@@ -29,7 +29,7 @@ The charger circuit itself draws a small amount of power just by being active. I
 
 For **LoRaWAN** ISURLOG units specifically, two additional factors commonly cause excessive consumption:
 
-* **Wrong device class.** Configuring **Class B or Class C** instead of **Class A** when the application doesn't actually need low-latency downlinks and the device is meant to run on batteries. Class B and C keep the radio listening far more often than Class A, which is by far the most power-efficient class.
+* **A device class that uses more power than needed.** **Class A** is by far the most power-efficient class and gives the maximum battery life. **Class B** is also suitable for battery-powered devices (ISURKI has not tested it), but it keeps the radio listening more often, so it is not optimal for maximum battery life. **Class C** keeps the radio listening all the time and is only recommended where the ISURLOG has external power. If the application doesn't need low-latency downlinks, use Class A.
 * **ADR (Adaptive Data Rate) not enabled** on the LoRaWAN network server. Without ADR, the device may keep transmitting at a higher power / lower data rate than its actual link conditions require, wasting energy on every uplink.
 
 ---

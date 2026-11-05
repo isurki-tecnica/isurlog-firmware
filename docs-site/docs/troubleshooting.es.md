@@ -29,7 +29,7 @@ El propio circuito del cargador consume una pequeña cantidad de energía solo p
 
 Para unidades ISURLOG con **LoRaWAN** en concreto, hay otros dos factores adicionales que suelen causar un consumo excesivo:
 
-* **Clase de dispositivo incorrecta.** Configurar **Clase B o Clase C** en vez de **Clase A** cuando la aplicación en realidad no necesita downlinks de baja latencia y el dispositivo está pensado para funcionar con baterías. Las Clases B y C mantienen la radio escuchando mucho más a menudo que la Clase A, que es, con diferencia, la clase más eficiente energéticamente.
+* **Una clase de dispositivo que consume más de lo necesario.** La **Clase A** es, con diferencia, la clase más eficiente energéticamente y da la máxima autonomía. La **Clase B** también es apta para dispositivos con batería (ISURKI no la ha probado), pero mantiene la radio escuchando más a menudo, así que no es lo óptimo para la máxima autonomía. La **Clase C** mantiene la radio escuchando todo el tiempo y solo se recomienda donde el ISURLOG tiene alimentación externa. Si la aplicación no necesita downlinks de baja latencia, usa la Clase A.
 * **ADR (Adaptive Data Rate) no activado** en el network server LoRaWAN. Sin ADR, el dispositivo puede seguir transmitiendo con más potencia / menor Data Rate de la que sus condiciones de enlace reales requieren, desperdiciando energía en cada uplink.
 
 ---
