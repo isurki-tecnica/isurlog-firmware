@@ -1,4 +1,4 @@
-# boards/sdkconfig.base, boards/sdkconfig.ble and boards/sdkconfig.spiram
+# boards/sdkconfig.base, boards/sdkconfig.ble and boards/sdkconfig.spiram_esp32
 # are genuine MicroPython files - those relative paths correctly resolve
 # against ports/esp32 (where MicroPython actually lives), same as for any
 # other board.
@@ -12,6 +12,10 @@
 # to also inject the partition table's own path as an absolute one, since
 # CONFIG_PARTITION_TABLE_CUSTOM_FILENAME has the exact same problem.
 
+# MicroPython >= 1.28 picks its component lockfile by IDF_TARGET before the
+# IDF project is set up, so the board has to set it (its own boards do too).
+set(IDF_TARGET esp32)
+
 set(ISURLOG_PARTITIONS_ABS "${CMAKE_CURRENT_LIST_DIR}/partitions-8MiB-ota.csv")
 set(ISURLOG_SDKCONFIG_GEN "${CMAKE_BINARY_DIR}/sdkconfig.isurlog.generated")
 file(WRITE ${ISURLOG_SDKCONFIG_GEN}
@@ -20,7 +24,7 @@ file(WRITE ${ISURLOG_SDKCONFIG_GEN}
 set(SDKCONFIG_DEFAULTS
     boards/sdkconfig.base
     boards/sdkconfig.ble
-    boards/sdkconfig.spiram
+    boards/sdkconfig.spiram_esp32
     ${ISURLOG_SDKCONFIG_GEN}
 )
 
