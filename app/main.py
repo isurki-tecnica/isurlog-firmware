@@ -1836,12 +1836,12 @@ if __name__ == "__main__":
         # dedicated interrupt pins) - configure them once here as plain
         # digital inputs for read_all_sensors(), independent of
         # theft_alert and independent of accel.hardware_ready (the MCP
-        # can be present even if the LIS2DH12 isn't). External active
-        # signal on these pins -> no internal pull-up.
+        # can be present even if the LIS2DH12 isn't). Dry contacts to GND:
+        # a closed contact reads 1 (see configure_input()).
         from modules.digital_sensor import DigitalInputMCP23008
         mcp_digital_input = DigitalInputMCP23008(mcp)
         for _pin in (3, 4, 5):
-            mcp_digital_input.configure_input(_pin, pullup=False)
+            mcp_digital_input.configure_input(_pin)
     
     #Set VDC voltage via I2C
     pot = MCP4017()

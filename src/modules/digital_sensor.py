@@ -306,24 +306,20 @@ class DigitalInputMCP23008:
         '''
         self._mcp = mcp
 
-    def configure_input(self, pin, pullup=False):
+    def configure_input(self, pin):
         '''
-        Ensures a single pin is configured as an input (and optionally
-        its internal 100k pull-up), without touching any other pin's
-        configuration. Idempotent - safe to call once at boot, no need
-        to call it again on every read.
+        Configures a single pin as a dry-contact input wired to GND, without
+        touching any other pin. Idempotent - call once at boot.
 
-        Also forces input_polarity/interrupt_enable to a known-off state
-        on this pin. The MCP23008's registers persist across ESP32 resets
-        (it's a separate I2C chip), and mcp.init() - the only thing that
-        would otherwise reset those registers - only runs when
-        theft_alert=true (via Accelerometer.check_wakeup()). With
-        theft_alert=false, a stray input_polarity bit left by any past
-        firmware/test would silently invert this pin's reading forever.
+        The MCP23008 has no internal pull-downs, so an input with no pull-up
+        floats and picks up neighbouring pins through capacitive coupling.
+        The internal ~100k pull-up holds an open contact high, and inverted
+        input_polarity makes a closed contact (pin pulled to GND) read 1.
+        All of these registers are set explicitly: they survive ESP32 resets,
+        and mcp.init() only runs when theft_alert=true.
         :param pin: MCP GPIO number (0-7)
-        :param pullup: enable the MCP's internal weak pull-up on this pin
         '''
-        self._mcp.pin(pin, mode=1, pullup=1 if pullup else 0, polarity=0, interrupt_enable=0)  # mode=1 -> input
+        self._mcp.pin(pin, mode=1, pullup=1, polarity=1, interrupt_enable=0)  # mode=1 -> input
 
     def read(self, pin):
         '''
