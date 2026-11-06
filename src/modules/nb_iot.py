@@ -515,7 +515,8 @@ class NBIoT:
                     is_priority = plmn in whitelist
                     utils.log_info(f"Attempting connection to PLMN: {plmn} (Priority: {is_priority})")
                     
-                    if await self.send_at_command_check(f'AT+COPS=1,2,"{plmn}"', timeout = 10000):
+                    # Pass the AcT too: with only the PLMN, the modem picks the RAT itself and can land on LTE-M.
+                    if await self.send_at_command_check(f'AT+COPS=1,2,"{plmn}",{desired_act}', timeout = 10000):
                         # Async wait of 1 minute for each operator.
                         if await self.wait_for_network_connection(timeout=30000): 
                             utils.log_info(f"Successfully connected to {plmn}!")
