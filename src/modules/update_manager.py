@@ -103,7 +103,7 @@ def decode_base64_file(input_b64_filepath, output_bin_filepath, buffer_size=1024
                             fout.write(binary_data)
                             total_bytes_written += len(binary_data)
                             utils.log_debug(f"Decoded {len(binary_data)} final leftover bytes.")
-                        except ubinascii.Error as e:
+                        except ValueError as e:  # MicroPython's binascii has no Error class; bad base64 raises ValueError
                             utils.log_error(f"Error decoding final Base64 leftover: {e!r}. Leftover: {leftover!r}")
                             raise # Re-raise to abort
                     break # Exit the while loop
