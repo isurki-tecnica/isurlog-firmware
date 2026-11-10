@@ -40,6 +40,32 @@ El ISURLOG usa el módem nRF9151 para establecer la comunicación NB-IoT a trav�
 
     Si estás construyendo una aplicación de **sustitución** para el firmware del módem, debe seguir soportando el mismo conjunto de comandos AT del que realmente depende el driver propio del ISURLOG (`modules/nb_iot.py`) — ver la lista de comandos verificada en **[2.1 Referencia de Módulos y Librerías](module-library-reference.md)** a modo de lista de comprobación de compatibilidad.
 
+### Secuencia de registro en la red
+
+Cada vez que el firmware necesita el módem conectado, `connect()` de `modules/nb_iot.py` ejecuta la secuencia siguiente. Recibe la preferencia de conexión (`1` = LTE-M, `2` = NB-IoT), si el eDRX está activado y, opcionalmente, un APN. Si el módem ya está registrado y tiene una dirección IP, se saltan los pasos de configuración.
+
+```mermaid
+flowchart TD
+    A["AT, AT#XSLMVER,<br/>AT+CGMR, AT%XMONITOR"] --> B{"¿Ya registrado<br/>con IP?"}
+    B -->|"sí"| Z
+    B -->|"no"| C["AT%XSYSTEMMODE=1,1,0,pref<br/>(solo si cambia)"]
+    C --> D["AT%RAI=1<br/>(solo si no lo está ya)"]
+    D --> E["Si el eDRX está activo:<br/>AT%PERIODICSEARCHCONF,<br/>AT+CEDRXS=1, AT%XPTW"]
+    E --> F["AT+CGDCONT=1,IP,apn (si hay APN)<br/>AT+CFUN=1"]
+    F --> G["AT+COPS=? (escaneo de redes,<br/>hasta 5 min)"]
+    G --> H["Quedarse con los operadores de la tecnología elegida,<br/>descartar los de la lista negra,<br/>lista blanca primero"]
+    H --> I["Para cada operador:<br/>AT+COPS=1,2,plmn,AcT<br/>y esperar hasta 30 s por una IP"]
+    I -->|"conectado"| J
+    I -->|"ninguno funciona"| K["AT+COPS=0 (automático),<br/>esperar hasta 60 s"]
+    K -->|"conectado"| J
+    K -->|"no"| X["Fallo"]
+    J["AT+CPSMS=0, AT+CPSMS?,<br/>AT%XMONITOR"] --> Z["AT+CEDRXRDP (si eDRX)<br/>→ conectado"]
+```
+
+*Secuencia de registro en la red de `NBIoT.connect()`.*
+
+Las listas negra y blanca de operadores se definen por tecnología en el driver (`BLACKLIST` y `WHITELIST`, en `NBIoT.__init__`).
+
 ---
 ## 5.4 Gestión Avanzada de Energía: Pines ESP32 - nRF9151
 

@@ -9,6 +9,17 @@ Este modo permite al personal de campo interactuar directamente con el ISURLOG m
 !!! note "Dos modos activados por imán"
     Mantener el imán cerca del sensor también activa un segundo modo, más breve — **Lectura y Envío Inmediato** (~1 segundo) — que fuerza un ciclo de lectura y transmisión bajo demanda sin entrar en el modo Bluetooth. Ver [1.8 Sensores Internos y Diagnóstico](sensor-connections.md#18-sensores-internos-y-diagnostico) para ambos modos, uno junto al otro. Este apartado cubre el mantenimiento más largo (**más de 5 segundos**) que activa el Modo de Diagnóstico por Bluetooth.
 
+```mermaid
+flowchart TD
+    A(["Imán mantenido más de 5 segundos"]) --> B["Bluetooth activado, esperando un cliente<br/>(hasta 2 minutos)"]
+    B -->|"Se conecta un cliente"| C["Sesión de datos en vivo<br/>lecturas continuas,<br/>se puede enviar nueva configuración"]
+    B -->|"Ningún cliente en 120 s"| D["Termina el modo Bluetooth"]
+    C -->|"El usuario se desconecta"| D
+    D --> E(["Se retoma el ciclo de registro normal"])
+```
+
+*El Modo de Diagnóstico por Bluetooth de un vistazo.*
+
 ### 1. Activación
 
 Al mantener un imán sobre la zona del sensor magnético durante **más de 5 segundos** (ver [1. Conexión de Sensores](sensor-connections.md#18-sensores-internos-y-diagnostico) para la ubicación exacta), el ISURLOG se despierta de inmediato y entra en este modo especial. El LED STATUS comenzará a parpadear con un patrón distintivo para indicar que está listo (ver [5.3. Diagnóstico en Campo (LED STATUS)](#53-diagnostico-en-campo-led-status)).
@@ -33,6 +44,23 @@ La sesión de Bluetooth termina cuando el usuario se desconecta de la aplicació
 ## 5.2. Ciclo de Registro Normal (Funcionamiento Automático)
 
 Este es el modo de funcionamiento estándar y autónomo del ISURLOG.
+
+```mermaid
+flowchart TD
+    S(["Hora de despertar programada"]) --> A["Despierta, lee los sensores<br/>y la tensión de batería"]
+    A --> B["Comprueba los umbrales de alarma"]
+    B --> C["Empaqueta los datos y los guarda en RAM<br/>(cuenta los registros acumulados)"]
+    C --> D{"Modo de envío"}
+    D -->|"Fijo"| E{"¿Acumulador de registros<br/>alcanzado?"}
+    D -->|"Condicional"| F{"¿Acumulador alcanzado<br/>o alarma detectada?"}
+    E -->|"Sí"| G["Despierta el módem<br/>y transmite a la nube"]
+    F -->|"Sí"| G
+    E -->|"No"| Z
+    F -->|"No"| Z
+    G --> Z(["Reposo profundo hasta el siguiente despertar"])
+```
+
+*Un ciclo del Ciclo de Registro Normal, desde que despierta hasta el reposo profundo.*
 
 ### 1. Despertar y Leer
 

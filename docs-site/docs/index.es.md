@@ -50,6 +50,7 @@ ISURLOG es un producto en mantenimiento activo con despliegues reales en campo, 
 | Arquitectura de funciones asíncronas para ejecución de tareas en paralelo, reduciendo el tiempo que el datalogger permanece encendido | Firmware | ✅ Estable | FW v2.0.3 |
 | Soporte de baterías no recargables Li-SOCl2 | Hardware | 🧪 Experimental | PCB v3.3 |
 | Búfer de transmisión ampliado mediante EEPROM I2C externa (24LC1025), eliminando la limitación actual de tamaño de la RAM del RTC | Firmware | ✅ Estable | FW v2.0.3 |
+| Aprendizaje de redes — el datalogger recuerda, por operador y tecnología de acceso, si la red concede eDRX y si MQTT (TCP) funciona a través de ella, lo guarda en flash para que sobreviva a los reinicios y lo usa para decidir qué red probar primero | Firmware | 🛠️ En desarrollo | — |
 | Alarma del acelerómetro → transmisión inmediata forzada | Firmware | 🔜 Planificado | — |
 | Modo de conexión automática NB-IoT/LTE-M | Firmware | 🔜 Planificado | — |
 | DECT NR+ (compatible a nivel de chip vía nRF9151) | Firmware | 🔜 Planificado | — |

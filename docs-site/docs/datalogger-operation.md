@@ -9,6 +9,17 @@ This mode allows field personnel to interact directly with the ISURLOG via a loc
 !!! note "Two magnet-triggered modes"
     Holding the magnet near the sensor also triggers a second, shorter mode — **Immediate Read & Send** (~1 second) — that forces an on-demand reading and transmission cycle without entering Bluetooth. See [1.8 Internal Sensors and Diagnostics](sensor-connections.md#18-internal-sensors-and-diagnostics) for both modes side by side. This section covers the longer (**more than 5 seconds**) hold that activates Bluetooth Diagnostics Mode.
 
+```mermaid
+flowchart TD
+    A(["Magnet held for more than 5 seconds"]) --> B["Bluetooth on, waiting for a client<br/>(up to 2 minutes)"]
+    B -->|"Client connects"| C["Live data session<br/>continuous readings,<br/>new configuration can be sent"]
+    B -->|"No client within 120 s"| D["Bluetooth mode ends"]
+    C -->|"User disconnects"| D
+    D --> E(["Normal logging cycle resumes"])
+```
+
+*Bluetooth Diagnostics Mode at a glance.*
+
 ### 1. Activation
 
 By holding a magnet on the magnetic sensor zone for **more than 5 seconds** (refer to [1. Sensor Connections](sensor-connections.md#18-internal-sensors-and-diagnostics) for the exact location), the ISURLOG immediately wakes up and enters this special mode. The STATUS LED will begin to flash with a distinct pattern to indicate it is ready (refer to [5.3. Field Diagnostics (LED STATUS)](#53-field-diagnostics-led-status)).
@@ -33,6 +44,23 @@ The Bluetooth session ends when the user disconnects from the application. At th
 ## 5.2. Normal Logging Cycle (Automatic Operation)
 
 This is the standard, autonomous functioning mode of the ISURLOG.
+
+```mermaid
+flowchart TD
+    S(["Programmed wake-up time"]) --> A["Wake up, read sensors<br/>and battery voltage"]
+    A --> B["Check alarm thresholds"]
+    B --> C["Package the data and store it in RAM<br/>(count accumulated records)"]
+    C --> D{"Sending Mode"}
+    D -->|"Fixed"| E{"Record Accumulator<br/>reached?"}
+    D -->|"Conditional"| F{"Accumulator reached<br/>or alarm detected?"}
+    E -->|"Yes"| G["Wake up the modem<br/>and transmit to the cloud"]
+    F -->|"Yes"| G
+    E -->|"No"| Z
+    F -->|"No"| Z
+    G --> Z(["Deep sleep until the next wake-up"])
+```
+
+*One cycle of the Normal Logging Cycle, from wake-up to deep sleep.*
 
 ### 1. Wake Up and Read
 

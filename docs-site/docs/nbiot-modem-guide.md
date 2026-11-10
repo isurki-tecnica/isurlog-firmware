@@ -40,6 +40,32 @@ The ISURLOG uses the nRF9151 modem to establish NB-IoT communication via a UART 
 
     If you're building a **replacement** application firmware for the modem, it must keep supporting the same AT command surface the ISURLOG's own driver (`modules/nb_iot.py`) actually depends on — see the verified command list in **[2.1 Module & Library Reference](module-library-reference.md)** as a compatibility checklist.
 
+### Network registration sequence
+
+Whenever the firmware needs the modem online, `connect()` in `modules/nb_iot.py` runs the sequence below. It takes the connection preference (`1` = LTE-M, `2` = NB-IoT), whether eDRX is enabled and, optionally, an APN. If the modem is already registered and has an IP address, the configuration steps are skipped.
+
+```mermaid
+flowchart TD
+    A["AT, AT#XSLMVER,<br/>AT+CGMR, AT%XMONITOR"] --> B{"Already registered<br/>with an IP?"}
+    B -->|"yes"| Z
+    B -->|"no"| C["AT%XSYSTEMMODE=1,1,0,pref<br/>(only if it changes)"]
+    C --> D["AT%RAI=1<br/>(only if not already set)"]
+    D --> E["If eDRX is enabled:<br/>AT%PERIODICSEARCHCONF,<br/>AT+CEDRXS=1, AT%XPTW"]
+    E --> F["AT+CGDCONT=1,IP,apn (if an APN is set)<br/>AT+CFUN=1"]
+    F --> G["AT+COPS=? (network scan,<br/>up to 5 min)"]
+    G --> H["Keep the operators of the chosen technology,<br/>drop the blacklisted ones,<br/>whitelisted ones first"]
+    H --> I["For each operator:<br/>AT+COPS=1,2,plmn,AcT<br/>and wait up to 30 s for an IP"]
+    I -->|"connected"| J
+    I -->|"none works"| K["AT+COPS=0 (automatic),<br/>wait up to 60 s"]
+    K -->|"connected"| J
+    K -->|"no"| X["Failure"]
+    J["AT+CPSMS=0, AT+CPSMS?,<br/>AT%XMONITOR"] --> Z["AT+CEDRXRDP (if eDRX)<br/>→ connected"]
+```
+
+*Network registration sequence of `NBIoT.connect()`.*
+
+The operator blacklist and whitelist are defined per technology in the driver (`BLACKLIST` and `WHITELIST`, in `NBIoT.__init__`).
+
 ---
 ## 5.4 Advanced Energy Management: ESP32 - nRF9151 Pins
 
