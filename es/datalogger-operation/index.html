@@ -2221,6 +2221,13 @@
 <p class="admonition-title">Dos modos activados por imán</p>
 <p>Mantener el imán cerca del sensor también activa un segundo modo, más breve — <strong>Lectura y Envío Inmediato</strong> (~1 segundo) — que fuerza un ciclo de lectura y transmisión bajo demanda sin entrar en el modo Bluetooth. Ver <a href="../sensor-connections/#18-sensores-internos-y-diagnostico">1.8 Sensores Internos y Diagnóstico</a> para ambos modos, uno junto al otro. Este apartado cubre el mantenimiento más largo (<strong>más de 5 segundos</strong>) que activa el Modo de Diagnóstico por Bluetooth.</p>
 </div>
+<pre class="mermaid"><code>flowchart TD
+    A(["Imán mantenido más de 5 segundos"]) --&gt; B["Bluetooth activado, esperando un cliente&lt;br/&gt;(hasta 2 minutos)"]
+    B --&gt;|"Se conecta un cliente"| C["Sesión de datos en vivo&lt;br/&gt;lecturas continuas,&lt;br/&gt;se puede enviar nueva configuración"]
+    B --&gt;|"Ningún cliente en 120 s"| D["Termina el modo Bluetooth"]
+    C --&gt;|"El usuario se desconecta"| D
+    D --&gt; E(["Se retoma el ciclo de registro normal"])</code></pre>
+<p><em>El Modo de Diagnóstico por Bluetooth de un vistazo.</em></p>
 <h3 id="1-activacion">1. Activación</h3>
 <p>Al mantener un imán sobre la zona del sensor magnético durante <strong>más de 5 segundos</strong> (ver <a href="../sensor-connections/#18-sensores-internos-y-diagnostico">1. Conexión de Sensores</a> para la ubicación exacta), el ISURLOG se despierta de inmediato y entra en este modo especial. El LED STATUS comenzará a parpadear con un patrón distintivo para indicar que está listo (ver <a href="#53-diagnostico-en-campo-led-status">5.3. Diagnóstico en Campo (LED STATUS)</a>).</p>
 <h3 id="2-espera-de-conexion">2. Espera de Conexión</h3>
@@ -2237,6 +2244,19 @@ El ISURLOG esperará como máximo <strong>2 minutos (120 segundos)</strong> por 
 <p>La sesión de Bluetooth termina cuando el usuario se desconecta de la aplicación. En ese momento, el ISURLOG sale del modo Bluetooth y retoma su ciclo de registro normal programado.</p>
 <h2 id="52-ciclo-de-registro-normal-funcionamiento-automatico">5.2. Ciclo de Registro Normal (Funcionamiento Automático)</h2>
 <p>Este es el modo de funcionamiento estándar y autónomo del ISURLOG.</p>
+<pre class="mermaid"><code>flowchart TD
+    S(["Hora de despertar programada"]) --&gt; A["Despierta, lee los sensores&lt;br/&gt;y la tensión de batería"]
+    A --&gt; B["Comprueba los umbrales de alarma"]
+    B --&gt; C["Empaqueta los datos y los guarda en RAM&lt;br/&gt;(cuenta los registros acumulados)"]
+    C --&gt; D{"Modo de envío"}
+    D --&gt;|"Fijo"| E{"¿Acumulador de registros&lt;br/&gt;alcanzado?"}
+    D --&gt;|"Condicional"| F{"¿Acumulador alcanzado&lt;br/&gt;o alarma detectada?"}
+    E --&gt;|"Sí"| G["Despierta el módem&lt;br/&gt;y transmite a la nube"]
+    F --&gt;|"Sí"| G
+    E --&gt;|"No"| Z
+    F --&gt;|"No"| Z
+    G --&gt; Z(["Reposo profundo hasta el siguiente despertar"])</code></pre>
+<p><em>Un ciclo del Ciclo de Registro Normal, desde que despierta hasta el reposo profundo.</em></p>
 <h3 id="1-despertar-y-leer">1. Despertar y Leer</h3>
 <p>El <strong>ISURLOG</strong> se despierta automáticamente en el momento programado. La primera tarea es realizar un ciclo completo de lectura de sensores, encendiendo únicamente los componentes necesarios para leer todos los sensores activados en la configuración. También mide su propia tensión de batería.</p>
 <h3 id="2-comprobacion-de-alarmas">2. Comprobación de Alarmas</h3>

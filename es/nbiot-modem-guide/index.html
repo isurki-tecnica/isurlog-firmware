@@ -1270,6 +1270,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="5.3 Comunicación UART y Comandos AT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secuencia-de-registro-en-la-red" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secuencia de registro en la red
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2080,6 +2097,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="5.3 Comunicación UART y Comandos AT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secuencia-de-registro-en-la-red" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secuencia de registro en la red
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2254,6 +2288,25 @@
 <p>La referencia completa y oficial de comandos AT para el módem nRF9151 se encuentra en la documentación de Nordic Semiconductor: <a href="https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/applications/serial_lte_modem/README.html">https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/applications/serial_lte_modem/README.html</a></p>
 <p>Si estás construyendo una aplicación de <strong>sustitución</strong> para el firmware del módem, debe seguir soportando el mismo conjunto de comandos AT del que realmente depende el driver propio del ISURLOG (<code>modules/nb_iot.py</code>) — ver la lista de comandos verificada en <strong><a href="../module-library-reference/">2.1 Referencia de Módulos y Librerías</a></strong> a modo de lista de comprobación de compatibilidad.</p>
 </div>
+<h3 id="secuencia-de-registro-en-la-red">Secuencia de registro en la red</h3>
+<p>Cada vez que el firmware necesita el módem conectado, <code>connect()</code> de <code>modules/nb_iot.py</code> ejecuta la secuencia siguiente. Recibe la preferencia de conexión (<code>1</code> = LTE-M, <code>2</code> = NB-IoT), si el eDRX está activado y, opcionalmente, un APN. Si el módem ya está registrado y tiene una dirección IP, se saltan los pasos de configuración.</p>
+<pre class="mermaid"><code>flowchart TD
+    A["AT, AT#XSLMVER,&lt;br/&gt;AT+CGMR, AT%XMONITOR"] --&gt; B{"¿Ya registrado&lt;br/&gt;con IP?"}
+    B --&gt;|"sí"| Z
+    B --&gt;|"no"| C["AT%XSYSTEMMODE=1,1,0,pref&lt;br/&gt;(solo si cambia)"]
+    C --&gt; D["AT%RAI=1&lt;br/&gt;(solo si no lo está ya)"]
+    D --&gt; E["Si el eDRX está activo:&lt;br/&gt;AT%PERIODICSEARCHCONF,&lt;br/&gt;AT+CEDRXS=1, AT%XPTW"]
+    E --&gt; F["AT+CGDCONT=1,IP,apn (si hay APN)&lt;br/&gt;AT+CFUN=1"]
+    F --&gt; G["AT+COPS=? (escaneo de redes,&lt;br/&gt;hasta 5 min)"]
+    G --&gt; H["Quedarse con los operadores de la tecnología elegida,&lt;br/&gt;descartar los de la lista negra,&lt;br/&gt;lista blanca primero"]
+    H --&gt; I["Para cada operador:&lt;br/&gt;AT+COPS=1,2,plmn,AcT&lt;br/&gt;y esperar hasta 30 s por una IP"]
+    I --&gt;|"conectado"| J
+    I --&gt;|"ninguno funciona"| K["AT+COPS=0 (automático),&lt;br/&gt;esperar hasta 60 s"]
+    K --&gt;|"conectado"| J
+    K --&gt;|"no"| X["Fallo"]
+    J["AT+CPSMS=0, AT+CPSMS?,&lt;br/&gt;AT%XMONITOR"] --&gt; Z["AT+CEDRXRDP (si eDRX)&lt;br/&gt;→ conectado"]</code></pre>
+<p><em>Secuencia de registro en la red de <code>NBIoT.connect()</code>.</em></p>
+<p>Las listas negra y blanca de operadores se definen por tecnología en el driver (<code>BLACKLIST</code> y <code>WHITELIST</code>, en <code>NBIoT.__init__</code>).</p>
 <hr>
 <h2 id="54-gestion-avanzada-de-energia-pines-esp32-nrf9151">5.4 Gestión Avanzada de Energía: Pines ESP32 - nRF9151</h2>
 <p>Además de la comunicación de datos por el puerto UART, el ESP32 y el módem nRF9151 están conectados mediante dos líneas GPIO dedicadas. Estas conexiones permiten una gestión dinámica y eficiente de los modos de bajo consumo de ambos procesadores, optimizando la autonomía del <strong>ISURLOG</strong>.</p>

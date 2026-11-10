@@ -2221,6 +2221,13 @@
 <p class="admonition-title">Two magnet-triggered modes</p>
 <p>Holding the magnet near the sensor also triggers a second, shorter mode — <strong>Immediate Read &amp; Send</strong> (~1 second) — that forces an on-demand reading and transmission cycle without entering Bluetooth. See <a href="../sensor-connections/#18-internal-sensors-and-diagnostics">1.8 Internal Sensors and Diagnostics</a> for both modes side by side. This section covers the longer (<strong>more than 5 seconds</strong>) hold that activates Bluetooth Diagnostics Mode.</p>
 </div>
+<pre class="mermaid"><code>flowchart TD
+    A(["Magnet held for more than 5 seconds"]) --&gt; B["Bluetooth on, waiting for a client&lt;br/&gt;(up to 2 minutes)"]
+    B --&gt;|"Client connects"| C["Live data session&lt;br/&gt;continuous readings,&lt;br/&gt;new configuration can be sent"]
+    B --&gt;|"No client within 120 s"| D["Bluetooth mode ends"]
+    C --&gt;|"User disconnects"| D
+    D --&gt; E(["Normal logging cycle resumes"])</code></pre>
+<p><em>Bluetooth Diagnostics Mode at a glance.</em></p>
 <h3 id="1-activation">1. Activation</h3>
 <p>By holding a magnet on the magnetic sensor zone for <strong>more than 5 seconds</strong> (refer to <a href="../sensor-connections/#18-internal-sensors-and-diagnostics">1. Sensor Connections</a> for the exact location), the ISURLOG immediately wakes up and enters this special mode. The STATUS LED will begin to flash with a distinct pattern to indicate it is ready (refer to <a href="#53-field-diagnostics-led-status">5.3. Field Diagnostics (LED STATUS)</a>).</p>
 <h3 id="2-connection-wait">2. Connection Wait</h3>
@@ -2237,6 +2244,19 @@ The ISURLOG will wait for a maximum of <strong>2 minutes (120 seconds)</strong> 
 <p>The Bluetooth session ends when the user disconnects from the application. At that moment, the ISURLOG exits Bluetooth mode and resumes its programmed normal logging cycle.</p>
 <h2 id="52-normal-logging-cycle-automatic-operation">5.2. Normal Logging Cycle (Automatic Operation)</h2>
 <p>This is the standard, autonomous functioning mode of the ISURLOG.</p>
+<pre class="mermaid"><code>flowchart TD
+    S(["Programmed wake-up time"]) --&gt; A["Wake up, read sensors&lt;br/&gt;and battery voltage"]
+    A --&gt; B["Check alarm thresholds"]
+    B --&gt; C["Package the data and store it in RAM&lt;br/&gt;(count accumulated records)"]
+    C --&gt; D{"Sending Mode"}
+    D --&gt;|"Fixed"| E{"Record Accumulator&lt;br/&gt;reached?"}
+    D --&gt;|"Conditional"| F{"Accumulator reached&lt;br/&gt;or alarm detected?"}
+    E --&gt;|"Yes"| G["Wake up the modem&lt;br/&gt;and transmit to the cloud"]
+    F --&gt;|"Yes"| G
+    E --&gt;|"No"| Z
+    F --&gt;|"No"| Z
+    G --&gt; Z(["Deep sleep until the next wake-up"])</code></pre>
+<p><em>One cycle of the Normal Logging Cycle, from wake-up to deep sleep.</em></p>
 <h3 id="1-wake-up-and-read">1. Wake Up and Read</h3>
 <p>The <strong>ISURLOG</strong> automatically wakes up at the programmed time. The first task is to perform a full sensor reading cycle, powering on only the necessary components to read all sensors enabled in the configuration. It also measures its own battery voltage.</p>
 <h3 id="2-alarm-check">2. Alarm Check</h3>

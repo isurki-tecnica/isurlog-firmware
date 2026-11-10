@@ -1270,6 +1270,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="5.3 UART Communication and AT Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#network-registration-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network registration sequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2080,6 +2097,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="5.3 UART Communication and AT Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#network-registration-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network registration sequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2254,6 +2288,25 @@
 <p>The complete and official AT command reference for the nRF9151 modem can be found in the Nordic Semiconductor documentation: <a href="https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/applications/serial_lte_modem/README.html">https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/applications/serial_lte_modem/README.html</a></p>
 <p>If you're building a <strong>replacement</strong> application firmware for the modem, it must keep supporting the same AT command surface the ISURLOG's own driver (<code>modules/nb_iot.py</code>) actually depends on — see the verified command list in <strong><a href="../module-library-reference/">2.1 Module &amp; Library Reference</a></strong> as a compatibility checklist.</p>
 </div>
+<h3 id="network-registration-sequence">Network registration sequence</h3>
+<p>Whenever the firmware needs the modem online, <code>connect()</code> in <code>modules/nb_iot.py</code> runs the sequence below. It takes the connection preference (<code>1</code> = LTE-M, <code>2</code> = NB-IoT), whether eDRX is enabled and, optionally, an APN. If the modem is already registered and has an IP address, the configuration steps are skipped.</p>
+<pre class="mermaid"><code>flowchart TD
+    A["AT, AT#XSLMVER,&lt;br/&gt;AT+CGMR, AT%XMONITOR"] --&gt; B{"Already registered&lt;br/&gt;with an IP?"}
+    B --&gt;|"yes"| Z
+    B --&gt;|"no"| C["AT%XSYSTEMMODE=1,1,0,pref&lt;br/&gt;(only if it changes)"]
+    C --&gt; D["AT%RAI=1&lt;br/&gt;(only if not already set)"]
+    D --&gt; E["If eDRX is enabled:&lt;br/&gt;AT%PERIODICSEARCHCONF,&lt;br/&gt;AT+CEDRXS=1, AT%XPTW"]
+    E --&gt; F["AT+CGDCONT=1,IP,apn (if an APN is set)&lt;br/&gt;AT+CFUN=1"]
+    F --&gt; G["AT+COPS=? (network scan,&lt;br/&gt;up to 5 min)"]
+    G --&gt; H["Keep the operators of the chosen technology,&lt;br/&gt;drop the blacklisted ones,&lt;br/&gt;whitelisted ones first"]
+    H --&gt; I["For each operator:&lt;br/&gt;AT+COPS=1,2,plmn,AcT&lt;br/&gt;and wait up to 30 s for an IP"]
+    I --&gt;|"connected"| J
+    I --&gt;|"none works"| K["AT+COPS=0 (automatic),&lt;br/&gt;wait up to 60 s"]
+    K --&gt;|"connected"| J
+    K --&gt;|"no"| X["Failure"]
+    J["AT+CPSMS=0, AT+CPSMS?,&lt;br/&gt;AT%XMONITOR"] --&gt; Z["AT+CEDRXRDP (if eDRX)&lt;br/&gt;→ connected"]</code></pre>
+<p><em>Network registration sequence of <code>NBIoT.connect()</code>.</em></p>
+<p>The operator blacklist and whitelist are defined per technology in the driver (<code>BLACKLIST</code> and <code>WHITELIST</code>, in <code>NBIoT.__init__</code>).</p>
 <hr>
 <h2 id="54-advanced-energy-management-esp32-nrf9151-pins">5.4 Advanced Energy Management: ESP32 - nRF9151 Pins</h2>
 <p>In addition to data communication via the UART port, the ESP32 and the nRF9151 modem are connected through two dedicated GPIO lines. These connections enable dynamic and efficient management of both processors' low-power modes, optimizing the autonomy of the <strong>ISURLOG</strong>.</p>
