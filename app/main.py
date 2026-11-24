@@ -549,7 +549,7 @@ async def read_all_sensors(upload_mode, ble = False, n_loop = 1, n_seconds = 10,
 
     if num_modbus_enabled > 0:
         from modules import modbus_sensor
-        baudrate_map = {0: 9600, 1: 19200, 2: 38400, 3: 57600, 4: 115200}
+        baudrate_map = {0: 9600, 1: 19200, 2: 38400, 3: 57600, 4: 115200, 5: 4800}
         parity_map = {0: None, 1: 0, 2: 1}
         modbus_module = modbus_sensor.ModbusSensor(
             baudrate=baudrate_map[modbus_config.get("baudrate", 0)],
@@ -770,7 +770,7 @@ async def read_isurnode_data(upload_mode, data, alarm_condition, ble = False):
     pm.control_5v(1)
 
     from modules import modbus_sensor
-    baudrate_map = {0: 9600, 1: 19200, 2: 38400, 3: 57600, 4: 115200}
+    baudrate_map = {0: 9600, 1: 19200, 2: 38400, 3: 57600, 4: 115200, 5: 4800}
     parity_map = {0: None, 1: 0, 2: 1}
     modbus_module = modbus_sensor.ModbusSensor(
         baudrate=baudrate_map[modbus_config.get("baudrate", 0)],

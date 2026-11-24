@@ -93,7 +93,7 @@ def process_sd_ev_manual_command(command, rtc_memory, ble=False):
         modbus_config = config_manager.get_dynamic("modbus_config")
 
         from modules import modbus_sensor
-        baudrate_map = {0: 9600, 1: 19200, 2: 38400, 3: 57600, 4: 115200}
+        baudrate_map = {0: 9600, 1: 19200, 2: 38400, 3: 57600, 4: 115200, 5: 4800}
         parity_map = {0: None, 1: 0, 2: 1}
         modbus_module = modbus_sensor.ModbusSensor(
             baudrate=baudrate_map[modbus_config.get("baudrate", 0)],
