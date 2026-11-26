@@ -28,7 +28,7 @@
     
     
       
-        <title>5. LoRaWAN with Your Own ChirpStack Server - ISURLOG Docs</title>
+        <title>5. LoRaWAN with a Self-Hosted ChirpStack Server - ISURLOG Docs</title>
       
     
     
@@ -99,7 +99,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#5-lorawan-with-your-own-chirpstack-server" class="md-skip">
+        <a href="#5-lorawan-with-a-self-hosted-chirpstack-server" class="md-skip">
           Skip to content
         </a>
       
@@ -135,7 +135,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              5. LoRaWAN with Your Own ChirpStack Server
+              5. LoRaWAN with a Self-Hosted ChirpStack Server
             
           </span>
         </div>
@@ -1441,7 +1441,7 @@
   <span class="md-ellipsis">
     
   
-    5. LoRaWAN with Your Own ChirpStack Server
+    5. LoRaWAN with a Self-Hosted ChirpStack Server
   
 
     
@@ -1459,7 +1459,7 @@
   <span class="md-ellipsis">
     
   
-    5. LoRaWAN with Your Own ChirpStack Server
+    5. LoRaWAN with a Self-Hosted ChirpStack Server
   
 
     
@@ -1485,10 +1485,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#51-what-you-need" class="md-nav__link">
+  <a href="#51-requirements" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5.1 What You Need
+        5.1 Requirements
       
     </span>
   </a>
@@ -1540,10 +1540,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#56-connecting-your-server-to-isurdash" class="md-nav__link">
+  <a href="#56-connecting-the-server-to-isurdash" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5.6 Connecting Your Server to IsurDASH
+        5.6 Connecting the Server to IsurDASH
       
     </span>
   </a>
@@ -1949,10 +1949,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#51-what-you-need" class="md-nav__link">
+  <a href="#51-requirements" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5.1 What You Need
+        5.1 Requirements
       
     </span>
   </a>
@@ -2004,10 +2004,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#56-connecting-your-server-to-isurdash" class="md-nav__link">
+  <a href="#56-connecting-the-server-to-isurdash" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5.6 Connecting Your Server to IsurDASH
+        5.6 Connecting the Server to IsurDASH
       
     </span>
   </a>
@@ -2045,29 +2045,29 @@
   
 
 
-<h1 id="5-lorawan-with-your-own-chirpstack-server">5. LoRaWAN with Your Own ChirpStack Server</h1>
-<p>The LoRaWAN version of the ISURLOG works with a standard LoRaWAN network server: it joins with OTAA, uses the 868 MHz band and runs as a Class A device (see <a href="../technical-specifications/">Technical Specifications</a>). So you can run your own gateways and your own server, and keep your LoRaWAN network open and under your control.</p>
+<h1 id="5-lorawan-with-a-self-hosted-chirpstack-server">5. LoRaWAN with a Self-Hosted ChirpStack Server</h1>
+<p>The LoRaWAN version of the ISURLOG works with a standard LoRaWAN network server: it joins with OTAA, uses the 868 MHz band and runs as a Class A device (see <a href="../technical-specifications/">Technical Specifications</a>). This allows the use of self-owned gateways and a self-hosted server, keeping the LoRaWAN network open and under the operator's control.</p>
 <p>This page explains how to do it with <strong>ChirpStack</strong>, an open-source LoRaWAN network server.</p>
-<h2 id="51-what-you-need">5.1 What You Need</h2>
+<h2 id="51-requirements">5.1 Requirements</h2>
 <ul>
 <li>An <strong>ISURLOG with the LoRaWAN module</strong> (868 MHz).</li>
-<li>A <strong>LoRaWAN gateway</strong> for the EU868 band, connected to your ChirpStack server.</li>
-<li><strong>ChirpStack v4</strong>. For the installation of the server and the gateway bridge, follow the <a href="https://www.chirpstack.io/docs/">official ChirpStack documentation</a>.</li>
+<li>A <strong>LoRaWAN gateway</strong> for the EU868 band, connected to the ChirpStack server.</li>
+<li><strong>ChirpStack v4</strong>. To install the server and the gateway bridge, follow the <a href="https://www.chirpstack.io/docs/">official ChirpStack documentation</a>.</li>
 </ul>
 <h2 id="52-device-profile">5.2 Device Profile</h2>
-<p>Create a device profile for the ISURLOG in ChirpStack:</p>
+<p>A device profile for the ISURLOG is created in ChirpStack:</p>
 <ul>
 <li><strong>Region:</strong> EU868.</li>
 <li><strong>Activation:</strong> OTAA.</li>
 <li><strong>Class:</strong> A or B are recommended for battery-powered devices. Class A is the most power-efficient and gives the maximum battery life; Class B is not optimal for maximum battery life, and ISURKI has not tested it. Class C is only recommended where the ISURLOG has external power, since it keeps the radio listening all the time.</li>
 <li><strong>ADR:</strong> enabled, so the device does not transmit with more power or a lower data rate than the link needs.</li>
 </ul>
-<p>See <a href="../troubleshooting/">LoRaWAN-specific: device class and ADR</a> in the troubleshooting page for the reasons.</p>
+<p>The reasons are explained in <a href="../troubleshooting/">LoRaWAN-specific: device class and ADR</a> in the troubleshooting page.</p>
 <h2 id="53-payload-decoder">5.3 Payload Decoder</h2>
 <p>The ISURLOG sends its readings in a compact binary format (see <a href="../realtime-data-mqtt/#34-payload-decoding-nb-iotcayenne-lpp">3.4 Payload Decoding</a>). ChirpStack turns it into readable values with a decoder.</p>
 <ol>
 <li>Download the decoder: <a href="https://github.com/isurki-tecnica/isurlog-firmware/blob/main/data_integration/chirpstack/IsurlogLPP_Decoder.js"><code>IsurlogLPP_Decoder.js</code></a>.</li>
-<li>In ChirpStack, open the <strong>device profile</strong> of your ISURLOGs, go to the <strong>Codec</strong> tab and choose <strong>JavaScript functions</strong>.</li>
+<li>In ChirpStack, open the <strong>device profile</strong> of the ISURLOGs, go to the <strong>Codec</strong> tab and choose <strong>JavaScript functions</strong>.</li>
 <li>Paste the content of the file and save.</li>
 </ol>
 <p>From then on, every uplink event includes the decoded values in the <code>object</code> key:</p>
@@ -2087,16 +2087,16 @@
 <li><strong>Unknown data:</strong> if a payload contains a data type the decoder does not know, it keeps what it decoded up to that point and adds a <code>warnings</code> list to the result, and an <code>error</code> field to the <code>object</code>.</li>
 </ul>
 <h2 id="54-register-the-device">5.4 Register the Device</h2>
-<p>Create an application in ChirpStack and add each ISURLOG as a device with its LoRaWAN credentials. Use the <strong>DEV EUI</strong>, <strong>APP EUI</strong> and <strong>APP KEY</strong> that are configured on the device (see the <a href="../reference-parameters/#lorawan">LoRaWAN parameters</a>), and assign the device profile of the previous step.</p>
+<p>An application is created in ChirpStack and each ISURLOG is added as a device with its LoRaWAN credentials. The <strong>DEV EUI</strong>, <strong>APP EUI</strong> and <strong>APP KEY</strong> configured on the device are used (see the <a href="../reference-parameters/#lorawan">LoRaWAN parameters</a>), and the device profile of the previous step is assigned.</p>
 <p>When the ISURLOG powers on, it joins the network and starts sending.</p>
 <h2 id="55-getting-the-data-out">5.5 Getting the Data Out</h2>
 <p>ChirpStack publishes every uplink on its MQTT integration, in the topic <code>application/{application-id}/device/{device_eui}/event/up</code>. The format is described in <a href="../realtime-data-mqtt/#331-lorawan-devices-via-chirpstack">3.3.1 LoRaWAN Devices (via ChirpStack)</a>.</p>
-<h2 id="56-connecting-your-server-to-isurdash">5.6 Connecting Your Server to IsurDASH</h2>
-<p>Your ChirpStack server can be connected to <strong>IsurDASH</strong>, our free platform for viewing and configuring dataloggers. You keep your own network and your own gateways, and you also get the dashboards, alarms and remote configuration of IsurDASH (see <a href="../isurdash-platform/">6. IsurDASH Platform</a>).</p>
-<p>This connection is set up by ISURKI. <a href="mailto:tecnica@isurki.com?subject=ISURLOG%20LoRaWAN%20-%20Connect%20my%20ChirpStack%20server">Contact us</a> and we will arrange it with you.</p>
+<h2 id="56-connecting-the-server-to-isurdash">5.6 Connecting the Server to IsurDASH</h2>
+<p>The ChirpStack server can be connected to <strong>IsurDASH</strong>, the free ISURKI platform for viewing and configuring dataloggers. The network and gateways remain under the owner's control, and the dashboards, alarms and remote configuration of IsurDASH are available as well (see <a href="../isurdash-platform/">6. IsurDASH Platform</a>).</p>
+<p>This connection is set up by ISURKI: <a href="mailto:tecnica@isurki.com?subject=ISURLOG%20LoRaWAN%20-%20Connect%20my%20ChirpStack%20server">contacting the technical team</a> is enough, and the procedure is agreed from there.</p>
 <h2 id="57-using-the-data-in-a-scada">5.7 Using the Data in a SCADA</h2>
-<p>The readings that reach IsurDASH are stored in InfluxDB, in a bucket of your own, with a private read-only token. Any SCADA or application that can make HTTP requests can read them with a Flux query. See <a href="../historical-data-influxdb/">2. Historical Data (InfluxDB)</a>, including the reference implementation with a working query, for the connection parameters and field names.</p>
-<p>If you prefer to get the data in real time, subscribe to the MQTT integration of your ChirpStack server (see <a href="#55-getting-the-data-out">5.5</a>).</p>
+<p>The readings that reach IsurDASH are stored in InfluxDB, in a bucket of their own, with a private read-only token. Any SCADA or application that can make HTTP requests can read them with a Flux query. See <a href="../historical-data-influxdb/">2. Historical Data (InfluxDB)</a>, including the reference implementation with a working query, for the connection parameters and field names.</p>
+<p>To receive the data in real time, subscribe to the MQTT integration of the ChirpStack server (see <a href="#55-getting-the-data-out">5.5</a>).</p>
 
 
 

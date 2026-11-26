@@ -1724,7 +1724,7 @@
   <span class="md-ellipsis">
     
   
-    5. LoRaWAN con tu Propio Servidor ChirpStack
+    5. LoRaWAN con Servidor ChirpStack Propio
   
 
     
@@ -2402,7 +2402,7 @@
 <p>Los datos LoRaWAN se procesan a través del Network Server ChirpStack.</p>
 <ul>
 <li><strong>Estructura del Topic:</strong> <code>application/{application-id}/device/{device_eui}/event/up</code></li>
-<li><strong>Formato del Mensaje:</strong> <strong>objeto JSON con datos decodificados</strong>. El Network Server ChirpStack decodifica el payload en bruto con el decodificador del ISURLOG (ver <a href="../chirpstack-integration/">5. LoRaWAN con tu Propio Servidor ChirpStack</a> si usas tu propio servidor). Los valores de sensores decodificados están disponibles directamente dentro de la clave <code>object</code> del JSON.</li>
+<li><strong>Formato del Mensaje:</strong> <strong>objeto JSON con datos decodificados</strong>. El Network Server ChirpStack decodifica el payload en bruto con el decodificador del ISURLOG (ver <a href="../chirpstack-integration/">5. LoRaWAN con Servidor ChirpStack Propio</a> si se usa un servidor propio). Los valores de sensores decodificados están disponibles directamente dentro de la clave <code>object</code> del JSON.</li>
 <li><strong>Metadatos:</strong> el JSON también incluye metadatos de red útiles, como RSSI, SNR, ubicación del gateway, y parámetros de transmisión.</li>
 </ul>
 <h4 id="ejemplo-de-payload-json-chirpstack">Ejemplo de Payload JSON (ChirpStack)</h4>
